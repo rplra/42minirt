@@ -1,69 +1,80 @@
-CC = cc 
-CFLAGS = -Wall -Wextra -Werror -Iinclude #-g3 -fsanitize=address
-LFLAGS = -lreadline
-RM = rm -rf
+
+# Colour
+RESET			= \033[0m
+BLACK    		= \033[30m		# Black
+RED      		= \033[31m		# Red
+GREEN    		= \033[32m		# Green
+YELLOW   		= \033[33m		# Yellow
+BLUE     		= \033[34m		# Blue
+MAGENTA  		= \033[35m		# Magenta
+CYAN     		= \033[36m		# Cyan
+WHITE    		= \033[37m		# White
 
 NAME = miniRT
 
-# Directory
-LIBFT_DIR = ./libft
-#OBJ_DIR = ./obj/
-#MAIN_DIR = ./main/
-#PARSING_DIR = ./parsing/
+CC = cc 
+CFLAGS = -Wall -Wextra -Werror -Iinc #-g3 -fsanitize=address
+RM = rm -rf
 
 # OS
 OS := $(shell uname -s)
 ifeq ($(OS),Darwin)
-	CFLAGS += -DMAC
-	MLX_DIR = mlx/
-	MLX = $(MLX_DIR)libmlx.a
-	LINKS = -L./mlx -lmlx -L./lib -lft -framework OpenGL -framework AppKit -lm
+	CFLAGS += 	-DMAC
+	MLX_DIR = 	mlx/macos
+	MLX 	= 	$(MLX_DIR)libmlx.a
+	LINKS 	= 	-L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -lm
 else ifeq ($(OS),Linux)
-	CFLAGS += -DLINUX
-	MLX_DIR = minilibx-linux/
-	MLX = $(MLX_DIR)libmlx.a
-	LINKS = -L$(MLX_DIR) -lmlx -L./lib -lft -lGL -lX11 -lXext -lm
+	CFLAGS += 	-DLINUX
+	MLX_DIR = 	mlx/linux
+	MLX 	= 	$(MLX_DIR)libmlx.a
+	LINKS 	= 	-L$(MLX_DIR) -lmlx -lGL -lX11 -lXext -lm
 else
 	$(error Unsupported OS: $(OS))
 endif
 
+# Directory
+LIB_DIR 	= 	lib
+SRC_DIR		= 	src
+OBJ_DIR		= 	obj
+MAIN_DIR 	= 	$(SRC_DIR)/main
+PARSE_DIR 	= 	$(SRC_DIR)/parse
 
-# Files
-#MAIN_FILES =
-#PARSING_FILES =
-
-# Object Files
-#OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(MAIN_FILES)))
-#OBJ += $(addprefix $(OBJ_DIR), $(addsuffix .o, $(PARSING_FILES)))
+# Sources
+SRCS		=	$(wildcard $(MAIN_DIR)/*.c) \
+				$(wildcard $(PARSE_DIR)/*.c)
+OBJS		=	$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 all : $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT_DIR)/libft.a
-	@$(CC) $(CFLAGS) $^ -o $@ -L$(LIBFT_DIR) -lft $(LFLAGS)
-	@echo $(YELLOW) "MiniRT GO!" $(RESET)
+$(NAME): $(MLX) $(LIB_DIR)/libft.a $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -L$(LIB_DIR) -lft $(LINKS) -o $(NAME)
+	@echo "Compile $(NAME)		: OK!"
 
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-@$(OBJ_DIR)%.o: $(MAIN_DIR)%.c | $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -c $< -o $@
+$(LIB_DIR)/libft.a:
+	@make -s -C $(LIB_DIR)
 
-$(LIBFT_DIR)/libft.a:
-	@make -s -C $(LIBFT_DIR)
+$(MLX):
+	@make -C $(MLX_DIR) > /dev/null
+	@echo "Compile libmlx.a	: OK!"
 
 clean:
 	@$(RM) $(OBJ_DIR)
-	@make -s clean -C $(LIBFT_DIR)
-	@echo $(YELLOW) "Cleaned!" $(RESET)
+	@make -s clean -C $(LIB_DIR) > /dev/null 2>&1
+	@$(MAKE) -C $(MLX_DIR) clean > /dev/null 2>&1
+	@echo "Clean $(NAME)		: OK!"
 
 fclean: clean
-	@$(RM) $(OBJ_DIR)
 	@$(RM) $(NAME)
-	@make -s fclean -C $(LIBFT_DIR)
+	@make -s fclean -C $(LIB_DIR)
+	@echo "Full Clean $(NAME)	: OK!"
 
 re: fclean all
 
 valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re valgrind

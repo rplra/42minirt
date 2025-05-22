@@ -9,12 +9,12 @@ OBJ=$(OBJ1:.m=.o)
 CFLAGS+=-O2
 
 # add to match string put with X11 in size and position
-CFLAGS+= -DSTRINGPUTX11
+CFLAGS+= -DSTRINGPUTX11 -Wno-deprecated-non-prototype -Wno-deprecated -Wno-deprecated-declarations -DGL_SILENCE_DEPRECATION
 
 all: $(NOM)
 
 $(NOM):	$(OBJ)
-	ar -r $(NOM) $(OBJ)
+	@ar -rcs $(NOM) $(OBJ)
 	ranlib $(NOM)
 
 clean:

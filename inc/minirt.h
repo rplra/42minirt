@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/22 11:16:15 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:33:14 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+# include "config.h"
+# include "keymap.h"
+# include "parse.h"
+# include "scene.h"
 
 #endif

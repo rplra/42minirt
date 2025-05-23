@@ -6,14 +6,12 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:15:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/22 13:01:38 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:02:36 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef KEYMAP_H
 # define KEYMAP_H
-
-#include "minirt.h"
 
 # ifndef MAC
 #  if defined(__APPLE__) && defined(__MACH__)

@@ -37,11 +37,13 @@ LIB_DIR 	= 	lib
 SRC_DIR		= 	src
 OBJ_DIR		= 	obj
 MAIN_DIR 	= 	$(SRC_DIR)/main
-PARSE_DIR 	= 	$(SRC_DIR)/parse
+PARSE_DIR 	= 	$(SRC_DIR)/parsing
+UTILS_DIR 	= 	$(SRC_DIR)/utils
 
 # Sources
 SRCS		=	$(wildcard $(MAIN_DIR)/*.c) \
-				$(wildcard $(PARSE_DIR)/*.c)
+				$(wildcard $(PARSE_DIR)/*.c) \
+				$(wildcard $(UTILS_DIR)/*.c)
 OBJS		=	$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 all : $(NAME)

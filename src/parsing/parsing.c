@@ -1,23 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 13:09:38 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/26 18:26:36 by rraja-az         ###   ########.fr       */
+/*   Created: 2025/05/26 14:33:02 by rraja-az          #+#    #+#             */
+/*   Updated: 2025/05/26 14:33:11 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int main(int ac, char **av)
-{
-	if (ac != 2)
-		exit_with_error(ERROR_ARGFORMAT);
-	// open file
-	// run mlx
-	// clean
-	return (0);
-}

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/22 17:33:14 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/26 17:07:20 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <math.h>
+# include <stdbool.h>
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -26,5 +27,26 @@
 # include "keymap.h"
 # include "parse.h"
 # include "scene.h"
+
+# define ERROR_ARGFORMAT "Format: <./minirt> <scenes/scene.rt>"
+# define ERROR_FILETYPE "Error: File type must be in .rt"
+
+typedef struct	s_rt
+{
+	void		*mlx;
+	void		*mlx_win;
+	t_img		img;
+	t_camera	camera;
+}				t_rt;
+
+typedef	struct	s_img
+{
+	void		*img;
+	char		*addr;
+	int			bpp;
+	int			line_len;
+	int			endian;
+}				t_img;
+
 
 #endif

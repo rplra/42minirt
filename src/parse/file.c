@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:53 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/27 10:47:34 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:48:55 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	is_rt_file(const char *filename)
 {
 	int	len;
-	
+
 	if (!filename)
 		return (false);
 	len = ft_strlen(filename);
@@ -24,6 +24,7 @@ bool	is_rt_file(const char *filename)
 	return (false);
 }
 
+// to check if there are invalid params, interrupt gnl and free line
 void	parse_file(int fd, t_parse *scene)
 {
 	char	*line;
@@ -32,11 +33,23 @@ void	parse_file(int fd, t_parse *scene)
 	scene->valid = 1;
 	line = get_next_line(fd);
 	while (line)
-	{ 
+	{
 		scene->line_num++;
 		scene->params = tokenize_params(line);
 		//if (parse_params(line))
 		//	scene->valid = 0;
+		// print params
+		/* if (scene->params)
+        {
+            int i = 0;
+            printf("tokens:");
+            while (scene->params[i])
+            {
+                printf(" [%s]", scene->params[i]);
+                i++;
+            }
+            printf("\n");
+        } */
 		free(line);
 		free(scene->params);
 		line = get_next_line(fd);
@@ -49,7 +62,7 @@ void	open_file(const char *file)
 	t_parse	scene;
 
 	if (!is_rt_file(file))
-		exit_with_error("Error: File must in .rt extension");
+		exit_with_error("Error: File must in .rt format");
 	if (access(file, F_OK | R_OK) < 0)
 		exit_with_error("Error: File does not exist or has no read permission");
 	fd = open(file, O_RDONLY);

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:39:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/22 17:31:29 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/27 08:30:17 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 
 typedef struct	s_parse
 {
-	char		**tokens;
-	int			token_count;
+	char		**params;
+	int			param_count;
 	int			line_num;
+	bool		valid;
 }				t_parse;
 
 

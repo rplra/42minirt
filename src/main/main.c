@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 13:09:38 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/26 18:26:36 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/27 07:43:56 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int main(int ac, char **av)
 {
+	char	*filepath;
+	
 	if (ac != 2)
 		exit_with_error(ERROR_ARGFORMAT);
+	filepath = av[1];
 	// open file
 	// run mlx
 	// clean

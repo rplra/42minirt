@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:53 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/27 09:54:01 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:47:34 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,27 @@ bool	is_rt_file(const char *filename)
 	if (!filename)
 		return (false);
 	len = ft_strlen(filename);
-	if (len > 3 && ft_strcmp(filename + len - 3, ".rt") == 0)
+	if (len > 3 && ft_strncmp(filename + len - 3, ".rt", 3) == 0)
 		return (true);
 	return (false);
 }
 
-void	parse_file(int fd, const char *filepath, t_parse *scene)
+void	parse_file(int fd, t_parse *scene)
 {
 	char	*line;
 
 	scene->line_num = 0;
 	scene->valid = 1;
-	line = getnextline(fd);
+	line = get_next_line(fd);
 	while (line)
-	{
+	{ 
 		scene->line_num++;
 		scene->params = tokenize_params(line);
-		if (parse_params(line))
-			scene->valid = 1;
+		//if (parse_params(line))
+		//	scene->valid = 0;
 		free(line);
+		free(scene->params);
+		line = get_next_line(fd);
 	}
 }
 
@@ -53,7 +55,9 @@ void	open_file(const char *file)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		exit_with_error("Error: File not found");
-	parse_file(fd, file, &scene);
+	parse_file(fd, &scene);
+	if (scene.line_num == 0)
+		exit_with_error("Error: Empty file");
 	close(fd);
 }
 

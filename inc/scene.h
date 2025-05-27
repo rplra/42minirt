@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/26 17:01:56 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:35:07 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,6 @@ typedef struct s_cylinder
 	t_vector	normal;
 }				t_cylinder;
 
-typedef	struct s_object
-{
-	t_obj_type	type;
-	t_obj_union	obj;
-	t_colour	colour;
-	t_material	material;
-}				t_object;
-
 typedef enum 	e_obj_type
 {
 	obj_ambient,
@@ -97,6 +89,14 @@ typedef union	u_obj
 	t_plane		plane;
 	t_cylinder	cylinder;
 }				t_obj_union;
+
+typedef	struct s_object
+{
+	t_obj_type	type;
+	t_obj_union	obj;
+	t_colour	colour;
+	t_material	material;
+}				t_object;
 
 typedef struct	s_scene
 {

@@ -13,7 +13,7 @@ WHITE    		= \033[37m		# White
 NAME = miniRT
 
 CC = cc 
-CFLAGS = -Wall -Wextra -Werror -Iinc #-g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iinc -g3 -fsanitize=address
 RM = rm -rf
 
 # OS
@@ -37,7 +37,7 @@ LIB_DIR 	= 	lib
 SRC_DIR		= 	src
 OBJ_DIR		= 	obj
 MAIN_DIR 	= 	$(SRC_DIR)/main
-PARSE_DIR 	= 	$(SRC_DIR)/parsing
+PARSE_DIR 	= 	$(SRC_DIR)/parse
 UTILS_DIR 	= 	$(SRC_DIR)/utils
 
 # Sources

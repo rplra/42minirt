@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:10:59 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/22 09:03:52 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:03:24 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 # include <unistd.h>
 
 /* PART 1 - LIBC */
-/* INTEGERS */
+/* VALUES */
 
+float	ft_atof(const char *str);
 int		ft_atoi(const char *str);
 int		ft_atoi_base(const char *s, const char *base);
+long	ft_atol(const char *str);
 
 /* CHARS */
 

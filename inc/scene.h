@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/27 10:35:07 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/27 13:57:52 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ typedef struct	s_vector
 
 typedef struct	s_colour
 {
-	float		r;
-	float		g;
-	float		b;		
+	int			r;
+	int			g;
+	int			b;		
 }				t_colour;
 
 typedef struct s_material

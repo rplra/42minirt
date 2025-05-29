@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file.c                                             :+:      :+:    :+:   */
+/*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:53 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/27 12:48:55 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/28 09:36:48 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,23 @@ void	parse_file(int fd, t_parse *scene)
 	while (line)
 	{
 		scene->line_num++;
-		scene->params = tokenize_params(line);
+		scene->tokens = tokenize(line);
 		//if (parse_params(line))
 		//	scene->valid = 0;
 		// print params
-		/* if (scene->params)
+/* 		if (scene->tokens)
         {
             int i = 0;
             printf("tokens:");
-            while (scene->params[i])
+            while (scene->tokens[i])
             {
-                printf(" [%s]", scene->params[i]);
+                printf(" [%s]", scene->tokens[i]);
                 i++;
             }
             printf("\n");
-        } */
+        }  */
 		free(line);
-		free(scene->params);
+		free(scene->tokens);
 		line = get_next_line(fd);
 	}
 }
@@ -74,17 +74,17 @@ void	open_file(const char *file)
 	close(fd);
 }
 
-char	**tokenize_params(char *params)
+char	**tokenize(char *input)
 {
 	int	i;
 
 	i = -1;
-	while (params[++i])
+	while (input[++i])
 	{
-		if (params[i] == '\t' || params[i] == '\n')
-			params[i] = ' ';
+		if (input[i] == '\t' || input[i] == '\n')
+			input[i] = ' ';
 	}
-	return (ft_split(params, ' '));
+	return (ft_split(input, ' '));
 }
 
 

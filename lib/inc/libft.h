@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:10:59 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/27 14:03:24 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:50:43 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,31 @@
 # define LIBFT_H
 
 # include <limits.h>
+# include <stdbool.h>
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct s_atod
+{
+	double		val;
+	double 		frac;
+	int			divisor;
+	bool		has_dot;
+	bool		has_digit;
+}				t_atod;
+
+typedef unsigned int uint;
+
 /* PART 1 - LIBC */
 /* VALUES */
 
+double	ft_atod(const char *str, bool *valid);
 float	ft_atof(const char *str);
 int		ft_atoi(const char *str);
 int		ft_atoi_base(const char *s, const char *base);
 long	ft_atol(const char *str);
+uint	ft_atoui(const char *str);
 
 /* CHARS */
 

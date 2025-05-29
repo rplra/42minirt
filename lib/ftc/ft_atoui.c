@@ -1,38 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atol.c                                          :+:      :+:    :+:   */
+/*   ft_atoui.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 14:44:03 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/29 14:58:14 by rraja-az         ###   ########.fr       */
+/*   Created: 2025/05/29 14:37:58 by rraja-az          #+#    #+#             */
+/*   Updated: 2025/05/29 15:01:24 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long	ft_atol(const char *str)
+uint	ft_atoui(const char *str, bool *valid)
 {
-	int		negative;
-	long	nbr;
+	uint	result;
 
-	negative = 1;
-	nbr = 0;
-	if (!*str)
+	result = 0;
+	if (*str == '\0')
 		return (0);
-	while (*str == 32 || (*str >= 9 && *str <= 13))
-		++str;
-	if (*str == '-' || *str == '+')
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '-')
 	{
-		if (*str == '-')
-			negative *= -1;
-		++str;
+		*valid = false;
+		return (0);
 	}
-	while (*str >= '0' && *str <= '9')
+	if (*str == '+')
+		str++;
+	while (ft_isdigit(*str))
 	{
-		nbr = nbr * 10 + (*str - '0');
-		++str;
+		result = result * 10 + *str - '0';
+		str++;
 	}
-	return (nbr * negative);
+	if (*str != '\0')
+		*valid = false;
+	else
+		*valid = true;
+	return (result);
 }

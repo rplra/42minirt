@@ -6,10 +6,12 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:01:31 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/27 14:53:54 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/28 08:17:18 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//#include <stdio.h>
+//#include <stdlib.h>
 #include "libft.h"
 
 static int	parse_sign(const char **str)
@@ -56,5 +58,25 @@ float	ft_atof(const char *str)
 			str++;
 		}
 	}
-	return ((result + num)* sign);
+	return ((result + num) * sign);
 }
+
+
+/* int	main(void)
+{
+	float	val;
+	float	f;
+	
+	char *str = "1.45";
+	val = ft_atof(str);
+	f = atof(str);
+	printf("Before atof		: %s \n", str);
+	printf("After ft_atof	: %f \n", val);
+	printf("After atof		: %f \n", f);
+
+	// OUTPUT
+	// Before atof		: 1.45 
+	// After ft_atof	: 1.450000 
+	// After atof		: 1.450000
+}
+*/

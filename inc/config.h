@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/22 17:32:56 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:20:28 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CONFIG_H
 
 /*	math constant	*/
-# define EPSILON 1e-6
+# define EPSILON 0.000001
 # define PI 3.14159265358979323846
 
 /*	window	*/
@@ -28,6 +28,10 @@
 /*	colour	*/
 # define COL_MIN	0
 # define COL_MAX	255
+
+/*	normal vector	*/
+# define VEC_MIN	-1
+# define VEC_MAX	1
 
 /*	camera	*/
 # define FOV_MIN	0

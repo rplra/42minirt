@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:34:27 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/29 14:16:59 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:07:35 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,19 @@ int		count_params(char **params)
 
 bool	is_colour(char **col, t_colour *colour)
 {
+	bool	valid;
+	
 	if (count_params(col) != 3)
 		exit_with_error("Error: Colour must consist of 3 values - R, G, B");
-	colour->r = ft_atoi(col[0]);
-	colour->g = ft_atoi(col[1]);
-	colour->b = ft_atoi(col[2]);
+	colour->r = ft_atoui(col[0], &valid);
+	if (!valid)
+		return (false);
+	colour->g = ft_atoui(col[1], &valid);
+	if (!valid)
+		return (false);
+	colour->b = ft_atoui(col[2], &valid);
+	if (!valid)
+		return (false);
 	if ((colour->r < 0 || colour->r > 255)
 		|| (colour->g < 0 || colour->g > 255)
 		|| (colour->b < 0 || colour->b > 255))
@@ -60,3 +68,5 @@ bool	is_vector(char **values, t_vector *vector, bool check_range)
 	}
 	return (true);
 }
+
+

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/29 13:38:01 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:54:29 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define ERROR_FILETYPE "Error: File type must be in .rt"
 # define YES	1
 # define NO		0
+
+typedef unsigned int uint;
 
 typedef	struct	s_img
 {

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:10:59 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/29 14:50:43 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:00:06 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ float	ft_atof(const char *str);
 int		ft_atoi(const char *str);
 int		ft_atoi_base(const char *s, const char *base);
 long	ft_atol(const char *str);
-uint	ft_atoui(const char *str);
+uint	ft_atoui(const char *str, bool *valid);
 
 /* CHARS */
 

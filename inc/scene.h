@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/29 14:37:20 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:55:16 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ typedef struct	s_vector
 
 typedef struct	s_colour
 {
-	unsigned int	r;
-	unsigned int	g;
-	unsigned int	b;		
+	uint		r;
+	uint		g;
+	uint		b;		
 }				t_colour;
 
 typedef struct s_material
@@ -43,9 +43,9 @@ typedef struct	s_ambient
 
 typedef struct s_camera
 {
-	t_vector		origin;
-	t_vector		orientation;
-	unsigned int	fov;
+	t_vector	origin;
+	t_vector	orientation;
+	uint		fov;
 }				t_camera;
 
 typedef struct s_light

@@ -6,13 +6,13 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:34:27 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/29 17:07:35 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:41:10 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int		count_params(char **params)
+int	count_params(char **params)
 {
 	int	i;
 
@@ -22,51 +22,51 @@ int		count_params(char **params)
 	return (i);
 }
 
-bool	is_colour(char **col, t_colour *colour)
+int	is_colour(t_parse *scene, char **col, t_colour *colour)
 {
 	bool	valid;
 	
 	if (count_params(col) != 3)
-		exit_with_error("Error: Colour must consist of 3 values - R, G, B");
+		print_error(scene, ERROR_COLCOUNT, 0, col);
 	colour->r = ft_atoui(col[0], &valid);
 	if (!valid)
-		return (false);
+		return (print_error(scene, ERROR_INVALID_R, 0, col));
 	colour->g = ft_atoui(col[1], &valid);
 	if (!valid)
-		return (false);
+		return (print_error(scene, ERROR_INVALID_G, 1, col));
 	colour->b = ft_atoui(col[2], &valid);
 	if (!valid)
-		return (false);
+		return (print_error(scene, ERROR_INVALID_B, 2, col));
 	if ((colour->r < 0 || colour->r > 255)
 		|| (colour->g < 0 || colour->g > 255)
 		|| (colour->b < 0 || colour->b > 255))
-		return (false);
-	return (true);
+		return (print_error(scene, ERROR_INVALID_COL_VAL, -1, col));;
+	return (0);
 }
 
-bool	is_vector(char **values, t_vector *vector, bool check_range)
+int	is_vector(t_parse *scene, char **values, t_vector *vector, bool check_range)
 {
 	bool	valid;
 
 	if (count_params(values) != 3)
-		exit_with_error("Error: Coordinate must consist of 3 values; x, y, z");
+		return (print_error(scene, ERROR_INVALID_COORD, 0, values));
 	vector->x = ft_atod(values[0], &valid);
 	if (!valid)
-		return (false);
+		return (print_error(scene, ERROR_INVALID_X, 0, values));
 	vector->y = ft_atod(values[1], &valid);
 	if (!valid)
-		return (false);
+		return (print_error(scene, ERROR_INVALID_Y, 1, values));
 	vector->z = ft_atod(values[2], &valid);
 	if (!valid)
-		return (false);
+		return (print_error(scene, ERROR_INVALID_Z, 1, values));
 	if (check_range)
 	{
 		if ((vector->x < -1 || vector->x > 1)
 		|| (vector->y < -1 || vector->y > 1) 
 		|| (vector->z < -1 || vector->z > 1))
-		return (false);
+		return (print_error(scene, ERROR_VECTOR, 1, values));
 	}
-	return (true);
+	return (0);
 }
 
 

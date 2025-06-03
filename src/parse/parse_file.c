@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:53 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/03 15:48:24 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:03:09 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	open_file(const char *file)
 	close(fd);
 }
 
-char	**tokenize(char *input)
+char	**tokenize(char *line)
 {
 	int	i;
 

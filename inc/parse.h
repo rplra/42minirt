@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:39:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/03 16:42:16 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:08:48 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,30 @@ typedef struct	s_parse
 	bool		valid;
 }				t_parse;
 
+/*		parse_file.c		*/
 bool	is_rt_file(const char *filename);
 void	parse_file(int fd, t_parse *scene);
 void	open_file(const char *file);
-char	**tokenize(char *params);
+char	**tokenize(char *line);
 
+/*		parse_scene.c		*/
+int		parse_scene(t_parse *file, t_scene *scene);
+int		parse_object(t_parse *file, t_scene *scene);
+
+/*		parse_setup.c		*/
+int		validate_setup(t_parse *scene);
+int		parse_ambient(char **params, t_parse *scene, t_ambient *ambient);
+int		parse_camera(char **params, t_parse *scene, t_camera *camera);
+int		parse_light(char **params, t_parse *scene, t_light *light);
+
+/*		parse_objects.c		*/
+int 	parse_plane(char **params, t_parse *scene, t_plane *plane);
+int 	parse_sphere(char **params, t_parse *scene, t_sphere *sphere);
+int		parse_cylinder(char **params, t_parse *scene, t_cylinder *cylinder);
+
+/*		parse_utils.c		*/
+int		count_params(char **params);
+int		is_colour(t_parse *scene, char **col, t_colour *colour);
+int		is_vector(t_parse *scene, char **values, t_vector *vector, bool check_normal);
 
 #endif

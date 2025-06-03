@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:39:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/28 17:25:17 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:42:16 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ typedef struct	s_parse
 {
 	char		**tokens;
 	int			param_count;
+	int			ambient_count;
+	int			camera_count;
+	int			light_count;
 	int			line_num;
 	bool		valid;
 }				t_parse;
@@ -33,8 +36,5 @@ void	parse_file(int fd, t_parse *scene);
 void	open_file(const char *file);
 char	**tokenize(char *params);
 
-int		print_error(char *msg);
-void	exit_with_error(char *msg);
-void	perror_exit(char *perrmsg);
 
 #endif

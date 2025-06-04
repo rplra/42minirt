@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:53 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/03 17:03:09 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/04 08:19:46 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,35 @@ bool	is_rt_file(const char *filename)
 }
 
 // to check if there are invalid params, interrupt gnl and free line
-void	parse_file(int fd, t_parse *scene)
+void	parse_file(int fd, t_parse *file)
 {
 	char	*line;
+	t_scene	scene;
 
-	scene->ambient_count = 0;
-	scene->camera_count = 0;
-	scene->light_count = 0;
-	scene->line_num = 0;
+	file->ambient_count = 0;
+	file->camera_count = 0;
+	file->light_count = 0;
+	file->line_num = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
-		scene->tokens = tokenize(line);
-		scene->line_num++;
-		if (scene->tokens && scene->tokens[0])
+		file->tokens = tokenize(line);
+		file->line_num++;
+		if (file->tokens && file->tokens[0])
 		{
-			if (ft_strcmp(scene->tokens[0], "A") == 0)
-				scene->ambient_count++;
-			else if (ft_strcmp(scene->tokens[0], "C") == 0)
-				scene->camera_count++;
-			else if (ft_strcmp(scene->tokens[0], "L") == 0)
-				scene->light_count++;
+			if (ft_strcmp(file->tokens[0], "A") == 0)
+				file->ambient_count++;
+			else if (ft_strcmp(file->tokens[0], "C") == 0)
+				file->camera_count++;
+			else if (ft_strcmp(file->tokens[0], "L") == 0)
+				file->light_count++;
 		}
-		parse_scene(line);
+		parse_scene(line, &scene);
 		free(line);
-		free(scene->tokens);
+		free(file->tokens);
 		line = get_next_line(fd);
 	}
-	validate_setup(scene);
+	validate_setup(file);
 }
 
 void	open_file(const char *file)
@@ -78,12 +79,12 @@ char	**tokenize(char *line)
 	int	i;
 
 	i = -1;
-	while (input[++i])
+	while (line[++i])
 	{
-		if (input[i] == '\t' || input[i] == '\n')
-			input[i] = ' ';
+		if (line[i] == '\t' || line[i] == '\n')
+			line[i] = ' ';
 	}
-	return (ft_split(input, ' '));
+	return (ft_split(line, ' '));
 }
 
 /*

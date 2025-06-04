@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:39:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/03 17:08:48 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:12:28 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,19 @@ int		parse_scene(t_parse *file, t_scene *scene);
 int		parse_object(t_parse *file, t_scene *scene);
 
 /*		parse_setup.c		*/
-int		validate_setup(t_parse *scene);
-int		parse_ambient(char **params, t_parse *scene, t_ambient *ambient);
-int		parse_camera(char **params, t_parse *scene, t_camera *camera);
-int		parse_light(char **params, t_parse *scene, t_light *light);
+int		validate_setup(t_parse *file);
+int		parse_ambient(char **params, t_parse *file, t_ambient *ambient);
+int		parse_camera(char **params, t_parse *file, t_camera *camera);
+int		parse_light(char **params, t_parse *file, t_light *light);
 
 /*		parse_objects.c		*/
-int 	parse_plane(char **params, t_parse *scene, t_plane *plane);
-int 	parse_sphere(char **params, t_parse *scene, t_sphere *sphere);
-int		parse_cylinder(char **params, t_parse *scene, t_cylinder *cylinder);
+int		parse_plane(t_parse *file, t_object *obj);
+int 	parse_sphere(t_parse *file, t_object *obj);
+int		parse_cylinder(t_parse *file, t_object *obj);
 
 /*		parse_utils.c		*/
+bool	is_object(const char *token);
+int		add_object(t_scene *scene, t_object obj);
 int		count_params(char **params);
 int		is_colour(t_parse *scene, char **col, t_colour *colour);
 int		is_vector(t_parse *scene, char **values, t_vector *vector, bool check_normal);

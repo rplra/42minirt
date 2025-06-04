@@ -6,76 +6,83 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/03 16:31:44 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:48:23 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int parse_plane(char **params, t_parse *scene, t_plane *plane)
+//normalize normal
+int	parse_plane(t_parse *file, t_object *obj)
 {
 	char	**position;
 	char	**normal;
 	char	**colour;
-	bool	valid;
 
-	if (count_params(params) != 4)
-		return (print_error(scene, ERROR_PLCOUNT, 0, params));
-	position = ft_split(params[1], ',');
-	if (!is_vector(scene, position, &plane->position, NO))
-		return(print_error(scene, ERROR_PLPOS, 1, params));
-	normal = ft_split(params[2], ',');
-	if (!is_vector(scene, normal, &plane->normal, YES))
-		return (print_error(scene, ERROR_NORMAL, 2, params));
-	colour = ft_split(params[3], ',');
-	is_colour(colour);
-	return (free_arrays(params, position, normal, colour));
+	if (count_params(file->tokens) != 4)
+		return (print_error(file, ERROR_PLCOUNT, 0, file->tokens));
+	position = ft_split(file->tokens[1], ',');
+	if (!is_vector(file, position, &obj->obj.plane.position, NO))
+		return (free_array(position), print_error(file, ERROR_PLPOS, 1, file->tokens));
+	free_array(position);
+	normal = ft_split(file->tokens[2], ',');
+	if (!is_vector(file, normal, &obj->obj.plane.normal, YES))
+		return (free_array(normal), print_error(file, ERROR_NORMAL, 2, file->tokens));
+	free_array(normal);
+	colour = ft_split(file->tokens[3], ',');
+	if (!is_colour(file, colour, &obj->colour))
+		return (free_array(colour), 1);
+	free_array(colour);
+	return (0);
 }
 
-int parse_sphere(char **params, t_parse *scene, t_sphere *sphere)
+int	parse_sphere(t_parse *file, t_object *obj)
 {
 	char	**position;
 	char	**colour;
-	double	diameter;
 	bool	valid;
 
-	if (count_params(params) != 4)
-		return (print_error(scene, ERROR_SPCOUNT, 0, params));
-	position = ft_split(params[1], ',');
-	if (!is_vector(scene, position, &sphere->position, NO))
-		return (print_error(scene, ERROR_SPPOS, 1, params));
-	diameter = ft_atod(params[2], &valid);
+	if (count_params(file->tokens) != 4)
+		return (print_error(file, ERROR_SPCOUNT, 0, file->tokens));
+	position = ft_split(file->tokens[1], ',');
+	if (!is_vector(file, position, &obj->obj.sphere.position, NO))
+		return (print_error(file, ERROR_SPPOS, 1, file->tokens));
+	free_array(position);
+	obj->obj.sphere.diameter = ft_atod(file->tokens[2], &valid);
 	if (!valid)
-		return (print_error(scene, ERROR_SPDIA, 2, params));
-	colour = ft_split(params[3], ',');
-	is_colour(colour);
-	return (free_arrays(params, position, colour, NULL));
+		return (print_error(file, ERROR_SPDIA, 2, file->tokens));
+	colour = ft_split(file->tokens[3], ',');
+	if (!is_colour(file, colour, &obj->colour))
+		return (free_array(colour), 1);
+	free_array(colour);
+	return (0);
 }
 
-int parse_cylinder(char **params, t_parse *scene, t_cylinder *cylinder)
+//normalize
+int	parse_cylinder(t_parse *file, t_object *obj)
 {
 	char	**position;
-	char	**normal;
+	char	**axis;
 	char	**colour;
-	double	diameter;
-	double	height;
 	bool	valid;
 
-	if (count_params(params) != 6)
-		return (print_error(scene, ERROR_CYCOUNT, 0, params));
-	position = ft_split(params[1], ',');
-	if (!is_vector(scene, position, &cylinder->position, NO))
-		return (print_error(scene, ERROR_CYPOS, 1, params));
-	normal = ft_split(params[2], ',');
-	if (!is_vector(scene, normal, &cylinder->normal, YES))
-		return (print_error(scene, ERROR_NORMAL, 2, params));
-	diameter = ft_atod(params[3], &valid);
-	if (!valid)
-		return (print_error(scene, ERROR_CYDIA, 3, params));
-	height = ft_atod(params[4], &valid);
-	if (!valid)
-		return (print_error(scene, ERROR_CYHT, 4, params));
-	colour = ft_split(params[5], ',');
-	is_colour(colour);
-	return (free_arrays(params, position, normal, colour));
+	if (count_params(file->tokens) != 6)
+		return (print_error(file, ERROR_CYCOUNT, 0, file->tokens));
+	position = ft_split(file->tokens[1], ',');
+	if (!is_vector(file, position, &obj->obj.cylinder.position, NO))
+		return (print_error(file, ERROR_CYPOS, 1, file->tokens));
+	axis = ft_split(file->tokens[2], ',');
+	if (!is_vector(file, axis, &obj->obj.cylinder.axis, YES))
+		return (print_error(file, ERROR_NORMAL, 2, file->tokens));
+	obj->obj.cylinder.diameter = ft_atod(file->tokens[3], &valid);
+	if (!valid || obj->obj.cylinder.diameter <= 0)
+		return (print_error(file, ERROR_CYDIA, 3, file->tokens));
+	obj->obj.cylinder.height = ft_atod(file->tokens[4], &valid);
+	if (!valid || obj->obj.cylinder.height <= 0)
+		return (print_error(file, ERROR_CYHT, 4, file->tokens));
+	colour = ft_split(file->tokens[5], ',');
+	if (!is_colour(file, colour, &obj->colour))
+		return (free_array(colour), 1);
+	free_array(colour);
+	return (0);
 }

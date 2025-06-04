@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/03 15:39:25 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:48:14 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ typedef struct s_plane
 typedef struct s_cylinder
 {
 	t_vector	position;
-	t_vector	normal;
+	t_vector	axis;
+	double		diameter;
+	double		height;
 }				t_cylinder;
 
 // tag / labelling of objects
@@ -108,6 +110,7 @@ typedef struct	s_scene
 	t_camera	camera;
 	t_light		*lights;
 	t_object	*objects;
+	size_t		obj_count;
 }				t_scene;
 
 #endif

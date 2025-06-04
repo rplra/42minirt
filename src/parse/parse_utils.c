@@ -6,11 +6,33 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:34:27 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/03 16:41:10 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/04 09:39:08 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+bool	is_object(const char *token)
+{
+	return (ft_strcmp(token, "pl") == 0)
+			|| (ft_strcmp(token, "sp") == 0)
+			|| (ft_strcmp(token, "cy") == 0);
+}
+
+int	add_object(t_scene *scene, t_object obj)
+{
+	t_object *new_objs;
+	size_t	new_size;
+	
+	new_size = scene->obj_count + 1;
+	new_objs = ft_realloc(scene->objects, new_size * sizeof(t_object));
+	if (!new_objs)
+		return (1);
+	scene->objects = new_objs;
+	scene->objects[scene->obj_count] = obj;
+	scene->obj_count++;
+	return (0);
+}
 
 int	count_params(char **params)
 {
@@ -68,5 +90,3 @@ int	is_vector(t_parse *scene, char **values, t_vector *vector, bool check_range)
 	}
 	return (0);
 }
-
-

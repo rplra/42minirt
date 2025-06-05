@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 11:21:38 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/01/07 14:33:32 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:20:08 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,21 @@
  * @param len		specified length of string to extract
  * @return			(char *) Pointer to a newly extracted string 
 */
-char	*ft_substr(const char *s, size_t start, size_t len)
+char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
 	char	*substring;
-	size_t	slen;
-	size_t	n;
 
-	if (s == NULL)
+	if (!s)
 		return (NULL);
-	slen = ft_strlen(s);
-	if (start >= slen)
+	if (start > ft_strlen(s))
 		return (ft_strdup(""));
-	if (start + len > slen)
-		len = slen - start;
-	substring = malloc((len + 1) * sizeof(char));
-	if (substring == NULL)
+	if (ft_strlen(s) > (len + start))
+		substring = malloc((len + 1) * sizeof(char));
+	else
+		substring = malloc((ft_strlen(s) - start + 1) * sizeof(char));
+	if (!substring)
 		return (NULL);
-	n = 0;
-	while (n < len)
-	{
-		substring[n] = s[start + n];
-		n++;
-	}
-	substring[len] = '\0';
+	ft_strlcpy(substring, s + start, len + 1);
 	return (substring);
 }
 
@@ -95,3 +87,29 @@ int main(void)
 	IF return NULL
 		- NULL signals failure of invalid input
 */
+
+/* char	*ft_substr(const char *s, unsigned int start, size_t len)
+{
+	char	*substring;
+	size_t	slen;
+	size_t	n;
+
+	if (s == NULL)
+		return (NULL);
+	slen = ft_strlen(s);
+	if (start >= slen)
+		return (ft_strdup(""));
+	if (start + len > slen)
+		len = slen - start;
+	substring = malloc((len + 1) * sizeof(char));
+	if (substring == NULL)
+		return (NULL);
+	n = 0;
+	while (n < len)
+	{
+		substring[n] = s[start + n];
+		n++;
+	}
+	substring[len] = '\0';
+	return (substring);
+} */

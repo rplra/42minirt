@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:53 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/05 14:03:47 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:20:23 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ void	parse_file(int fd, t_parse *file)
 			exit(1);
 		//print_scene(&scene);
 		free(line);
-		free(file->tokens);
+		free_array(file->tokens);
 		line = get_next_line(fd);
 	}
 	validate_setup(file);
+	cleanup_gnl();
 }
 
 void	open_file(const char *file)
@@ -87,6 +88,17 @@ char	**tokenize(char *line)
 			line[i] = ' ';
 	}
 	return (ft_split(line, ' '));
+}
+
+void	cleanup_gnl(void)
+{
+	static char	*buffer = NULL;
+
+	if (buffer)
+	{
+		free(buffer);
+		buffer = NULL;
+	}
 }
 
 /*

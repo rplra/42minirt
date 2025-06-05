@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:21:54 by rraja-az          #+#    #+#             */
-/*   Updated: 2024/12/03 16:12:21 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:21:26 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strjoin_free(char *s1, char *s2);
 char	*ft_strdup(const char *s);
-char	*ft_substr(const char *s, size_t start, size_t len);
+char	*ft_substr(const char *s, unsigned int start, size_t len);
 
 #endif

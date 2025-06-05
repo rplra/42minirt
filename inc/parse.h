@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:39:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/05 13:30:37 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:20:55 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ bool	is_rt_file(const char *filename);
 void	parse_file(int fd, t_parse *scene);
 void	open_file(const char *file);
 char	**tokenize(char *line);
+void	cleanup_gnl(void);
 
 /*		parse_scene.c		*/
 int		parse_scene(t_parse *file, t_scene *scene);

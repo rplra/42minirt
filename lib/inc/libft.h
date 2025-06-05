@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:10:59 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/05 13:09:54 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:13:47 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 
 /* PART 2 - ADDITIONAL FX */
 
-char	*ft_substr(const char *s, size_t start, size_t len);
+char	*ft_substr(const char *s, unsigned int start, size_t len);
 char	*ft_strjoin(const char *s1, const char *s2);
 char	*ft_strtrim(const char *s1, const char *set);
 char	**ft_split(char const *s, char c);

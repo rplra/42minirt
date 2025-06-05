@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:26:36 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/05 09:41:16 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:56:38 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ int parse_camera(char **params, t_parse *file, t_camera *camera)
 		return (print_error(file, ERROR_CCOUNT, 0, params));
 	ft_memset(&tmp, 0, sizeof(t_camera));
 	values = ft_split(params[1], ',');
-	if (!is_vector(file, values, &tmp.position, NO))
+	if (is_vector(file, values, &tmp.position, NO))
 		return (free_array(values), print_error(file, ERROR_CPOS, 1, NULL));
 	free_array(values);
 	values = ft_split(params[2], ',');
-	if (!is_vector(file, values, &tmp.orientation, YES))
+	if (is_vector(file, values, &tmp.orientation, YES))
 		return (free_array(values), print_error(file, ERROR_CORT, 2, NULL));
 	free_array(values);
 	tmp.fov = ft_atoui(params[3], &valid);

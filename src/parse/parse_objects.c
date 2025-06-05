@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/05 09:37:16 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:21:46 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	parse_sphere(t_parse *file, t_object *obj)
 		return (print_error(file, ERROR_SPCOUNT, 0, file->tokens));
 	ft_memset(&tmp, 0, sizeof(t_sphere));
 	values = ft_split(file->tokens[1], ',');
-	if (!is_vector(file, values, &tmp.position, NO))
+	if (!is_vector(file, values, &tmp.position, NO) && free_array(values))
 		return (print_error(file, ERROR_SPPOS, 1, file->tokens));
 	free_array(values);
 	tmp.diameter = ft_atod(file->tokens[2], &valid);

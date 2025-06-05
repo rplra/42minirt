@@ -6,14 +6,15 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:42:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/03 16:43:13 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:32:48 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "parse.h"
 
-#ifndef UTILS.H
-#define UTILS.H
+#ifndef UTILS_H
+#define UTILS_H
 
 # define ERROR_ARGFORMAT "Format: <./minirt> <scenes/scene.rt>"
 # define ERROR_FILETYPE "Error: File type must be in .rt"

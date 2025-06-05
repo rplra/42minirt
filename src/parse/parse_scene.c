@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:02 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/04 09:22:31 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/05 11:07:25 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@
 int	parse_scene(t_parse *file, t_scene *scene)
 {
 	if (!file->tokens)
-		return (print_error(scene, ERROR_PARAMEMPTY, 0, NULL));
+		return (print_error(file, ERROR_PARAMEMPTY, 0, NULL));
 	if (ft_strcmp(file->tokens[0], "A") == 0)
-		return (parse_ambient(file->tokens, scene, &scene->ambient));
+		return (parse_ambient(file->tokens, file, &scene->ambient));
 	else if (ft_strcmp(file->tokens[0], "C") == 0)
-		return (parse_camera(file->tokens, scene, &scene->camera));
+		return (parse_camera(file->tokens, file, &scene->camera));
 	else if (ft_strcmp(file->tokens[0], "L") == 0)
-		return (parse_light(file->tokens, scene, &scene->lights));
+		return (parse_light(file->tokens, file, &scene->light));
 	else if (is_object(file->tokens[0]))
 		return(parse_object(file, scene));
-	return (print_error(scene, ERROR_INVALIDID, 0, NULL));
+	return (print_error(file, ERROR_INVALIDID, 0, NULL));
 }
 
 int	parse_object(t_parse *file, t_scene *scene)
@@ -46,7 +46,7 @@ int	parse_object(t_parse *file, t_scene *scene)
 		if (parse_sphere(file, &obj))
 			return (1);
 	}
-	if (ft_strcmp(file->tokens[0], "cy") == 0)
+	else if (ft_strcmp(file->tokens[0], "cy") == 0)
 	{
 		obj.type = obj_cylinder;
 		if (parse_cylinder(file, &obj))

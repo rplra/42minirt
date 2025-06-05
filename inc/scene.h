@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/05 09:38:53 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/05 11:08:06 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ typedef struct	s_scene
 {
 	t_ambient	ambient;
 	t_camera	camera;
-	t_light		*lights;
+	t_light		light;
 	t_object	*objects;
 	size_t		obj_count;
 }				t_scene;

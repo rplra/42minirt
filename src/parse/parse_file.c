@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:53 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/04 08:19:46 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:03:47 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ void	parse_file(int fd, t_parse *file)
 			else if (ft_strcmp(file->tokens[0], "L") == 0)
 				file->light_count++;
 		}
-		parse_scene(line, &scene);
+		if (!parse_scene(file, &scene))
+			exit(1);
+		//print_scene(&scene);
 		free(line);
 		free(file->tokens);
 		line = get_next_line(fd);

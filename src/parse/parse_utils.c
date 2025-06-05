@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:34:27 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/04 09:39:08 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:04:20 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ bool	is_object(const char *token)
 
 int	add_object(t_scene *scene, t_object obj)
 {
-	t_object *new_objs;
-	size_t	new_size;
+	t_object	*new_objs;
+	size_t		old_size;
+	size_t		new_size;
 	
-	new_size = scene->obj_count + 1;
-	new_objs = ft_realloc(scene->objects, new_size * sizeof(t_object));
+	old_size = scene->obj_count * sizeof(t_object);
+	new_size = (scene->obj_count + 1) * sizeof(t_object);
+	new_objs = ft_realloc(scene->objects, old_size, new_size);
 	if (!new_objs)
 		return (1);
 	scene->objects = new_objs;
@@ -49,7 +51,7 @@ int	is_colour(t_parse *scene, char **col, t_colour *colour)
 	bool	valid;
 	
 	if (count_params(col) != 3)
-		print_error(scene, ERROR_COLCOUNT, 0, col);
+		return (print_error(scene, ERROR_COLCOUNT, 0, col));
 	colour->r = ft_atoui(col[0], &valid);
 	if (!valid)
 		return (print_error(scene, ERROR_INVALID_R, 0, col));

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:21:54 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/05 14:21:26 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:01:31 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #  define BUFFER_SIZE 42
 # endif
 
+# include <limits.h>
 # include <fcntl.h>
 # include <stddef.h>
 # include <stdlib.h>

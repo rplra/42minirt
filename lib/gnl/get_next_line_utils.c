@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 10:46:56 by rraja-az          #+#    #+#             */
-/*   Updated: 2024/10/21 15:48:01 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:01:50 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,4 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	str[len] = '\0';
 	free(s1);
 	return (str);
-}
+} 

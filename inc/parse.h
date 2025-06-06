@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:39:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/05 15:20:55 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:02:42 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,15 @@ typedef struct	s_parse
 
 /*		parse_file.c		*/
 bool	is_rt_file(const char *filename);
-void	parse_file(int fd, t_parse *scene);
-void	open_file(const char *file);
+void	parse_file(int fd, t_parse *file, t_scene *scene);
+void	open_file(const char *file, t_scene *scene);
 char	**tokenize(char *line);
-void	cleanup_gnl(void);
 
 /*		parse_scene.c		*/
 int		parse_scene(t_parse *file, t_scene *scene);
 int		parse_object(t_parse *file, t_scene *scene);
 
 /*		parse_setup.c		*/
-int		validate_setup(t_parse *file);
 int		parse_ambient(char **params, t_parse *file, t_ambient *ambient);
 int		parse_camera(char **params, t_parse *file, t_camera *camera);
 int		parse_light(char **params, t_parse *file, t_light *light);
@@ -63,12 +61,11 @@ int		is_colour(t_parse *scene, char **col, t_colour *colour);
 int		is_vector(t_parse *scene, char **values, t_vector *vector, bool check_normal);
 
 /*		parse_debug.c		*/
-void	print_vector(const char *label, t_vector v);
-void	print_colour(const char *label, t_colour c);
-void	print_ambient(t_ambient *a);
-void	print_camera(t_camera *c);
-void	print_light(t_light *l);
-void	print_object(t_object *obj);
-void	print_scene(t_scene *scene);
+void	print_ambient(const t_ambient *ambient);
+void 	print_camera(const t_camera *camera);
+void 	print_light(const t_light *light);
+void 	print_plane(const t_object *obj);
+void	print_sphere(const t_object *obj);
+void	print_cylinder(const t_object *obj);
 
 #endif

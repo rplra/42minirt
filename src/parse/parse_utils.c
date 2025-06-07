@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:34:27 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/05 13:04:20 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/07 11:25:55 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,22 @@ int	is_vector(t_parse *scene, char **values, t_vector *vector, bool check_range)
 	bool	valid;
 
 	if (count_params(values) != 3)
-		return (print_error(scene, ERROR_INVALID_COORD, 0, values));
+		return (print_error(scene, ERROR_INVALID_COORD, 0, NULL));
 	vector->x = ft_atod(values[0], &valid);
 	if (!valid)
-		return (print_error(scene, ERROR_INVALID_X, 0, values));
+		return (print_error(scene, ERROR_INVALID_X, 0, NULL));
 	vector->y = ft_atod(values[1], &valid);
 	if (!valid)
-		return (print_error(scene, ERROR_INVALID_Y, 1, values));
+		return (print_error(scene, ERROR_INVALID_Y, 1, NULL));
 	vector->z = ft_atod(values[2], &valid);
 	if (!valid)
-		return (print_error(scene, ERROR_INVALID_Z, 1, values));
+		return (print_error(scene, ERROR_INVALID_Z, 1, NULL));
 	if (check_range)
 	{
 		if ((vector->x < -1 || vector->x > 1)
 		|| (vector->y < -1 || vector->y > 1) 
 		|| (vector->z < -1 || vector->z > 1))
-		return (print_error(scene, ERROR_VECTOR, 1, values));
+		return (print_error(scene, ERROR_VECTOR, 1, NULL));
 	}
 	return (0);
 }

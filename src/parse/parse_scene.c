@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:02 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/06 12:56:45 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/07 10:15:19 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ int	parse_scene(t_parse *file, t_scene *scene)
 		return (print_error(file, ERROR_PARAMEMPTY, 0, NULL));
 	if (ft_strcmp(file->tokens[0], "A") == 0)
 	{
-		printf("Parsing Ambient\n"); // debug
+		//printf("Parsing Ambient\n"); // debug
 		return (parse_ambient(file->tokens, file, &scene->ambient));
 	}
 	else if (ft_strcmp(file->tokens[0], "C") == 0)
 	{
-		printf("Parsing Camera\n"); // debug
+		//printf("Parsing Camera\n"); // debug
 		return (parse_camera(file->tokens, file, &scene->camera));
 	}
 	else if (ft_strcmp(file->tokens[0], "L") == 0)
 	{
-		printf("Parsing Light\n"); // debug
+		//printf("Parsing Light\n"); // debug
 		return (parse_light(file->tokens, file, &scene->light));
 	}
 	else if (is_object(file->tokens[0]))

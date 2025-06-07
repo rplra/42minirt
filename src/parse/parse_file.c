@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:53 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/06 16:05:12 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/07 10:49:57 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static void	parse_line(char *line, t_parse *file, t_scene *scene)
 	char	*type;
 
 	file->tokens = tokenize(line);
-	for (int i = 0; file->tokens && file->tokens[i] ; i++) // debug
-			printf("   Line: %d, Token %d: [%s]\n", file->line_num, i, file->tokens[i]); // debug
+	//for (int i = 0; file->tokens && file->tokens[i] ; i++) // debug
+	//		printf("   Line: %d, Token %d: [%s]\n", file->line_num, i, file->tokens[i]); // debug
 	if (!file->tokens)
 		exit_with_error("Error: No tokens");
 	if (file->tokens[0] && file->tokens[0][0] != '#')
@@ -41,7 +41,7 @@ static void	parse_line(char *line, t_parse *file, t_scene *scene)
 		else if (!ft_strcmp(type, "L") && ++file->light_count > 1)
 			exit_with_error("Error: Light must only be 1");
 		else if (parse_scene(file, scene))
-			exit_with_error("Parsing scene failed");
+			exit(1);
 	}
 }
 
@@ -53,7 +53,7 @@ void	parse_file(int fd, t_parse *file, t_scene *scene)
 	ft_bzero(file, sizeof(t_parse));
 	while ((line = get_next_line(fd)))
 	{
-		printf("\n-->Line: %s\n", line);
+		//printf("\n-->Line: %s\n", line); // debug
 		file->line_num++;
 		parse_line(line, file, scene);
 		free(line);

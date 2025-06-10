@@ -37,11 +37,13 @@ SRC_DIR		= 	src
 OBJ_DIR		= 	obj
 MAIN_DIR 	= 	$(SRC_DIR)/main
 PARSE_DIR 	= 	$(SRC_DIR)/parse
+VEC_DIR		=	$(SRC_DIR)/vector
 UTILS_DIR 	= 	$(SRC_DIR)/utils
 
 # Sources
 SRCS		=	$(wildcard $(MAIN_DIR)/*.c) \
 				$(wildcard $(PARSE_DIR)/*.c) \
+				$(wildcard $(VEC_DIR)/*.c) \
 				$(wildcard $(UTILS_DIR)/*.c)
 OBJS		=	$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 

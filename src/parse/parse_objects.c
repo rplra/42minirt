@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/07 11:01:27 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/10 10:21:51 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	parse_plane(t_parse *file, t_object *obj)
 		return (print_error(file, ERROR_NORMAL, 2, values));
 	//printf("Plane normal: (x=%f, y=%f, z=%f)\n", tmp.normal.x, tmp.normal.y, tmp.normal.z); // debug
 	free_array(values);
+	vector_normalize(&tmp.normal);
 	values = ft_split(file->tokens[3], ',');
 	if (is_colour(file, values, &obj->colour))
 		return (1);
@@ -94,6 +95,8 @@ int	parse_cylinder(t_parse *file, t_object *obj)
 	if (is_vector(file, values, &tmp.axis, YES))
 		return (print_error(file, ERROR_NORMAL, 2, values));
 	//printf("Cylinder axis: (x=%f, y=%f, z=%f)\n", tmp.axis.x, tmp.axis.y, tmp.axis.z); // debug
+	vector_normalize(&tmp.axis);
+	free_array(values);
 	tmp.diameter = ft_atod(file->tokens[3], &valid);
 	if (!valid || tmp.diameter <= 0)
 		return (print_error(file, ERROR_CYDIA, 3, file->tokens));

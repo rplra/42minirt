@@ -6,19 +6,12 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/10 12:14:29 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:22:20 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_H
 # define SCENE_H
-
-/* typedef struct	s_vector
-{
-	double		x;
-	double		y;
-	double		z;
-}				t_vector; */
 
 typedef struct	s_colour
 {

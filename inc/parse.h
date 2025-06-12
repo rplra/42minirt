@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:39:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/06 16:02:42 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/12 14:38:06 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ typedef struct	s_parse
 
 /*		parse_file.c		*/
 bool	is_rt_file(const char *filename);
-void	parse_file(int fd, t_parse *file, t_scene *scene);
-void	open_file(const char *file, t_scene *scene);
+int		parse_file(int fd, t_parse *file, t_scene *scene);
+int		open_file(const char *file, t_scene *scene);
 char	**tokenize(char *line);
 
 /*		parse_scene.c		*/

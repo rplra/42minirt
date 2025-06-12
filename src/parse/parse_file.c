@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:53 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/07 10:49:57 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:50:48 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	is_rt_file(const char *filename)
 	return ((len >= 3 && !ft_strncmp(filename + len - 3, ".rt", 3)));
 }
 
-static void	parse_line(char *line, t_parse *file, t_scene *scene)
+static int	parse_line(char *line, t_parse *file, t_scene *scene)
 {
 	char	*type;
 
@@ -35,18 +35,19 @@ static void	parse_line(char *line, t_parse *file, t_scene *scene)
 	{
 		type = file->tokens[0];
 		if (!ft_strcmp(type, "A") && ++file->ambient_count > 1)
-			exit_with_error("Error: Ambient must only be 1");
+			print_error(file, "Error: Ambient must only be 1", 0, NULL);
 		else if (!ft_strcmp(type, "C") && ++file->camera_count > 1)
-			exit_with_error("Error: Camera must only be 1");
+			print_error(file, "Error: Camera must only be 1", 0, NULL);
 		else if (!ft_strcmp(type, "L") && ++file->light_count > 1)
-			exit_with_error("Error: Light must only be 1");
+			print_error(file, "Error: Light must only be 1", 0, NULL);
 		else if (parse_scene(file, scene))
-			exit(1);
+			return(1);
 	}
+	return (0);
 }
 
 // to check if there are invalid params, interrupt gnl and free line
-void	parse_file(int fd, t_parse *file, t_scene *scene)
+int	parse_file(int fd, t_parse *file, t_scene *scene)
 {
 	char	*line;
 
@@ -55,19 +56,21 @@ void	parse_file(int fd, t_parse *file, t_scene *scene)
 	{
 		//printf("\n-->Line: %s\n", line); // debug
 		file->line_num++;
-		parse_line(line, file, scene);
+		if (parse_line(line, file, scene))
+			return (1);
 		free(line);
 		free_array(file->tokens);
 	}
 	close(fd);
 	if (file->line_num == 0)
-		exit_with_error(ERROR_FILEEMPTY);
+		print_error(NULL, ERROR_FILEEMPTY, -1, NULL);
 	if (file->ambient_count < 1 || file->camera_count < 1
 		|| file->light_count < 1)
-		exit_with_error(ERROR_MISSINGID);
+		print_error(NULL, ERROR_MISSINGID, -1, NULL);
+	return (0);
 }
 
-void	open_file(const char *file, t_scene *scene)
+int	open_file(const char *file, t_scene *scene)
 {
 	int		fd;
 	t_parse	parse;
@@ -79,7 +82,9 @@ void	open_file(const char *file, t_scene *scene)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		exit_with_error(ERROR_FILEFD);
-	parse_file(fd, &parse, scene);
+	if (parse_file(fd, &parse, scene))
+		return (1);
+	return (0);
 }
 
 char	**tokenize(char *line)

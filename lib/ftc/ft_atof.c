@@ -6,14 +6,111 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:01:31 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/28 08:17:18 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:56:43 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <stdio.h>
-//#include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "libft.h"
 
+static void	handle_whitespace_and_sign(const char **str, int *sign)
+{
+	while (**str == ' ' || (**str >= '\t' && **str <= '\r'))
+		(*str)++;
+	if (**str == '-')
+		*sign *= -1;
+	if (**str == '-' || **str == '+')
+		(*str)++;
+}
+
+static void	process_digits(const char **str, t_atof *atof)
+{
+	while (ft_isdigit(**str))
+	{
+		if (!atof->has_dot)
+			atof->val = (atof->val * 10) + (**str - '0');
+		else
+		{
+			atof->frac += (**str - '0') /(double)atof->divisor;
+			atof->divisor *= 10;
+		}
+		atof->has_digit = true;
+		(*str)++;
+	}
+}
+
+static bool	process_dot(const char **str, t_atof *atof)
+{
+	while (**str)
+	{
+		if (**str == '.')
+		{
+			if (atof->has_dot)
+				return (false);
+			atof->has_dot = true;
+			(*str)++;
+		}
+		else if (ft_isdigit(**str))
+			process_digits(str, atof);
+		else
+			break;
+	}
+	return (true);
+}
+
+float	ft_atof(const char *str, bool *valid)
+{
+	t_atof	atof;
+	int		sign;
+
+	sign = 1;
+	atof.val = 0.0;
+	atof.frac = 0.0;
+	atof.divisor = 10;
+	atof.has_dot = false;
+	atof.has_digit = false;
+	handle_whitespace_and_sign(&str, &sign);
+	if (!process_dot(&str, &atof) || !atof.has_digit || *str != '\0')
+	{
+		*valid = false;
+		return 0.0;
+	}
+	*valid = true;
+	return ((atof.val + atof.frac) * sign);
+}
+
+/*
+int main(void)
+{
+    bool valid;
+    const char *tests[] = {
+        "123.45", "-0.5", ".7", "1.", "1.2.3", "abc", "a.12", "1.2b"
+    };
+    int count = sizeof(tests) / sizeof(tests[0]);
+
+    for (int i = 0; i < count; i++)
+    {
+        float my_val = ft_atof(tests[i], &valid);
+        float sys_val = atof(tests[i]);
+
+        printf("input: '%s'\n", tests[i]);
+
+        if (valid)
+            printf("  ft_atof  => %f\n", my_val);
+        else
+            printf("  ft_atof  => Invalid input\n");
+
+        printf("  std_atof => %f\n", sys_val);
+        printf("\n");
+    }
+    return 0;
+}
+*/
+
+// cc -Wall -Wextra -Werror ft_atof.c -I../inc -L.. -lft
+
+/*
 static int	parse_sign(const char **str)
 {
 	int	sign;
@@ -60,6 +157,7 @@ float	ft_atof(const char *str)
 	}
 	return ((result + num) * sign);
 }
+*/
 
 
 /* int	main(void)

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/11 16:13:36 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:55:27 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	parse_sphere(t_parse *file, t_object *obj)
 		return (print_error(file, ERROR_SPPOS, 1, values));
 	//printf("Camera pos: (x=%f, y=%f, z=%f)\n", tmp.position.x, tmp.position.y, tmp.position.z); // debug
 	free_array(values);
-	tmp.diameter = ft_atod(file->tokens[2], &valid);
+	tmp.diameter = ft_atof(file->tokens[2], &valid);
 	if (!valid || tmp.diameter <= 0)
 		return (print_error(file, ERROR_SPDIA, 2, file->tokens));
 	//printf("Sphere diameter: %f\n", tmp.diameter);
@@ -97,11 +97,11 @@ int	parse_cylinder(t_parse *file, t_object *obj)
 	//printf("Cylinder axis: (x=%f, y=%f, z=%f)\n", tmp.axis.x, tmp.axis.y, tmp.axis.z); // debug
 	vector_normalize(&tmp.axis);
 	free_array(values);
-	tmp.diameter = ft_atod(file->tokens[3], &valid);
+	tmp.diameter = ft_atof(file->tokens[3], &valid);
 	if (!valid || tmp.diameter <= 0)
 		return (print_error(file, ERROR_CYDIA, 3, file->tokens));
 	//printf("Cylinder diameter: %f\n", tmp.diameter);
-	tmp.height = ft_atod(file->tokens[4], &valid);
+	tmp.height = ft_atof(file->tokens[4], &valid);
 	if (!valid || tmp.height <= 0)
 		return (print_error(file, ERROR_CYHT, 4, file->tokens));
 	//printf("Cylinder height: %f\n", tmp.height);

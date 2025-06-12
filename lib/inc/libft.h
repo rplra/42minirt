@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:10:59 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/05 14:13:47 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:36:57 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,22 @@ typedef struct s_atod
 	bool		has_digit;
 }				t_atod;
 
+typedef struct s_atof
+{
+	double		val;
+	double 		frac;
+	int			divisor;
+	bool		has_dot;
+	bool		has_digit;
+}				t_atof;
+
 typedef unsigned int uint;
 
 /* PART 1 - LIBC */
 /* VALUES */
 
 double	ft_atod(const char *str, bool *valid);
-float	ft_atof(const char *str);
+float	ft_atof(const char *str, bool *valid);
 int		ft_atoi(const char *str);
 int		ft_atoi_base(const char *s, const char *base);
 long	ft_atol(const char *str);

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/11 16:22:20 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:53:36 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ typedef struct	s_colour
 typedef struct s_material
 {
 	t_colour	diffuse;
-	double		specular;
-	double		reflect;
-	double		refract;
+	float		specular;
+	float		reflect;
+	float		refract;
 }				t_material;
 
 typedef struct	s_ambient
 {
-	double		ratio;
+	float		ratio;
 	t_colour	colour;
 }				t_ambient;
 
@@ -44,14 +44,14 @@ typedef struct s_camera
 typedef struct s_light
 {
 	t_vector	position;
-	double		brightness;
+	float		brightness;
 	t_colour	colour;
 }				t_light;
 
 typedef struct s_sphere
 {
 	t_vector	position;
-	double		diameter;
+	float		diameter;
 }				t_sphere;
 
 typedef struct s_plane
@@ -64,8 +64,8 @@ typedef struct s_cylinder
 {
 	t_vector	position;
 	t_vector	axis;
-	double		diameter;
-	double		height;
+	float		diameter;
+	float		height;
 }				t_cylinder;
 
 // tag / labelling of objects

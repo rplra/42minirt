@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:26:36 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/10 13:30:55 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:54:51 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int parse_ambient(char **params, t_parse *file, t_ambient *ambient)
 		return (print_error(file, ERROR_ACOUNT, 0, params));
 	//printf("Ambient param count : %i\n", count_params(params)); // debug
 	ft_memset(&tmp, 0, sizeof(t_ambient));
-	tmp.ratio = ft_atod(params[1], &valid);
+	tmp.ratio = ft_atof(params[1], &valid);
 	//printf("Ambient ratio: %f\n",tmp.ratio); // debug
 	if (!valid || tmp.ratio < 0.0 || tmp.ratio > 1.0)
 		return (print_error(file, ERROR_RATIO, 1, params));
@@ -85,7 +85,7 @@ int parse_light(char **params, t_parse *file, t_light *light)
 		return (print_error(file, ERROR_LPOS, 1, values));
 	//printf("Light pos: (x=%f, y=%f, z=%f)\n", tmp.position.x, tmp.position.y, tmp.position.z);
 	free_array(values);
-	tmp.brightness = ft_atod(params[2], &valid);
+	tmp.brightness = ft_atof(params[2], &valid);
 	if (!valid || tmp.brightness < 0.0 || tmp.brightness > 1.0)
 		return (print_error(file, ERROR_RATIO, 2, params));
 	//printf("Light brightness: %f\n", tmp.brightness);

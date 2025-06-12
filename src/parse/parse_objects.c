@@ -6,13 +6,12 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/10 10:21:51 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:13:36 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-//normalize normal
 int	parse_plane(t_parse *file, t_object *obj)
 {
 	t_plane	tmp;
@@ -33,6 +32,7 @@ int	parse_plane(t_parse *file, t_object *obj)
 	//printf("Plane normal: (x=%f, y=%f, z=%f)\n", tmp.normal.x, tmp.normal.y, tmp.normal.z); // debug
 	free_array(values);
 	vector_normalize(&tmp.normal);
+	printf("Plane normalized: (x=%f, y=%f, z=%f)\n", tmp.normal.x, tmp.normal.y, tmp.normal.z); // debug
 	values = ft_split(file->tokens[3], ',');
 	if (is_colour(file, values, &obj->colour))
 		return (1);
@@ -76,7 +76,6 @@ int	parse_sphere(t_parse *file, t_object *obj)
 	return (0);
 }
 
-//normalize
 int	parse_cylinder(t_parse *file, t_object *obj)
 {
 	t_cylinder	tmp;
@@ -91,6 +90,7 @@ int	parse_cylinder(t_parse *file, t_object *obj)
 	if (is_vector(file, values, &tmp.position, NO))
 		return (print_error(file, ERROR_CYPOS, 1, values));
 	//printf("Cylinder pos: (x=%f, y=%f, z=%f)\n", tmp.position.x, tmp.position.y, tmp.position.z); // debug
+	free_array(values);
 	values = ft_split(file->tokens[2], ',');
 	if (is_vector(file, values, &tmp.axis, YES))
 		return (print_error(file, ERROR_NORMAL, 2, values));

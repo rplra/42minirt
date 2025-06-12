@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 08:44:18 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/10 12:40:21 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/10 13:32:23 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 double	vector_len(t_vector vec)
 {
-	return ((sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.y, 2))));
+	return ((sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2))));
 }
 
 t_vector	*vector_normalize(t_vector *vec)

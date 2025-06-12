@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:42:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/07 10:43:46 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:24:51 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ void	perror_exit(char *perrmsg);
 
 int		free_array(char **arr);
 int		free_arrays(char **arr1, char **arr2, char **arr3, char **arr4);
-
+void	free_scene(t_scene *scene);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/12 18:53:36 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/13 09:38:24 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@ typedef struct	s_colour
 
 typedef struct s_material
 {
-	t_colour	diffuse;
-	float		specular;
-	float		reflect;
-	float		refract;
+	t_colour	diffuse;			// base colour (Lambertian)
+	float		ambient;			// ambient reflectance
+	float		specular;			// specular intensity (PHONG)
+	float		shininess;			// highlight sharpness (PHONG)
+	float		reflect;			// mirror reflectivity (ray bounce)
+	float		refract;			// transparency (glass-like)
+	float		refractive_index;	// index of refraction (for Snell's law) 
 }				t_material;
 
 typedef struct	s_ambient

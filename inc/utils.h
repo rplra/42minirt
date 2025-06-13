@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:42:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/12 17:46:20 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:21:56 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,15 @@
 # define ERROR_INVALID_Y "Invalid y value"
 # define ERROR_INVALID_Z "Invalid z value"
 
-int		print_error(t_parse *scene, char *msg, int param, char **params);
+int		print_error(t_parse *file, char *msg, int param, char **params);
 void	exit_with_error(char *msg);
 void	perror_exit(char *perrmsg);
 
 int		free_array(char **arr);
 int		free_arrays(char **arr1, char **arr2, char **arr3, char **arr4);
 void	free_scene(t_scene *scene);
-void	cleanup_and_exit(char **tokens, t_scene *scene);
+void	cleanup_and_exit(t_scene *scene);
+
+void	flush_gnl(int fd);
 
 #endif

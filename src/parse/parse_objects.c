@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/12 18:55:27 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/13 10:32:53 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	parse_plane(t_parse *file, t_object *obj)
 	//printf("Plane normal: (x=%f, y=%f, z=%f)\n", tmp.normal.x, tmp.normal.y, tmp.normal.z); // debug
 	free_array(values);
 	vector_normalize(&tmp.normal);
-	printf("Plane normalized: (x=%f, y=%f, z=%f)\n", tmp.normal.x, tmp.normal.y, tmp.normal.z); // debug
+	//printf("Plane normalized: (x=%f, y=%f, z=%f)\n", tmp.normal.x, tmp.normal.y, tmp.normal.z); // debug
 	values = ft_split(file->tokens[3], ',');
 	if (is_colour(file, values, &obj->colour))
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 11:50:40 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/12 14:47:29 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:50:34 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,9 @@ void	free_scene(t_scene *scene)
 	}
 }
 
-void	cleanup_and_exit(char **tokens, t_scene *scene)
+void	cleanup_and_exit(t_scene *scene)
 {
-	if (tokens)
-		free_array(tokens);
 	if (scene)
 		free_scene(scene);
-	// free buffer in gnl
 	exit(1);
 }

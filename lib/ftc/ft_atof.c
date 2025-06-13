@@ -6,12 +6,12 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:01:31 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/12 18:56:43 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:00:38 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdlib.h>
 #include "libft.h"
 
 static void	handle_whitespace_and_sign(const char **str, int *sign)

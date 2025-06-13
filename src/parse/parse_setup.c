@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:26:36 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/12 18:54:51 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:04:07 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int parse_camera(char **params, t_parse *file, t_camera *camera)
 	values = ft_split(params[2], ',');
 	if (is_vector(file, values, &tmp.orientation, YES))
 		return (print_error(file, ERROR_CORT, 2, values));
-	//printf("Camera ort: (x=%f, y=%f, z=%f)\n", tmp.orientation.x, tmp.orientation.y, tmp.orientation.z);
+	//printf("Camera ort: (x=%f, y=%f, z=%f)\n", tmp.orientation.x, tmp.orientation.y, tmp.orientation.z); // debug
 	free_array(values);
-	printf("Camera ort normalized: (x=%f, y=%f, z=%f)\n", tmp.orientation.x, tmp.orientation.y, tmp.orientation.z); // debug
+	//printf("Camera ort normalized: (x=%f, y=%f, z=%f)\n", tmp.orientation.x, tmp.orientation.y, tmp.orientation.z); // debug
 	vector_normalize(&tmp.orientation);
 	tmp.fov = ft_atoui(params[3], &valid);
 	if (!valid || tmp.fov < FOV_MIN || tmp.fov > FOV_MAX)

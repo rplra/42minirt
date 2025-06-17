@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:26:36 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/12 19:04:07 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/17 07:56:31 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int parse_ambient(char **params, t_parse *file, t_ambient *ambient)
 	bool		valid;
 
 	if (count_params(params) != 3)
-		return (print_error(file, ERROR_ACOUNT, 0, params));
+		return (print_error(file, ERROR_ACOUNT, -1, params));
 	//printf("Ambient param count : %i\n", count_params(params)); // debug
 	ft_memset(&tmp, 0, sizeof(t_ambient));
 	tmp.ratio = ft_atof(params[1], &valid);
@@ -45,7 +45,7 @@ int parse_camera(char **params, t_parse *file, t_camera *camera)
 	bool		valid;
 
 	if (count_params(params) != 4)
-		return (print_error(file, ERROR_CCOUNT, 0, params));
+		return (print_error(file, ERROR_CCOUNT, -1, params));
 	//printf("Camera param count : %i\n", count_params(params)); // debug
 	ft_memset(&tmp, 0, sizeof(t_camera));
 	values = ft_split(params[1], ',');
@@ -77,7 +77,7 @@ int parse_light(char **params, t_parse *file, t_light *light)
 	bool	valid;
 	
 	if (count_params(params) != 4)
-		return (print_error(file, ERROR_LCOUNT, 0, params));
+		return (print_error(file, ERROR_LCOUNT, -1, params));
 	//printf("Light param count : %i\n", count_params(params)); // debug
 	ft_memset(&tmp, 0, sizeof(t_light));
 	values = ft_split(params[1], ',');

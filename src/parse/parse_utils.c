@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:34:27 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/12 18:55:50 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:59:55 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ int	is_colour(t_parse *scene, char **col, t_colour *colour)
 		return (print_error(scene, ERROR_COLCOUNT, 0, col));
 	colour->r = ft_atoui(col[0], &valid);
 	if (!valid)
-		return (print_error(scene, ERROR_INVALID_R, 0, col));
+		return (print_error(scene, ERROR_INVALID_R, -1, col));
 	colour->g = ft_atoui(col[1], &valid);
 	if (!valid)
-		return (print_error(scene, ERROR_INVALID_G, 1, col));
+		return (print_error(scene, ERROR_INVALID_G, -1, col));
 	colour->b = ft_atoui(col[2], &valid);
 	if (!valid)
-		return (print_error(scene, ERROR_INVALID_B, 2, col));
+		return (print_error(scene, ERROR_INVALID_B, -1, col));
 	if ((colour->r < 0 || colour->r > 255)
 		|| (colour->g < 0 || colour->g > 255)
 		|| (colour->b < 0 || colour->b > 255))
@@ -73,22 +73,22 @@ int	is_vector(t_parse *scene, char **values, t_vector *vector, bool check_range)
 	bool	valid;
 
 	if (count_params(values) != 3)
-		return (print_error(scene, ERROR_INVALID_COORD, 0, NULL));
+		return (print_error(scene, ERROR_INVALID_COORD, -1, NULL));
 	vector->x = ft_atof(values[0], &valid);
 	if (!valid)
-		return (print_error(scene, ERROR_INVALID_X, 0, NULL));
+		return (print_error(scene, ERROR_INVALID_X, -1, NULL));
 	vector->y = ft_atof(values[1], &valid);
 	if (!valid)
-		return (print_error(scene, ERROR_INVALID_Y, 1, NULL));
+		return (print_error(scene, ERROR_INVALID_Y, -1, NULL));
 	vector->z = ft_atof(values[2], &valid);
 	if (!valid)
-		return (print_error(scene, ERROR_INVALID_Z, 1, NULL));
+		return (print_error(scene, ERROR_INVALID_Z, -1, NULL));
 	if (check_range)
 	{
 		if ((vector->x < -1 || vector->x > 1)
 		|| (vector->y < -1 || vector->y > 1) 
 		|| (vector->z < -1 || vector->z > 1))
-		return (print_error(scene, ERROR_VECTOR, 1, NULL));
+		return (print_error(scene, ERROR_VECTOR, -1, NULL));
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:53 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/13 11:26:01 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:09:04 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ static int	parse_line(char *line, t_parse *file, t_scene *scene)
 	{
 		type = file->tokens[0];
 		if (!ft_strcmp(type, "A") && ++file->ambient_count > 1)
-			print_error(file, "Ambient must only be 1", 0, NULL);
+			return (print_error(file, "Ambient must only be 1", -1, NULL));
 		else if (!ft_strcmp(type, "C") && ++file->camera_count > 1)
-			print_error(file, "Camera must only be 1", 0, NULL);
+			return (print_error(file, "Camera must only be 1", -1, NULL));
 		else if (!ft_strcmp(type, "L") && ++file->light_count > 1)
-			print_error(file, "Light must only be 1", 0, NULL);
+			return (print_error(file, "Light must only be 1", -1, NULL));
 		else if (parse_scene(file, scene))
 			return(1);
 	}
@@ -69,10 +69,10 @@ int	parse_file(int fd, t_parse *file, t_scene *scene)
 	}
 	close(fd);
 	if (file->line_num == 0)
-		print_error(NULL, ERROR_FILEEMPTY, -1, NULL);
+		return (print_error(NULL, ERROR_FILEEMPTY, -1, NULL));
 	if (file->ambient_count < 1 || file->camera_count < 1
 		|| file->light_count < 1)
-		print_error(NULL, ERROR_MISSINGID, -1, NULL);
+		return (print_error(NULL, ERROR_MISSINGID, -1, NULL));
 	return (0);
 }
 

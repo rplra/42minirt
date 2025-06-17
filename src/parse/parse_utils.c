@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:34:27 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/13 18:59:55 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/17 08:34:46 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	is_colour(t_parse *scene, char **col, t_colour *colour)
 	bool	valid;
 	
 	if (count_params(col) != 3)
-		return (print_error(scene, ERROR_COLCOUNT, 0, col));
+		return (print_error(scene, ERROR_COLCOUNT, -1, col));
 	colour->r = ft_atoui(col[0], &valid);
 	if (!valid)
 		return (print_error(scene, ERROR_INVALID_R, -1, col));

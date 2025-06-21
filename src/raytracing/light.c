@@ -5,47 +5,66 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/17 13:58:49 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/17 17:54:16 by rraja-az         ###   ########.fr       */
+/*   Created: 2025/06/18 13:27:39 by rraja-az          #+#    #+#             */
+/*   Updated: 2025/06/21 18:44:48 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-// we get the surface normal to determine how light reacts with the surface at the intersection point
-t_vector	get_normal(t_vector	intersection_point, t_object *obj)
+// ambient
+t_colour	ambient(t_object *obj, t_ambient amb)
 {
-	if (!obj)
-		return ((t_vector){0,0,0});
-	if (obj->type == obj_plane)
-		return (obj->obj.plane.normal);
-	else if (obj->type == obj_sphere)
-		return (vector_normalize(subtract(intersection_point, obj->obj.sphere.position)));
-	else (obj->type == obj_cylinder)
-		return (get_cylinder_normal(intersection_point, obj->obj.cylinder.axis));
+	t_colour	ambient_col;
+
+	ambient_col = colour_multiply(obj->colour, amb.colour);
+	return (colour_scale(ambient_col, amb.intensity));
 }
 
-// normalize cylinder
-t_vector	get_cylinder_normal(t_vector intersection_point, t_cylinder cylinder)
+// diffuse
+t_colour	diffuse(t_object *obj, t_light *light, t_vector intersection, t_vector normal)
 {
-	t_vector	base_from_intersection;
-	t_vector	distance_to_axis;
-	t_vector	axis_point;
-	t_vector	normal;
+	t_vector	light_dir;
+	float		diffuse_intensity;
+	t_colour	diffuse_col;
+	t_colour	material_col;
+	
+	// vector from intersection to light, normalized
+	light_dir = vector_normalize(vector_subtract(light->position, intersection));
 
-	base_from_intersection = intersection_point cy->axis;
-	distance_to_axis = dot(base_from_intersection, cy->axis);
-	// check if the intersection happens at the bottom cap
-	if (distance_to_axis <= 0)
-		return (-cy->axis);
-	// check if the intersection happens at the top cap
-	else if (distance_to_axis >= cy->height)
-		return (cy->axis);
-	// else, intersection happens at the sides of the cylinder
-	else
-	{
-		axis_point = cy->center + (cy->axis * distance_to_axis);
-		normal = intersection - axis_point;
-		return (vector_normalize(normal));
-	}
+	// dot product btw light dir and surface normal
+	diffuse_intensity = dot_product(normal, light_dir);
+	if (diffuse_intensity < 0)
+		diffuse_intensity = 0;
+	
+	// use obj's colour
+	material_col = obj->material.diffuse;
+	diffuse_col = colour_multiply(material_col, light->colour);
+	diffuse_col = colour_scale(diffuse_col, light->brightness *diffuse_intensity);
+	return (diffuse_col);
 }
+
+// specular
+t_colour	specular(t_object *obj, t_light *light, t_vector intersection, t_camera *camera)
+{
+	t_vector	light_dir;
+	t_vector	view_dir;
+	t_vector	reflected;
+	float		reflect_dot;
+	float		specular_intensity;
+	t_colour	specular_colour;
+
+	light_dir = vector_normalize(vector_subtract(light->position, intersection));
+	view_dir = vector_normalize(vector_subtract(camera->position, intersection));
+	reflected = reflect(vector_negate(light_dir), get_normal(intersection, obj)));
+	
+	reflect_dot = dot_product(reflected, view_dir);
+	if (reflect_dot < 0)
+		reflect_dot = 0;
+	
+	specular_intensity = powf(reflect_dot, obj->material.shininess);
+	specular_colour = colour_scale(light.colour, light->brightness * obj->material.specular * specular_intensity);
+	return (specular_colour);
+}
+
+// final colour (ambient + diffuse + specular)

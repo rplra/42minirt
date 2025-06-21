@@ -6,12 +6,19 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/13 09:38:24 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/21 14:42:11 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_H
 # define SCENE_H
+
+typedef struct	s_vector
+{
+	double		x;
+	double		y;
+	double		z;
+}				t_vector;
 
 typedef struct	s_colour
 {
@@ -33,7 +40,7 @@ typedef struct s_material
 
 typedef struct	s_ambient
 {
-	float		ratio;
+	float		intensity;
 	t_colour	colour;
 }				t_ambient;
 

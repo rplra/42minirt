@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:26:36 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/17 07:56:31 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/21 12:08:09 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int parse_ambient(char **params, t_parse *file, t_ambient *ambient)
 		return (print_error(file, ERROR_ACOUNT, -1, params));
 	//printf("Ambient param count : %i\n", count_params(params)); // debug
 	ft_memset(&tmp, 0, sizeof(t_ambient));
-	tmp.ratio = ft_atof(params[1], &valid);
+	tmp.intensity = ft_atof(params[1], &valid);
 	//printf("Ambient ratio: %f\n",tmp.ratio); // debug
-	if (!valid || tmp.ratio < 0.0 || tmp.ratio > 1.0)
+	if (!valid || tmp.intensity < 0.0 || tmp.intensity > 1.0)
 		return (print_error(file, ERROR_RATIO, 1, params));
 	values = ft_split(params[2], ',');
 	if (is_colour(file, values, &tmp.colour))

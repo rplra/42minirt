@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:34:27 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/17 08:34:46 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/21 12:14:47 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ int	is_colour(t_parse *scene, char **col, t_colour *colour)
 	if ((colour->r < 0 || colour->r > 255)
 		|| (colour->g < 0 || colour->g > 255)
 		|| (colour->b < 0 || colour->b > 255))
-		return (print_error(scene, ERROR_INVALID_COL_VAL, -1, col));;
+		return (print_error(scene, ERROR_INVALID_COL_VAL, -1, col));
+	colour->r = (float)colour->r / 255.0;
+	colour->g = (float)colour->g / 255.0;
+	colour->b = (float)colour->b / 255.0;
 	return (0);
 }
 

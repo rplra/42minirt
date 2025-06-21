@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:19:29 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/06 16:26:36 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/21 12:06:00 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void print_ambient(const t_ambient *ambient)
 {
-    printf("Ambient ratio: %f\n", ambient->ratio);
+    printf("Ambient ratio: %f\n", ambient->intensity);
     printf("Ambient colour: (r=%u, g=%u, b=%u)\n",
 		ambient->colour.r, ambient->colour.g, ambient->colour.b);
 }

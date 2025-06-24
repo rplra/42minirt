@@ -6,36 +6,49 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/21 14:42:11 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:30:27 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_H
 # define SCENE_H
 
+typedef unsigned char	t_uchar;
+typedef unsigned int	t_uint;
+
+//to change to t_vec3
 typedef struct	s_vector
 {
-	double		x;
-	double		y;
-	double		z;
+	float		x;
+	float		y;
+	float		z;
 }				t_vector;
 
 typedef struct	s_colour
 {
-	uint		r;
-	uint		g;
-	uint		b;		
+	t_uint		r;
+	t_uint		g;
+	t_uint		b;		
 }				t_colour;
+
+typedef enum	e_material_type
+{
+	DIFFUSE,
+	METAL,
+	// DIELEC
+	// BUBBLE
+}				t_material_type;
 
 typedef struct s_material
 {
-	t_colour	diffuse;			// base colour (Lambertian)
+	t_colour	albedo;				// obj's base colour
 	float		ambient;			// ambient reflectance
 	float		specular;			// specular intensity (PHONG)
 	float		shininess;			// highlight sharpness (PHONG)
 	float		reflect;			// mirror reflectivity (ray bounce)
 	float		refract;			// transparency (glass-like)
 	float		refractive_index;	// index of refraction (for Snell's law) 
+	t_uchar		type;				// diffuse / metal / dielec? / bubble?
 }				t_material;
 
 typedef struct	s_ambient
@@ -81,12 +94,9 @@ typedef struct s_cylinder
 // tag / labelling of objects
 typedef enum 	e_obj_type
 {
-	obj_ambient,
-	obj_camera,
-	obj_light,
-	obj_sphere,
-	obj_plane,
-	obj_cylinder,
+	SPHERE,
+	PLANE,
+	CYLINDER,
 }				t_obj_type;
 
 // union of shapes, stores one of several shapes, one at a time

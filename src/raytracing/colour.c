@@ -6,11 +6,21 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:16:21 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/21 12:18:42 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:04:12 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+t_colour	colour_add(t_colour c1, t_colour c2)
+{
+		t_colour	c;
+
+	c.r = clamp((c1.r + c2.r), 0, 255);
+	c.g = clamp((c1.g + c2.g), 0, 255);
+	c.b = clamp((c1.b + c2.b), 0, 255);
+	return (c);
+}
 
 t_colour	colour_multiply(t_colour c1, t_colour c2)
 {

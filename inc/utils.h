@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:42:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/17 08:07:46 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/24 09:57:23 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,7 @@ void	free_scene(t_scene *scene);
 void	cleanup_and_exit(t_scene *scene);
 
 void	flush_gnl(int fd);
+float	clamp(float value, float min, float max);
+t_colour	colour_clamp(t_colour c);
 
 #endif

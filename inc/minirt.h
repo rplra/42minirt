@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/10 12:17:25 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:29:05 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include "../lib/gnl/get_next_line.h"
 # include "config.h"
 # include "keymap.h"
-# include "raymath.h"
+# include "ray.h"
 # include "utils.h"
 # include "scene.h"
 # include "parse.h"
@@ -37,8 +37,6 @@
 
 # define YES	1
 # define NO		0
-
-typedef unsigned int uint;
 
 typedef	struct	s_img
 {

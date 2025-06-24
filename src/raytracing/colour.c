@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colour.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:16:21 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/21 12:18:42 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/23 21:52:29 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_colour	colour_scale(t_colour col, float scale)
 int	rgb_float_to_int(t_colour col)
 {
 	int	c;
-	
+
 	c = (int)(col.r * 255) << 16;
 	c += (int)(col.g * 255) << 8;
 	c += (int)(col.b * 255);

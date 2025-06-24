@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   rt_utils_key.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 13:09:38 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 19:39:42 by hsim             ###   ########.fr       */
+/*   Created: 2025/04/21 13:07:08 by hsim              #+#    #+#             */
+/*   Updated: 2025/04/25 20:19:15 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int main(int ac, char **av)
+/*dont use mlx_destroy_window, have fsan error*/
+int	close_window(int keycode, t_vars *vars)
 {
-	t_scene scene;
-	
-	ft_memset(&scene, 0, sizeof(scene));
-	if (ac != 2)
-		exit_with_error(ERROR_ARGFORMAT);
-	if (open_file(av[1], &scene))
-		cleanup_and_exit(&scene);
-	// render
-	free_scene(&scene);
+	if (keycode == KEY_ESC)
+	{
+		free_malloc(vars, 1);
+		exit (0);
+	}
 	return (0);
 }
 
+/* only for linux system, can remove this for mac system */
+int	close_window_x(int keycode, t_vars *vars)
+{
+	(void) keycode;
+	(void) vars;
+	exit (0);
+	return (0);
+}

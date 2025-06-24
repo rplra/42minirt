@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:10:59 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/12 18:36:57 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/24 19:18:16 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_atof
 	bool		has_digit;
 }				t_atof;
 
-typedef unsigned int uint;
+typedef unsigned int t_uint;
 
 /* PART 1 - LIBC */
 /* VALUES */
@@ -47,7 +47,7 @@ float	ft_atof(const char *str, bool *valid);
 int		ft_atoi(const char *str);
 int		ft_atoi_base(const char *s, const char *base);
 long	ft_atol(const char *str);
-uint	ft_atoui(const char *str, bool *valid);
+t_uint	ft_atoui(const char *str, bool *valid);
 
 /* CHARS */
 
@@ -95,6 +95,8 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+int		ft_perror(char *err_str, char *err_str2, int return_value);
+
 
 /* PART 3 - BONUS */
 /* LISTS */

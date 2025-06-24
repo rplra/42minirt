@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raymath.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:12:17 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/21 16:05:16 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/24 18:36:30 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #ifndef RAYMATH_H
 # define RAYMATH_H
 
-#include "scene.h"
+# include "scene.h"
 
 double		vector_len(t_vector vec);
 t_vector	vector_subtract(t_vector v1, t_vector v2);

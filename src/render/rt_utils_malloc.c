@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   rt_utils_malloc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 13:09:38 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 19:39:42 by hsim             ###   ########.fr       */
+/*   Created: 2025/05/07 13:04:45 by hsim              #+#    #+#             */
+/*   Updated: 2025/06/24 19:22:21 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int main(int ac, char **av)
+/* mallocs a sph_ptr and writes all to NULL */
+int	malloc_sph_ptr(t_sph **dest, int num)
 {
-	t_scene scene;
-	
-	ft_memset(&scene, 0, sizeof(scene));
-	if (ac != 2)
-		exit_with_error(ERROR_ARGFORMAT);
-	if (open_file(av[1], &scene))
-		cleanup_and_exit(&scene);
-	// render
-	free_scene(&scene);
-	return (0);
+	if (num <= 0)
+		return (0);
+	*dest = (t_sph *)malloc(sizeof(t_sph) * num);
+	if (!(*dest))
+	{
+		ft_perror("🚨 malloc_sph_ptr failed!", 0, 0);
+		return (0);
+	}
+	return (1);
 }
-

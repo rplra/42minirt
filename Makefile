@@ -11,17 +11,25 @@ WHITE    		= \033[37m		# White
 
 NAME = miniRT
 
-CC = cc 
-CFLAGS = -Wall -Wextra -Werror -Iinc #g3 -fsanitize=address
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -Iinc -I$(MLX_DIR) #g3 -fsanitize=address
 RM = rm -rf
 
 # OS
 OS := $(shell uname -s)
+MACOS_VER := $(shell sw_vers -productVersion | cut -d. -f1-2)
+
 ifeq ($(OS),Darwin)
 	CFLAGS += 	-DMAC
-	MLX_DIR = 	mlx/macos
-	MLX 	= 	$(MLX_DIR)libmlx.a
-	LINKS 	= 	-L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -lm
+	ifeq ($(MACOS_VER), 11.6)
+		MLX_DIR = 	./mlx/macos2
+		MLX 	= 	$(MLX_DIR)libmlx.a
+		LINKS 	= 	-L/usr/X11/lib -lX11 -lXext -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -lm
+	else
+		MLX_DIR = 	mlx/macos
+		MLX 	= 	$(MLX_DIR)libmlx.a
+		LINKS 	= 	-L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -lm
+	endif
 else ifeq ($(OS),Linux)
 	CFLAGS += 	-DLINUX
 	MLX_DIR = 	mlx/linux
@@ -37,12 +45,14 @@ SRC_DIR		= 	src
 OBJ_DIR		= 	obj
 MAIN_DIR 	= 	$(SRC_DIR)/main
 PARSE_DIR 	= 	$(SRC_DIR)/parse
+REND_DIR	=	$(SRC_DIR)/render
 RT_DIR		=	$(SRC_DIR)/raytracing
 UTILS_DIR 	= 	$(SRC_DIR)/utils
 
 # Sources
 SRCS		=	$(wildcard $(MAIN_DIR)/*.c) \
-				$(wildcard $(PARSE_DIR)/*.c) \
+				$(wildcard $(REND_DIR)/*.c) \
+#				$(wildcard $(PARSE_DIR)/*.c) \
 				$(wildcard $(RT_DIR)/*.c) \
 				$(wildcard $(UTILS_DIR)/*.c)
 OBJS		=	$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))

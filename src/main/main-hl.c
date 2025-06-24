@@ -5,24 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 13:09:38 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 19:39:42 by hsim             ###   ########.fr       */
+/*   Created: 2025/04/21 13:07:37 by hsim              #+#    #+#             */
+/*   Updated: 2025/06/24 19:37:42 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int main(int ac, char **av)
+int	main()
 {
-	t_scene scene;
-	
-	ft_memset(&scene, 0, sizeof(scene));
-	if (ac != 2)
-		exit_with_error(ERROR_ARGFORMAT);
-	if (open_file(av[1], &scene))
-		cleanup_and_exit(&scene);
-	// render
-	free_scene(&scene);
+	t_vars	vars;
+
+	initialize_mlx(&vars);
+	init_variable(&vars);
+
+	/* _____________rendering_____________ */
+	my_render_image(&vars);//, viewport_00_center, viewport_d);
+
+	/* _____________close windows_____________ */
+	mlx_hook(vars.mlxwindow, 17, 0, close_window_x, &vars);
+	mlx_key_hook(vars.mlxwindow, close_window, &vars);
+	mlx_loop(vars.mlxconnect);
 	return (0);
 }
-

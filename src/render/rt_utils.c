@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   rt_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 13:09:38 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 19:39:42 by hsim             ###   ########.fr       */
+/*   Created: 2025/05/22 17:18:14 by hsim              #+#    #+#             */
+/*   Updated: 2025/06/22 18:53:38 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int main(int ac, char **av)
+/* checks if all vector values is near to zero */
+bool	is_near_zero(t_vec3 vec)
 {
-	t_scene scene;
-	
-	ft_memset(&scene, 0, sizeof(scene));
-	if (ac != 2)
-		exit_with_error(ERROR_ARGFORMAT);
-	if (open_file(av[1], &scene))
-		cleanup_and_exit(&scene);
-	// render
-	free_scene(&scene);
-	return (0);
-}
+	float	res[3];
+	float	s;
 
+	s = 0.001f;
+	res[X] = fabs(vec.x);
+	res[Y] = fabs(vec.y);
+	res[Z] = fabs(vec.z);
+	return ((res[X] < s) && (res[Y] < s) && (res[Z] < s));
+}

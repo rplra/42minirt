@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/21 14:42:11 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/23 22:13:41 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_H
 # define SCENE_H
 
-typedef struct	s_vector
+typedef struct s_vector
 {
 	double		x;
 	double		y;
 	double		z;
 }				t_vector;
 
-typedef struct	s_colour
+typedef struct s_colour
 {
-	uint		r;
-	uint		g;
-	uint		b;		
+	t_uint		r;
+	t_uint		g;
+	t_uint		b;		
 }				t_colour;
 
 typedef struct s_material
@@ -38,7 +38,7 @@ typedef struct s_material
 	float		refractive_index;	// index of refraction (for Snell's law) 
 }				t_material;
 
-typedef struct	s_ambient
+typedef struct s_ambient
 {
 	float		intensity;
 	t_colour	colour;
@@ -48,7 +48,7 @@ typedef struct s_camera
 {
 	t_vector	position;
 	t_vector	orientation;
-	uint		fov;
+	t_uint		fov;
 }				t_camera;
 
 typedef struct s_light

@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_perror.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 13:09:38 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 19:39:42 by hsim             ###   ########.fr       */
+/*   Created: 2025/05/05 18:02:00 by hsim              #+#    #+#             */
+/*   Updated: 2025/06/24 19:17:48 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "libft.h"
 
-int main(int ac, char **av)
+/* prints error message, no \n needed*/
+int	ft_perror(char *err_str, char *err_str2, int return_value)
 {
-	t_scene scene;
-	
-	ft_memset(&scene, 0, sizeof(scene));
-	if (ac != 2)
-		exit_with_error(ERROR_ARGFORMAT);
-	if (open_file(av[1], &scene))
-		cleanup_and_exit(&scene);
-	// render
-	free_scene(&scene);
-	return (0);
+	if (err_str && err_str[0])
+		ft_putstr_fd(err_str, 2);
+	if (err_str2 && err_str2[0])
+		ft_putstr_fd(err_str2, 2);
+	ft_putchar_fd('\n', 2);
+	return (return_value);
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:27:39 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/21 18:44:48 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:06:52 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_colour	specular(t_object *obj, t_light *light, t_vector intersection, t_camera
 		reflect_dot = 0;
 	
 	specular_intensity = powf(reflect_dot, obj->material.shininess);
-	specular_colour = colour_scale(light.colour, light->brightness * obj->material.specular * specular_intensity);
+	specular_colour = colour_scale(light->colour, light->brightness * obj->material.specular * specular_intensity);
 	return (specular_colour);
 }
 

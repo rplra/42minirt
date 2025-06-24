@@ -1,0 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_vector3.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/07 12:20:52 by hsim              #+#    #+#             */
+/*   Updated: 2025/06/24 19:23:06 by hsim             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_vector.h"
+
+/* 
+ * Multiply vector with scalar 
+ * q = cos(deg/2) + sin(deg/2)( x + y + z )
+ */
+t_vec3	mult_vec_scalar(t_vec3 a, float s)
+{
+	t_vec3	result;
+
+	result = new_vector3d(0, 0, 0);
+	if (a.x != 0)
+		result.x = a.x * s;
+	if (a.y != 0)
+		result.y = a.y * s;
+	if (a.z != 0)
+		result.z = a.z * s;
+	return (result);
+}
+
+/* Divide vector with scalar */
+t_vec3	div_vec_scalar(t_vec3 a, float s)
+{
+	t_vec3	result;
+
+	result.x = a.x / s;
+	result.y = a.y / s;
+	result.z = a.z / s;
+	return (result);
+}
+
+/* Subtract vector with scalar */
+t_vec3	subtract_vec_scalar(t_vec3 a, float s)
+{
+	t_vec3	result;
+
+	result.x = a.x - s;
+	result.y = a.y - s;
+	result.z = a.z - s;
+	return (result);
+}

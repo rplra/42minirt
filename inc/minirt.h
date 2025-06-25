@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 19:13:03 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/25 11:53:04 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@
 # include "../lib/quaternion/ft_vector.h"
 # include "config.h"
 # include "keymap.h"
-# include "raymath.h"
+# include "keybind.h"
+# include "ray.h"
 # include "utils.h"
 # include "scene.h"
 # include "parse.h"
@@ -42,6 +43,8 @@
 # define NO		0
 
 typedef unsigned int	t_uint;
+typedef struct s_ray	t_ray;
+typedef struct s_sph	t_sph;
 
 typedef struct s_img
 {
@@ -57,34 +60,43 @@ typedef struct s_rt
 	void		*mlx;
 	void		*mlx_win;
 	t_img		img;
-	t_camera	camera;
-}				t_rt;
+	t_camera	cam;
 
-typedef struct s_vars
-{
-	void		*mlxconnect;
-	void		*mlxwindow;
-	t_img		img;
-
-	//camera setup
-	t_vec3			cam_orig;
-	t_vec3			cam_lookat;
-	t_vec3			vup; //camera up
-	float			vfov; //vertical fov
-	// float			focal_len;
-	float			focus_dist;
-	float			defoc_ang; //blur angle
-	t_vec3			defoc_disk[2];
-	int				sample_per_pixel;
-	unsigned char	ray_bounce; /* how many times a ray should bounce */
-	t_vec3			color_bg[2];
-
-	//obj
-	int				count_sph;
-	t_sph			*sph;
+	//scene
+	t_vec3		color_bg[2];
+	int			count_sph;
+	t_sph		*sph;
 
 	//general
-	t_ray			ray;
-}	t_vars;
+	t_ray		ray; //helper pointer
+
+}				t_rt;
+
+// typedef struct s_vars
+// {
+// 	void		*mlxconnect;
+// 	void		*mlxwindow;
+// 	t_img		img;
+
+// 	//camera setup
+// 	t_vec3			cam_orig;
+// 	t_vec3			cam_lookat;
+// 	t_vec3			vup; //camera orientation
+// 	float			vfov; //vertical fov
+// 	float			focus_dist;
+// 	float			defoc_ang; //blur angle
+// 	t_vec3			defoc_disk[2];
+// 	int				sample_per_pixel;
+// 	t_uchar			ray_bounce; //how many times a ray should bounce
+
+// 	//scene
+// 	t_vec3			color_bg[2];
+// 	//obj
+// 	int				count_sph;
+// 	t_sph			*sph;
+
+// 	//general
+// 	t_ray			ray; //helper pointer
+// }	t_vars;
 
 #endif

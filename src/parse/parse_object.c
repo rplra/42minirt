@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/21 12:49:04 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:32:41 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ int	parse_plane(t_parse *file, t_object *obj)
 		return (print_error(file, ERROR_NORMAL, 2, values));
 	//printf("Plane normal: (x=%f, y=%f, z=%f)\n", tmp.normal.x, tmp.normal.y, tmp.normal.z); // debug
 	free_array(values);
-	vector_normalize(&tmp.normal);
+	tmp.normal = vector_normalize(tmp.normal);
 	//printf("Plane normalized: (x=%f, y=%f, z=%f)\n", tmp.normal.x, tmp.normal.y, tmp.normal.z); // debug
 	values = ft_split(file->tokens[3], ',');
 	if (is_colour(file, values, &obj->colour))
 		return (1);
 	//printf("Converted colour: (r=%u, g=%u, b=%u)\n", obj->colour.r, obj->colour.g, obj->colour.b); // debug
 	free_array(values);
-	obj->type = obj_plane;
+	obj->type = PLANE;
 	obj->obj.plane = tmp;
 	//printf("Printing struct\n");
 	//print_plane(obj);
@@ -69,7 +69,7 @@ int	parse_sphere(t_parse *file, t_object *obj)
 		return (1);
 	//printf("Converted colour: (r=%u, g=%u, b=%u)\n", obj->colour.r, obj->colour.g, obj->colour.b);
 	free_array(values);
-	obj->type = obj_sphere;
+	obj->type = SPHERE;
 	obj->obj.sphere = tmp;
 	//printf("Printing struct\n");
 	//print_sphere(obj);
@@ -95,7 +95,7 @@ int	parse_cylinder(t_parse *file, t_object *obj)
 	if (is_vector(file, values, &tmp.axis, YES))
 		return (print_error(file, ERROR_NORMAL, 2, values));
 	//printf("Cylinder axis: (x=%f, y=%f, z=%f)\n", tmp.axis.x, tmp.axis.y, tmp.axis.z); // debug
-	vector_normalize(&tmp.axis);
+	tmp.axis = vector_normalize(tmp.axis);
 	free_array(values);
 	tmp.diameter = ft_atof(file->tokens[3], &valid);
 	if (!valid || tmp.diameter <= 0)
@@ -110,7 +110,7 @@ int	parse_cylinder(t_parse *file, t_object *obj)
 		return (1);
 	//printf("Converted colour: (r=%u, g=%u, b=%u)\n", obj->colour.r, obj->colour.g, obj->colour.b);
 	free_array(values);
-	obj->type = obj_cylinder;
+	obj->type = CYLINDER;
 	obj->obj.cylinder = tmp;
 	//printf("Printing struct\n");
 	//print_cylinder(obj);

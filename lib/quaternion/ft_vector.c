@@ -6,14 +6,14 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:36:20 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/23 10:15:09 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/25 11:24:28 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_vector.h"
 
 /* Creates new vector from given values */
-t_vec3	new_vector3d(float x, float y, float z)
+t_vec3	new_vec3(float x, float y, float z)
 {
 	t_vec3	newvector;
 
@@ -24,7 +24,7 @@ t_vec3	new_vector3d(float x, float y, float z)
 }
 
 /* Calculates length of a vector, returns sqrt(x^2 + y^2 + z^2) */
-float	len_vector3d(t_vec3 vector)
+float	len_vec3(t_vec3 vector)
 {
 	return (sqrt((vector.x * vector.x) + \
 (vector.y * vector.y) + \
@@ -32,16 +32,16 @@ float	len_vector3d(t_vec3 vector)
 }
 
 /* Normalize vector into unit vector */
-t_vec3	unit_vector3d(t_vec3 vector)
+t_vec3	unit_vec3(t_vec3 vector)
 {
 	float	len;
 
-	len = len_vector3d(vector);
+	len = len_vec3(vector);
 	if (len >= 0.00001f)
-		return (new_vector3d(vector.x / len, \
+		return (new_vec3(vector.x / len, \
 vector.y / len, \
 vector.z / len));
-	return (new_vector3d(0, 0, 0));
+	return (new_vec3(0, 0, 0));
 }
 
 /* Add vector + vector */

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 18:15:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/24 19:19:02 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/24 22:15:02 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * https://harm-smits.github.io/42docs/libs/minilibx/
  * getting_started.html#writing-pixels-to-a-image/
  */
-void	my_mlx_pixel_put(t_vars vars, int x, int y, int color)
+void	my_mlx_pixel_put(t_rt vars, int x, int y, int color)
 {
 	int		offset;
 	char	*dst;
@@ -33,7 +33,7 @@ void	my_mlx_pixel_put(t_vars vars, int x, int y, int color)
 }
 
 /* Renders the image black color*/
-void	clear_image(t_vars vars, int win_width, int win_height, int color)
+void	clear_image(t_rt vars, int win_width, int win_height, int color)
 {
 	int	tmp;
 
@@ -47,9 +47,9 @@ void	clear_image(t_vars vars, int win_width, int win_height, int color)
 }
 
 /* Create image container to start draw */
-void	my_create_image(t_vars *vars, t_img *img)
+void	my_create_image(t_rt *vars, t_img *img)
 {
-	img->img = mlx_new_image(vars->mlxconnect, WIN_WIDTH, WIN_HEIGHT);
+	img->img = mlx_new_image(vars->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!img->img)
 		ft_perror("🚨 Error in creating main image!", 0, 0);
 	img->addr = mlx_get_data_addr(img->img, \

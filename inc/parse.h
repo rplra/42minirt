@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:39:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/12 14:38:06 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/24 21:52:20 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool	is_object(const char *token);
 int		add_object(t_scene *scene, t_object obj);
 int		count_params(char **params);
 int		is_colour(t_parse *scene, char **col, t_colour *colour);
-int		is_vector(t_parse *scene, char **values, t_vector *vector, bool check_normal);
+int		is_vector(t_parse *scene, char **values, t_vec3 *vector, bool check_normal);
 
 /*		parse_debug.c		*/
 void	print_ambient(const t_ambient *ambient);

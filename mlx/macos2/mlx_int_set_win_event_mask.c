@@ -11,6 +11,9 @@
 
 #include	"mlx_int.h"
 
+
+
+
 int	mlx_int_set_win_event_mask(t_xvar *xvar)
 {
   t_win_list	*win;

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 12:20:52 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/24 19:23:06 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/25 11:24:08 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_vec3	mult_vec_scalar(t_vec3 a, float s)
 {
 	t_vec3	result;
 
-	result = new_vector3d(0, 0, 0);
+	result = new_vec3(0, 0, 0);
 	if (a.x != 0)
 		result.x = a.x * s;
 	if (a.y != 0)

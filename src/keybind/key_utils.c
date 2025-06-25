@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light_utils.c                                      :+:      :+:    :+:   */
+/*   key_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/21 18:47:46 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 21:52:20 by hsim             ###   ########.fr       */
+/*   Created: 2025/06/25 09:52:32 by hsim              #+#    #+#             */
+/*   Updated: 2025/06/25 11:08:56 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "keybind.h"
 
-// reflect(I, N) = 2 * dot(N, I) * N - I
-t_vec3 reflect(t_vec3 I, t_vec3 N)
+/* prints out current keycode number */
+int	key_press(int keycode, void *param)
 {
-	return (vector_subtract(vector_scale(N, 2 * dot_product(N, I)), I));
+	(void)param;
+	printf("🟡 keycode is %i\n", keycode);
+	// add on other keypress here
+	return (0);
 }

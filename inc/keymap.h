@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keymap.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:15:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/22 17:02:36 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/25 09:46:18 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # endif
 
 # ifdef MAC
-#  define KEY_ESC 53
+#  define KEY_ESC 65307 //53
 #  define KEY_UP 126
 #  define KEY_DOWN 125
 #  define KEY_LEFT 123

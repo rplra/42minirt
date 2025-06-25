@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/24 19:21:37 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/25 11:24:28 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,21 @@
  * get value of viewport_uv and save to
  * t_vector3d *viewport_u & *viewport_v
  */
-static void	get_viewport_uv(t_vars *vars, t_vec3 *viewport_u, \
+static void	get_viewport_uv(t_rt *vars, t_vec3 *viewport_u, \
 t_vec3 *viewport_v, t_vec3 *cam_w)
 {
 	float		h;
 	float		defoc_radius;
 	float		viewport[2];
-	t_vec3	cam[2];
+	t_vec3		cam[2];
 
-	h = tan(vars->vfov / 2);
-	viewport[H] = 2 * h * vars->focus_dist;
+	h = tan(vars->cam.vfov / 2);
+	viewport[H] = 2 * h * vars->cam.focus_dist;
 	viewport[W] = (viewport[H] * WIN_WIDTH) / WIN_HEIGHT;
 	// /*debug*/printf("h:%f, viewport: %f %f\n", h, viewport[X], viewport[Y]);
 
-	*cam_w = unit_vector3d(subtract_vec(vars->cam_orig, vars->cam_lookat));
-	cam[X] = unit_vector3d(cross_product3d(vars->vup, *cam_w));
+	*cam_w = unit_vec3(subtract_vec(vars->cam.orig, vars->cam.lookat));
+	cam[X] = unit_vec3(cross_product3d(vars->cam.vup, *cam_w));
 	cam[Y] = mult_vec_scalar(cross_product3d(*cam_w, cam[X]), -1); // -v
 	*viewport_u = mult_vec_scalar(cam[X], viewport[W]);
 	*viewport_v = mult_vec_scalar(cam[Y], viewport[H]);
@@ -39,9 +39,9 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
 	// /*debug*/printf("cam_u: %f %f %f\n", cam[X].x, cam[X].y, cam[X].z);
 	// /*debug*/printf("cam_v: %f %f %f\n", cam[Y].x, cam[Y].y, cam[Y].z);
 
-	defoc_radius = vars->focus_dist * tan(vars->defoc_ang / 2);
-	vars->defoc_disk[X] = mult_vec_scalar(cam[X], defoc_radius);
-	vars->defoc_disk[Y] = mult_vec_scalar(cam[Y], defoc_radius);
+	defoc_radius = vars->cam.focus_dist * tan(vars->cam.defoc_ang / 2);
+	vars->cam.defoc_disk[X] = mult_vec_scalar(cam[X], defoc_radius);
+	vars->cam.defoc_disk[Y] = mult_vec_scalar(cam[Y], defoc_radius);
 
 	// *viewport_u = new_vector3d(viewport[X], 0, 0);
 	// *viewport_v = new_vector3d(0, -viewport[Y], 0);
@@ -53,7 +53,7 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
  * get starting values of viewport (viewport top_left)
  * & center of top_left_pixel (viewport_00_loc)
  */
-static void	get_viewport_coords(t_vars *vars, t_vec3 *vp_00_loc, \
+static void	get_viewport_coords(t_rt *vars, t_vec3 *vp_00_loc, \
 t_vec3 *vp_top_left, t_vec3 vp_d[2])
 {
 	t_vec3	vp[2];
@@ -63,8 +63,8 @@ t_vec3 *vp_top_left, t_vec3 vp_d[2])
 	vp_d[X] = div_vec_scalar(vp[X], WIN_WIDTH);
 	vp_d[Y] = div_vec_scalar(vp[Y], WIN_HEIGHT);
 
-	*vp_top_left = subtract_vec(vars->cam_orig, \
-mult_vec_scalar(cam_w, vars->focus_dist));
+	*vp_top_left = subtract_vec(vars->cam.orig, \
+mult_vec_scalar(cam_w, vars->cam.focus_dist));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[X], 2));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[Y], 2));
 
@@ -83,7 +83,7 @@ div_vec_scalar(add_vec(vp_d[X], vp_d[Y]), 2));
  * viewport_00 = center of pixel 00 in viewport
  * viewport_d = dydx or dudv of viewport
  */
-static void	ft_draw(t_vars vars, t_vec3 viewport_00, t_vec3 viewport_d[2])
+static void	ft_draw(t_rt vars, t_vec3 viewport_00, t_vec3 viewport_d[2])
 {
 	int		x;
 	int		y;
@@ -115,7 +115,7 @@ static void	ft_draw(t_vars vars, t_vec3 viewport_00, t_vec3 viewport_d[2])
  * vp_00 = center of pixel 00 in viewport
  * vp_d = dydx or dudv of viewport
  */
-void	my_render_image(t_vars *vars)
+void	my_render_image(t_rt *vars)
 {
 	t_vec3	vp_d[2];
 	t_vec3	vp_00_loc;
@@ -123,12 +123,12 @@ void	my_render_image(t_vars *vars)
 
 	//clear before draw
 	clear_image(*vars, WIN_WIDTH, WIN_HEIGHT, 0x000000);
-	mlx_put_image_to_window(vars->mlxconnect, vars->mlxwindow, \
+	mlx_put_image_to_window(vars->mlx, vars->mlx_win, \
 vars->img.img, 0, 0);
 	//draw
 	get_viewport_coords(vars, &vp_00_loc, &vp_top_left, vp_d);
 	ft_draw(*vars, vp_00_loc, vp_d);
 	//push draw result to window
-	mlx_put_image_to_window(vars->mlxconnect, vars->mlxwindow, \
+	mlx_put_image_to_window(vars->mlx, vars->mlx_win, \
 vars->img.img, 0, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:15:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/22 22:39:23 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/25 11:24:08 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_vec3	rand_vec(unsigned int *seed)
 {
 	t_vec3	res;
 
-	res = new_vector3d(rand_lcg(seed), rand_lcg(seed), rand_lcg(seed));
+	res = new_vec3(rand_lcg(seed), rand_lcg(seed), rand_lcg(seed));
 	return (res);
 }
 
@@ -60,7 +60,7 @@ t_vec3	rand_vec_range(unsigned int *seed, float min, float max)
 {
 	t_vec3	res;
 
-	res = new_vector3d(rand_lcg_range(seed, min, max), \
+	res = new_vec3(rand_lcg_range(seed, min, max), \
 rand_lcg_range(seed, min, max), \
 rand_lcg_range(seed, min, max));
 	return (res);

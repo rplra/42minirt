@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:56:34 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/22 18:53:38 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/25 11:23:36 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ float	scalar_product(t_vec3 a, t_vec3 b)
  * officially known as hadamart product,
  * returns a.x * b.x,  a.y * b.y,  a.z * b.z
  */
-t_vec3	multiply_vec(t_vec3 a, t_vec3 b)
+t_vec3	mult_vec(t_vec3 a, t_vec3 b)
 {
 	t_vec3	res;
 

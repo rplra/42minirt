@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:02 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/07 10:15:19 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:31:53 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,23 @@ int	parse_object(t_parse *file, t_scene *scene)
 	ft_memset(&obj, 0, sizeof(t_object));
 	if (ft_strcmp(file->tokens[0], "pl") == 0)
 	{
-		obj.type = obj_plane;
+		obj.type = PLANE;
 		if (parse_plane(file, &obj))
 			return (1);
 	}
 	else if (ft_strcmp(file->tokens[0], "sp") == 0)
 	{
-		obj.type = obj_sphere;
+		obj.type = SPHERE;
 		if (parse_sphere(file, &obj))
 			return (1);
 	}
 	else if (ft_strcmp(file->tokens[0], "cy") == 0)
 	{
-		obj.type = obj_cylinder;
+		obj.type = CYLINDER;
 		if (parse_cylinder(file, &obj))
 			return (1);
 	}
-	// add material defaults
+	// add material defaults, to revise
 	obj.material.specular = 0.5;
 	obj.material.reflect = 0.5;
 	return (add_object(scene, obj));

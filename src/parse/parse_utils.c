@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:34:27 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/21 12:14:47 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/24 21:52:20 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	is_colour(t_parse *scene, char **col, t_colour *colour)
 	return (0);
 }
 
-int	is_vector(t_parse *scene, char **values, t_vector *vector, bool check_range)
+int	is_vector(t_parse *scene, char **values, t_vec3 *vector, bool check_range)
 {
 	bool	valid;
 

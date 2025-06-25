@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light_utils.c                                      :+:      :+:    :+:   */
+/*   render_ray2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/21 18:47:46 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 21:52:20 by hsim             ###   ########.fr       */
+/*   Created: 2025/06/25 11:41:25 by hsim              #+#    #+#             */
+/*   Updated: 2025/06/25 11:48:03 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-// reflect(I, N) = 2 * dot(N, I) * N - I
-t_vec3 reflect(t_vec3 I, t_vec3 N)
+/* assigns ray to value specified in arguments */
+t_ray	new_ray(t_vec3 origin, t_vec3 dir)
 {
-	return (vector_subtract(vector_scale(N, 2 * dot_product(N, I)), I));
+	t_ray	ray;
+
+	ray.orig = origin;
+	ray.vector = dir;
+	return (ray);
 }

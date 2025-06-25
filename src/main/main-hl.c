@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main-hl.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:07:37 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/24 19:37:42 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/25 11:15:18 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 int	main()
 {
-	t_vars	vars;
+	t_rt	vars;
 
 	initialize_mlx(&vars);
 	init_variable(&vars);
 
-	/* _____________rendering_____________ */
-	my_render_image(&vars);//, viewport_00_center, viewport_d);
+	/* _____________ rendering _____________ */
+	my_render_image(&vars);
 
-	/* _____________close windows_____________ */
-	mlx_hook(vars.mlxwindow, 17, 0, close_window_x, &vars);
-	mlx_key_hook(vars.mlxwindow, close_window, &vars);
-	mlx_loop(vars.mlxconnect);
+	/* _____________ keymaps _____________ */
+	mlx_hook(vars.mlx_win, ON_KEYDOWN, 1L << 0, key_press, &vars);
+	mlx_hook(vars.mlx_win, 17, 0, close_window_x, &vars);
+	mlx_key_hook(vars.mlx_win, close_window, &vars);
+	mlx_loop(vars.mlx);
 	return (0);
 }

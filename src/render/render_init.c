@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_utils_init.c                                    :+:      :+:    :+:   */
+/*   render_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/25 11:38:49 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/25 12:58:38 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	init_variable(t_rt *vars)
 	vars->cam.lookat = new_vec3(0, 0, -1);
 	vars->cam.vup = new_vec3(0, 1, 0);
 	vars->cam.vfov = radian(90);
-	vars->cam.defoc_ang = radian(20);
+	vars->cam.defoc_ang = radian(0);
 	vars->cam.defoc_disk[X] = new_vec3(0, 0, 0);
 	vars->cam.defoc_disk[Y] = new_vec3(0, 0, 0);
 	vars->cam.focus_dist = len_vec3(subtract_vec(vars->cam.orig, vars->cam.lookat));

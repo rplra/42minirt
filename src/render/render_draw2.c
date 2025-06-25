@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_utils_draw2.c                                   :+:      :+:    :+:   */
+/*   render_draw2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/25 11:24:28 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/25 12:58:06 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,14 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
 	float		viewport[2];
 	t_vec3		cam[2];
 
-	h = tan(vars->cam.vfov / 2);
-	viewport[H] = 2 * h * vars->cam.focus_dist;
+	h = tan(vars->cam.vfov / 2) * vars->cam.focus_dist;
+	viewport[H] = 2 * h;
 	viewport[W] = (viewport[H] * WIN_WIDTH) / WIN_HEIGHT;
-	// /*debug*/printf("h:%f, viewport: %f %f\n", h, viewport[X], viewport[Y]);
+	// for hfov method, push changes later
+	// viewport[W] = 2 * h;
+	// viewport[H] = (viewport[W] * WIN_HEIGHT) / WIN_WIDTH;
 
+	// /*debug*/printf("h:%f, viewport: %f %f\n", h, viewport[X], viewport[Y]);
 	*cam_w = unit_vec3(subtract_vec(vars->cam.orig, vars->cam.lookat));
 	cam[X] = unit_vec3(cross_product3d(vars->cam.vup, *cam_w));
 	cam[Y] = mult_vec_scalar(cross_product3d(*cam_w, cam[X]), -1); // -v

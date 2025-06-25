@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 21:37:14 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/25 11:26:12 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/25 12:12:27 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_vector3d
 typedef struct s_quaternion
 {
 	float		scalar;
-	t_vec3	vector;
+	t_vec3		vector;
 }	t_quat;
 
 t_vec3	new_vec3(float x, float y, float z);

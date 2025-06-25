@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/25 11:51:41 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/25 12:16:50 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ float	has_hit_sphere(t_vec3 sph_orig, float radius, t_ray ray)
 	float		n[3];
 	float		discriminant;
 	float		tmp;
-	t_vec3	ray_to_center;
+	t_vec3		ray_to_center;
 
 	ray_to_center = subtract_vec(sph_orig, ray.orig);
 	n[A] = scalar_product(ray.vector, ray.vector) + EPS;

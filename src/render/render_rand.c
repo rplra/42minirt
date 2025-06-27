@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_utils_rand.c                                    :+:      :+:    :+:   */
+/*   render_rand.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:15:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/25 11:24:08 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/27 14:53:53 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ static unsigned int	lcg(unsigned int *seed)
  */
 float	rand_lcg(unsigned int *seed)
 {
-	return ((float)lcg(seed) / 0xFFFFFFFF);
+	return ((float)(lcg(seed) / 0xFFFFFFFF));
 }
 
 /* returns a random float number within a range, based on lcg algorithm */
 float	rand_lcg_range(unsigned int *seed, float min, float max)
 {
-	return (min + ((max - min) * (float)lcg(seed) / 0xFFFFFFFF));
+	return (min + ((max - min) * (float)(lcg(seed) / 0xFFFFFFFF)));
 }
 
 /* return a random vector with xyz between 0 to 1 */
@@ -83,7 +83,7 @@ t_vec3	rand_unit_vec(unsigned int *seed)//, t_vector3d surf_norm)
 		len_sq = (pt.x * pt.x) + \
 (pt.y * pt.y) + \
 (pt.z * pt.z);
-		if (len_sq > 0.00001f && len_sq <= 1)
+		if (len_sq > 0.0001f && len_sq <= 1)
 			return (div_vec_scalar(pt, sqrt(len_sq)));
 	}
 }

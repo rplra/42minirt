@@ -17,9 +17,9 @@ RM = rm -rf
 
 # OS
 OS := $(shell uname -s)
-MACOS_VER := $(shell sw_vers -productVersion | cut -d. -f1-2)
 
 ifeq ($(OS),Darwin)
+	MACOS_VER := $(shell sw_vers -productVersion | cut -d. -f1-2)
 	CFLAGS += 	-DMAC
 	ifeq ($(MACOS_VER), 11.6)
 		MLX_DIR = 	mlx/macos2

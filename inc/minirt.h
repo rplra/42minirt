@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/27 13:57:12 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/27 15:27:02 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 typedef unsigned int		t_uint;
 typedef struct s_ray		t_ray;
 typedef struct s_sph		t_sph;
+typedef struct s_obj		t_obj;
 
 typedef struct s_img
 {

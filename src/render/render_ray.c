@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/27 13:11:33 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/27 15:21:14 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ float	has_hit_sphere(t_vec3 sph_orig, float radius, t_ray ray)
 	if (discriminant < 0)
 		return (-1);
 	tmp = (n[B] - sqrt(discriminant)) / n[A];
-	if (tmp <= 0 || tmp >= 4294967295)
+	if (tmp <= 0 || tmp >= 4294967295.0)
 		tmp = (n[B] + sqrt(discriminant)) / n[A];
 	/*debug*/printf("has_hit_sphere:%f %f\n", discriminant, INFINITY);
 
-	if (tmp <= 0 || tmp >= 4294967295)
+	if (tmp <= 0 || tmp >= 4294967295.0)
 		return (-1);
 	return (tmp);
 }
@@ -105,7 +105,7 @@ int	hit(t_rt vars, t_ray ray, t_vec3 *surf_norm, t_vec3 *at)
 
 	x = -1;
 	res = -1;
-	min = 2147483647;
+	min = 2147483647.0;
 	while (++x < vars.count_sph)
 	{
 		/*debug*/printf("id:%d\n", x);

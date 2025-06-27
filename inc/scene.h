@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/27 14:08:12 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/27 15:26:38 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ typedef enum e_obj_type
 // memory is allocated based on the largest one
 typedef union u_obj
 {
-	t_sph		sph;
+	t_sphere	sph;
 	t_plane		plane;
 	t_cylinder	cyl;
 }				t_obj_union;

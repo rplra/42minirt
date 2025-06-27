@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/25 11:48:42 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/26 07:43:56 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
 		/*debug*/printf("ft_draw:tar:%f %f %f\n", target.x, target.y, target.z);
 		/*debug*/printf("ft_draw:res:%f %f %f\n", res.x, res.y, res.z);
 
-		// /*debug*/printf("ft_draw:cam:%f %f %f\n", vars.ray.vector.x, vars.ray.vector.y,  vars.ray.vector.z);
 		// color = add_vec(color, ray_color_loop(vars, vars.ray, &seed));
 		color = add_vec(color, ray_color(vars, vars.ray, vars.cam.ray_bounce, &seed));
 		// /*debug*/printf("color:%f %f %f\n", color.x, color.y, color.z);

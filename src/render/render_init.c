@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/25 12:58:38 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/27 13:16:20 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,6 @@ void	initialize_mlx(t_rt *vars)
 	}
 	vars->mlx_win = mlx_new_window(vars->mlx, WIN_WIDTH, WIN_HEIGHT, \
 "miniRT");
-}
-
-/*
- * wrapper function to assign members in target to location & sph_radius
- * target has been malloced before passing to here
- */
-t_sph	new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_uchar mat_type)
-{
-	t_sph	target;
-
-	target.orig = position;
-	target.rad = sph_radius;
-	target.mat.albedo = color;
-	target.mat.type = mat_type;
-	return (target);
 }
 
 void	init_variable(t_rt *vars)

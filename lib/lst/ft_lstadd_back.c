@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:35:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2024/06/21 12:43:04 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:31:17 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @brief 		Adds the node 'new' at the end of the list
  * 
  * @param lst 	Pointer to the first link of list
- * @param new	Pointer of node 'new' to be added to end of list
+ * @param new 	Pointer of node 'new' to be added to end of list
  * @return		None
 */
 void	ft_lstadd_back(t_list **lst, t_list *new)

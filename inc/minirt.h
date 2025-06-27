@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/25 11:53:04 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/27 13:57:12 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include "utils.h"
 # include "scene.h"
 # include "parse.h"
+# include "interval.h"
 # include "render.h"
 
 # define RED "\033[31m"
@@ -42,9 +43,9 @@
 # define YES	1
 # define NO		0
 
-typedef unsigned int	t_uint;
-typedef struct s_ray	t_ray;
-typedef struct s_sph	t_sph;
+typedef unsigned int		t_uint;
+typedef struct s_ray		t_ray;
+typedef struct s_sph		t_sph;
 
 typedef struct s_img
 {
@@ -65,10 +66,12 @@ typedef struct s_rt
 	//scene
 	t_vec3		color_bg[2];
 	int			count_sph;
+	t_obj		*obj;
 	t_sph		*sph;
+	t_interval	bbox[3];	//bounding box, aabb == t_interval[3]
 
 	//general
-	t_ray		ray; //helper pointer
+	t_ray		ray;		//helper pointer
 
 }				t_rt;
 

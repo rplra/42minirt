@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:07:08 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/25 11:08:41 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/27 17:19:47 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	close_window_x(int keycode, t_rt *vars)
 {
 	(void) keycode;
 	(void) vars;
+	// free_malloc(vars, 1);
 	exit (0);
 	// return (0);
 }

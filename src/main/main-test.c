@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:45:50 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/26 10:38:47 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/27 17:18:15 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,26 @@ int main()
 	// printf("rgb: %d %d %d\n", c[R], c[G], c[B]);
 	
 	/* __________________ bound_box __________________*/
-	t_sph		*sph;
-	t_interval	bbox[3];
+	// t_sph		*sph;
+	// t_interval	bbox[3];
+	
+	// sph = (t_sph *)malloc(sizeof(t_sph));
+	// sph->rad = 3;
+	// sph->orig = new_vec3(0, 0, 0);
+	// bounding_box(SPHERE, sph, bbox);
+	// printf("bbox_x: %f %f", bbox[X].min, bbox[X].max);
 
-	sph = (t_sph *)malloc(sizeof(t_sph));
-	sph->rad = 3;
-	sph->orig = new_vec3(0, 0, 0);
-	bounding_box(SPHERE, sph, bbox);
-	printf("bbox_x: %f %f", bbox[X].min, bbox[X].max);
+	/* __________________ init_obj __________________*/
+	t_rt	vars;
+	t_obj	*tmp;
+
+	init_obj(&vars);
+	tmp = vars.obj;
+	while (tmp)
+	{
+		printf("sph_rad: %f\n", tmp->sph.rad);
+		tmp = tmp->next;
+	}
+	ft_lstclear_obj(&vars.obj);
 	return (0);
 }

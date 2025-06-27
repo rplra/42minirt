@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_utils_free.c                                    :+:      :+:    :+:   */
+/*   render_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:09:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/24 22:18:02 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/27 17:15:39 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,27 @@ void	free_malloc(t_rt *vars, int indicator)
 		return ;
 	// free_assign_hsv(vars->color_bg, 2);
 	free_one(vars->mlx);
-	free(vars->sph);
+	// free(vars->sph);
+	ft_lstclear_obj(&vars->obj);
 	if (indicator > 0)
 	{
 		// free_one(vars->z_array);
 		// free_assign_hsv(vars->hsv_array, 3);
 	}
+}
+
+void	ft_lstclear_obj(t_obj **lst)
+{
+	t_obj	*temp;
+
+	if (lst == NULL)
+		return ;
+	temp = *lst;
+	while (*lst != NULL)
+	{
+		temp = (*lst)->next;
+		free(*lst);
+		*lst = temp;
+	}
+	*lst = NULL;
 }

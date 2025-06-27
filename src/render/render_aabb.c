@@ -6,9 +6,12 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/26 11:45:21 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/27 16:51:32 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/* aabb = axis-aligned bounding box
+ * ************************************************************************** */
 
 #include "render.h"
 
@@ -38,9 +41,10 @@ void	aabb(t_vec3 a, t_vec3 b, t_interval range[3])
 }
 
 /*
- * sets res[X].min to smallest value
- * (comparing box0[X].min & box1[X].min)
- * same applies to X.max & Y.min/max & Z.min/max
+ * comparing box0[X].min & box1[X].min
+ * sets res[X].min to smallest value between them
+ * sets res[X].max to biggest value between them
+ * same applies to Y.min/max & Z.min/max
  */
 void	update_aabb_box(t_interval box_0[3], t_interval box_1[3], \
 t_interval res[3])
@@ -75,7 +79,7 @@ void	assign_ray_t(float t0, float t1, t_interval *ray_t)
 // 	float	ray_vec[3];
 // 	float	ray_orig[3];
 // 	float	t[2];
-	
+// 
 // 	axis = -1;
 // 	vec3_to_arr(r.vector, ray_vec);
 // 	vec3_to_arr(r.orig, ray_orig);
@@ -93,30 +97,40 @@ void	assign_ray_t(float t0, float t1, t_interval *ray_t)
 
 /*
  * res = bound_box 
- * updates bound_box value for static sphere
+ * updates bound_box for static sphere
+ * value returned in res
  */
-void	aabb_sph(void *sphere, t_interval res[3])
+void	aabb_sph(t_obj *obj, t_interval res[3])
 {
-	t_sph	*sph;
+	t_sph	sph;
 	t_vec3	rvec;
 
-	sph = (t_sph *)sphere;
-	if (sph->rad < 0)
-		sph->rad = 0;
-	rvec = new_vec3(sph->rad, sph->rad, sph->rad);
-	aabb(subtract_vec(sph->orig, rvec), add_vec(sph->orig, rvec), res);
+	sph = obj->sph;
+	if (sph.rad < 0)
+		sph.rad = 0;
+	rvec = new_vec3(sph.rad, sph.rad, sph.rad);
+	aabb(subtract_vec(sph.orig, rvec), add_vec(sph.orig, rvec), res);
 }
 
-static void	init_bbox_func(void (*aabb_obj[])(void *, t_interval[3]))
+/*
+ * child function in get_bounding_box
+ * calls different function based on obj type
+ */
+static void	init_bbox_func(void (*aabb_obj[])(t_obj *, t_interval[3]))
 {
-	aabb_obj[0] = aabb_sph;
+	aabb_obj[SPHERE] = aabb_sph;
 }
 
-void	bounding_box(t_obj_type type, void *obj, t_interval bound_box[3])
+/*
+ * bounding_box()
+ * get bounding box size for different objs
+ * calls bound box function based on obj_type
+ */
+void	get_bbox(t_obj_type type, t_obj *obj, t_interval bound_box[3])
 {
-	void	(*func[3])(void *, t_interval[3]);
+	void	(*func[3])(t_obj *, t_interval[3]);
 
-	if (type > 2)
+	if (type < 0 || type > 2)
 		return ;
 	init_bbox_func(func);
 	func[type](obj, bound_box);

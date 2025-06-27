@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/27 14:08:19 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/27 17:10:29 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,36 @@ typedef struct s_sph
 typedef struct s_obj
 {
 	t_obj_type		type;		// tells what type of obj
-	t_obj_union		*is;		// stores the actual shape of data
+	// t_obj_union		*is;		// stores the actual shape of data
+	union
+	{
+		t_sph	sph;
+		t_plane		plane;
+		t_cylinder	cyl;
+	};
 	t_mat			mat;
 	struct s_obj	*next;
 }					t_obj;
 
+/* __________________ initialization __________________ */
 void		initialize_mlx(t_rt *vars);
 void		init_variable(t_rt *vars);
+void		init_obj(t_rt *vars);
+
 
 /* __________________ bound box __________________ */
-void		bounding_box(t_obj_type type, void *obj, t_interval bound_box[3]);
+void		aabb(t_vec3 a, t_vec3 b, t_interval range[3]);
+void		get_bbox(t_obj_type type, t_obj *obj, t_interval bound_box[3]);
+void		update_aabb_box(t_interval box_0[3], t_interval box_1[3], \
+t_interval res[3]);
+
 t_interval	new_interval(float min, float max);
 t_interval	interval(t_interval a, t_interval b);
 
 /* __________________ objs __________________ */
-t_sph	new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_uchar mat_type);
+t_obj		*new_sph(t_vec3 position, float sph_radius, t_vec3 color, t_uchar mat_type);
+t_sph		new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_uchar mat_type);
+void		new_obj(t_rt *vars, t_obj **lst, t_obj *new);
 
 
 /* __________________ img render __________________ */
@@ -122,6 +137,7 @@ int			malloc_sph_ptr(t_sph **dest, int num);
 
 /* __________________ memory free functions __________________ */
 void		free_malloc(t_rt *vars, int indicator);
+void		ft_lstclear_obj(t_obj **lst);
 
 /* __________________ debug functions __________________ */
 void		debug_print_vec(char *str, t_vec3 vec);

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/28 13:17:36 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/28 18:05:23 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ enum	e_quadratic_values
 
 typedef struct s_mat
 {
-	t_uchar	type;		//material type
-	t_vec3	albedo;		//obj base color
+	t_uchar			type;		//material type
+	t_vec3			albedo;		//obj base color
 }	t_mat;
 
 typedef struct s_sph
 {
-	t_vec3		orig;	//origin
-	float		rad;	//radius
+	t_vec3			orig;	//origin
+	float			rad;	//radius
 	// t_mat		mat;
 }	t_sph;
 
@@ -75,7 +75,7 @@ typedef struct s_obj
 	};
 	t_mat			mat;
 	struct s_obj	*next;
-}					t_obj;
+}	t_obj;
 
 /* __________________ initialization __________________ */
 void		initialize_mlx(t_rt *vars);
@@ -105,12 +105,17 @@ void		my_render_image(t_rt *vars);
 void		clear_image(t_rt vars, int win_width, int win_height, int color);
 
 /* __________________ ray __________________ */
-float		has_hit_sphere(t_vec3 sphere, float radius, t_ray ray);
-t_vec3		ray_color(t_rt *vars, t_ray ray, unsigned char ray_bounce, unsigned int *seed);
+// float		has_hit_sphere(t_vec3 sphere, float radius, t_ray ray);
+float		has_hit_sphere(t_obj obj, t_ray ray);
+t_vec3		ray_color(t_rt *vars, t_ray ray, t_uchar ray_bounce, \
+t_uint *seed);
 // t_vector3d	ray_color_loop(t_vars vars, t_ray ray, unsigned int *seed);
 t_ray		new_ray(t_vec3 origin, t_vec3 dir);
 int			sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x);
 t_vec3		sample_sq_rand(unsigned int *seed);
+t_vec3		get_surf_norm_sph(t_ray ray, t_obj obj, float t);
+t_obj		*hit(t_rt *vars, t_ray ray, t_vec3 *surf_norm, t_vec3 *at);
+
 
 /* __________________ color __________________ */
 t_vec3		lerp_rgb(t_vec3 c1, t_vec3 c2, float t);

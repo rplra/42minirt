@@ -6,59 +6,11 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/28 13:13:32 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/28 18:05:07 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-/*
- * check all sph objects to see which is the closest hit
- * 
- * derived from quadratic equation discriminant formula
- * b sq - 4ac >= 0 (hit sphere)
- * b sq - 4ac < 0 (doesnt hit sphere)
- * full formula:
- * [-b +- sqrt(b sq - 4ac)]  /  2a
- * shortened:
- * [b +- sqrt(b sq - ac)]  /  a
- * 
- * res = discriminant
- * expanded frm sphere equation x sq + y sq + z sq - r sq = 0
- * vector from point P on ray -> sphere center C
- * 
- * returns the closest point if there are 2 roots
- * unsigned int max: 4294967295 as limit num
- * 
- * formula expansion reference:
- * https://raytracing.github.io/books/RayTracingInOneWeekend.html
- * https://youtu.be/ebzlMOw79Yw?si=8SXTPsEcSUtwft71
- */
-float	has_hit_sphere(t_vec3 sph_orig, float radius, t_ray ray)
-{
-	float		n[3];
-	float		discriminant;
-	float		tmp;
-	t_vec3		ray_to_center;
-
-	ray_to_center = subtract_vec(sph_orig, ray.orig);
-	n[A] = scalar_product(ray.vector, ray.vector) + EPS;
-	n[B] = scalar_product(ray.vector, ray_to_center) + EPS;
-	n[C] = scalar_product(ray_to_center, ray_to_center) - \
-(radius * radius) + EPS;
-
-	discriminant = (n[B] * n[B]) - (n[A] * n[C]);
-	if (discriminant < 0)
-		return (-1);
-	tmp = (n[B] - sqrt(discriminant)) / n[A];
-	if (tmp <= 0 || tmp >= 4294967295.0)
-		tmp = (n[B] + sqrt(discriminant)) / n[A];
-	/*debug*/printf("has_hit_sphere:%f %f %f\n", tmp, discriminant, INFINITY);
-
-	if (tmp <= 0 || tmp >= 4294967295.0)
-		return (-1);
-	return (tmp);
-}
 
 /*
  * 3d point along a vector ray
@@ -75,53 +27,34 @@ t_vec3	point_at(float t, t_ray r)
  * reverse direction of surf_norm if so
  * returns a surf_norm in unit vector
  */
-t_vec3	get_surf_norm(t_ray ray, t_vec3 sph_center, float t)
+t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t)
 {
 	t_vec3	pt_ray;
 	t_vec3	surf_norm;
 
 	// also known as set_face_normal
 	pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
-	surf_norm = subtract_vec(pt_ray, sph_center);
+	surf_norm = subtract_vec(pt_ray, obj.sph.orig);
 	surf_norm = unit_vec3(surf_norm);
 	// so, reverse surf_norm if so
 	if (scalar_product(ray.vector, surf_norm) > 0) // pointing in same direction
 		surf_norm = mult_vec_scalar(surf_norm, -1);
 	return (surf_norm);
 }
+// t_vec3	get_surf_norm_sph(t_ray ray, t_vec3 sph_center, float t)
+// {
+// 	t_vec3	pt_ray;
+// 	t_vec3	surf_norm;
 
-/*
- * child function in ray_color
- * checks if ray hits any surface
- * returns the closest point ray hits
- * at = origin + (t * direction)
- */
-t_obj	*hit(t_rt *vars, t_ray ray, t_vec3 *surf_norm, t_vec3 *at)
-{
-	float		t;
-	t_obj		*tmp;
-	t_obj		*res;
-	float		min;
-
-	min = 2147483647.0;
-	res = NULL;
-	tmp = vars->obj;
-	while (tmp != NULL)
-	{
-		// /*debug*/printf("id:%d\n", x);
-		t = has_hit_sphere(tmp->sph.orig, tmp->sph.rad, ray);
-		/*debug*/printf("has_hit_sphere:t:%f\n", t);
-		if (t > 0.001 && t <= min) // if its new min, keep in record
-		{
-			res = tmp;
-			min = t;
-			*at = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
-			*surf_norm = get_surf_norm(ray, tmp->sph.orig, t);
-		}
-		tmp = tmp->next;
-	}
-	return (res);
-}
+// 	// also known as set_face_normal
+// 	pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
+// 	surf_norm = subtract_vec(pt_ray, sph_center);
+// 	surf_norm = unit_vec3(surf_norm);
+// 	// so, reverse surf_norm if so
+// 	if (scalar_product(ray.vector, surf_norm) > 0) // pointing in same direction
+// 		surf_norm = mult_vec_scalar(surf_norm, -1);
+// 	return (surf_norm);
+// }
 
 /*
  * child function in mat_metal
@@ -177,6 +110,21 @@ t_vec3	mat_lambertian(t_vec3 surf_norm, t_uint *seed)
 
 /*
  * child function in sample_pixels
+ * returns background gradient color
+ */
+static t_vec3	bg_color(t_rt vars, t_ray ray)
+{
+	float	t;
+
+	ray.vector.y /= len_vec3(ray.vector); //unit vector
+	t = (ray.vector.y + 1) / 2;
+	// vec.y ranges from -1 to 1, add 1 makes it positive, div 2 makes it 1
+	return (lerp_rgb(vars.color_bg[1], vars.color_bg[0], t));
+	// return (split_rgb(lerp_hsv(vars.color_bg[1], vars.color_bg[0], t)));
+}
+
+/*
+ * child function in sample_pixels
  * checks if ray hits any object
  * defines what color the ray should be
  */
@@ -185,7 +133,6 @@ t_uint *seed)
 {
 	(void) ray_bounce;
 	(void) seed;
-	float		t;
 	t_obj		*res;
 	t_ray		bounce;
 	t_vec3		surf_norm;
@@ -210,13 +157,7 @@ res->mat.albedo));
 // 0.5*255*(surf_norm.y+1),
 // 0.5*255*(surf_norm.z+1)));
 	}
-
-	/* else render sky bg */
-	ray.vector.y /= len_vec3(ray.vector); //unit vector
-	t = (ray.vector.y + 1) / 2;
-	// vec.y ranges from -1 to 1, add 1 makes it positive, div 2 makes it 1
-	return (lerp_rgb(vars->color_bg[1], vars->color_bg[0], t));
-	// return (split_rgb(lerp_hsv(vars.color_bg[1], vars.color_bg[0], t)));
+	return (bg_color(*vars, ray));
 }
 
 // t_vector3d	ray_color_loop(t_vars vars, t_ray ray, unsigned int *seed)

@@ -6,31 +6,11 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:13:15 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/28 13:14:30 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/28 13:44:48 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-
-/*
- * wrapper function to assign members in target to location & sph_radius
- * target has been malloced before passing to here
- */
-// t_sph	*new_sphere(void *param)
-// {
-// 	t_sph	*target;
-// 	t_sph	*input;
-
-// 	input = (t_sph *)param;
-// 	target = (t_sph *)malloc(sizeof(t_sph));
-// 	target->orig = input->orig;
-// 	target->rad = input->rad;
-// 	target->mat.albedo = input->mat.albedo;
-// 	target->mat.type = input->mat.type;
-// 	return (target);
-// }
-
 
 // t_sph	new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_uchar mat_type)
 // {
@@ -55,10 +35,6 @@ t_vec3 color, t_uchar mat_type)
 	res->type = SPHERE;
 	res->sph.orig = position;
 	res->sph.rad = sph_radius;
-
-	// res->sph.mat.type = mat_type;
-	// res->sph.mat.albedo = color;
-
 	res->mat.type = mat_type;
 	res->mat.albedo = color;
 

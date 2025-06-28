@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/27 22:37:18 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/28 13:17:36 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,19 @@ typedef struct s_sph
 {
 	t_vec3		orig;	//origin
 	float		rad;	//radius
-	t_mat		mat;
+	// t_mat		mat;
 }	t_sph;
 
 typedef struct s_obj
 {
 	t_obj_type		type;		// tells what type of obj
-	// t_obj_union		*is;		// stores the actual shape of data
 	union
 	{
-		t_sph	sph;
+		t_sph		sph;
 		t_plane		plane;
 		t_cylinder	cyl;
 	};
-	// t_mat			mat;
+	t_mat			mat;
 	struct s_obj	*next;
 }					t_obj;
 

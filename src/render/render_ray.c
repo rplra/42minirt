@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/28 12:57:17 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/28 13:13:32 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,33 +98,25 @@ t_vec3	get_surf_norm(t_ray ray, t_vec3 sph_center, float t)
  */
 t_obj	*hit(t_rt *vars, t_ray ray, t_vec3 *surf_norm, t_vec3 *at)
 {
-	(void) ray;
-	(void) surf_norm;
-	(void) at;
 	float		t;
-	// int			x = -1;
-	// int			res = -1;
-	t_obj		*res = NULL;
+	t_obj		*tmp;
+	t_obj		*res;
 	float		min;
 
 	min = 2147483647.0;
-	// while (++x < vars->count_sph)
-	t_obj	*tmp = vars->obj;
+	res = NULL;
+	tmp = vars->obj;
 	while (tmp != NULL)
 	{
-		// /*new*/x++;
 		// /*debug*/printf("id:%d\n", x);
-		// t = has_hit_sphere(vars->sph[x].orig, vars->sph[x].rad, ray);
-		/*new*/t = has_hit_sphere(tmp->sph.orig, tmp->sph.rad, ray);
+		t = has_hit_sphere(tmp->sph.orig, tmp->sph.rad, ray);
 		/*debug*/printf("has_hit_sphere:t:%f\n", t);
 		if (t > 0.001 && t <= min) // if its new min, keep in record
 		{
-			// res = x;
 			res = tmp;
 			min = t;
 			*at = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
-			/*new*/*surf_norm = get_surf_norm(ray, tmp->sph.orig, t);
-			// *surf_norm = get_surf_norm(ray, vars->sph[x].orig, t);
+			*surf_norm = get_surf_norm(ray, tmp->sph.orig, t);
 		}
 		tmp = tmp->next;
 	}
@@ -159,7 +151,7 @@ t_vec3	mat_metal(t_vec3 incoming_ray, t_vec3 surf_norm, \
 float fuzz, t_uint *seed)
 {
 	t_vec3	bounce_ray;
-	float		magnitude;
+	float	magnitude;
 
 	magnitude = 2 * (scalar_product(incoming_ray, surf_norm));
 	bounce_ray = mult_vec_scalar(surf_norm, magnitude);
@@ -194,48 +186,23 @@ t_uint *seed)
 	(void) ray_bounce;
 	(void) seed;
 	float		t;
-	// int			res;
 	t_obj		*res;
 	t_ray		bounce;
 	t_vec3		surf_norm;
-
-	// t_obj		*tmp;
-	// t_obj		*state;
 
 	if (ray_bounce <= 0)
 		return (new_vec3(0, 0, 0));
 	res = hit(vars, ray, &surf_norm, &bounce.orig); //assigns surf_norm
 	// /*debug*/printf("res_7: %d\n", res);
 
-	// if (res >= 0)
 	if (res != NULL)
 	{
-		/* hit obj_ptr */
-		if (res->sph.mat.type == METAL)
+		if (res->mat.type == METAL)
 			bounce.vector = mat_metal(ray.vector, surf_norm, 0, seed);
-		else if (res->sph.mat.type == DIFFUSE)
+		else if (res->mat.type == DIFFUSE)
 			bounce.vector = mat_lambertian(surf_norm, seed);
 		return (mult_vec(ray_color(vars, bounce, ray_bounce - 1, seed), \
-res->sph.mat.albedo));
-
-		/*modified_hit_int*/
-// 		t_obj *state = vars->obj;
-// 		while (res-- > 0)
-// 			state = state->next;
-// 		if (state->sph.mat.type == METAL)
-// 			bounce.vector = mat_metal(ray.vector, surf_norm, 0, seed);
-// 		else if (state->sph.mat.type == DIFFUSE)
-// 			bounce.vector = mat_lambertian(surf_norm, seed);
-// 		return (mult_vec(ray_color(vars, bounce, ray_bounce - 1, seed), \
-// state->sph.mat.albedo));
-
-		/*ori*/
-// 		if (vars->sph[res].mat.type == METAL)
-// 			bounce.vector = mat_metal(ray.vector, surf_norm, 0, seed);
-// 		else if (vars->sph[res].mat.type == DIFFUSE)
-// 			bounce.vector = mat_lambertian(surf_norm, seed);
-// 		return (mult_vec(ray_color(vars, bounce, ray_bounce - 1, seed), \
-// vars->sph[res].mat.albedo));
+res->mat.albedo));
 // 0.5)); //weaken its color reflectance by 50% everytime it bounce
 
 // mult_vec_scalar(vars.sph[state].mat.albedo, 0.8)));

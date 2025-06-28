@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:13:15 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/27 17:14:40 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/27 22:27:21 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_vec3 color, t_uchar mat_type)
 {
 	t_obj	*res;
 
-	res = malloc(sizeof(t_obj));
+	res = (t_obj *)malloc(sizeof(t_obj));
 	if (!res)
 		return (NULL);
 	res->type = SPHERE;

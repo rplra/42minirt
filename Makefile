@@ -93,4 +93,7 @@ re: fclean all
 valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 
-.PHONY: all clean fclean re valgrind
+leaks:
+	leaks -atExit -- ./$(NAME)
+
+.PHONY: all clean fclean re valgrind leaks

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/25 12:58:06 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/27 22:57:43 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ static void	ft_draw(t_rt vars, t_vec3 viewport_00, t_vec3 viewport_d[2])
 	x = -1;
 	y = -1;
 	target = viewport_00;
+
 	// target.z = viewport_00.z + (x * viewport_d[X].z) + (y * viewport_d[Y].z);
 	while (++y < WIN_HEIGHT)
 	{

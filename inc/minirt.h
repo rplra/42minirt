@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/27 16:36:05 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/28 12:10:45 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ typedef struct s_rt
 	//scene
 	t_vec3		color_bg[2];
 	t_obj		*obj;
-	t_sph		*sph;
-	int			count_sph;
+	// t_sph		*sph;
+	// int			count_sph;
 	t_interval	bbox[3];	//bounding box, aabb = t_interval[3]
 
 	//general

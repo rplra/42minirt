@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/27 17:10:29 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/27 22:37:18 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_obj
 		t_plane		plane;
 		t_cylinder	cyl;
 	};
-	t_mat			mat;
+	// t_mat			mat;
 	struct s_obj	*next;
 }					t_obj;
 
@@ -107,7 +107,7 @@ void		clear_image(t_rt vars, int win_width, int win_height, int color);
 
 /* __________________ ray __________________ */
 float		has_hit_sphere(t_vec3 sphere, float radius, t_ray ray);
-t_vec3		ray_color(t_rt vars, t_ray ray, unsigned char ray_bounce, unsigned int *seed);
+t_vec3		ray_color(t_rt *vars, t_ray ray, unsigned char ray_bounce, unsigned int *seed);
 // t_vector3d	ray_color_loop(t_vars vars, t_ray ray, unsigned int *seed);
 t_ray		new_ray(t_vec3 origin, t_vec3 dir);
 int			sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x);

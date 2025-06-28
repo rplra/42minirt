@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:45:50 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/27 17:18:15 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/28 12:19:46 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,29 @@
 //     // return (double)lcg(seed) / 0xFFFFFFFF;
 //     return (double)lcg(seed) / 4294967295;
 // }
+
+/* for debug purposes */
+t_obj	*return_ptr(t_rt *vars)
+{
+	int		x = -1;
+	t_obj	*tmp;
+	t_obj	*res;
+
+	tmp = vars->obj;
+	while (++x < 2)
+	{
+		if (x == 1)
+			res = tmp;
+		tmp = tmp->next;
+	}
+	return (res);
+}
+
+void	incr_ptr(t_rt *vars)
+{
+	while (vars->obj->next)
+		vars->obj = vars->obj->next;
+}
 
 int main()
 {
@@ -86,16 +109,38 @@ int main()
 	// printf("bbox_x: %f %f", bbox[X].min, bbox[X].max);
 
 	/* __________________ init_obj __________________*/
+	// t_rt	vars;
+	// t_obj	*tmp;
+	
+	// init_obj(&vars);
+	// tmp = vars.obj;
+	// while (tmp)
+	// {
+	// 	printf("sph_rad: %f\n", tmp->sph.rad);
+	// 	tmp = tmp->next;
+	// }
+	// ft_lstclear_obj(&vars.obj);
+	// return (0);
+
+	/* __________________ test_incr_ptr __________________*/
+	// t_rt	vars;
+	// t_obj	*tmp;
+	
+	// init_obj(&vars);
+	// incr_ptr(&vars);
+	// tmp = vars.obj;
+	// printf("sph: %f %f %f\n", tmp->sph.orig.x, tmp->sph.orig.y, tmp->sph.orig.z);
+	// ft_lstclear_obj(&vars.obj);
+	// return (0);
+	
+	/* __________________ return_ptr __________________*/
 	t_rt	vars;
 	t_obj	*tmp;
 
 	init_obj(&vars);
-	tmp = vars.obj;
-	while (tmp)
-	{
-		printf("sph_rad: %f\n", tmp->sph.rad);
-		tmp = tmp->next;
-	}
+	tmp = return_ptr(&vars);
+	printf("sph= %f %f %f\n", tmp->sph.orig.x, tmp->sph.orig.y, tmp->sph.orig.z);
 	ft_lstclear_obj(&vars.obj);
-	return (0);
+
+	return (0);	
 }

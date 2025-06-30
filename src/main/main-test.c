@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:45:50 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/28 12:19:46 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/28 23:04:57 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ t_obj	*return_ptr(t_rt *vars)
 
 void	incr_ptr(t_rt *vars)
 {
-	while (vars->obj->next)
-		vars->obj = vars->obj->next;
+	// while (vars->obj->next)
+		// vars->obj = vars->obj->next;
+	vars->ray.orig = new_vec3(10, 10, 10);
 }
 
 int main()
@@ -127,20 +128,25 @@ int main()
 	// t_obj	*tmp;
 	
 	// init_obj(&vars);
-	// incr_ptr(&vars);
 	// tmp = vars.obj;
 	// printf("sph: %f %f %f\n", tmp->sph.orig.x, tmp->sph.orig.y, tmp->sph.orig.z);
 	// ft_lstclear_obj(&vars.obj);
+
+	// vars.ray.orig = new_vec3(0, -1, 0);
+	// printf("ray_init: %f %f %f\n", vars.ray.orig.x, vars.ray.orig.y, vars.ray.orig.z);
+	// incr_ptr(&vars);
+	// printf("ray: %f %f %f\n", vars.ray.orig.x, vars.ray.orig.y, vars.ray.orig.z);
+
 	// return (0);
 	
 	/* __________________ return_ptr __________________*/
-	t_rt	vars;
-	t_obj	*tmp;
+	// t_rt	vars;
+	// t_obj	*tmp;
 
-	init_obj(&vars);
-	tmp = return_ptr(&vars);
-	printf("sph= %f %f %f\n", tmp->sph.orig.x, tmp->sph.orig.y, tmp->sph.orig.z);
-	ft_lstclear_obj(&vars.obj);
+	// init_obj(&vars);
+	// tmp = return_ptr(&vars);
+	// printf("sph= %f %f %f\n", tmp->sph.orig.x, tmp->sph.orig.y, tmp->sph.orig.z);
+	// ft_lstclear_obj(&vars.obj);
 
-	return (0);	
+	// return (0);	
 }

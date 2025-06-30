@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/27 16:51:32 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/29 22:18:22 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,47 +53,6 @@ t_interval res[3])
 	res[Y] = interval(box_0[Y], box_1[Y]);
 	res[Z] = interval(box_0[Z], box_1[Z]);
 }
-
-void	assign_ray_t(float t0, float t1, t_interval *ray_t)
-{
-	if (t0 < t1)
-	{
-		if (t0 > ray_t->min)
-			ray_t->min = t0;
-		else if (t1 < ray_t->max)
-			ray_t->max = t1;
-	}
-	else
-	{
-		if (t1 > ray_t->min)
-			ray_t->min = t1;
-		else if (t0 < ray_t->max)
-			ray_t->max = t0;
-	}
-}
-
-// int	hit(t_ray r, t_interval ax[3], t_interval ray_t)
-// {
-// 	int		axis;
-// 	float	axis_inv; //inverse axis, adinv
-// 	float	ray_vec[3];
-// 	float	ray_orig[3];
-// 	float	t[2];
-// 
-// 	axis = -1;
-// 	vec3_to_arr(r.vector, ray_vec);
-// 	vec3_to_arr(r.orig, ray_orig);
-// 	while (++axis < 3)
-// 	{
-// 		axis_inv = 1 / ray_vec[axis];
-// 		t[0] = (ax[axis].min - ray_orig[axis]) * axis_inv;
-// 		t[1] = (ax[axis].max - ray_orig[axis]) * axis_inv;
-// 		assign_ray_t(t[0], t[1], &ray_t);
-// 		if (ray_t.max <= ray_t.min)
-// 			return (-1);
-// 	}
-// 	return (0);
-// }
 
 /*
  * res = bound_box 

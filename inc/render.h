@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/28 18:05:23 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/29 22:32:49 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ typedef struct s_mat
 
 typedef struct s_sph
 {
-	t_vec3			orig;	//origin
-	float			rad;	//radius
+	t_vec3			orig;		//origin
+	float			rad;		//radius
 	// t_mat		mat;
 }	t_sph;
 
@@ -81,7 +81,6 @@ typedef struct s_obj
 void		initialize_mlx(t_rt *vars);
 void		init_variable(t_rt *vars);
 void		init_obj(t_rt *vars);
-
 
 /* __________________ bound box __________________ */
 void		aabb(t_vec3 a, t_vec3 b, t_interval range[3]);
@@ -106,7 +105,7 @@ void		clear_image(t_rt vars, int win_width, int win_height, int color);
 
 /* __________________ ray __________________ */
 // float		has_hit_sphere(t_vec3 sphere, float radius, t_ray ray);
-float		has_hit_sphere(t_obj obj, t_ray ray);
+float		has_hit_sphere(t_obj obj, t_interval ray_range, t_ray ray);
 t_vec3		ray_color(t_rt *vars, t_ray ray, t_uchar ray_bounce, \
 t_uint *seed);
 // t_vector3d	ray_color_loop(t_vars vars, t_ray ray, unsigned int *seed);
@@ -114,7 +113,10 @@ t_ray		new_ray(t_vec3 origin, t_vec3 dir);
 int			sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x);
 t_vec3		sample_sq_rand(unsigned int *seed);
 t_vec3		get_surf_norm_sph(t_ray ray, t_obj obj, float t);
-t_obj		*hit(t_rt *vars, t_ray ray, t_vec3 *surf_norm, t_vec3 *at);
+t_obj		*hit(t_rt *vars, t_interval ray_range, t_ray ray);
+
+// t_obj		*hit(t_rt *vars, t_interval ray_range, t_vec3 *at);
+// t_obj		*hit(t_rt *vars, t_ray ray, t_vec3 *surf_norm, t_vec3 *at);
 
 
 /* __________________ color __________________ */

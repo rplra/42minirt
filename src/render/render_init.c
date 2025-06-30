@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/28 13:08:13 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/28 22:34:10 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ void	init_variable(t_rt *vars)
 
 	// vars->color_bg[0] = create_hsv(199, 100, 100);
 	// vars->color_bg[1] = create_hsv(166, 10, 90);
+
+	vars->rec.surf_norm = new_vec3(0, 0, 0);
+	vars->rec.t = 0;
 	init_obj(vars);
 	my_create_image(vars, &vars->img);
 }

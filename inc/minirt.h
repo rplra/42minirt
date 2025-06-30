@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/28 12:10:45 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/29 22:31:31 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,13 @@ typedef struct s_img
 	int			endian;
 }				t_img;
 
+typedef struct s_record
+{
+	float		t;			//t = pt along a ray (formula: pt_at = a + t*d)
+	t_vec3		surf_norm;	//surface_normal
+	t_vec3		at;			//pt_at, result frm a + t*d
+}	t_record;
+
 typedef struct s_rt
 {
 	void		*mlx;
@@ -65,6 +72,7 @@ typedef struct s_rt
 	t_camera	cam;
 
 	//scene
+	t_record	rec;
 	t_vec3		color_bg[2];
 	t_obj		*obj;
 	// t_sph		*sph;

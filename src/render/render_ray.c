@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/28 18:05:07 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/29 22:35:41 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,23 +131,24 @@ static t_vec3	bg_color(t_rt vars, t_ray ray)
 t_vec3	ray_color(t_rt *vars, t_ray ray, t_uchar ray_bounce, \
 t_uint *seed)
 {
-	(void) ray_bounce;
+	(void) ray;
 	(void) seed;
 	t_obj		*res;
 	t_ray		bounce;
-	t_vec3		surf_norm;
+	// t_vec3		surf_norm;
 
 	if (ray_bounce <= 0)
 		return (new_vec3(0, 0, 0));
-	res = hit(vars, ray, &surf_norm, &bounce.orig); //assigns surf_norm
+	res = hit(vars, new_interval(0.001f, 2147483647.0), ray); //assigns surf_norm
 	// /*debug*/printf("res_7: %d\n", res);
 
 	if (res != NULL)
 	{
+		bounce.orig = vars->rec.at;
 		if (res->mat.type == METAL)
-			bounce.vector = mat_metal(ray.vector, surf_norm, 0, seed);
+			bounce.vector = mat_metal(ray.vector, vars->rec.surf_norm, 0, seed);
 		else if (res->mat.type == DIFFUSE)
-			bounce.vector = mat_lambertian(surf_norm, seed);
+			bounce.vector = mat_lambertian(vars->rec.surf_norm, seed);
 		return (mult_vec(ray_color(vars, bounce, ray_bounce - 1, seed), \
 res->mat.albedo));
 // 0.5)); //weaken its color reflectance by 50% everytime it bounce

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_vector.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 21:37:14 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/25 12:12:27 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/02 09:07:01 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_quaternion
 
 t_vec3	new_vec3(float x, float y, float z);
 float	len_vec3(t_vec3 vector);
-t_vec3	unit_vec3(t_vec3 vector);
+t_vec3	unit_vec3(t_vec3 vector); // normalize
 t_vec3	mult_vec_scalar(t_vec3 a, float s);
 t_vec3	subtract_vec_scalar(t_vec3 a, float s);
 t_vec3	div_vec_scalar(t_vec3 a, float s);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/28 22:34:10 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/02 16:32:06 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,22 @@ void	initialize_mlx(t_rt *vars)
 "miniRT");
 }
 
-void	init_obj(t_rt *vars)
+void	init_obj(t_rt *vars, t_scene *scene)
 {
-	vars->obj = NULL;
-	new_obj(vars, &vars->obj, new_sph(new_vec3(0, 0, -1.2), 0.5, \
-new_vec3(0.1, 0.2, 0.5), DIFFUSE)); //center
-	new_obj(vars, &vars->obj, new_sph(new_vec3(0, -100.5, -1), 100, \
-new_vec3(0.8, 0.8, 0), DIFFUSE)); //ground
-	new_obj(vars, &vars->obj, new_sph(new_vec3(-1, 0, -1), 0.5, \
-new_vec3(0.8, 0.8, 0.8), METAL)); //left
-	new_obj(vars, &vars->obj, new_sph(new_vec3(1, 0, -1), 0.5, \
-new_vec3(0.8, 0.6, 0.2), METAL)); //right
+	size_t	i;
+	
+	vars->obj = scene->objects;
+	vars->obj_count = scene->obj_count;
+
+// 	vars->obj = NULL;
+// 	new_obj(vars, &vars->obj, new_sph(new_vec3(0, 0, -1.2), 0.5, \
+// new_vec3(0.1, 0.2, 0.5), DIFFUSE)); //center
+// 	new_obj(vars, &vars->obj, new_sph(new_vec3(0, -100.5, -1), 100, \
+// new_vec3(0.8, 0.8, 0), DIFFUSE)); //ground
+// 	new_obj(vars, &vars->obj, new_sph(new_vec3(-1, 0, -1), 0.5, \
+// new_vec3(0.8, 0.8, 0.8), METAL)); //left
+// 	new_obj(vars, &vars->obj, new_sph(new_vec3(1, 0, -1), 0.5, \
+// new_vec3(0.8, 0.6, 0.2), METAL)); //right
 
 	/* init sphere objects, use malloc */
 	// vars->count_sph = 4;
@@ -60,12 +65,15 @@ new_vec3(0.8, 0.6, 0.2), METAL)); //right
 // new_vec3(0.8, 0.6, 0.2), METAL); //right
 }
 
-void	init_cam(t_rt *vars)
+void	init_cam(t_rt *vars, t_scene *scene)
 {
-	vars->cam.orig = new_vec3(0, 0, 0); //-2,2,1
-	vars->cam.lookat = new_vec3(0, 0, -1);
+	// vars->cam.orig = new_vec3(0, 0, 0); //-2,2,1
+	vars->cam.orig = scene->camera.position;
+	// vars->cam.lookat = new_vec3(0, 0, -1);
+	vars->cam.lookat = add_vec(scene->camera.position, scene->camera.orientation);
 	vars->cam.vup = new_vec3(0, 1, 0);
-	vars->cam.vfov = radian(90);
+	//vars->cam.vfov = radian(90);
+	vars->cam.vfov = radian(scene->camera.fov);
 	vars->cam.defoc_ang = radian(0);
 	vars->cam.defoc_disk[X] = new_vec3(0, 0, 0);
 	vars->cam.defoc_disk[Y] = new_vec3(0, 0, 0);

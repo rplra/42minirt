@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_aabb.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/29 22:18:22 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/02 14:51:47 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,19 @@ t_interval res[3])
  * updates bound_box for static sphere
  * value returned in res
  */
-void	aabb_sph(t_obj *obj, t_interval res[3])
+void	aabb_sph(t_object *obj, t_interval res[3])
+{
+	t_sphere	sph;
+	t_vec3		rvec;
+
+	sph = obj->obj.sph;
+	if ((sph.diameter / 2.0f) < 0)
+		sph.diameter = 0;
+	rvec = new_vec3(sph.diameter / 2.0f, sph.diameter / 2.0f, sph.diameter / 2.0f);
+	aabb(subtract_vec(sph.position, rvec), add_vec(sph.position, rvec), res);
+}
+
+/* void	aabb_sph(t_obj *obj, t_interval res[3])
 {
 	t_sph	sph;
 	t_vec3	rvec;
@@ -69,7 +81,7 @@ void	aabb_sph(t_obj *obj, t_interval res[3])
 		sph.rad = 0;
 	rvec = new_vec3(sph.rad, sph.rad, sph.rad);
 	aabb(subtract_vec(sph.orig, rvec), add_vec(sph.orig, rvec), res);
-}
+} */
 
 /*
  * child function in get_bounding_box

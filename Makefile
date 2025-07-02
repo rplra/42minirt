@@ -55,7 +55,7 @@ UTILS_DIR 	= 	$(SRC_DIR)/utils
 SRCS		=	$(wildcard $(MAIN_DIR)/main-hl.c) \
 				$(wildcard $(REND_DIR)/*.c) \
 				$(wildcard $(KEY_DIR)/*.c) \
-#				$(wildcard $(PARSE_DIR)/*.c) \
+				$(wildcard $(PARSE_DIR)/*.c) \
 				$(wildcard $(RT_DIR)/*.c) \
 				$(wildcard $(UTILS_DIR)/*.c)
 OBJS		=	$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))

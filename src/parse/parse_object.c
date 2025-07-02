@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 10:32:41 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/02 08:58:12 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	parse_sphere(t_parse *file, t_object *obj)
 	//printf("Converted colour: (r=%u, g=%u, b=%u)\n", obj->colour.r, obj->colour.g, obj->colour.b);
 	free_array(values);
 	obj->type = SPHERE;
-	obj->obj.sphere = tmp;
+	obj->obj.sph = tmp;
 	//printf("Printing struct\n");
 	//print_sphere(obj);
 	return (0);
@@ -111,7 +111,7 @@ int	parse_cylinder(t_parse *file, t_object *obj)
 	//printf("Converted colour: (r=%u, g=%u, b=%u)\n", obj->colour.r, obj->colour.g, obj->colour.b);
 	free_array(values);
 	obj->type = CYLINDER;
-	obj->obj.cylinder = tmp;
+	obj->obj.cyl = tmp;
 	//printf("Printing struct\n");
 	//print_cylinder(obj);
 	return (0);

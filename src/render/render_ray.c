@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ray.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/29 22:35:41 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/02 10:10:24 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_vec3	point_at(float t, t_ray r)
  * reverse direction of surf_norm if so
  * returns a surf_norm in unit vector
  */
+// intergrate get_normal in normal.c instead
 t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t)
 {
 	t_vec3	pt_ray;

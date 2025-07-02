@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/29 22:31:31 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/02 15:49:20 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <errno.h>
 # include <fcntl.h>
+# include <float.h>
 # include <limits.h>
 # include <math.h>
 # include <stdbool.h>
@@ -75,6 +76,8 @@ typedef struct s_rt
 	t_record	rec;
 	t_vec3		color_bg[2];
 	t_obj		*obj;
+	size_t		obj_count;
+	
 	// t_sph		*sph;
 	// int			count_sph;
 	t_interval	bbox[3];	//bounding box, aabb = t_interval[3]

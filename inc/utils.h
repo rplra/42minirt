@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:42:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 09:57:23 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/02 08:57:30 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 #ifndef UTILS_H
 #define UTILS_H
+
+// Forward declaration for conversion functions
+struct s_rt;
+typedef struct s_rt t_rt;
 
 # define ERROR_ARGFORMAT "Format: <./minirt> <scenes/scene.rt>"
 # define ERROR_FILETYPE "Error: File type must be in .rt"
@@ -76,5 +80,13 @@ void	cleanup_and_exit(t_scene *scene);
 void	flush_gnl(int fd);
 float	clamp(float value, float min, float max);
 t_colour	colour_clamp(t_colour c);
+
+// Conversion functions
+t_vec3	colour_to_vec3(t_colour colour);
+t_colour	vec3_to_colour(t_vec3 vec);
+void	convert_scene_to_render(t_scene *scene, t_rt *rt);
+void	convert_camera(t_scene *scene, t_rt *rt);
+void	convert_objects(t_scene *scene, t_rt *rt);
+void	convert_ambient(t_scene *scene, t_rt *rt);
 
 #endif

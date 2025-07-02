@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/28 13:41:44 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/02 16:39:57 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 typedef unsigned char	t_uchar;
 typedef unsigned int	t_uint;
+typedef t_vec3			t_colour;
+
+# define r	x
+# define g	y
+# define b	z
 
 // //to change to t_vec3
 // typedef struct	s_vector
@@ -24,12 +29,12 @@ typedef unsigned int	t_uint;
 // 	float		z;
 // }				t_vec3;
 
-typedef struct s_colour
-{
-	t_uint		r;
-	t_uint		g;
-	t_uint		b;		
-}				t_colour;
+// typedef struct s_colour
+// {
+// 	float		r;
+// 	float		g;
+// 	float		b;		
+// }				t_colour;
 
 typedef enum e_material_type
 {
@@ -59,19 +64,19 @@ typedef struct s_ambient
 
 typedef struct s_camera
 {
-	t_vec3	position;
-	t_vec3	orientation;
-	t_uint	fov;
+	t_vec3		position;
+	t_vec3		orientation;
+	t_uint		fov;
 
-	t_vec3	orig;		//camera position
-	t_vec3	lookat;		//camera pointing to
-	t_vec3	vup;		//camera orientation
-	float	vfov;		//vertical fov (need change to hfov)
-	float	focus_dist;
-	float	defoc_ang;	//blur angle
-	t_vec3	defoc_disk[2];
-	int		sample_per_pixel;
-	t_uchar	ray_bounce;	//how many times a ray should bounce
+	t_vec3		orig;				//camera position
+	t_vec3		lookat;				//camera pointing to
+	t_vec3		vup;				//camera orientation
+	float		vfov;				//vertical fov (need change to hfov)
+	float		focus_dist;
+	float		defoc_ang;			//blur angle
+	t_vec3		defoc_disk[2];
+	int			sample_per_pixel;
+	t_uchar		ray_bounce;			//how many times a ray should bounce
 
 }				t_camera;
 
@@ -84,30 +89,30 @@ typedef struct s_light
 
 typedef struct s_sphere
 {
-	t_vec3	position;
-	float	diameter;
+	t_vec3		position;
+	float		diameter;
 }				t_sphere;
 
 typedef struct s_plane
 {
-	t_vec3	position;
-	t_vec3	normal;
+	t_vec3		position;
+	t_vec3		normal;
 }				t_plane;
 
 typedef struct s_cylinder
 {
-	t_vec3	position;
-	t_vec3	axis;
-	float	diameter;
-	float	height;
+	t_vec3		position;
+	t_vec3		axis;
+	float		diameter;
+	float		height;
 }				t_cylinder;
 
 // tag / labelling of objects
 typedef enum e_obj_type
 {
-	SPHERE = 0,
-	PLANE = 1,
-	CYLINDER = 2,
+	SPHERE,
+	PLANE,
+	CYLINDER,
 }				t_obj_type;
 
 // union of shapes, stores one of several shapes, one at a time
@@ -122,10 +127,10 @@ typedef union u_obj
 // the core object structure
 typedef struct s_object
 {
-	t_obj_type	type;		// tells what type of obj
-	t_obj_union	obj;		// stores the actual shape of data
-	t_colour	colour;		// object's colour
-	t_material	material;	// rendering data
+	t_obj_type	type;				// tells what type of obj
+	t_obj_union	obj;				// stores the actual shape of data
+	// t_colour	colour;				// obj's colour, removed since mat has albedo
+	t_material	material;			// rendering data
 }				t_object;
 
 typedef struct s_scene

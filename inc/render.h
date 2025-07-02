@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/29 22:32:49 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/02 14:52:44 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,31 @@ enum	e_quadratic_values
 // 	t_vec3	vector;
 // }	t_ray;
 
-typedef struct s_mat
-{
-	t_uchar			type;		//material type
-	t_vec3			albedo;		//obj base color
-}	t_mat;
+// typedef struct s_mat
+// {
+// 	t_uchar			type;		//material type
+// 	t_vec3			albedo;		//obj base color
+// }	t_mat;
 
-typedef struct s_sph
-{
-	t_vec3			orig;		//origin
-	float			rad;		//radius
-	// t_mat		mat;
-}	t_sph;
+// typedef struct s_sph
+// {
+// 	t_vec3			orig;		//origin
+// 	float			rad;		//radius
+// 	// t_mat		mat;
+// }	t_sph;
 
-typedef struct s_obj
-{
-	t_obj_type		type;		// tells what type of obj
-	union
-	{
-		t_sph		sph;
-		t_plane		plane;
-		t_cylinder	cyl;
-	};
-	t_mat			mat;
-	struct s_obj	*next;
-}	t_obj;
+// typedef struct s_obj
+// {
+// 	t_obj_type		type;		// tells what type of obj
+// 	union
+// 	{
+// 		t_sph		sph;
+// 		t_plane		plane;
+// 		t_cylinder	cyl;
+// 	};
+// 	t_mat			mat;
+// 	struct s_obj	*next;
+// }	t_obj;
 
 /* __________________ initialization __________________ */
 void		initialize_mlx(t_rt *vars);

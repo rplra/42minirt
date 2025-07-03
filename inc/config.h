@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 22:36:15 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/03 10:38:50 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 # define CONFIG_H
 
 /*	math constant	*/
-# define EPSILON 0.000001
-# define EPS 0.00001
+# define EPSILON 0.00001
 # define PI 3.14159265358979323846
 
 /*	window	*/

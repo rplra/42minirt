@@ -6,12 +6,14 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/02 16:39:57 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:27:33 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_H
 # define SCENE_H
+
+# include "../lib/quaternion/ft_vector.h" 
 
 typedef unsigned char	t_uchar;
 typedef unsigned int	t_uint;
@@ -67,8 +69,7 @@ typedef struct s_camera
 	t_vec3		position;
 	t_vec3		orientation;
 	t_uint		fov;
-
-	t_vec3		orig;				//camera position
+	
 	t_vec3		lookat;				//camera pointing to
 	t_vec3		vup;				//camera orientation
 	float		vfov;				//vertical fov (need change to hfov)
@@ -77,7 +78,6 @@ typedef struct s_camera
 	t_vec3		defoc_disk[2];
 	int			sample_per_pixel;
 	t_uchar		ray_bounce;			//how many times a ray should bounce
-
 }				t_camera;
 
 typedef struct s_light
@@ -133,13 +133,13 @@ typedef struct s_object
 	t_material	material;			// rendering data
 }				t_object;
 
-typedef struct s_scene
-{
-	t_ambient	ambient;
-	t_camera	camera;
-	t_light		light;
-	t_object	*objects;
-	size_t		obj_count;
-}				t_scene;
+// typedef struct s_scene
+// {
+// 	t_ambient	ambient;
+// 	t_camera	camera;
+// 	t_light		light;
+// 	t_object	*objects;
+// 	size_t		obj_count;
+// }				t_scene;
 
 #endif

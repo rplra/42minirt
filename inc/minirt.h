@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/02 15:49:20 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:23:03 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@
 # include "../lib/gnl/get_next_line.h"
 # include "../lib/quaternion/ft_vector.h"
 # include "config.h"
-# include "keymap.h"
 # include "keybind.h"
-# include "ray.h"
 # include "utils.h"
 # include "scene.h"
 # include "parse.h"
@@ -45,9 +43,9 @@
 # define NO		0
 
 typedef unsigned int		t_uint;
-typedef struct s_ray		t_ray;
-typedef struct s_sph		t_sph;
-typedef struct s_obj		t_obj;
+// typedef struct s_ray		t_ray;
+// typedef struct s_sph		t_sph;
+// typedef struct s_obj		t_obj;
 
 typedef struct s_img
 {
@@ -58,31 +56,24 @@ typedef struct s_img
 	int			endian;
 }				t_img;
 
-typedef struct s_record
-{
-	float		t;			//t = pt along a ray (formula: pt_at = a + t*d)
-	t_vec3		surf_norm;	//surface_normal
-	t_vec3		at;			//pt_at, result frm a + t*d
-}	t_record;
-
 typedef struct s_rt
 {
+	//mlx
 	void		*mlx;
 	void		*mlx_win;
 	t_img		img;
-	t_camera	cam;
 
 	//scene
+	t_ambient	ambient;
+	t_camera	camera;
+	t_light		light;
+	t_object	*obj;
+	size_t		obj_count;
+
+	// raytracing
 	t_record	rec;
 	t_vec3		color_bg[2];
-	t_obj		*obj;
-	size_t		obj_count;
-	
-	// t_sph		*sph;
-	// int			count_sph;
 	t_interval	bbox[3];	//bounding box, aabb = t_interval[3]
-
-	//general
 	t_ray		ray;		//helper pointer
 
 }				t_rt;

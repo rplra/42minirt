@@ -6,14 +6,17 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/02 14:52:44 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:25:44 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RENDER_H
 # define RENDER_H
 
-# include "minirt.h"
+# include <stdbool.h>         // for bool
+# include "scene.h"           // for t_object, t_obj_type
+# include "interval.h"        // for t_interval
+# include "../lib/quaternion/ft_vector.h" 
 
 typedef struct s_rt			t_rt;
 typedef struct s_ray		t_ray;
@@ -36,6 +39,28 @@ enum	e_quadratic_values
 	B = 1,
 	C = 2
 };
+
+typedef struct s_ray
+{
+	t_vec3	orig;
+	t_vec3	vector;
+}	t_ray;
+
+typedef struct s_hit
+{
+	t_vec3		point;			// intersection point
+	t_vec3		normal;			// surface normal at the point
+	t_object	*obj;			// the object hit
+	float		t;				// ray paremeter (distance)
+	bool		front_face;		// for correct normal orientation
+}				t_hit;
+
+typedef struct s_record
+{
+	float		t;			//t = pt along a ray (formula: pt_at = a + t*d)
+	t_vec3		surf_norm;	//surface_normal
+	t_vec3		at;			//pt_at, result frm a + t*d
+}	t_record;
 
 // enum	e_material_type
 // {
@@ -84,7 +109,7 @@ void		init_obj(t_rt *vars);
 
 /* __________________ bound box __________________ */
 void		aabb(t_vec3 a, t_vec3 b, t_interval range[3]);
-void		get_bbox(t_obj_type type, t_obj *obj, t_interval bound_box[3]);
+void		get_bbox(t_obj_type type, t_object *obj, t_interval bound_box[3]);
 void		update_aabb_box(t_interval box_0[3], t_interval box_1[3], \
 t_interval res[3]);
 
@@ -92,9 +117,9 @@ t_interval	new_interval(float min, float max);
 t_interval	interval(t_interval a, t_interval b);
 
 /* __________________ objs __________________ */
-t_obj		*new_sph(t_vec3 position, float sph_radius, t_vec3 color, t_uchar mat_type);
-t_sph		new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_uchar mat_type);
-void		new_obj(t_rt *vars, t_obj **lst, t_obj *new);
+//t_obj		*new_sph(t_vec3 position, float sph_radius, t_vec3 color, t_uchar mat_type);
+//t_sph		new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_uchar mat_type);
+//void		new_obj(t_rt *vars, t_obj **lst, t_obj *new);
 
 
 /* __________________ img render __________________ */
@@ -105,15 +130,15 @@ void		clear_image(t_rt vars, int win_width, int win_height, int color);
 
 /* __________________ ray __________________ */
 // float		has_hit_sphere(t_vec3 sphere, float radius, t_ray ray);
-float		has_hit_sphere(t_obj obj, t_interval ray_range, t_ray ray);
+float		has_hit_sphere(t_object obj, t_interval ray_range, t_ray ray);
 t_vec3		ray_color(t_rt *vars, t_ray ray, t_uchar ray_bounce, \
 t_uint *seed);
-// t_vector3d	ray_color_loop(t_vars vars, t_ray ray, unsigned int *seed);
+// t_vect3d	ray_color_loop(t_vars vars, t_ray ray, unsigned int *seed);
 t_ray		new_ray(t_vec3 origin, t_vec3 dir);
 int			sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x);
 t_vec3		sample_sq_rand(unsigned int *seed);
-t_vec3		get_surf_norm_sph(t_ray ray, t_obj obj, float t);
-t_obj		*hit(t_rt *vars, t_interval ray_range, t_ray ray);
+t_vec3		get_surf_norm_sph(t_ray ray, t_object obj, float t);
+t_object	*hit(t_rt *vars, t_interval ray_range, t_ray ray);
 
 // t_obj		*hit(t_rt *vars, t_interval ray_range, t_vec3 *at);
 // t_obj		*hit(t_rt *vars, t_ray ray, t_vec3 *surf_norm, t_vec3 *at);
@@ -139,13 +164,28 @@ t_vec3		rand_unit_vec(unsigned int *seed);
 t_vec3		rand_unit_disk(unsigned int *seed);
 
 /* __________________ malloc functions __________________ */
-int			malloc_sph_ptr(t_sph **dest, int num);
+//int			malloc_sph_ptr(t_sph **dest, int num);
 
 /* __________________ memory free functions __________________ */
 void		free_malloc(t_rt *vars, int indicator);
-void		ft_lstclear_obj(t_obj **lst);
+//void		ft_lstclear_obj(t_obj **lst);
 
 /* __________________ debug functions __________________ */
 void		debug_print_vec(char *str, t_vec3 vec);
+
+
+/*			normal.c		*/
+void		get_normal(t_hit *hit);
+t_vec3		get_cylinder_normal(t_vec3 point, t_cylinder *cy);
+
+/*			light.c			*/
+t_vec3		ambient(t_hit *hit, t_ambient amb);
+t_vec3		diffuse(t_hit *hit, t_light *light);
+t_vec3		specular(t_hit *hit, t_light *light, t_camera *camera);
+t_vec3		light_col(t_hit *hit, t_rt *rt);
+t_vec3		reflect(t_vec3 I, t_vec3 N);
+
+/*			shadow.c		*/
+int			is_shadow(t_rt	*vars, t_vec3 point, t_vec3 normal, t_rt *rt);
 
 #endif

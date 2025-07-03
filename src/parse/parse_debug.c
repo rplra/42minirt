@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:19:29 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/02 11:14:06 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/03 09:10:07 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void print_plane(const t_object *obj)
     printf("Plane normal: (x=%f, y=%f, z=%f)\n",
         obj->obj.plane.normal.x, obj->obj.plane.normal.y, obj->obj.plane.normal.z);
     printf("Plane colour: (r=%f, g=%f, b=%f)\n",
-        obj->colour.r, obj->colour.g, obj->colour.b);
+        obj->material.albedo.r, obj->material.albedo.g, obj->material.albedo.b);
 }
 
 void	print_sphere(const t_object *obj)
@@ -53,7 +53,7 @@ void	print_sphere(const t_object *obj)
         obj->obj.sph.position.x, obj->obj.sph.position.y, obj->obj.sph.position.z);
 	printf("Sphere diameter: %f\n", obj->obj.sph.diameter);
 	printf("Sphere colour: (r=%f, g=%f, b=%f)\n",
-        obj->colour.r, obj->colour.g, obj->colour.b);
+        obj->material.albedo.r, obj->material.albedo.g, obj->material.albedo.b);
 }
 
 void	print_cylinder(const t_object *obj)
@@ -65,5 +65,5 @@ void	print_cylinder(const t_object *obj)
 	printf("Cylinder diameter: %f\n", obj->obj.cyl.diameter);
 	printf("Cylinder height: %f\n", obj->obj.cyl.height);
 	printf("Cylinder colour: (r=%f, g=%f, b=%f)\n",
-        obj->colour.r, obj->colour.g, obj->colour.b);
+        obj->material.albedo.r, obj->material.albedo.g, obj->material.albedo.b);
 }

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:27:39 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/02 14:31:51 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/03 09:21:32 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,16 @@ t_colour	specular(t_hit *hit, t_light *light, t_camera *camera)
 }
 
 // final colour (ambient + diffuse + specular)
-t_colour	light_col(t_hit *hit, t_scene *scene)
+t_colour	light_col(t_hit *hit, t_rt *rt)
 {
 	t_colour	ambient_col;
 	t_colour	diffuse_col;
 	t_colour	specular_col;
 	t_colour	final_col;
 
-	ambient_col = ambient(hit, scene->ambient);
-	diffuse_col = diffuse(hit, &scene->light);
-	specular_col = specular(hit, &scene->light, &scene->camera);
+	ambient_col = ambient(hit, rt->ambient);
+	diffuse_col = diffuse(hit, &rt->light);
+	specular_col = specular(hit, &rt->light, &rt->camera);
 	final_col = add_vec(ambient_col, diffuse_col);
 	final_col = add_vec(final_col, specular_col);
 	// final_col = colour_clamp(final_col);

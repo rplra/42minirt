@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:53 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/17 08:09:04 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:57:51 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	is_rt_file(const char *filename)
 	return ((len >= 3 && !ft_strncmp(filename + len - 3, ".rt", 3)));
 }
 
-static int	parse_line(char *line, t_parse *file, t_scene *scene)
+static int	parse_line(char *line, t_parse *file, t_rt *rt)
 {
 	char	*type;
 
@@ -40,14 +40,14 @@ static int	parse_line(char *line, t_parse *file, t_scene *scene)
 			return (print_error(file, "Camera must only be 1", -1, NULL));
 		else if (!ft_strcmp(type, "L") && ++file->light_count > 1)
 			return (print_error(file, "Light must only be 1", -1, NULL));
-		else if (parse_scene(file, scene))
+		else if (parse_scene(file, rt))
 			return(1);
 	}
 	return (0);
 }
 
 // to check if there are invalid params, interrupt gnl and free line
-int	parse_file(int fd, t_parse *file, t_scene *scene)
+int	parse_file(int fd, t_parse *file, t_rt *rt)
 {
 	char	*line;
 
@@ -56,7 +56,7 @@ int	parse_file(int fd, t_parse *file, t_scene *scene)
 	{
 		//printf("\n-->Line: %s\n", line); // debug
 		file->line_num++;
-		if (parse_line(line, file, scene))
+		if (parse_line(line, file, rt))
 		{
 			free(line);
 			free_array(file->tokens);
@@ -73,10 +73,11 @@ int	parse_file(int fd, t_parse *file, t_scene *scene)
 	if (file->ambient_count < 1 || file->camera_count < 1
 		|| file->light_count < 1)
 		return (print_error(NULL, ERROR_MISSINGID, -1, NULL));
+	/*debug*/printf("Parsed file\n");
 	return (0);
 }
 
-int	open_file(const char *file, t_scene *scene)
+int	open_file(const char *file, t_rt *rt)
 {
 	int		fd;
 	t_parse	parse;
@@ -88,7 +89,7 @@ int	open_file(const char *file, t_scene *scene)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		exit_with_error(ERROR_FILEFD);
-	if (parse_file(fd, &parse, scene))
+	if (parse_file(fd, &parse, rt))
 		return (1);
 	return (0);
 }

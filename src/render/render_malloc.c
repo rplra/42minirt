@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_utils_malloc.c                                  :+:      :+:    :+:   */
+/*   render_malloc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:04:45 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/24 19:22:21 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/03 13:36:41 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 /* mallocs a sph_ptr and writes all to NULL */
+/* 
 int	malloc_sph_ptr(t_sph **dest, int num)
 {
 	if (num <= 0)
@@ -25,3 +26,4 @@ int	malloc_sph_ptr(t_sph **dest, int num)
 	}
 	return (1);
 }
+*/

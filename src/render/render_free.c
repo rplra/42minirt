@@ -3,53 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   render_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:09:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/28 12:28:20 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/03 14:33:50 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	free_one(void *vars)
-{
-	if (!vars)
-		return ;
-	free(vars);
-	vars = NULL;
-}
+// void	free_one(void *vars)
+// {
+// 	if (!vars)
+// 		return ;
+// 	free(vars);
+// 	vars = NULL;
+// }
 
-void	free_assign_hsv(int **hsv, int free_count)
-{
-	if (!hsv)
-		return ;
-	while (free_count > 0)
-	{
-		free(hsv[--free_count]);
-		hsv[free_count] = NULL;
-	}
-}
+// void	free_assign_hsv(int **hsv, int free_count)
+// {
+// 	if (!hsv)
+// 		return ;
+// 	while (free_count > 0)
+// 	{
+// 		free(hsv[--free_count]);
+// 		hsv[free_count] = NULL;
+// 	}
+// }
 
 /* 
  * consolidate all mallocs and free when exit program
  * indicator controls what to free
  */
-void	free_malloc(t_rt *vars, int indicator)
-{
-	if (!vars)
-		return ;
-	// free_assign_hsv(vars->color_bg, 2);
-	free_one(vars->mlx);
-	// free(vars->sph);
-	ft_lstclear_obj(&vars->obj);
-	if (indicator > 0)
-	{
-		// free_one(vars->z_array);
-		// free_assign_hsv(vars->hsv_array, 3);
-	}
-}
+// void	free_malloc(t_rt *vars, int indicator)
+// {
+// 	if (!vars)
+// 		return ;
+// 	// free_assign_hsv(vars->color_bg, 2);
+// 	free_one(vars->mlx);
+// 	// free(vars->sph);
+// 	ft_lstclear_obj(&vars->obj);
+// 	if (indicator > 0)
+// 	{
+// 		// free_one(vars->z_array);
+// 		// free_assign_hsv(vars->hsv_array, 3);
+// 	}
+// }
 
+/*
 void	ft_lstclear_obj(t_obj **lst)
 {
 	t_obj	*temp;
@@ -65,3 +66,4 @@ void	ft_lstclear_obj(t_obj **lst)
 	}
 	*lst = NULL;
 }
+*/

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/02 14:51:47 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:28:34 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	aabb_sph(t_object *obj, t_interval res[3])
  * child function in get_bounding_box
  * calls different function based on obj type
  */
-static void	init_bbox_func(void (*aabb_obj[])(t_obj *, t_interval[3]))
+static void	init_bbox_func(void (*aabb_obj[])(t_object *, t_interval[3]))
 {
 	aabb_obj[SPHERE] = aabb_sph;
 }
@@ -97,9 +97,9 @@ static void	init_bbox_func(void (*aabb_obj[])(t_obj *, t_interval[3]))
  * get bounding box size for different objs
  * calls bound box function based on obj_type
  */
-void	get_bbox(t_obj_type type, t_obj *obj, t_interval bound_box[3])
+void	get_bbox(t_obj_type type, t_object *obj, t_interval bound_box[3])
 {
-	void	(*func[3])(t_obj *, t_interval[3]);
+	void	(*func[3])(t_object *, t_interval[3]);
 
 	if (type < 0 || type > 2)
 		return ;

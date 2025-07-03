@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/02 10:10:24 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:01:10 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ t_vec3	point_at(float t, t_ray r)
  * returns a surf_norm in unit vector
  */
 // intergrate get_normal in normal.c instead
-t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t)
+t_vec3	get_surf_norm_sph(t_ray ray, t_object obj, float t)
 {
 	t_vec3	pt_ray;
 	t_vec3	surf_norm;
 
 	// also known as set_face_normal
 	pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
-	surf_norm = subtract_vec(pt_ray, obj.sph.orig);
+	surf_norm = subtract_vec(pt_ray, obj.obj.sph.position);
 	surf_norm = unit_vec3(surf_norm);
 	// so, reverse surf_norm if so
 	if (scalar_product(ray.vector, surf_norm) > 0) // pointing in same direction
@@ -134,7 +134,7 @@ t_uint *seed)
 {
 	(void) ray;
 	(void) seed;
-	t_obj		*res;
+	t_object	*res;
 	t_ray		bounce;
 	// t_vec3		surf_norm;
 
@@ -146,12 +146,12 @@ t_uint *seed)
 	if (res != NULL)
 	{
 		bounce.orig = vars->rec.at;
-		if (res->mat.type == METAL)
+		if (res->material.type == METAL)
 			bounce.vector = mat_metal(ray.vector, vars->rec.surf_norm, 0, seed);
-		else if (res->mat.type == DIFFUSE)
+		else if (res->material.type == DIFFUSE)
 			bounce.vector = mat_lambertian(vars->rec.surf_norm, seed);
 		return (mult_vec(ray_color(vars, bounce, ray_bounce - 1, seed), \
-res->mat.albedo));
+res->material.albedo));
 // 0.5)); //weaken its color reflectance by 50% everytime it bounce
 
 // mult_vec_scalar(vars.sph[state].mat.albedo, 0.8)));

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   render_ray_sample.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/27 23:10:17 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/03 14:43:43 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "render.h"
+#include "minirt.h"
 
 /*
  * child function in sample_pixels 
@@ -36,11 +38,11 @@ t_vec3	sample_defoc_disk(t_rt vars, unsigned int *seed)
 
 	pt = rand_unit_disk(seed);
 	// res = vars.cam_orig;
-	res = add_vec(vars.cam.orig, add_vec(mult_vec_scalar(\
-vars.cam.defoc_disk[X], pt.x), mult_vec_scalar(vars.cam.defoc_disk[Y], pt.y)));
-	/*debug*/debug_print_vec("sample_defoc:cam:", vars.cam.orig);
-	/*debug*/debug_print_vec("sample_defoc:x:", vars.cam.defoc_disk[X]);
-	/*debug*/debug_print_vec("sample_defoc:y:", vars.cam.defoc_disk[Y]);
+	res = add_vec(vars.camera.position, add_vec(mult_vec_scalar(\
+vars.camera.defoc_disk[X], pt.x), mult_vec_scalar(vars.camera.defoc_disk[Y], pt.y)));
+	/*debug*/debug_print_vec("sample_defoc:cam:", vars.camera.position);
+	/*debug*/debug_print_vec("sample_defoc:x:", vars.camera.defoc_disk[X]);
+	/*debug*/debug_print_vec("sample_defoc:y:", vars.camera.defoc_disk[Y]);
 	/*debug*/debug_print_vec("sample_defoc:pt:", pt);
 	/*debug*/debug_print_vec("sample_defoc:res:", res);
 
@@ -64,7 +66,7 @@ int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
 	k = -1;
 	color = new_vec3(0, 0, 0);
 	res.z = target.z;
-	while (++k < vars.cam.sample_per_pixel)
+	while (++k < vars.camera.sample_per_pixel)
 	{
 		offset = sample_sq_rand(&seed);
 		// res.x = target.x + (offset.x * viewport_d.x);
@@ -80,7 +82,7 @@ int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
 		// auto pixel_sample = pixel00_loc
 		//						+ ((i + offset.x()) * pixel_delta_u)
 		//						+ ((j + offset.y()) * pixel_delta_v);
-		if (vars.cam.defoc_ang > 0)
+		if (vars.camera.defoc_ang > 0)
 			vars.ray.orig = sample_defoc_disk(vars, &seed);
 		vars.ray.vector = subtract_vec(res, vars.ray.orig);
 
@@ -88,10 +90,10 @@ int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
 		/*debug*/printf("ft_draw:res:%f %f %f\n", res.x, res.y, res.z);
 
 		// color = add_vec(color, ray_color_loop(vars, vars.ray, &seed));
-		color = add_vec(color, ray_color(&vars, vars.ray, vars.cam.ray_bounce, &seed));
+		color = add_vec(color, ray_color(&vars, vars.ray, vars.camera.ray_bounce, &seed));
 		// /*debug*/printf("color:%f %f %f\n", color.x, color.y, color.z);
 	}
-	color = div_vec_scalar(color, vars.cam.sample_per_pixel);
+	color = div_vec_scalar(color, vars.camera.sample_per_pixel);
 	color = color_correction(color);
 	// /*debug*/printf("color_fin: %f %f %f\n", color.x, color.y, color.z);
 	// color = color_correction(div_vector_scalar(color, vars.sample_per_pixel));

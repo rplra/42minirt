@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_hit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/30 21:38:08 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/03 14:34:05 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@
  * https://raytracing.github.io/books/RayTracingInOneWeekend.html
  * https://youtu.be/ebzlMOw79Yw?si=8SXTPsEcSUtwft71
  */
-float	has_hit_sphere(t_obj obj, t_interval ray_range, t_ray ray)
+float	has_hit_sphere(t_object obj, t_interval ray_range, t_ray ray)
 {
 	float		n[3];
 	float		discriminant;
 	float		tmp;
 	t_vec3		ray_to_center;
 
-	ray_to_center = subtract_vec(obj.sph.orig, ray.orig);
-	n[A] = scalar_product(ray.vector, ray.vector) + EPS;
-	n[B] = scalar_product(ray.vector, ray_to_center) + EPS;
+	ray_to_center = subtract_vec(obj.obj.sph.position, ray.orig);
+	n[A] = scalar_product(ray.vector, ray.vector) + EPSILON;
+	n[B] = scalar_product(ray.vector, ray_to_center) + EPSILON;
 	n[C] = scalar_product(ray_to_center, ray_to_center) - \
-(obj.sph.rad * obj.sph.rad) + EPS;
+((obj.obj.sph.diameter / 2) * (obj.obj.sph.diameter / 2)) + EPSILON;
 
 	discriminant = (n[B] * n[B]) - (n[A] * n[C]);
 	if (discriminant < 0)
@@ -74,7 +74,7 @@ void	init_hit_func(float (*has_hit[])())
  * child function in hit
  * calls respective get_surf_norm function depending on object type
  */
-void	init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float))
+void	init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_object, float))
 {
 	get_surf_norm[SPHERE] = get_surf_norm_sph;
 }
@@ -86,35 +86,72 @@ void	init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float))
  * at = origin + (t * direction)
  */
 // t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray, t_vec3 *at)
-t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
-{
-	float		t;
-	t_obj		*tmp;
-	t_obj		*res;
-	float		min;
-	float		(*has_hit[3])(t_obj, t_interval, t_ray);
-	t_vec3      (*get_surf_norm[3])(t_ray, t_obj, float);
+// using linked list
+// t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
+// {
+// 	float		t;
+// 	t_obj		*tmp;
+// 	t_obj		*res;
+// 	float		min;
+// 	float		(*has_hit[3])(t_obj, t_interval, t_ray);
+// 	t_vec3      (*get_surf_norm[3])(t_ray, t_obj, float);
 
-	init_hit_func(has_hit);
+// 	init_hit_func(has_hit);
+// 	init_surf_norm(get_surf_norm);
+// 	min = ray_range.max;
+// 	res = NULL;
+// 	tmp = vars->obj;
+// 	while (tmp != NULL)
+// 	{
+// 		// /*debug*/printf("id:%d\n", x);
+// 		t = has_hit[tmp->type](*tmp, ray_range, ray); //this returns t value only, more like get_root
+// 		// /*debug*/printf("has_hit_sphere:t:%f\n", t);
+// 		if (t > ray_range.min && t <= min) // if its new min, keep in record
+// 		{
+// 			res = tmp;
+// 			min = t;
+// 			vars->rec.t = t; //hit hittable
+// 			// can split this out to end (has_hit_sphere)
+// 			vars->rec.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, min)); //min=t
+// 			vars->rec.surf_norm = get_surf_norm[res->type](ray, *res, min); //min=t
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	return (res);
+// }
+
+/*
+ray_range: defines the minimum and maximum valid t values (distance along the ray).
+ray: the ray being tested against all scene objects
+*/
+t_object	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
+{
+	size_t		i;
+	float		t; 				// temp var holding hit distance
+	t_object	*res;			// stores closest obj hit so far
+	float		min;			// keep track of the smallest (nearest hit point)
+	float		(*has_hit[3])(t_object, t_interval, t_ray);
+	t_vec3		(*get_surf_norm[3])(t_ray, t_object, float);
+
+	// init hit and normal function array
+	init_hit_func(has_hit);			
 	init_surf_norm(get_surf_norm);
-	min = ray_range.max;
 	res = NULL;
-	tmp = vars->obj;
-	while (tmp != NULL)
+	min = ray_range.max;
+	i = -1;
+	while (++i < vars->obj_count)
 	{
-		// /*debug*/printf("id:%d\n", x);
-		t = has_hit[tmp->type](*tmp, ray_range, ray); //this returns t value only, more like get_root
-		// /*debug*/printf("has_hit_sphere:t:%f\n", t);
-		if (t > ray_range.min && t <= min) // if its new min, keep in record
+		// call hit function for object
+		t = has_hit[vars->obj[i].type](vars->obj[i], ray_range, ray);
+		// if t is within valid range and closer than previous closest
+		if (t > ray_range.min && t <= min)
 		{
-			res = tmp;
-			min = t;
-			vars->rec.t = t; //hit hittable
-			// can split this out to end (has_hit_sphere)
-			vars->rec.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, min)); //min=t
-			vars->rec.surf_norm = get_surf_norm[res->type](ray, *res, min); //min=t
+			res = &vars->obj[i]; // update closest object
+			min = t;			 // update closest distance
+			vars->rec.t = t;	 // save t val for lighting / shading
+			vars->rec.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, min)); //compute hit function
+			vars->rec.surf_norm = get_surf_norm[res->type](ray, *res, min);		//compute normal at hit point
 		}
-		tmp = tmp->next;
 	}
 	return (res);
 }
@@ -196,8 +233,8 @@ int	hit_aabb(t_ray r, t_interval ray_t, t_interval bbox[3])
 
 int	hit_bvh(t_ray ray, t_interval ray_range, t_rt vars, t_interval bbox[3])
 {
-	t_obj *hit_left;
-	t_obj *hit_right;
+	t_object *hit_left;
+	t_object *hit_right;
 
 	if (!hit_aabb(ray, ray_range, bbox))
 		return (0);

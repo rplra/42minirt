@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/27 22:57:43 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/03 11:02:54 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
 	float		viewport[2];
 	t_vec3		cam[2];
 
-	h = tan(vars->cam.vfov / 2) * vars->cam.focus_dist;
+	h = tan(vars->camera.vfov / 2) * vars->camera.focus_dist;
 	viewport[H] = 2 * h;
 	viewport[W] = (viewport[H] * WIN_WIDTH) / WIN_HEIGHT;
 	// for hfov method, push changes later
@@ -33,8 +33,8 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
 	// viewport[H] = (viewport[W] * WIN_HEIGHT) / WIN_WIDTH;
 
 	// /*debug*/printf("h:%f, viewport: %f %f\n", h, viewport[X], viewport[Y]);
-	*cam_w = unit_vec3(subtract_vec(vars->cam.orig, vars->cam.lookat));
-	cam[X] = unit_vec3(cross_product3d(vars->cam.vup, *cam_w));
+	*cam_w = unit_vec3(subtract_vec(vars->camera.position, vars->camera.lookat));
+	cam[X] = unit_vec3(cross_product3d(vars->camera.vup, *cam_w));
 	cam[Y] = mult_vec_scalar(cross_product3d(*cam_w, cam[X]), -1); // -v
 	*viewport_u = mult_vec_scalar(cam[X], viewport[W]);
 	*viewport_v = mult_vec_scalar(cam[Y], viewport[H]);
@@ -42,9 +42,9 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
 	// /*debug*/printf("cam_u: %f %f %f\n", cam[X].x, cam[X].y, cam[X].z);
 	// /*debug*/printf("cam_v: %f %f %f\n", cam[Y].x, cam[Y].y, cam[Y].z);
 
-	defoc_radius = vars->cam.focus_dist * tan(vars->cam.defoc_ang / 2);
-	vars->cam.defoc_disk[X] = mult_vec_scalar(cam[X], defoc_radius);
-	vars->cam.defoc_disk[Y] = mult_vec_scalar(cam[Y], defoc_radius);
+	defoc_radius = vars->camera.focus_dist * tan(vars->camera.defoc_ang / 2);
+	vars->camera.defoc_disk[X] = mult_vec_scalar(cam[X], defoc_radius);
+	vars->camera.defoc_disk[Y] = mult_vec_scalar(cam[Y], defoc_radius);
 
 	// *viewport_u = new_vector3d(viewport[X], 0, 0);
 	// *viewport_v = new_vector3d(0, -viewport[Y], 0);
@@ -66,8 +66,8 @@ t_vec3 *vp_top_left, t_vec3 vp_d[2])
 	vp_d[X] = div_vec_scalar(vp[X], WIN_WIDTH);
 	vp_d[Y] = div_vec_scalar(vp[Y], WIN_HEIGHT);
 
-	*vp_top_left = subtract_vec(vars->cam.orig, \
-mult_vec_scalar(cam_w, vars->cam.focus_dist));
+	*vp_top_left = subtract_vec(vars->camera.position, \
+mult_vec_scalar(cam_w, vars->camera.focus_dist));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[X], 2));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[Y], 2));
 

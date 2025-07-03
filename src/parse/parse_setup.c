@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:26:36 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 09:56:02 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/03 08:56:02 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int parse_camera(char **params, t_parse *file, t_camera *camera)
 	//printf("Camera ort: (x=%f, y=%f, z=%f)\n", tmp.orientation.x, tmp.orientation.y, tmp.orientation.z); // debug
 	free_array(values);
 	//printf("Camera ort normalized: (x=%f, y=%f, z=%f)\n", tmp.orientation.x, tmp.orientation.y, tmp.orientation.z); // debug
-	tmp.orientation = vector_normalize(tmp.orientation);
+	tmp.orientation = unit_vec3(tmp.orientation);
 	tmp.fov = ft_atoui(params[3], &valid);
 	if (!valid || tmp.fov < FOV_MIN || tmp.fov > FOV_MAX)
 		return (print_error(file, ERROR_CFOV, 3, params));

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 11:50:40 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/13 11:50:34 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:56:25 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,19 @@ int	free_arrays(char **arr1, char **arr2, char **arr3, char **arr4)
 	return (0);
 }
 
-void	free_scene(t_scene *scene)
+void	free_scene(t_rt *rt)
 {
-	if (scene->objects)
+	if (rt->obj)
 	{
-		free(scene->objects);
-		scene->objects = NULL;
-		scene->obj_count = 0;
+		free(rt->obj);
+		rt->obj = NULL;
+		rt->obj_count = 0;
 	}
 }
 
-void	cleanup_and_exit(t_scene *scene)
+void	cleanup_and_exit(t_rt *rt)
 {
-	if (scene)
-		free_scene(scene);
+	if (rt)
+		free_scene(rt);
 	exit(1);
 }

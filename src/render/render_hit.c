@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/30 21:38:08 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/04 19:40:01 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float))
 t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
 {
 	float		t;
-	t_obj		*tmp;
+	// t_obj		*tmp;
 	t_obj		*res;
 	float		min;
 	float		(*has_hit[3])(t_obj, t_interval, t_ray);
@@ -99,22 +99,27 @@ t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
 	init_surf_norm(get_surf_norm);
 	min = ray_range.max;
 	res = NULL;
-	tmp = vars->obj;
-	while (tmp != NULL)
+	// tmp = vars->obj;
+
+	int	x = -1;
+	// while (tmp != NULL)
+	while (++x < vars->obj_count)
 	{
 		// /*debug*/printf("id:%d\n", x);
-		t = has_hit[tmp->type](*tmp, ray_range, ray); //this returns t value only, more like get_root
+		// t = has_hit[tmp->type](*tmp, ray_range, ray); //this returns t value only, more like get_root
+		t = has_hit[vars->obj[x].type](vars->obj[x], ray_range, ray); //this returns t value only, more like get_root
 		// /*debug*/printf("has_hit_sphere:t:%f\n", t);
 		if (t > ray_range.min && t <= min) // if its new min, keep in record
 		{
-			res = tmp;
+			// res = tmp;
+			res = &vars->obj[x];
 			min = t;
 			vars->rec.t = t; //hit hittable
 			// can split this out to end (has_hit_sphere)
 			vars->rec.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, min)); //min=t
 			vars->rec.surf_norm = get_surf_norm[res->type](ray, *res, min); //min=t
 		}
-		tmp = tmp->next;
+		// tmp = tmp->next;
 	}
 	return (res);
 }
@@ -214,3 +219,81 @@ int	hit_bvh(t_ray ray, t_interval ray_range, t_rt vars, t_interval bbox[3])
 		return (1);
 	return (0);
 }
+
+static bool box_compare(t_obj a, t_obj b, int axis)
+{
+	(void) axis;
+
+	t_interval	a_axis_interval[3];
+	t_interval	b_axis_interval[3];
+
+	get_bbox(&a, a_axis_interval);
+	get_bbox(&b, b_axis_interval);
+
+	/*debug*/printf("a.[%d].min: %f, b.[%d].min: %f\n", axis, a_axis_interval[axis].min, axis, b_axis_interval[axis].min);
+	return (a_axis_interval[axis].min < b_axis_interval[axis].min);
+	// return (a.sph.orig.z < b.sph.orig.z);
+	// auto a_axis_interval = a->bounding_box().axis_interval(axis_index);
+	// auto b_axis_interval = b->bounding_box().axis_interval(axis_index);
+	// return a_axis_interval.min < b_axis_interval.min;
+}
+
+static bool	box_compare_x(t_obj a, t_obj b)
+{
+	return (box_compare(a, b, X));
+}
+
+static bool	box_compare_y(t_obj a, t_obj b)
+{
+	return (box_compare(a, b, Y));
+}
+
+static bool	box_compare_z(t_obj a, t_obj b)
+{
+	return (box_compare(a, b, Z));
+}
+
+void	init_box_compare(bool (*box_compare[])(t_obj, t_obj))
+{
+	box_compare[X] = box_compare_x;
+	box_compare[Y] = box_compare_y;
+	box_compare[Z] = box_compare_z;
+}
+
+// void	build_bvh_tree(t_obj node[2], t_rt *vars, t_obj obj, size_t range[2], bool (*func))
+// {
+// 	int			obj_span;
+// 	t_interval	box[2][3];
+
+// 	obj_span = range[1] - range[0];
+// 	/*debug*/printf("obj_span: %d\n", obj_span);
+// 	if (obj_span < 0)
+// 		return ;
+// 	if (obj_span == 1 || obj_span == 2)
+// 	{
+// 		node[L] = obj;
+// 		if (obj_span == 1)
+// 			node[R] = obj;
+// 		else
+// 			node[R] = *obj.next;
+// 	}
+// 	else
+// 	{
+// 		// sort(ft_lst_forward(&obj, range[0]), ft_lst_forward(&obj, range[1], func))
+// 	}
+// 	get_bbox(&node[L], box[L]);	//box[L]=
+// 	get_bbox(&node[R], box[R]);	//box[R]=
+// 	update_aabb_box(box[L], box[R], vars->bbox);
+// }
+
+// /* range[0] = start , range[1] = end */
+// void	bvh_node(t_rt vars, size_t range[2])
+// {
+// 	t_obj	node[2];
+// 	int		axis;
+// 	bool	(*box_compare[3])();
+
+// 	init_box_compare(box_compare);
+// 	axis = rand_int(&vars.seed, 0, 2);
+// 	build_bvh_tree(node, &vars, *vars.obj, range); //box_compare[axis] (pass in func_pointer)
+// }

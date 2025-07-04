@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:15:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/27 15:07:58 by hsim             ###   ########.fr       */
+/*   Updated: 2025/06/30 21:57:54 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,9 @@ t_vec3	rand_unit_disk(unsigned int *seed)
 		if (len_sq < 1)
 			return (pt);
 	}
+}
+
+int	rand_int(unsigned int *seed, int min, int max)
+{
+	return ((int)rand_lcg_range(seed, min, max + 1));
 }

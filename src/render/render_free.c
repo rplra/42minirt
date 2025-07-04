@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:09:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/28 12:28:20 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/04 19:29:38 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	free_malloc(t_rt *vars, int indicator)
 		return ;
 	// free_assign_hsv(vars->color_bg, 2);
 	free_one(vars->mlx);
-	// free(vars->sph);
-	ft_lstclear_obj(&vars->obj);
+	free_one(vars->obj);
+	// ft_lstclear_obj(&vars->obj);
 	if (indicator > 0)
 	{
 		// free_one(vars->z_array);
@@ -50,18 +50,18 @@ void	free_malloc(t_rt *vars, int indicator)
 	}
 }
 
-void	ft_lstclear_obj(t_obj **lst)
-{
-	t_obj	*temp;
+// void	ft_lstclear_obj(t_obj **lst)
+// {
+// 	t_obj	*temp;
 
-	if (lst == NULL)
-		return ;
-	temp = *lst;
-	while (*lst != NULL)
-	{
-		temp = (*lst)->next;
-		free(*lst);
-		*lst = temp;
-	}
-	*lst = NULL;
-}
+// 	if (lst == NULL)
+// 		return ;
+// 	temp = *lst;
+// 	while (*lst != NULL)
+// 	{
+// 		temp = (*lst)->next;
+// 		free(*lst);
+// 		*lst = temp;
+// 	}
+// 	*lst = NULL;
+// }

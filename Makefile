@@ -52,7 +52,7 @@ KEY_DIR 	= 	$(SRC_DIR)/keybind
 UTILS_DIR 	= 	$(SRC_DIR)/utils
 
 # Sources
-SRCS		=	$(wildcard $(MAIN_DIR)/main-hl.c) \
+SRCS		=	$(wildcard $(MAIN_DIR)/main-test.c) \
 				$(wildcard $(REND_DIR)/*.c) \
 				$(wildcard $(KEY_DIR)/*.c) \
 #				$(wildcard $(PARSE_DIR)/*.c) \

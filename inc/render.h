@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/29 22:32:49 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/04 19:28:39 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ enum	e_quadratic_values
 	A = 0,
 	B = 1,
 	C = 2
+};
+
+enum	e_bvh_node
+{
+	L = 0,
+	R = 1
 };
 
 // enum	e_material_type
@@ -74,7 +80,7 @@ typedef struct s_obj
 		t_cylinder	cyl;
 	};
 	t_mat			mat;
-	struct s_obj	*next;
+	// struct s_obj	*next;
 }	t_obj;
 
 /* __________________ initialization __________________ */
@@ -84,7 +90,7 @@ void		init_obj(t_rt *vars);
 
 /* __________________ bound box __________________ */
 void		aabb(t_vec3 a, t_vec3 b, t_interval range[3]);
-void		get_bbox(t_obj_type type, t_obj *obj, t_interval bound_box[3]);
+void		get_bbox(t_obj *obj, t_interval bound_box[3]);
 void		update_aabb_box(t_interval box_0[3], t_interval box_1[3], \
 t_interval res[3]);
 
@@ -93,8 +99,29 @@ t_interval	interval(t_interval a, t_interval b);
 
 /* __________________ objs __________________ */
 t_obj		*new_sph(t_vec3 position, float sph_radius, t_vec3 color, t_uchar mat_type);
-t_sph		new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_uchar mat_type);
+t_obj		new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_uchar mat_type);
 void		new_obj(t_rt *vars, t_obj **lst, t_obj *new);
+void		obj_add_back(t_obj **lst, t_obj *new);
+
+/* __________________ lst __________________ */
+int			ft_lstsize_obj(t_obj *lst);
+t_obj		*ft_lstnew_obj(t_obj *lst);
+t_obj		*ft_lstlast_obj(t_obj *lst);
+t_obj		*ft_lst_forward(t_obj *obj, size_t n);
+
+/* __________________ func_pointers __________________ */
+void		init_new_obj_func(t_obj *(*add_obj[])(t_vec3, float, t_vec3, t_uchar));
+void		init_new_obj_func2(t_obj (*add_obj[])(t_vec3, float, t_vec3, t_uchar));
+void		init_box_compare(bool (*box_compare[])(t_obj, t_obj));
+
+/* __________________ merge_sort __________________ */
+void		copy_array(t_obj *dest, t_obj *src, int n);
+void		copy_obj(t_obj *dest, t_obj src);
+void		merge_sort(t_obj *res, int argc, bool (*func)(t_obj, t_obj));
+/* __________________ bvh __________________ */
+void		build_bvh_tree(t_obj node[2], t_obj obj, size_t range[2]);
+int			compare(int a, int b); /*debug*/
+// bool		box_compare(t_obj a, t_obj b);
 
 
 /* __________________ img render __________________ */
@@ -137,15 +164,21 @@ t_vec3		rand_vec(unsigned int *seed);
 t_vec3		rand_vec_range(unsigned int *seed, float min, float max);
 t_vec3		rand_unit_vec(unsigned int *seed);
 t_vec3		rand_unit_disk(unsigned int *seed);
+int			rand_int(unsigned int *seed, int min, int max);
 
 /* __________________ malloc functions __________________ */
 int			malloc_sph_ptr(t_sph **dest, int num);
+int			malloc_obj_ptr(t_obj **dest, int num);
+
 
 /* __________________ memory free functions __________________ */
 void		free_malloc(t_rt *vars, int indicator);
 void		ft_lstclear_obj(t_obj **lst);
 
-/* __________________ debug functions __________________ */
+/* __________________ debug_print functions __________________ */
 void		debug_print_vec(char *str, t_vec3 vec);
+void		debug_print_lst(char *str, t_obj *lst);
+void		debug_print_arr(char *str, t_obj *obj, int obj_count);
+
 
 #endif

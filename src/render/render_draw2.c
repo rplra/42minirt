@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/27 22:57:43 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/03 15:50:10 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,13 @@ t_vec3 *vp_top_left, t_vec3 vp_d[2])
 	vp_d[X] = div_vec_scalar(vp[X], WIN_WIDTH);
 	vp_d[Y] = div_vec_scalar(vp[Y], WIN_HEIGHT);
 
+	//viewport top left location
 	*vp_top_left = subtract_vec(vars->cam.orig, \
 mult_vec_scalar(cam_w, vars->cam.focus_dist));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[X], 2));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[Y], 2));
 
+	//pixel center
 	*vp_00_loc = add_vec(*vp_top_left, \
 div_vec_scalar(add_vec(vp_d[X], vp_d[Y]), 2));
 

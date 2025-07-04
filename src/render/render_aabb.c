@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/29 22:18:22 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/01 18:47:36 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,14 @@ static void	init_bbox_func(void (*aabb_obj[])(t_obj *, t_interval[3]))
  * bounding_box()
  * get bounding box size for different objs
  * calls bound box function based on obj_type
+ * result stored in bound_box
  */
-void	get_bbox(t_obj_type type, t_obj *obj, t_interval bound_box[3])
+void	get_bbox(t_obj *obj, t_interval bound_box[3])
 {
 	void	(*func[3])(t_obj *, t_interval[3]);
 
-	if (type < 0 || type > 2)
+	if (obj->type < 0 || obj->type > 2)
 		return ;
 	init_bbox_func(func);
-	func[type](obj, bound_box);
+	func[obj->type](obj, bound_box);
 }

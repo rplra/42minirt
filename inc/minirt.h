@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/29 22:31:31 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/04 19:20:14 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,13 @@ typedef struct s_rt
 	t_vec3		color_bg[2];
 	t_obj		*obj;
 	// t_sph		*sph;
-	// int			count_sph;
+	int			sph_count;
+	int			obj_count;
 	t_interval	bbox[3];	//bounding box, aabb = t_interval[3]
 
 	//general
 	t_ray		ray;		//helper pointer
+	t_uint		seed;
 
 }				t_rt;
 

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/04 19:21:10 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/06 18:53:02 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	init_obj(t_rt *vars)
 
 	/* init sphere objects, use malloc */
 	vars->sph_count = 4;
+	vars->obj_count = vars->sph_count; // + other_obj_count
 	malloc_obj_ptr(&vars->obj, vars->sph_count);
 
 // 	float r = cos(M_PI / 4);
@@ -89,8 +90,7 @@ void	init_variable(t_rt *vars)
 	init_cam(vars);
 	init_bbox(vars);
 	init_obj(vars);		//replace with info from parser
-	vars->obj_count = vars->sph_count; // + other_obj_count
-
+	init_bvh_node(vars);
 	vars->color_bg[0] = new_vec3(0.5, 0.7, 1);
 	vars->color_bg[1] = new_vec3(1, 1, 1);
 

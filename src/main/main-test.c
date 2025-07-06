@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:45:50 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/04 19:36:35 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/06 18:52:36 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,14 @@ void	incr_ptr(t_rt *vars)
 	vars->ray.orig = new_vec3(10, 10, 10);
 }
 
-void	incr_obj(t_obj *obj)
+void	incr_obj(t_obj *obj, t_rt *vars)
 {
 	// while (obj->next)
 		// obj = obj->next;
-	obj[0].sph.orig = new_vec3(10, 10, 10);
+	// obj[0].sph.orig = new_vec3(10, 10, 10);
+	vars->bvh = (t_bvh_tree *)malloc(sizeof(t_bvh_tree));
+	vars->bvh->left = &obj[0];
+
 	// /*debug*/debug_print_vec("incr_obj", obj->sph.orig);
 }
 
@@ -216,14 +219,31 @@ int main()
 	// printf("node R: sph= %f %f %f\n", node[R].sph.orig.x, node[R].sph.orig.y, node[R].sph.orig.z);
 
 	/* __________________ merge_sort __________________*/
+	// t_rt	vars;
+	// init_obj(&vars);	//array ptr vs linked_lst ptr
+	// bool	(*box_compare[3])();
+	
+	// init_box_compare(box_compare);
+	// printf("init:\n");
+	// debug_print_arr("arr", vars.obj, vars.sph_count);
+	// merge_sort(vars.obj, vars.sph_count, box_compare[X]);
+	// printf("sorted:\n");
+	// debug_print_arr("arr", vars.obj, vars.sph_count);
+	// free(vars.obj);
+	
+	/* __________________ bvh_node __________________*/
 	t_rt	vars;
-	init_obj(&vars);	//array ptr vs linked_lst ptr
-	bool	(*box_compare[3])();
+	init_obj(&vars);
+	vars.seed = 12345;
+	// incr_obj(vars.obj, &vars);
 
-	init_box_compare(box_compare);
-	merge_sort(vars.obj, vars.sph_count, box_compare[X]);
-	printf("sorted:\n");
-	debug_print_arr("arr", vars.obj, vars.sph_count);
+	// t_obj *tmp = (t_obj *)vars.bvh->left;
+	// debug_print_vec("test:", tmp->sph.orig);
+	// free(vars.bvh);
+
+	init_bvh_node(&vars);
+	debug_print_bvh("bvh_node", vars.bvh);
+	free_bvh(vars.bvh);
 	free(vars.obj);
 
 	return (0);	

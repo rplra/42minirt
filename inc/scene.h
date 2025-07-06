@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/28 13:41:44 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/05 23:10:06 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef enum e_obj_type
 	SPHERE = 0,
 	PLANE = 1,
 	CYLINDER = 2,
+	BVH = 3,
 }				t_obj_type;
 
 // union of shapes, stores one of several shapes, one at a time

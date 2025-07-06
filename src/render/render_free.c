@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:09:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/04 19:29:38 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/06 18:51:49 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,29 @@ void	free_assign_hsv(int **hsv, int free_count)
 	}
 }
 
+void	free_bvh(t_bvh_tree *bvh)
+{
+	if (!bvh)
+		return ;
+	if (bvh->l_type == BVH)
+		free_bvh(bvh->left);
+	if (bvh->r_type == BVH)
+		free_bvh(bvh->right);
+	free(bvh);
+}
+
 /* 
  * consolidate all mallocs and free when exit program
  * indicator controls what to free
  */
-void	free_malloc(t_rt *vars, int indicator)
+void	free_render(t_rt *vars, int indicator)
 {
 	if (!vars)
 		return ;
-	// free_assign_hsv(vars->color_bg, 2);
 	free_one(vars->mlx);
+	free_bvh(vars->bvh);
 	free_one(vars->obj);
-	// ft_lstclear_obj(&vars->obj);
+
 	if (indicator > 0)
 	{
 		// free_one(vars->z_array);

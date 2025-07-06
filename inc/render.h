@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/04 19:28:39 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/06 18:52:36 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ typedef struct s_sph
 	// t_mat		mat;
 }	t_sph;
 
+typedef struct s_bvh_tree
+{
+	void		*left;
+	void		*right;
+	t_obj_type	l_type;
+	t_obj_type	r_type;
+	t_interval	bbox[3];
+}	t_bvh_tree;
+
 typedef struct s_obj
 {
 	t_obj_type		type;		// tells what type of obj
@@ -78,6 +87,7 @@ typedef struct s_obj
 		t_sph		sph;
 		t_plane		plane;
 		t_cylinder	cyl;
+		// t_bvh_tree	*bvh;
 	};
 	t_mat			mat;
 	// struct s_obj	*next;
@@ -119,7 +129,9 @@ void		copy_array(t_obj *dest, t_obj *src, int n);
 void		copy_obj(t_obj *dest, t_obj src);
 void		merge_sort(t_obj *res, int argc, bool (*func)(t_obj, t_obj));
 /* __________________ bvh __________________ */
-void		build_bvh_tree(t_obj node[2], t_obj obj, size_t range[2]);
+t_bvh_tree	*build_bvh_tree(t_obj *obj, t_uint *seed, int argc, bool (*func[3])(t_obj, t_obj));
+void		init_bvh_node(t_rt *vars);
+
 int			compare(int a, int b); /*debug*/
 // bool		box_compare(t_obj a, t_obj b);
 
@@ -172,13 +184,15 @@ int			malloc_obj_ptr(t_obj **dest, int num);
 
 
 /* __________________ memory free functions __________________ */
-void		free_malloc(t_rt *vars, int indicator);
-void		ft_lstclear_obj(t_obj **lst);
+void		free_bvh(t_bvh_tree *bvh);
+void		free_render(t_rt *vars, int indicator);
+// void		ft_lstclear_obj(t_obj **lst);
 
 /* __________________ debug_print functions __________________ */
 void		debug_print_vec(char *str, t_vec3 vec);
 void		debug_print_lst(char *str, t_obj *lst);
 void		debug_print_arr(char *str, t_obj *obj, int obj_count);
+void		debug_print_bvh(char *str, t_bvh_tree *bvh);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/03 11:02:54 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:16:44 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
 	// viewport[H] = (viewport[W] * WIN_HEIGHT) / WIN_WIDTH;
 
 	// /*debug*/printf("h:%f, viewport: %f %f\n", h, viewport[X], viewport[Y]);
-	*cam_w = unit_vec3(subtract_vec(vars->camera.position, vars->camera.lookat));
+	*cam_w = unit_vec3(subtract_vec(vars->camera.pos, vars->camera.lookat));
+	/*debug*/printf("cam_w: %f %f %f\n", (*cam_w).x, (*cam_w).y, (*cam_w).z);
 	cam[X] = unit_vec3(cross_product3d(vars->camera.vup, *cam_w));
+	/*debug*/printf("cam[X]: %f %f %f\n", cam[X].x, cam[X].y, cam[X].z);
 	cam[Y] = mult_vec_scalar(cross_product3d(*cam_w, cam[X]), -1); // -v
+	/*debug*/printf("cam[Y]: %f %f %f\n", cam[Y].x, cam[Y].y, cam[Y].z);
 	*viewport_u = mult_vec_scalar(cam[X], viewport[W]);
 	*viewport_v = mult_vec_scalar(cam[Y], viewport[H]);
 	// /*debug*/printf("cam_w: %f %f %f\n", (*cam_w).x, (*cam_w).y, (*cam_w).z);
@@ -66,7 +69,7 @@ t_vec3 *vp_top_left, t_vec3 vp_d[2])
 	vp_d[X] = div_vec_scalar(vp[X], WIN_WIDTH);
 	vp_d[Y] = div_vec_scalar(vp[Y], WIN_HEIGHT);
 
-	*vp_top_left = subtract_vec(vars->camera.position, \
+	*vp_top_left = subtract_vec(vars->camera.pos, \
 mult_vec_scalar(cam_w, vars->camera.focus_dist));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[X], 2));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[Y], 2));

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 12:30:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/03 14:55:11 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 09:52:41 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	is_shadow(t_rt	*vars, t_vec3 point, t_vec3 normal, t_rt *rt)
 	t_vec3		light_dir;
 	t_ray		shadow_ray;
 	t_interval	shadow_ray_range;
-	t_object	*shadow_obj;
+	t_obj	*shadow_obj;
 	float		distance_to_light;
 
 	// get direction from point to light
-	light_dir = (subtract_vec(rt->light.position, point));
+	light_dir = (subtract_vec(rt->light.pos, point));
 	distance_to_light = len_vec3(light_dir);
 	light_dir = unit_vec3(light_dir);
 
@@ -39,7 +39,7 @@ int	is_shadow(t_rt	*vars, t_vec3 point, t_vec3 normal, t_rt *rt)
 
 	// check intersection
 	shadow_obj = hit(vars, shadow_ray_range, shadow_ray);
-	if (shadow_obj && vars->rec.t < distance_to_light)
+	if (shadow_obj && vars->hit.t < distance_to_light)
 		return (1);
 	return (0);
 }

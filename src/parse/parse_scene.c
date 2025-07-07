@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:02 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/03 15:02:13 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 10:31:43 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	parse_scene(t_parse *file, t_rt *rt)
 
 int	parse_object(t_parse *file, t_rt *rt)
 {
-	t_object obj;
+	t_obj obj;
 
-	ft_memset(&obj, 0, sizeof(t_object));
+	ft_memset(&obj, 0, sizeof(t_obj));
 	if (ft_strcmp(file->tokens[0], "pl") == 0)
 	{
 		obj.type = PLANE;

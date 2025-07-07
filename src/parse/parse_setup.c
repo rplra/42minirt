@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:26:36 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/03 08:56:02 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 10:07:11 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,19 @@ int parse_camera(char **params, t_parse *file, t_camera *camera)
 	//printf("Camera param count : %i\n", count_params(params)); // debug
 	ft_memset(&tmp, 0, sizeof(t_camera));
 	values = ft_split(params[1], ',');
-	if (is_vector(file, values, &tmp.position, NO))
+	if (is_vector(file, values, &tmp.pos, NO))
 		return (print_error(file, ERROR_CPOS, 1, values));
 	//printf("Camera pos: (x=%f, y=%f, z=%f)\n", tmp.position.x, tmp.position.y, tmp.position.z);
 	free_array(values);
 	values = ft_split(params[2], ',');
-	if (is_vector(file, values, &tmp.orientation, YES))
+	if (is_vector(file, values, &tmp.vup, YES))
 		return (print_error(file, ERROR_CORT, 2, values));
 	//printf("Camera ort: (x=%f, y=%f, z=%f)\n", tmp.orientation.x, tmp.orientation.y, tmp.orientation.z); // debug
 	free_array(values);
 	//printf("Camera ort normalized: (x=%f, y=%f, z=%f)\n", tmp.orientation.x, tmp.orientation.y, tmp.orientation.z); // debug
-	tmp.orientation = unit_vec3(tmp.orientation);
-	tmp.fov = ft_atoui(params[3], &valid);
-	if (!valid || tmp.fov < FOV_MIN || tmp.fov > FOV_MAX)
+	tmp.vup = unit_vec3(tmp.vup);
+	tmp.vfov = ft_atof(params[3], &valid);
+	if (!valid || tmp.vfov < FOV_MIN || tmp.vfov > FOV_MAX)
 		return (print_error(file, ERROR_CFOV, 3, params));
 	//printf("Camera fov: %u\n", tmp.fov);
 	*camera = tmp;
@@ -81,7 +81,7 @@ int parse_light(char **params, t_parse *file, t_light *light)
 	//printf("Light param count : %i\n", count_params(params)); // debug
 	ft_memset(&tmp, 0, sizeof(t_light));
 	values = ft_split(params[1], ',');
-	if (is_vector(file, values, &tmp.position, NO))
+	if (is_vector(file, values, &tmp.pos, NO))
 		return (print_error(file, ERROR_LPOS, 1, values));
 	//printf("Light pos: (x=%f, y=%f, z=%f)\n", tmp.position.x, tmp.position.y, tmp.position.z);
 	free_array(values);

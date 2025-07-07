@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:19:29 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/03 09:10:07 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 10:06:58 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,48 +22,48 @@ void print_ambient(const t_ambient *ambient)
 void print_camera(const t_camera *camera)
 {
     printf("Camera pos: (x=%f, y=%f, z=%f)\n",
-		camera->position.x, camera->position.y, camera->position.z);
+		camera->pos.x, camera->pos.y, camera->pos.z);
 	printf("Camera ort: (x=%f, y=%f, z=%f)\n",
-		camera->orientation.x, camera->orientation.y, camera->orientation.z);
-	printf("Camera fov: %u\n", camera->fov);
+		camera->vup.x, camera->vup.y, camera->vup.z);
+	printf("Camera fov: %f\n", camera->vfov);
 }
 
 void print_light(const t_light *light)
 {
     printf("Light pos: (x=%f, y=%f, z=%f)\n",
-		light->position.x, light->position.y, light->position.z);
+		light->pos.x, light->pos.y, light->pos.z);
 	printf("Light brightness: %f\n", light->brightness);
 	printf("Light colour: (r=%f, g=%f, b=%f)\n",
 		light->colour.r, light->colour.g, light->colour.b);
 }
 
-void print_plane(const t_object *obj)
+void print_plane(const t_obj *obj)
 {
     printf("Plane pos: (x=%f, y=%f, z=%f)\n",
-        obj->obj.plane.position.x, obj->obj.plane.position.y, obj->obj.plane.position.z);
+        obj->plane.pos.x, obj->plane.pos.y, obj->plane.pos.z);
     printf("Plane normal: (x=%f, y=%f, z=%f)\n",
-        obj->obj.plane.normal.x, obj->obj.plane.normal.y, obj->obj.plane.normal.z);
+        obj->plane.normal.x, obj->plane.normal.y, obj->plane.normal.z);
     printf("Plane colour: (r=%f, g=%f, b=%f)\n",
         obj->material.albedo.r, obj->material.albedo.g, obj->material.albedo.b);
 }
 
-void	print_sphere(const t_object *obj)
+void	print_sphere(const t_obj *obj)
 {
 	printf("Sphere pos: (x=%f, y=%f, z=%f)\n",
-        obj->obj.sph.position.x, obj->obj.sph.position.y, obj->obj.sph.position.z);
-	printf("Sphere diameter: %f\n", obj->obj.sph.diameter);
+        obj->sph.pos.x, obj->sph.pos.y, obj->sph.pos.z);
+	printf("Sphere diameter: %f\n", obj->sph.rad);
 	printf("Sphere colour: (r=%f, g=%f, b=%f)\n",
         obj->material.albedo.r, obj->material.albedo.g, obj->material.albedo.b);
 }
 
-void	print_cylinder(const t_object *obj)
+void	print_cylinder(const t_obj *obj)
 {
 	printf("Cylinder pos: (x=%f, y=%f, z=%f)\n",
-        obj->obj.cyl.position.x, obj->obj.cyl.position.y, obj->obj.cyl.position.z);
+        obj->cyl.pos.x, obj->cyl.pos.y, obj->cyl.pos.z);
 	printf("Cylinder axis: (x=%f, y=%f, z=%f)\n",
-		obj->obj.cyl.axis.x, obj->obj.cyl.axis.y, obj->obj.cyl.axis.z);
-	printf("Cylinder diameter: %f\n", obj->obj.cyl.diameter);
-	printf("Cylinder height: %f\n", obj->obj.cyl.height);
+		obj->cyl.axis.x, obj->cyl.axis.y, obj->cyl.axis.z);
+	printf("Cylinder diameter: %f\n", obj->cyl.rad);
+	printf("Cylinder height: %f\n", obj->cyl.height);
 	printf("Cylinder colour: (r=%f, g=%f, b=%f)\n",
         obj->material.albedo.r, obj->material.albedo.g, obj->material.albedo.b);
 }

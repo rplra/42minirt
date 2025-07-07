@@ -6,78 +6,20 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/03 14:34:05 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:55:09 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 /*
- * check all sph objects to see which is the closest hit
- * 
- * derived from quadratic equation discriminant formula
- * b sq - 4ac >= 0 (hit sphere)
- * b sq - 4ac < 0 (doesnt hit sphere)
- * full formula:
- * [-b +- sqrt(b sq - 4ac)]  /  2a
- * shortened:
- * [b +- sqrt(b sq - ac)]  /  a
- * 
- * res = discriminant
- * expanded frm sphere equation x sq + y sq + z sq - r sq = 0
- * vector from point P on ray -> sphere center C
- * 
- * returns the closest point if there are 2 roots
- * unsigned int max: 4294967295 as limit num
- * 
- * formula expansion reference:
- * https://raytracing.github.io/books/RayTracingInOneWeekend.html
- * https://youtu.be/ebzlMOw79Yw?si=8SXTPsEcSUtwft71
- */
-float	has_hit_sphere(t_object obj, t_interval ray_range, t_ray ray)
-{
-	float		n[3];
-	float		discriminant;
-	float		tmp;
-	t_vec3		ray_to_center;
-
-	ray_to_center = subtract_vec(obj.obj.sph.position, ray.orig);
-	n[A] = scalar_product(ray.vector, ray.vector) + EPSILON;
-	n[B] = scalar_product(ray.vector, ray_to_center) + EPSILON;
-	n[C] = scalar_product(ray_to_center, ray_to_center) - \
-((obj.obj.sph.diameter / 2) * (obj.obj.sph.diameter / 2)) + EPSILON;
-
-	discriminant = (n[B] * n[B]) - (n[A] * n[C]);
-	if (discriminant < 0)
-		return (-1);
-	tmp = (n[B] - sqrt(discriminant)) / n[A];
-	if (tmp <= ray_range.min || tmp >= ray_range.max) //0 to 4294967295
-	{
-		tmp = (n[B] + sqrt(discriminant)) / n[A];
-		if (tmp <= ray_range.min || tmp >= ray_range.max)
-			return (-1);
-	}
-	/*debug*/printf("has_hit_sphere:%f %f\n", tmp, discriminant);
-	return (tmp);
-}
-
-/*
- * child function in hit
- * calls respective has_hit function depending on object type
- */
-void	init_hit_func(float (*has_hit[])())
-{
-	has_hit[SPHERE] = has_hit_sphere;
-}
-
-/*
  * child function in hit
  * calls respective get_surf_norm function depending on object type
  */
-void	init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_object, float))
-{
-	get_surf_norm[SPHERE] = get_surf_norm_sph;
-}
+// void	init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float))
+// {
+// 	get_surf_norm[SPHERE] = get_surf_norm_sph;
+// }
 
 /*
  * child function in ray_color
@@ -124,14 +66,14 @@ void	init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_object, float))
 ray_range: defines the minimum and maximum valid t values (distance along the ray).
 ray: the ray being tested against all scene objects
 */
-t_object	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
+t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
 {
 	size_t		i;
 	float		t; 				// temp var holding hit distance
-	t_object	*res;			// stores closest obj hit so far
+	t_obj		*res;			// stores closest obj hit so far
 	float		min;			// keep track of the smallest (nearest hit point)
-	float		(*has_hit[3])(t_object, t_interval, t_ray);
-	t_vec3		(*get_surf_norm[3])(t_ray, t_object, float);
+	float		(*has_hit[3])(t_obj, t_interval, t_ray);
+	t_vec3		(*get_surf_norm[3])(t_ray, t_obj, float);
 
 	// init hit and normal function array
 	init_hit_func(has_hit);			
@@ -148,9 +90,10 @@ t_object	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
 		{
 			res = &vars->obj[i]; // update closest object
 			min = t;			 // update closest distance
-			vars->rec.t = t;	 // save t val for lighting / shading
-			vars->rec.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, min)); //compute hit function
-			vars->rec.surf_norm = get_surf_norm[res->type](ray, *res, min);		//compute normal at hit point
+			vars->hit.t = t;	 // save t val for lighting / shading
+			vars->hit.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, min)); //compute hit function
+			vars->hit.obj = res;
+			vars->hit.surf_norm = get_surf_norm[res->type](ray, *res, min);		//compute normal at hit point
 		}
 	}
 	return (res);
@@ -233,8 +176,8 @@ int	hit_aabb(t_ray r, t_interval ray_t, t_interval bbox[3])
 
 int	hit_bvh(t_ray ray, t_interval ray_range, t_rt vars, t_interval bbox[3])
 {
-	t_object *hit_left;
-	t_object *hit_right;
+	t_obj *hit_left;
+	t_obj *hit_right;
 
 	if (!hit_aabb(ray, ray_range, bbox))
 		return (0);
@@ -244,7 +187,7 @@ int	hit_bvh(t_ray ray, t_interval ray_range, t_rt vars, t_interval bbox[3])
 
 	hit_left = hit(&vars, ray_range, vars.ray);
 	if (hit_left)
-		hit_right = hit(&vars, new_interval(ray_range.min, vars.rec.t), ray);
+		hit_right = hit(&vars, new_interval(ray_range.min, vars.hit.t), ray);
 	else
 		hit_right = hit(&vars, new_interval(ray_range.min, ray_range.max), ray);
 	if (hit_left || hit_right)

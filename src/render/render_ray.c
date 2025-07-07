@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/03 14:01:10 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 16:13:00 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
  * 3d point along a vector ray
  * vec = origin + (t * direction)
  */
-t_vec3	point_at(float t, t_ray r)
+/* t_vec3	point_at(float t, t_ray ray)
 {
-	return (add_vec(r.orig, mult_vec_scalar(r.vector, t)));
-}
+	return (add_vec(ray.orig, mult_vec_scalar(ray.vector, t)));
+} */
 
 /*
  * calculates vector pt_ray -> sphere_center
@@ -28,20 +28,21 @@ t_vec3	point_at(float t, t_ray r)
  * returns a surf_norm in unit vector
  */
 // intergrate get_normal in normal.c instead
-t_vec3	get_surf_norm_sph(t_ray ray, t_object obj, float t)
-{
-	t_vec3	pt_ray;
-	t_vec3	surf_norm;
+// t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t)
+// {
+// 	t_vec3	pt_ray;
+// 	t_vec3	surf_norm;
 
-	// also known as set_face_normal
-	pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
-	surf_norm = subtract_vec(pt_ray, obj.obj.sph.position);
-	surf_norm = unit_vec3(surf_norm);
-	// so, reverse surf_norm if so
-	if (scalar_product(ray.vector, surf_norm) > 0) // pointing in same direction
-		surf_norm = mult_vec_scalar(surf_norm, -1);
-	return (surf_norm);
-}
+// 	// also known as set_face_normal
+// 	pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
+// 	surf_norm = subtract_vec(pt_ray, obj.sph.pos);
+// 	surf_norm = unit_vec3(surf_norm);
+// 	// so, reverse surf_norm if so
+// 	if (scalar_product(ray.vector, surf_norm) > 0) // pointing in same direction
+// 		surf_norm = mult_vec_scalar(surf_norm, -1);
+// 	return (surf_norm);
+// }
+
 // t_vec3	get_surf_norm_sph(t_ray ray, t_vec3 sph_center, float t)
 // {
 // 	t_vec3	pt_ray;
@@ -124,17 +125,13 @@ static t_vec3	bg_color(t_rt vars, t_ray ray)
 	// return (split_rgb(lerp_hsv(vars.color_bg[1], vars.color_bg[0], t)));
 }
 
-/*
- * child function in sample_pixels
- * checks if ray hits any object
- * defines what color the ray should be
- */
+
 t_vec3	ray_color(t_rt *vars, t_ray ray, t_uchar ray_bounce, \
 t_uint *seed)
 {
 	(void) ray;
 	(void) seed;
-	t_object	*res;
+	t_obj	*res;
 	t_ray		bounce;
 	// t_vec3		surf_norm;
 
@@ -145,11 +142,11 @@ t_uint *seed)
 
 	if (res != NULL)
 	{
-		bounce.orig = vars->rec.at;
+		bounce.orig = vars->hit.at;
 		if (res->material.type == METAL)
-			bounce.vector = mat_metal(ray.vector, vars->rec.surf_norm, 0, seed);
+			bounce.vector = mat_metal(ray.vector, vars->hit.surf_norm, 0, seed);
 		else if (res->material.type == DIFFUSE)
-			bounce.vector = mat_lambertian(vars->rec.surf_norm, seed);
+			bounce.vector = mat_lambertian(vars->hit.surf_norm, seed);
 		return (mult_vec(ray_color(vars, bounce, ray_bounce - 1, seed), \
 res->material.albedo));
 // 0.5)); //weaken its color reflectance by 50% everytime it bounce
@@ -161,6 +158,46 @@ res->material.albedo));
 	}
 	return (bg_color(*vars, ray));
 }
+
+
+
+/*
+ * child function in sample_pixels
+ * checks if ray hits any object
+ * defines what color the ray should be
+ */
+/* t_vec3	ray_color(t_rt *vars, t_ray ray, t_uchar ray_bounce, \
+t_uint *seed)
+{
+	(void) ray;
+	(void) seed;
+	t_obj	*res;
+	t_ray		bounce;
+	// t_vec3		surf_norm;
+
+	if (ray_bounce <= 0)
+		return (new_vec3(0, 0, 0));
+	res = hit(vars, new_interval(0.001f, 2147483647.0), ray); //assigns surf_norm
+	// debugprintf("res_7: %d\n", res);
+
+	if (res != NULL)
+	{
+		bounce.orig = vars->hit.at;
+		if (res->material.type == METAL)
+			bounce.vector = mat_metal(ray.vector, vars->hit.surf_norm, 0, seed);
+		else if (res->material.type == DIFFUSE)
+			bounce.vector = mat_lambertian(vars->hit.surf_norm, seed);
+		return (mult_vec(ray_color(vars, bounce, ray_bounce - 1, seed), \
+res->material.albedo));
+// 0.5)); //weaken its color reflectance by 50% everytime it bounce
+
+// mult_vec_scalar(vars.sph[state].mat.albedo, 0.8)));
+// 		return (new_vector3d(0.5*255*(surf_norm.x+1),
+// 0.5*255*(surf_norm.y+1),
+// 0.5*255*(surf_norm.z+1)));
+	}
+	return (bg_color(*vars, ray));
+} */
 
 // t_vector3d	ray_color_loop(t_vars vars, t_ray ray, unsigned int *seed)
 // {

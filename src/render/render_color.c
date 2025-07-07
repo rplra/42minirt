@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_utils_color.c                                   :+:      :+:    :+:   */
+/*   render_color.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 19:11:59 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/25 11:43:33 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/03 17:52:31 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static float	linear_to_gamma(float n)
 }
 
 /* does color correction converting color values frm linear to gamma space */
+// brief: colour filter > based on how our eyes perceive (gamma) instead of reality(linear)
+// linear vs gamma
 t_vec3	color_correction(t_vec3 color)
 {
 	t_vec3	res;

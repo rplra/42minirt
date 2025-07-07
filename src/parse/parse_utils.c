@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:34:27 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/03 10:47:51 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:56:31 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ bool	is_object(const char *token)
 }
 
 // to fix t_object structure
-int	add_object(t_rt *rt, t_object *obj)
+int	add_object(t_rt *rt, t_obj *obj)
 {
-	t_object	*new_objs;
+	t_obj	*new_objs;
 	size_t		old_size;
 	size_t		new_size;
 	
-	old_size = rt->obj_count * sizeof(t_object);
-	new_size = (rt->obj_count + 1) * sizeof(t_object);
+	old_size = rt->obj_count * sizeof(t_obj);
+	new_size = (rt->obj_count + 1) * sizeof(t_obj);
 	new_objs = ft_realloc(rt->obj, old_size, new_size);
 	if (!new_objs)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:27:39 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/03 09:21:32 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 10:31:43 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ t_colour	diffuse(t_hit *hit, t_light *light)
 	t_colour	material_col;
 	
 	// vector from intersection to light, normalized
-	light_dir = unit_vec3(subtract_vec(light->position, hit->point));
+	light_dir = unit_vec3(subtract_vec(light->pos, hit->at));
 
 	// dot product btw light dir and surface normal
-	diffuse_intensity = scalar_product(hit->normal, light_dir);
+	diffuse_intensity = scalar_product(hit->surf_norm, light_dir);
 	if (diffuse_intensity < 0)
 		diffuse_intensity = 0;
 	
@@ -55,9 +55,9 @@ t_colour	specular(t_hit *hit, t_light *light, t_camera *camera)
 
 	// get dir from intersection to light & camera
 	// > reflect incoming light vector ard the surface normal
-	light_dir = unit_vec3(subtract_vec(light->position, hit->point));
-	view_dir = unit_vec3(subtract_vec(camera->position, hit->point));
-	reflected = reflect(mult_vec_scalar(light_dir, -1), hit->normal);
+	light_dir = unit_vec3(subtract_vec(light->pos, hit->at));
+	view_dir = unit_vec3(subtract_vec(camera->pos, hit->at));
+	reflected = reflect(mult_vec_scalar(light_dir, -1), hit->surf_norm);
 	
 	// get the angle btw reflected vector and the viewer
 	intensity = scalar_product(reflected, view_dir);

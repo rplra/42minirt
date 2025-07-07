@@ -6,13 +6,13 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/03 09:14:40 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 10:15:16 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	parse_plane(t_parse *file, t_object *obj)
+int	parse_plane(t_parse *file, t_obj *obj)
 {
 	t_plane	tmp;
 	char	**values;
@@ -22,7 +22,7 @@ int	parse_plane(t_parse *file, t_object *obj)
 	//printf("Plane param count : %i\n", count_params(file->tokens)); // debug
 	ft_memset(&tmp, 0, sizeof(t_plane));
 	values = ft_split(file->tokens[1], ',');
-	if (is_vector(file, values, &tmp.position, NO))
+	if (is_vector(file, values, &tmp.pos, NO))
 		return (print_error(file, ERROR_PLPOS, 1, values));
 	//printf("Plane pos: (x=%f, y=%f, z=%f)\n", tmp.position.x, tmp.position.y, tmp.position.z); // debug
 	free_array(values);
@@ -39,13 +39,13 @@ int	parse_plane(t_parse *file, t_object *obj)
 	//printf("Converted colour: (r=%u, g=%u, b=%u)\n", obj->colour.r, obj->colour.g, obj->colour.b); // debug
 	free_array(values);
 	obj->type = PLANE;
-	obj->obj.plane = tmp;
+	obj->plane = tmp;
 	//printf("Printing struct\n");
 	//print_plane(obj);
 	return (0);
 }
 
-int	parse_sphere(t_parse *file, t_object *obj)
+int	parse_sphere(t_parse *file, t_obj *obj)
 {
 	t_sphere	tmp;
 	char		**values;
@@ -56,27 +56,27 @@ int	parse_sphere(t_parse *file, t_object *obj)
 	//printf("Sphere param count : %i\n", count_params(file->tokens)); //debug
 	ft_memset(&tmp, 0, sizeof(t_sphere));
 	values = ft_split(file->tokens[1], ',');
-	if (is_vector(file, values, &tmp.position, NO))
+	if (is_vector(file, values, &tmp.pos, NO))
 		return (print_error(file, ERROR_SPPOS, 1, values));
-	//printf("Camera pos: (x=%f, y=%f, z=%f)\n", tmp.position.x, tmp.position.y, tmp.position.z); // debug
+	//printf("Sphere pos: (x=%f, y=%f, z=%f)\n", tmp.position.x, tmp.position.y, tmp.position.z); // debug
 	free_array(values);
-	tmp.diameter = ft_atof(file->tokens[2], &valid);
-	if (!valid || tmp.diameter <= 0)
+	tmp.rad = ft_atof(file->tokens[2], &valid) / 2;
+	if (!valid || tmp.rad <= 0)
 		return (print_error(file, ERROR_SPDIA, 2, file->tokens));
-	//printf("Sphere diameter: %f\n", tmp.diameter);
+	//printf("Sphere radius: %f\n", tmp.rad);
 	values = ft_split(file->tokens[3], ',');
 	if (is_colour(file, values, &obj->material.albedo))
 		return (1);
 	//printf("Converted colour: (r=%u, g=%u, b=%u)\n", obj->colour.r, obj->colour.g, obj->colour.b);
 	free_array(values);
 	obj->type = SPHERE;
-	obj->obj.sph = tmp;
+	obj->sph = tmp;
 	//printf("Printing struct\n");
 	//print_sphere(obj);
 	return (0);
 }
 
-int	parse_cylinder(t_parse *file, t_object *obj)
+int	parse_cylinder(t_parse *file, t_obj *obj)
 {
 	t_cylinder	tmp;
 	char		**values;
@@ -87,7 +87,7 @@ int	parse_cylinder(t_parse *file, t_object *obj)
 	//printf("Cylinder param count : %i\n", count_params(file->tokens)); //debug
 	ft_memset(&tmp, 0, sizeof(t_cylinder));
 	values = ft_split(file->tokens[1], ',');
-	if (is_vector(file, values, &tmp.position, NO))
+	if (is_vector(file, values, &tmp.pos, NO))
 		return (print_error(file, ERROR_CYPOS, 1, values));
 	//printf("Cylinder pos: (x=%f, y=%f, z=%f)\n", tmp.position.x, tmp.position.y, tmp.position.z); // debug
 	free_array(values);
@@ -97,10 +97,10 @@ int	parse_cylinder(t_parse *file, t_object *obj)
 	//printf("Cylinder axis: (x=%f, y=%f, z=%f)\n", tmp.axis.x, tmp.axis.y, tmp.axis.z); // debug
 	tmp.axis = unit_vec3(tmp.axis);
 	free_array(values);
-	tmp.diameter = ft_atof(file->tokens[3], &valid);
-	if (!valid || tmp.diameter <= 0)
+	tmp.rad = ft_atof(file->tokens[3], &valid) / 2;
+	if (!valid || tmp.rad <= 0)
 		return (print_error(file, ERROR_CYDIA, 3, file->tokens));
-	//printf("Cylinder diameter: %f\n", tmp.diameter);
+	//printf("Cylinder radius: %f\n", tmp.rad);
 	tmp.height = ft_atof(file->tokens[4], &valid);
 	if (!valid || tmp.height <= 0)
 		return (print_error(file, ERROR_CYHT, 4, file->tokens));
@@ -111,7 +111,7 @@ int	parse_cylinder(t_parse *file, t_object *obj)
 	//printf("Converted colour: (r=%u, g=%u, b=%u)\n", obj->colour.r, obj->colour.g, obj->colour.b);
 	free_array(values);
 	obj->type = CYLINDER;
-	obj->obj.cyl = tmp;
+	obj->cyl = tmp;
 	//printf("Printing struct\n");
 	//print_cylinder(obj);
 	return (0);

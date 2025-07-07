@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/03 14:43:43 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 10:31:43 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ t_vec3	sample_defoc_disk(t_rt vars, unsigned int *seed)
 
 	pt = rand_unit_disk(seed);
 	// res = vars.cam_orig;
-	res = add_vec(vars.camera.position, add_vec(mult_vec_scalar(\
+	res = add_vec(vars.camera.pos, add_vec(mult_vec_scalar(\
 vars.camera.defoc_disk[X], pt.x), mult_vec_scalar(vars.camera.defoc_disk[Y], pt.y)));
-	/*debug*/debug_print_vec("sample_defoc:cam:", vars.camera.position);
+	/*debug*/debug_print_vec("sample_defoc:cam:", vars.camera.pos);
 	/*debug*/debug_print_vec("sample_defoc:x:", vars.camera.defoc_disk[X]);
 	/*debug*/debug_print_vec("sample_defoc:y:", vars.camera.defoc_disk[Y]);
 	/*debug*/debug_print_vec("sample_defoc:pt:", pt);
@@ -90,6 +90,7 @@ int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
 		/*debug*/printf("ft_draw:res:%f %f %f\n", res.x, res.y, res.z);
 
 		// color = add_vec(color, ray_color_loop(vars, vars.ray, &seed));
+		// brief: keep adding colour and divide by how many times it bounced
 		color = add_vec(color, ray_color(&vars, vars.ray, vars.camera.ray_bounce, &seed));
 		// /*debug*/printf("color:%f %f %f\n", color.x, color.y, color.z);
 	}

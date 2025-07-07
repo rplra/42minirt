@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/03 12:39:51 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:25:53 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,20 @@ void	init_cam(t_rt *vars)
 {
 	// vars->cam.orig = new_vec3(0, 0, 0); //-2,2,1
 	// vars->cam.lookat = new_vec3(0, 0, -1);
-	vars->camera.lookat = add_vec(vars->camera.position, vars->camera.orientation);
 	vars->camera.vup = new_vec3(0, 1, 0);
+	vars->camera.lookat = add_vec(vars->camera.pos, new_vec3(0, 0, -1)); // fixed
 	//vars->cam.vfov = radian(90);
-	vars->camera.vfov = radian(vars->camera.fov);
+	vars->camera.vfov = radian(vars->camera.vfov);
 	vars->camera.defoc_ang = radian(0);
 	vars->camera.defoc_disk[X] = new_vec3(0, 0, 0);
 	vars->camera.defoc_disk[Y] = new_vec3(0, 0, 0);
-	vars->camera.focus_dist = len_vec3(subtract_vec(vars->camera.position, vars->camera.lookat));
+	vars->camera.focus_dist = len_vec3(subtract_vec(vars->camera.pos, vars->camera.lookat));
 	/*debug*/printf("focus_dist:%f\n", vars->camera.focus_dist);
 
 	vars->camera.ray_bounce = 5;
 	vars->camera.sample_per_pixel = 5;
 
-	vars->ray.orig = vars->camera.position; //be careful with this one, maybe copy safer?
+	vars->ray.orig = vars->camera.pos; //be careful with this one, maybe copy safer?
 	vars->ray.vector = new_vec3(0, 0, 0);
 }
 
@@ -100,8 +100,8 @@ void	init_variable(t_rt *vars)
 	// vars->color_bg[0] = create_hsv(199, 100, 100);
 	// vars->color_bg[1] = create_hsv(166, 10, 90);
 
-	vars->rec.surf_norm = new_vec3(0, 0, 0);
-	vars->rec.t = 0;
+	vars->hit.surf_norm = new_vec3(0, 0, 0);
+	vars->hit.t = 0;
 	//init_obj(vars);
 	my_create_image(vars, &vars->img);
 }

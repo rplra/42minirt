@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 13:09:38 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/03 16:04:14 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:16:33 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ int main(int ac, char **av)
 	// init render
 	initialize_mlx(&rt);
 	/*debug*/printf("Main: Init mlx\n");
+
+	// init vars to render_image
+	init_variable(&rt);
+	/*debug*/printf("Main: Init variables\n");
 
 	// render
 	my_render_image(&rt);

@@ -12,7 +12,7 @@ WHITE    		= \033[37m		# White
 NAME = miniRT
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinc -I$(MLX_DIR) #-fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -Iinc -I$(MLX_DIR) #-g3 -fsanitize=address 
 RM = rm -rf
 
 # OS

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/03 14:27:33 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 17:16:42 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,11 @@ typedef struct s_ambient
 
 typedef struct s_camera
 {
-	t_vec3		position;
-	t_vec3		orientation;
-	t_uint		fov;
-	
-	t_vec3		lookat;				//camera pointing to
+	t_vec3		pos;
 	t_vec3		vup;				//camera orientation
 	float		vfov;				//vertical fov (need change to hfov)
+
+	t_vec3		lookat;				//camera pointing to				
 	float		focus_dist;
 	float		defoc_ang;			//blur angle
 	t_vec3		defoc_disk[2];
@@ -82,33 +80,33 @@ typedef struct s_camera
 
 typedef struct s_light
 {
-	t_vec3		position;
+	t_vec3		pos;
 	float		brightness;
 	t_colour	colour;
 }				t_light;
 
 typedef struct s_sphere
 {
-	t_vec3		position;
-	float		diameter;
+	t_vec3		pos;
+	float		rad;
 }				t_sphere;
 
 typedef struct s_plane
 {
-	t_vec3		position;
+	t_vec3		pos;
 	t_vec3		normal;
 }				t_plane;
 
 typedef struct s_cylinder
 {
-	t_vec3		position;
+	t_vec3		pos;
 	t_vec3		axis;
-	float		diameter;
+	float		rad;
 	float		height;
 }				t_cylinder;
 
 // tag / labelling of objects
-typedef enum e_obj_type
+typedef enum	e_obj_type
 {
 	SPHERE,
 	PLANE,
@@ -117,21 +115,28 @@ typedef enum e_obj_type
 
 // union of shapes, stores one of several shapes, one at a time
 // memory is allocated based on the largest one
-typedef union u_obj
-{
-	t_sphere	sph;
-	t_plane		plane;
-	t_cylinder	cyl;
-}				t_obj_union;
+// typedef union u_obj
+// {
+// 	t_sphere	sph;
+// 	t_plane		plane;
+// 	t_cylinder	cyl;
+// }				t_obj_union;
 
 // the core object structure
-typedef struct s_object
+// !!refactor to hsim's t_obj
+typedef struct s_obj
 {
 	t_obj_type	type;				// tells what type of obj
-	t_obj_union	obj;				// stores the actual shape of data
+	union							// stores the actual shape of data 
+	{
+		t_sphere	sph;
+		t_plane		plane;
+		t_cylinder	cyl;
+	};
 	// t_colour	colour;				// obj's colour, removed since mat has albedo
 	t_material	material;			// rendering data
-}				t_object;
+}				t_obj;
+
 
 // typedef struct s_scene
 // {

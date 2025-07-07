@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/03 14:23:03 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/07 10:32:08 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,14 @@ typedef struct s_rt
 	t_ambient	ambient;
 	t_camera	camera;
 	t_light		light;
-	t_object	*obj;
+	t_obj		*obj;
 	size_t		obj_count;
 
 	// raytracing
-	t_record	rec;
+	t_hit		hit;
 	t_vec3		color_bg[2];
 	t_interval	bbox[3];	//bounding box, aabb = t_interval[3]
 	t_ray		ray;		//helper pointer
-
 }				t_rt;
 
 // typedef struct s_vars

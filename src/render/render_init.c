@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 15:43:54 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 20:36:12 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ void	initialize_mlx(t_rt *vars)
 void	init_obj(t_rt *vars)
 {
 	/* init sphere objects, use malloc */
-	vars->sph_count = 4;
-	vars->obj_count = vars->sph_count; // + other_obj_count
-	malloc_obj_ptr(&vars->obj, vars->sph_count);
+	vars->obj_count = 4; // + other_obj_count
+	malloc_obj_ptr(&vars->obj, vars->obj_count);
 
 // 	float r = cos(M_PI / 4);
 // 	vars->sph[0] = new_sphere(new_vector3d(-r, 0, -1), r, \
@@ -84,9 +83,9 @@ void	init_cam(t_rt *vars)
 
 void	init_rec(t_rt *vars)
 {
-	vars->rec.surf_norm = new_vec3(0, 0, 0);
-	vars->rec.t = 0;
-	vars->rec.index = -1;
+	vars->hit.surf_norm = new_vec3(0, 0, 0);
+	vars->hit.t = 0;
+	vars->hit.index = -1;
 }
 
 void	init_variable(t_rt *vars)

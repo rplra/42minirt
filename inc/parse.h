@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:39:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 21:52:20 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 20:57:40 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ typedef struct	s_parse
 
 /*		parse_file.c		*/
 bool	is_rt_file(const char *filename);
-int		parse_file(int fd, t_parse *file, t_scene *scene);
-int		open_file(const char *file, t_scene *scene);
-char	**tokenize(char *line);
+// int		parse_file(int fd, t_parse *file, t_scene *scene);
+// int		open_file(const char *file, t_scene *scene);
+// char	**tokenize(char *line);
 
 /*		parse_scene.c		*/
-int		parse_scene(t_parse *file, t_scene *scene);
-int		parse_object(t_parse *file, t_scene *scene);
+// int		parse_scene(t_parse *file, t_scene *scene);
+// int		parse_object(t_parse *file, t_scene *scene);
 
 /*		parse_setup.c		*/
 int		parse_ambient(char **params, t_parse *file, t_ambient *ambient);
@@ -55,7 +55,7 @@ int		parse_cylinder(t_parse *file, t_object *obj);
 
 /*		parse_utils.c		*/
 bool	is_object(const char *token);
-int		add_object(t_scene *scene, t_object obj);
+// int		add_object(t_scene *scene, t_object obj);
 int		count_params(char **params);
 int		is_colour(t_parse *scene, char **col, t_colour *colour);
 int		is_vector(t_parse *scene, char **values, t_vec3 *vector, bool check_normal);

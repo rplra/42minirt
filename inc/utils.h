@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:42:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 09:57:23 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/09 20:57:48 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	perror_exit(char *perrmsg);
 
 int		free_array(char **arr);
 int		free_arrays(char **arr1, char **arr2, char **arr3, char **arr4);
-void	free_scene(t_scene *scene);
-void	cleanup_and_exit(t_scene *scene);
+// void	free_scene(t_scene *scene);
+// void	cleanup_and_exit(t_scene *scene);
 
 void	flush_gnl(int fd);
 float	clamp(float value, float min, float max);

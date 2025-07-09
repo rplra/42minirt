@@ -6,15 +6,19 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/05 23:10:06 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 21:09:27 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_H
 # define SCENE_H
 
+# include "../lib/quaternion/ft_vector.h" 
+# include "interval.h"
+
 typedef unsigned char	t_uchar;
 typedef unsigned int	t_uint;
+typedef t_vec3			t_colour;
 
 // //to change to t_vec3
 // typedef struct	s_vector
@@ -24,12 +28,12 @@ typedef unsigned int	t_uint;
 // 	float		z;
 // }				t_vec3;
 
-typedef struct s_colour
-{
-	t_uint		r;
-	t_uint		g;
-	t_uint		b;		
-}				t_colour;
+// typedef struct s_colour
+// {
+// 	t_uint		r;
+// 	t_uint		g;
+// 	t_uint		b;		
+// }				t_colour;
 
 typedef enum e_material_type
 {
@@ -38,6 +42,12 @@ typedef enum e_material_type
 	// DIELEC
 	// BUBBLE
 }				t_material_type;
+
+typedef struct s_mat
+{
+	t_uchar			type;		//material type
+	t_vec3			albedo;		//obj base color
+}	t_mat;
 
 typedef struct s_material
 {
@@ -84,8 +94,8 @@ typedef struct s_light
 
 typedef struct s_sphere
 {
-	t_vec3	position;
-	float	diameter;
+	t_vec3	pos;
+	float	rad;
 }				t_sphere;
 
 typedef struct s_plane
@@ -129,13 +139,27 @@ typedef struct s_object
 	t_material	material;	// rendering data
 }				t_object;
 
-typedef struct s_scene
+typedef struct s_obj
 {
-	t_ambient	ambient;
-	t_camera	camera;
-	t_light		light;
-	t_object	*objects;
-	size_t		obj_count;
-}				t_scene;
+	t_obj_type		type;		// tells what type of obj
+	union
+	{
+		t_sphere	sph;
+		t_plane		plane;
+		t_cylinder	cyl;
+		// t_bvh_tree	*bvh;
+	};
+	t_mat			mat;
+	t_interval		bbox[3];
+}	t_obj;
+
+// typedef struct s_scene
+// {
+// 	t_ambient	ambient;
+// 	t_camera	camera;
+// 	t_light		light;
+// 	t_object	*objects;
+// 	size_t		obj_count;
+// }				t_scene;
 
 #endif

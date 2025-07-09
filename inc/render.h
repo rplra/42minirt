@@ -6,20 +6,23 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 15:34:17 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 21:08:37 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RENDER_H
 # define RENDER_H
 
-# include "minirt.h"
+// # include "minirt.h"
+# include <stdbool.h>         // for bool
+# include "scene.h"           // for t_object, t_obj_type
+# include "interval.h"        // for t_interval
+# include "../lib/quaternion/ft_vector.h" 
 
 typedef struct s_rt			t_rt;
 typedef struct s_ray		t_ray;
-typedef struct s_record		t_record;
-typedef struct s_interval	t_interval;
 typedef struct s_img		t_img;
+typedef struct s_interval	t_interval;
 typedef unsigned char		t_uchar;
 
 enum	e_vector_values
@@ -44,31 +47,21 @@ enum	e_bvh_node
 	R = 1
 };
 
-// enum	e_material_type
-// {
-// 	DIFFUSE,
-// 	METAL,
-// 	// DIELEC
-// 	// BUBBLE
-// };
-
-// typedef struct s_ray
-// {
-// 	t_vec3	orig;
-// 	t_vec3	vector;
-// }	t_ray;
-
-typedef struct s_mat
+typedef struct s_ray
 {
-	t_uchar			type;		//material type
-	t_vec3			albedo;		//obj base color
-}	t_mat;
+	t_vec3	orig;
+	t_vec3	vector;
+}	t_ray;
 
-typedef struct s_sph
+typedef struct s_hit
 {
-	t_vec3			orig;		//origin
-	float			rad;		//radius
-}	t_sph;
+	t_vec3		at;				// intersection point
+	t_vec3		surf_norm;		// surface normal at the point
+	t_obj		*obj;			// the object hit
+	float		t;				// ray paremeter (distance)
+	bool		front_face;		// for correct normal orientation
+	int			index;
+}	t_hit;
 
 typedef struct s_bvh_tree
 {
@@ -79,19 +72,33 @@ typedef struct s_bvh_tree
 	t_interval	bbox[3];
 }	t_bvh_tree;
 
-typedef struct s_obj
-{
-	t_obj_type		type;		// tells what type of obj
-	union
-	{
-		t_sph		sph;
-		t_plane		plane;
-		t_cylinder	cyl;
-		// t_bvh_tree	*bvh;
-	};
-	t_mat			mat;
-	t_interval		bbox[3];
-}	t_obj;
+
+/* ******************************************* */
+// typedef struct s_mat
+// {
+// 	t_uchar			type;		//material type
+// 	t_vec3			albedo;		//obj base color
+// }	t_mat;
+
+// typedef struct s_sph
+// {
+// 	t_vec3			pos;		//origin
+// 	float			rad;		//radius
+// }	t_sphere;
+
+// typedef struct s_obj
+// {
+// 	t_obj_type		type;		// tells what type of obj
+// 	union
+// 	{
+// 		t_sph		sph;
+// 		t_plane		plane;
+// 		t_cylinder	cyl;
+// 		// t_bvh_tree	*bvh;
+// 	};
+// 	t_mat			mat;
+// 	t_interval		bbox[3];
+// }	t_obj;
 
 /* __________________ initialization __________________ */
 void		initialize_mlx(t_rt *vars);
@@ -119,10 +126,10 @@ void		new_obj(t_rt *vars, t_obj **lst, t_obj *new);
 void		obj_add_back(t_obj **lst, t_obj *new);
 
 /* __________________ lst __________________ */
-int			ft_lstsize_obj(t_obj *lst);
-t_obj		*ft_lstnew_obj(t_obj *lst);
-t_obj		*ft_lstlast_obj(t_obj *lst);
-t_obj		*ft_lst_forward(t_obj *obj, size_t n);
+// int			ft_lstsize_obj(t_obj *lst);
+// t_obj		*ft_lstnew_obj(t_obj *lst);
+// t_obj		*ft_lstlast_obj(t_obj *lst);
+// t_obj		*ft_lst_forward(t_obj *obj, size_t n);
 
 /* __________________ func_pointers __________________ */
 void		init_new_obj_func(t_obj *(*add_obj[])(t_vec3, float, t_vec3, t_uchar));
@@ -187,7 +194,7 @@ t_vec3		rand_unit_disk(unsigned int *seed);
 int			rand_int(unsigned int *seed, int min, int max);
 
 /* __________________ malloc functions __________________ */
-int			malloc_sph_ptr(t_sph **dest, int num);
+int			malloc_sph_ptr(t_sphere **dest, int num);
 int			malloc_obj_ptr(t_obj **dest, int num);
 
 

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:13:15 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/08 15:34:52 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 20:53:45 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_obj	new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_uchar mat_ty
 	t_obj	target;
 
 	target.type = SPHERE;
-	target.sph.orig = position;
+	target.sph.pos = position;
 	target.sph.rad = sph_radius;
 	target.mat.albedo = color;
 	target.mat.type = mat_type;

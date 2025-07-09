@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_object.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 10:32:41 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/09 20:47:49 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ int	parse_sphere(t_parse *file, t_object *obj)
 	//printf("Sphere param count : %i\n", count_params(file->tokens)); //debug
 	ft_memset(&tmp, 0, sizeof(t_sphere));
 	values = ft_split(file->tokens[1], ',');
-	if (is_vector(file, values, &tmp.position, NO))
+	if (is_vector(file, values, &tmp.pos, NO))
 		return (print_error(file, ERROR_SPPOS, 1, values));
 	//printf("Camera pos: (x=%f, y=%f, z=%f)\n", tmp.position.x, tmp.position.y, tmp.position.z); // debug
 	free_array(values);
-	tmp.diameter = ft_atof(file->tokens[2], &valid);
-	if (!valid || tmp.diameter <= 0)
+	tmp.rad = ft_atof(file->tokens[2], &valid);
+	if (!valid || tmp.rad <= 0)
 		return (print_error(file, ERROR_SPDIA, 2, file->tokens));
 	//printf("Sphere diameter: %f\n", tmp.diameter);
 	values = ft_split(file->tokens[3], ',');

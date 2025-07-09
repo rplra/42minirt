@@ -6,22 +6,22 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 22:30:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 15:44:31 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 21:09:25 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "render.h"
+#include "minirt.h"
 
 void	update_sph_rec(t_rt *vars, int index, t_ray ray, float t)
 {
 	t_vec3 (*get_surf_norm[3])(t_ray, t_obj, float);
 
 	init_surf_norm(get_surf_norm);
-	vars->rec.surf_norm = get_surf_norm[vars->obj[index].type](ray, vars->obj[index], t);			//if t>0
-	vars->rec.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));	//if t>0
-	vars->rec.hit = &vars->obj[index];
-	vars->rec.index = index;
-	vars->rec.t = t;
+	vars->hit.surf_norm = get_surf_norm[vars->obj[index].type](ray, vars->obj[index], t);			//if t>0
+	vars->hit.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));	//if t>0
+	vars->hit.obj = &vars->obj[index];
+	vars->hit.index = index;
+	vars->hit.t = t;
 }
 
 /*
@@ -55,7 +55,7 @@ bool	has_hit_sphere(t_rt *vars, int index, t_interval ray_range, t_ray ray)
 
 	/*debug*/printf("has_hit index:%d\n", index);
 	/* ************* get discriminant ************* */
-	ray_to_center = subtract_vec(vars->obj[index].sph.orig, ray.orig);
+	ray_to_center = subtract_vec(vars->obj[index].sph.pos, ray.orig);
 	n[A] = scalar_product(ray.vector, ray.vector) + EPS;
 	n[B] = scalar_product(ray.vector, ray_to_center) + EPS;
 	n[C] = scalar_product(ray_to_center, ray_to_center) - \

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/07 12:46:12 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 21:07:43 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # include "config.h"
 # include "keymap.h"
 # include "keybind.h"
-# include "ray.h"
 # include "utils.h"
 # include "scene.h"
 # include "parse.h"
@@ -44,9 +43,10 @@
 # define NO		0
 
 typedef unsigned int		t_uint;
-typedef struct s_ray		t_ray;
-typedef struct s_sph		t_sph;
-typedef struct s_obj		t_obj;
+// typedef struct s_hit		t_hit;	//
+// typedef struct s_ray		t_ray;	//
+// typedef struct s_sph		t_sphere;	//
+typedef struct s_obj		t_obj;	//
 typedef struct s_bvh_tree	t_bvh_tree;
 
 typedef struct s_img
@@ -58,35 +58,37 @@ typedef struct s_img
 	int			endian;
 }				t_img;
 
-typedef struct s_record
-{
-	float		t;			//t = pt along a ray (formula: pt_at = a + t*d)
-	int			index;
-	t_obj		*hit;
-	t_vec3		surf_norm;	//surface_normal
-	t_vec3		at;			//pt_at, result frm a + t*d
-}	t_record;
+// typedef struct s_hit
+// {
+// 	t_vec3		at;				// intersection point
+// 	t_vec3		surf_norm;		// surface normal at the point
+// 	t_obj		*obj;			// the object hit
+// 	float		t;				// ray paremeter (distance)
+// 	bool		front_face;		// for correct normal orientation
+// 	int			index;
+// }	t_hit;
 
 typedef struct s_rt
 {
 	void		*mlx;
 	void		*mlx_win;
 	t_img		img;
-	t_camera	cam;
 
 	//scene
-	t_record	rec;
-	t_vec3		color_bg[2];
+	t_ambient	ambient;
+	t_camera	cam;
+	t_light		light;
 	t_obj		*obj;
-	// t_sph		*sph;
-	int			sph_count;
-	int			obj_count;
+	// int			sph_count;	//
+	size_t		obj_count;
+
+	// raytracing
+	t_hit		hit;
+	t_vec3		color_bg[2];
 	t_interval	bbox[3];	//bounding box, aabb = t_interval[3]
-
-	//general
 	t_ray		ray;		//helper pointer
-	t_uint		seed;
 
+	t_uint		seed;
 	t_bvh_tree	*bvh;
 }				t_rt;
 

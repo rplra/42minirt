@@ -6,16 +6,16 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 21:36:01 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/08 08:24:07 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 21:10:35 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "render.h"
+#include "minirt.h"
 
 void	copy_obj(t_obj *dest, t_obj src)
 {
 	if (src.type == SPHERE)
-		*dest = new_sphere(src.sph.orig, src.sph.rad, src.mat.albedo, src.mat.type);
+		*dest = new_sphere(src.sph.pos, src.sph.rad, src.mat.albedo, src.mat.type);
 }
 
 void	copy_array(t_obj *dest, t_obj *src, int n)

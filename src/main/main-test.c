@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:45:50 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 10:25:36 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 20:35:16 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@
 // 	return (res);
 // }
 
-void	add_rec(t_record *rec, t_obj obj)
+void	add_rec(t_hit *rec, t_obj obj)
 {
-	rec->hit = &obj;
+	rec->obj = &obj;
 	debug_print_vec("obj_col", obj.mat.albedo);
-	debug_print_vec("hit_col", rec->hit->mat.albedo);
+	debug_print_vec("hit_col", rec->obj->mat.albedo);
 	// *rec->hit = new_sphere(obj.sph.orig, obj.sph.rad, obj.mat.albedo, obj.mat.type);
 }
 
@@ -59,7 +59,7 @@ void	incr_ptr(t_rt *vars, t_obj obj)
 	// while (vars->obj->next)
 		// vars->obj = vars->obj->next;
 	vars->ray.orig = new_vec3(10, 10, 10);
-	add_rec(&vars->rec, obj);
+	add_rec(&vars->hit, obj);
 }
 
 t_obj	*test_rec(t_rt *vars)
@@ -67,7 +67,7 @@ t_obj	*test_rec(t_rt *vars)
 	t_obj *rec = NULL;
 
 	incr_ptr(vars, vars->obj[1]);
-	rec = vars->rec.hit;
+	rec = vars->hit.obj;
 	return (rec);
 }
 

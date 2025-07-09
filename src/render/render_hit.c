@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 15:46:49 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 20:35:16 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
 		// /*debug*/printf("id:%d\n", x);
 		// t = has_hit[vars->obj[x].type](vars, x, ray_range, ray); //this returns t value only, more like get_root
 		t = hit_bvh(vars->bvh, ray_range, ray, vars);
-		/*debug*/printf("t! %f %d\n", t, vars->rec.index);
+		/*debug*/printf("t! %f %d\n", t, vars->hit.index);
 		if (t > 0)
 		{
-			res = &vars->obj[vars->rec.index];
+			res = &vars->obj[vars->hit.index];
 			// ray_range.max = vars->rec.t;	//maybe no need
 		}
 	// }
@@ -133,9 +133,9 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
 
 	if (bvh->type[R] != BVH)
 	{
-		/*debug*/printf("bvh_id_R:%d  %d, rec.t:%f\n", bvh->id[R], bvh->type[R], vars->rec.t);
+		/*debug*/printf("bvh_id_R:%d  %d, rec.t:%f\n", bvh->id[R], bvh->type[R], vars->hit.t);
 		if (t[L] > 0.01f)
-			ray_range.max = vars->rec.t;
+			ray_range.max = vars->hit.t;
 		t[R] = has_hit[bvh->type[R]](vars, bvh->id[R], ray_range, ray);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:35:35 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 15:37:00 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 20:53:45 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@
  */
 void	aabb_sph(t_obj *obj, t_interval res[3])
 {
-	t_sph	sph;
+	t_sphere	sph;
 	t_vec3	rvec;
 
 	sph = obj->sph;
 	if (sph.rad < 0)
 		sph.rad = 0;
 	rvec = new_vec3(sph.rad, sph.rad, sph.rad);
-	aabb(subtract_vec(sph.orig, rvec), add_vec(sph.orig, rvec), res);
+	aabb(subtract_vec(sph.pos, rvec), add_vec(sph.pos, rvec), res);
 }
 
 /*

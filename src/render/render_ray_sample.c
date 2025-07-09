@@ -6,11 +6,11 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/30 22:20:31 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 21:10:14 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "render.h"
+#include "minirt.h"
 
 /*
  * child function in sample_pixels 

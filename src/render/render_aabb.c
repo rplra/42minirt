@@ -6,14 +6,14 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 15:42:14 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 21:03:44 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*   aabb = axis-aligned bounding box
  * ************************************************************************** */
 
-#include "render.h"
+#include "minirt.h"
 
 /* compares which smaller and returns in as 1st param in t_interval */
 static t_interval	assign_min_max(float a, float b)

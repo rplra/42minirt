@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:52:37 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 08:11:04 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 20:53:45 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	debug_print_arr(char *str, t_obj *obj, int obj_count)
 		{
 			printf("rad: %f\n%s: %d: bbox:\n", obj[i].sph.rad, str, i);
 			debug_print_bbox(" |sph_bbox", obj[i].bbox);
-			debug_print_vec(" |sph", obj[i].sph.orig);
+			debug_print_vec(" |sph", obj[i].sph.pos);
 			printf("----------------\n");
 		}
 		else if (obj->type == CYLINDER)

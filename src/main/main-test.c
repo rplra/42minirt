@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:45:50 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/06 18:52:36 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 10:25:36 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,29 @@
 // 	return (res);
 // }
 
-void	incr_ptr(t_rt *vars)
+void	add_rec(t_record *rec, t_obj obj)
+{
+	rec->hit = &obj;
+	debug_print_vec("obj_col", obj.mat.albedo);
+	debug_print_vec("hit_col", rec->hit->mat.albedo);
+	// *rec->hit = new_sphere(obj.sph.orig, obj.sph.rad, obj.mat.albedo, obj.mat.type);
+}
+
+void	incr_ptr(t_rt *vars, t_obj obj)
 {
 	// while (vars->obj->next)
 		// vars->obj = vars->obj->next;
 	vars->ray.orig = new_vec3(10, 10, 10);
+	add_rec(&vars->rec, obj);
+}
+
+t_obj	*test_rec(t_rt *vars)
+{
+	t_obj *rec = NULL;
+
+	incr_ptr(vars, vars->obj[1]);
+	rec = vars->rec.hit;
+	return (rec);
 }
 
 void	incr_obj(t_obj *obj, t_rt *vars)
@@ -188,6 +206,21 @@ int main()
 	// 	printf("yes! %f %f %f\n", vars.obj->sph.orig.x, vars.obj->sph.orig.y, vars.obj->sph.orig.z);
 	// ft_lstclear_obj(&vars.obj);
 
+	/* __________________ t_record __________________*/
+	// t_rt	vars;
+
+	// init_obj(&vars);
+	// vars.rec.hit = &vars.obj[0];
+	// debug_print_arr("obj", vars.obj, vars.obj_count);
+	// debug_print_vec("obj[1].col", vars.obj[1].mat.albedo);
+	// debug_print_vec("rec_bf", vars.rec.hit->sph.orig);
+
+	// t_obj *res = test_rec(&vars);
+	// // incr_ptr(&vars, vars.obj[1]);
+	// debug_print_vec("\nres", res->sph.orig);
+	// debug_print_vec("res:color", res->mat.albedo);
+	// debug_print_vec("rec_af", vars.rec.hit->sph.orig);
+
 	/* __________________ return_ptr __________________*/
 	// t_rt	vars;
 	// t_obj	*tmp;
@@ -234,15 +267,18 @@ int main()
 	/* __________________ bvh_node __________________*/
 	t_rt	vars;
 	init_obj(&vars);
+
+	// debug_print_arr("obj_init", vars.obj, vars.obj_count);
+	// debug_print_bbox("bbox_main", vars.bbox);
+
 	vars.seed = 12345;
-	// incr_obj(vars.obj, &vars);
 
-	// t_obj *tmp = (t_obj *)vars.bvh->left;
-	// debug_print_vec("test:", tmp->sph.orig);
-	// free(vars.bvh);
-
+	debug_print_bbox("vars_bbox", vars.bbox);
 	init_bvh_node(&vars);
+	printf("\n**********************************\n");
 	debug_print_bvh("bvh_node", vars.bvh);
+	printf("\n**********************************\n");
+	debug_print_arr("obj", vars.obj, vars.obj_count);
 	free_bvh(vars.bvh);
 	free(vars.obj);
 

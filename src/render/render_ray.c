@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/29 22:35:41 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/08 08:32:53 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,13 +144,20 @@ t_uint *seed)
 
 	if (res != NULL)
 	{
+		// /*debug*/debug_print_vec("hit_col", vars->rec.hit->mat.albedo);
+		// /*debug*/debug_print_vec("res_col", res->mat.albedo);
+		// /*debug*/printf("hit_type: %hhu\n", vars->rec.hit->mat.type);
+		// /*debug*/printf("res_type: %hhu\n", res->mat.type);
 		bounce.orig = vars->rec.at;
 		if (res->mat.type == METAL)
 			bounce.vector = mat_metal(ray.vector, vars->rec.surf_norm, 0, seed);
 		else if (res->mat.type == DIFFUSE)
 			bounce.vector = mat_lambertian(vars->rec.surf_norm, seed);
+		//mult_vec, free, return
+		t_vec3 color = new_vec3(res->mat.albedo.x, res->mat.albedo.y, res->mat.albedo.z);
 		return (mult_vec(ray_color(vars, bounce, ray_bounce - 1, seed), \
-res->mat.albedo));
+color));
+// res->mat.albedo));
 // 0.5)); //weaken its color reflectance by 50% everytime it bounce
 
 // mult_vec_scalar(vars.sph[state].mat.albedo, 0.8)));

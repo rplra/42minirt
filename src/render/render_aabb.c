@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/01 18:47:36 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/08 15:34:52 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,15 @@ static void	init_bbox_func(void (*aabb_obj[])(t_obj *, t_interval[3]))
  * calls bound box function based on obj_type
  * result stored in bound_box
  */
-void	get_bbox(t_obj *obj, t_interval bound_box[3])
+void	create_bbox(t_obj *obj, t_interval bound_box[3])
 {
 	void	(*func[3])(t_obj *, t_interval[3]);
 
 	if (obj->type < 0 || obj->type > 2)
+	{
+		/*debug*/printf("invalid bbox_type! %d\n", obj->type);
 		return ;
+	}
 	init_bbox_func(func);
 	func[obj->type](obj, bound_box);
 }

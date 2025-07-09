@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:09:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/06 18:51:49 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/08 09:33:50 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	free_bvh(t_bvh_tree *bvh)
 {
 	if (!bvh)
 		return ;
-	if (bvh->l_type == BVH)
+	if (bvh->type[L] == BVH)
 		free_bvh(bvh->left);
-	if (bvh->r_type == BVH)
+	if (bvh->type[R] == BVH)
 		free_bvh(bvh->right);
 	free(bvh);
 }
@@ -56,8 +56,7 @@ void	free_render(t_rt *vars, int indicator)
 
 	if (indicator > 0)
 	{
-		// free_one(vars->z_array);
-		// free_assign_hsv(vars->hsv_array, 3);
+		//add custom controls here
 	}
 }
 

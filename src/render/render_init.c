@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/06 18:53:02 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 11:28:53 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,26 @@ void	initialize_mlx(t_rt *vars)
 "miniRT");
 }
 
+void	init_bbox(t_interval bbox[3])
+{
+	aabb(new_vec3(0, 0, 0), new_vec3(0, 0, 0), bbox);
+}
+
+/* assigns value in src to res */
+void	assign_bbox(t_interval src[3], t_interval res[3])
+{
+	res[X].min = src[X].min;
+	res[Y].min = src[Y].min;
+	res[Z].min = src[Z].min;
+	res[X].max = src[X].max;
+	res[Y].max = src[Y].max;
+	res[Z].max = src[Z].max;
+}
+
 void	init_obj(t_rt *vars)
 {
+	init_bbox(vars->bbox);
+
 // 	vars->obj = NULL;
 // 	new_obj(vars, &vars->obj, new_sph(new_vec3(0, 0, -1.2), 0.5, \
 // new_vec3(0.1, 0.2, 0.5), DIFFUSE)); //center
@@ -52,13 +70,23 @@ void	init_obj(t_rt *vars)
 // new_vector3d(1, 0, 0), DIFFUSE); //right
 
 	vars->obj[0] = new_sphere(new_vec3(0, 0, -1.2), 0.5, \
-new_vec3(0.1, 0.2, 0.5), DIFFUSE); //center
+new_vec3(0.1, 0.2, 0.5), DIFFUSE);	//center
 	vars->obj[1] = new_sphere(new_vec3(0, -100.5, -1), 100, \
-new_vec3(0.8, 0.8, 0), DIFFUSE); //ground
+new_vec3(0.8, 0.8, 0), DIFFUSE);	//ground
 	vars->obj[2] = new_sphere(new_vec3(-1, 0, -1), 0.5, \
-new_vec3(0.8, 0.8, 0.8), METAL); //left
+new_vec3(0.8, 0.8, 0.8), METAL);	//left
 	vars->obj[3] = new_sphere(new_vec3(1, 0, -1), 0.5, \
-new_vec3(0.8, 0.6, 0.2), METAL); //right
+new_vec3(0.8, 0.6, 0.2), METAL);	//right
+
+	// vars->obj[4] = new_sphere(new_vec3(-2, 0, -2), 0.6, \
+// new_vec3(0.8, 0.8, 0.8), METAL);	//left
+// 	vars->obj[5] = new_sphere(new_vec3(5, 0, -1), 1, \
+// new_vec3(0.8, 0.6, 0.2), METAL);	//right
+
+	int	x = -1;
+	assign_bbox(vars->obj[0].bbox, vars->bbox);
+	while (++x < vars->obj_count)
+		update_aabb_box(vars->bbox, vars->obj[x].bbox, vars->bbox);
 }
 
 void	init_cam(t_rt *vars)
@@ -80,22 +108,22 @@ void	init_cam(t_rt *vars)
 	vars->ray.vector = new_vec3(0, 0, 0);
 }
 
-void	init_bbox(t_rt *vars)
+void	init_rec(t_rt *vars)
 {
-	aabb(new_vec3(0, 0, 0), new_vec3(0, 0, 0), vars->bbox);
+	vars->rec.surf_norm = new_vec3(0, 0, 0);
+	vars->rec.t = 0;
+	vars->rec.index = -1;
 }
 
 void	init_variable(t_rt *vars)
 {
 	init_cam(vars);
-	init_bbox(vars);
 	init_obj(vars);		//replace with info from parser
 	init_bvh_node(vars);
+	init_rec(vars);
 	vars->color_bg[0] = new_vec3(0.5, 0.7, 1);
 	vars->color_bg[1] = new_vec3(1, 1, 1);
 
 	vars->seed = 12345;
-	vars->rec.surf_norm = new_vec3(0, 0, 0);
-	vars->rec.t = 0;
 	my_create_image(vars, &vars->img);
 }

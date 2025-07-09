@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/04 23:07:48 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/07 12:46:12 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ typedef struct s_img
 typedef struct s_record
 {
 	float		t;			//t = pt along a ray (formula: pt_at = a + t*d)
+	int			index;
+	t_obj		*hit;
 	t_vec3		surf_norm;	//surface_normal
 	t_vec3		at;			//pt_at, result frm a + t*d
 }	t_record;

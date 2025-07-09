@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ray.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/07 16:13:00 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/09 21:45:53 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ t_uint *seed)
 	{
 		bounce.orig = vars->hit.at;
 		if (res->material.type == METAL)
-			bounce.vector = mat_metal(ray.vector, vars->hit.surf_norm, 0, seed);
+			bounce.vector = mat_metal(ray.vector, vars->hit.surf_norm, res->material.fuzz, seed);
 		else if (res->material.type == DIFFUSE)
 			bounce.vector = mat_lambertian(vars->hit.surf_norm, seed);
 		return (mult_vec(ray_color(vars, bounce, ray_bounce - 1, seed), \

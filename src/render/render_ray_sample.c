@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ray_sample.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/07 10:31:43 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/09 21:53:42 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,9 @@ int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
 		if (vars.camera.defoc_ang > 0)
 			vars.ray.orig = sample_defoc_disk(vars, &seed);
 		vars.ray.vector = subtract_vec(res, vars.ray.orig);
+		// /*debug*/printf("ft_draw:tar:%f %f %f\n", target.x, target.y, target.z);
+		// /*debug*/printf("ft_draw:res:%f %f %f\n", res.x, res.y, res.z);
 
-		/*debug*/printf("ft_draw:tar:%f %f %f\n", target.x, target.y, target.z);
-		/*debug*/printf("ft_draw:res:%f %f %f\n", res.x, res.y, res.z);
-
-		// color = add_vec(color, ray_color_loop(vars, vars.ray, &seed));
 		// brief: keep adding colour and divide by how many times it bounced
 		color = add_vec(color, ray_color(&vars, vars.ray, vars.camera.ray_bounce, &seed));
 		// /*debug*/printf("color:%f %f %f\n", color.x, color.y, color.z);
@@ -97,6 +95,5 @@ int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
 	color = div_vec_scalar(color, vars.camera.sample_per_pixel);
 	color = color_correction(color);
 	// /*debug*/printf("color_fin: %f %f %f\n", color.x, color.y, color.z);
-	// color = color_correction(div_vector_scalar(color, vars.sample_per_pixel));
 	return (create_rgb(color.x, color.y, color.z));
 }

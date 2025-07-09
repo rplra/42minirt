@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/07 13:16:44 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/09 21:50:50 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ mult_vec_scalar(cam_w, vars->camera.focus_dist));
 	*vp_00_loc = add_vec(*vp_top_left, \
 div_vec_scalar(add_vec(vp_d[X], vp_d[Y]), 2));
 
-	/*debug*/debug_print_vec("viewport_x:", vp[X]);
-	/*debug*/debug_print_vec("viewport_y:", vp[Y]);
-	/*debug*/debug_print_vec("viewport_dx:", vp_d[X]);
-	/*debug*/debug_print_vec("viewport_dy:", vp_d[Y]);
-	/*debug*/debug_print_vec("00_loc:", *vp_00_loc);
+	// /*debug*/debug_print_vec("viewport_x:", vp[X]);
+	// /*debug*/debug_print_vec("viewport_y:", vp[Y]);
+	// /*debug*/debug_print_vec("viewport_dx:", vp_d[X]);
+	// /*debug*/debug_print_vec("viewport_dy:", vp_d[Y]);
+	// /*debug*/debug_print_vec("00_loc:", *vp_00_loc);
 }
 
 /*

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_hit_objects.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/07 17:45:10 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/09 21:43:49 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ void	init_hit_func(float (*has_hit[])())
 float	has_hit_plane(t_obj obj, t_interval ray_range, t_ray ray)
 {
 	// to complete
+	(void) obj;
+	(void) ray;
+	(void) ray_range;
+
+	return (0);
 }
 
 /*
@@ -81,5 +86,10 @@ float	has_hit_sphere(t_obj obj, t_interval ray_range, t_ray ray)
 float	has_hit_cylinder(t_obj obj, t_interval ray_range, t_ray ray)
 {
 	// to complete
+	(void) obj;
+	(void) ray;
+	(void) ray_range;
+
+	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:02 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/07 10:31:43 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/09 21:48:37 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ int	parse_object(t_parse *file, t_rt *rt)
 	// add material defaults, to revise
 	obj.material.specular = 0.5;
 	obj.material.reflect = 0.5;
+	obj.material.type = METAL;
+	obj.material.fuzz = 0.2;
 	return (add_object(rt, &obj));
 }

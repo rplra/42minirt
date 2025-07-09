@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/07 17:16:42 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/09 21:43:11 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef enum e_material_type
 	METAL,
 	// DIELEC
 	// BUBBLE
-}				t_material_type;
+}			t_mat_type;
 
 typedef struct s_material
 {
@@ -55,7 +55,8 @@ typedef struct s_material
 	float		reflect;			// mirror reflectivity (ray bounce)
 	float		refract;			// transparency (glass-like)
 	float		refractive_index;	// index of refraction (for Snell's law) 
-	t_uchar		type;				// diffuse / metal / dielec? / bubble?
+	float		fuzz;				// material fuzziness (only for metal)
+	t_mat_type	type;				// diffuse / metal / dielec? / bubble?
 }				t_material;
 
 typedef struct s_ambient

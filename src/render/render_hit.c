@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 12:15:03 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 12:50:05 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@ t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
 
 	init_hit_func(has_hit);
 	res = NULL;
-	/*debug*/printf("_________start_hit_________\n");
-	// vars->rec.t = -42;
-	// vars->rec.hit = NULL;
 
 	// int	x = -1;
 	// while (++x < vars->obj_count)
@@ -56,9 +53,7 @@ t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
 		// t = has_hit[vars->obj[x].type](vars, x, ray_range, ray); //this returns t value only, more like get_root
 		t = hit_bvh(vars->bvh, ray_range, ray, vars);
 		// returns -1 if fail
-		// /*debug*/printf("has_hit_sphere:t:%f\n", t);
 		/*debug*/printf("t! %f %d\n", t, vars->rec.index);
-		// if (vars->rec.t > 0)
 		if (t > 0)
 		{
 			res = &vars->obj[vars->rec.index];
@@ -111,7 +106,7 @@ int	hit_aabb(t_ray r, t_interval ray_t, t_interval bbox[3])
 	return (1);
 }
 
-bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars) //bbox belongs to t_bvh bbox
+bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
 {
 	bool	t[2];
 	bool	(*has_hit[3])(t_rt *, int, t_interval, t_ray);
@@ -146,10 +141,6 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars) //bbo
 		if (t[L] > 0.01f)
 			ray_range.max = vars->rec.t;
 		t[R] = has_hit[bvh->type[R]](vars, bvh->id[R], ray_range, ray);
-		// if (t[L] > 0.01f)
-		// 	t[R] = has_hit[bvh->type[R]](vars, bvh->id[R], new_interval(ray_range.min, vars->rec.t), ray);
-		// else
-		// 	t[R] = has_hit[bvh->type[R]](vars, bvh->id[R], new_interval(ray_range.min, ray_range.max), ray);
 	}
 	else
 	{

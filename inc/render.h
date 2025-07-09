@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 12:08:52 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 15:34:17 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,14 @@ typedef struct s_sph
 {
 	t_vec3			orig;		//origin
 	float			rad;		//radius
-	// t_mat		mat;
 }	t_sph;
 
 typedef struct s_bvh_tree
 {
-	// t_obj		*left;
-	// t_obj		*right;
+	int			id[2];
 	void		*left;
 	void		*right;
-	int			id[2];
-	t_obj_type	type[2];
+	t_obj_type	type[2];		//can remove this if using t_obj
 	t_interval	bbox[3];
 }	t_bvh_tree;
 
@@ -94,7 +91,6 @@ typedef struct s_obj
 	};
 	t_mat			mat;
 	t_interval		bbox[3];
-	// struct s_obj	*next;
 }	t_obj;
 
 /* __________________ initialization __________________ */
@@ -108,6 +104,7 @@ void		aabb(t_vec3 a, t_vec3 b, t_interval range[3]);
 void		create_bbox(t_obj *obj, t_interval bound_box[3]);
 void		update_aabb_box(t_interval box_0[3], t_interval box_1[3], \
 t_interval res[3]);
+void		get_bbox_val(t_obj *obj, int argc, t_interval res[3]);
 void		assign_bbox(t_interval src[3], t_interval res[3]);
 
 t_interval	new_interval(float min, float max);
@@ -141,10 +138,9 @@ void		copy_obj(t_obj *dest, t_obj src);
 void		merge_sort(t_obj *res, int argc, bool (*func)(t_obj, t_obj));
 
 /* __________________ bvh __________________ */
-t_bvh_tree	*build_bvh_tree(t_obj *obj, t_uint *seed, int argc, int id[2], bool (*func[3])(t_obj, t_obj));
-// t_bvh_tree	*build_bvh_tree(t_obj *obj, t_uint *seed, int argc[2], bool (*func[3])(t_obj, t_obj));
+t_bvh_tree	*build_bvh_tree(t_obj *obj, int id[2], \
+bool (*func[3])(t_obj, t_obj));
 void		init_bvh_node(t_rt *vars);
-
 int			compare(int a, int b); /*debug*/
 // bool		box_compare(t_obj a, t_obj b);
 
@@ -163,7 +159,8 @@ t_vec3		ray_color(t_rt *vars, t_ray ray, t_uchar ray_bounce, \
 t_uint *seed);
 // t_vector3d	ray_color_loop(t_vars vars, t_ray ray, unsigned int *seed);
 t_ray		new_ray(t_vec3 origin, t_vec3 dir);
-int			sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x);
+int			sample_pixels(t_rt vars, t_vec3 target, \
+t_vec3 viewport_d[2], int x);
 t_vec3		sample_sq_rand(unsigned int *seed);
 t_vec3		get_surf_norm_sph(t_ray ray, t_obj obj, float t);
 t_obj		*hit(t_rt *vars, t_interval ray_range, t_ray ray);

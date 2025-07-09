@@ -6,11 +6,11 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/08 15:34:52 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 15:42:14 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* aabb = axis-aligned bounding box
+/*   aabb = axis-aligned bounding box
  * ************************************************************************** */
 
 #include "render.h"
@@ -54,47 +54,28 @@ t_interval res[3])
 	res[Z] = interval(box_0[Z], box_1[Z]);
 }
 
-/*
- * res = bound_box 
- * updates bound_box for static sphere
- * value returned in res
- */
-void	aabb_sph(t_obj *obj, t_interval res[3])
+/* assigns value in src to res */
+void	assign_bbox(t_interval src[3], t_interval res[3])
 {
-	t_sph	sph;
-	t_vec3	rvec;
-
-	sph = obj->sph;
-	if (sph.rad < 0)
-		sph.rad = 0;
-	rvec = new_vec3(sph.rad, sph.rad, sph.rad);
-	aabb(subtract_vec(sph.orig, rvec), add_vec(sph.orig, rvec), res);
+	res[X].min = src[X].min;
+	res[Y].min = src[Y].min;
+	res[Z].min = src[Z].min;
+	res[X].max = src[X].max;
+	res[Y].max = src[Y].max;
+	res[Z].max = src[Z].max;
 }
 
 /*
- * child function in get_bounding_box
- * calls different function based on obj type
+ * initializes res to (0,0)
+ * bbox value of obj (ranges frm 0 to argc) will be stored in res[3]
  */
-static void	init_bbox_func(void (*aabb_obj[])(t_obj *, t_interval[3]))
+void	get_bbox_val(t_obj *obj, int argc, t_interval res[3])
 {
-	aabb_obj[SPHERE] = aabb_sph;
-}
+	int	x;
 
-/*
- * bounding_box()
- * get bounding box size for different objs
- * calls bound box function based on obj_type
- * result stored in bound_box
- */
-void	create_bbox(t_obj *obj, t_interval bound_box[3])
-{
-	void	(*func[3])(t_obj *, t_interval[3]);
-
-	if (obj->type < 0 || obj->type > 2)
-	{
-		/*debug*/printf("invalid bbox_type! %d\n", obj->type);
-		return ;
-	}
-	init_bbox_func(func);
-	func[obj->type](obj, bound_box);
+	x = -1;
+	/*debug*/printf("get_bbox_val:ac:%d\n", argc);
+	assign_bbox(obj[0].bbox, res);
+	while (++x < argc)
+		update_aabb_box(res, obj[x].bbox, res);
 }

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 12:50:05 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 15:46:49 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
 		// /*debug*/printf("id:%d\n", x);
 		// t = has_hit[vars->obj[x].type](vars, x, ray_range, ray); //this returns t value only, more like get_root
 		t = hit_bvh(vars->bvh, ray_range, ray, vars);
-		// returns -1 if fail
 		/*debug*/printf("t! %f %d\n", t, vars->rec.index);
 		if (t > 0)
 		{
@@ -130,10 +129,7 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
 		t[L] = has_hit[bvh->type[L]](vars, bvh->id[L], ray_range, ray);
 	}
 	else
-	{
-		/*debug*/printf("BVH_node [L]\n");
 		t[L] = hit_bvh(bvh->left, ray_range, ray, vars);
-	}
 
 	if (bvh->type[R] != BVH)
 	{
@@ -143,18 +139,10 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
 		t[R] = has_hit[bvh->type[R]](vars, bvh->id[R], ray_range, ray);
 	}
 	else
-	{
-		/*debug*/printf("BVH_node [R]\n");
 		t[R] = hit_bvh(bvh->right, ray_range, ray, vars);
-	}
 	/* ******************************************** */
-
 	/*debug*/printf("t[L] & t[R]: %d %d  %d~%d\n", t[L], t[R], bvh->id[L], bvh->id[R]);
 	if (t[L] > 0.001f || t[R] > 0.001f)
-	{
-		// /*debug*/printf("hit!\n");
 		return (1);
-	}
-	// /*debug*/printf("hit fell\n");
 	return (0);
 }

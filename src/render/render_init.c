@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 11:28:53 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 15:43:54 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,36 +28,13 @@ void	initialize_mlx(t_rt *vars)
 "miniRT");
 }
 
-void	init_bbox(t_interval bbox[3])
-{
-	aabb(new_vec3(0, 0, 0), new_vec3(0, 0, 0), bbox);
-}
-
-/* assigns value in src to res */
-void	assign_bbox(t_interval src[3], t_interval res[3])
-{
-	res[X].min = src[X].min;
-	res[Y].min = src[Y].min;
-	res[Z].min = src[Z].min;
-	res[X].max = src[X].max;
-	res[Y].max = src[Y].max;
-	res[Z].max = src[Z].max;
-}
+// void	init_bbox(t_interval bbox[3])
+// {
+// 	aabb(new_vec3(0, 0, 0), new_vec3(0, 0, 0), bbox);
+// }
 
 void	init_obj(t_rt *vars)
 {
-	init_bbox(vars->bbox);
-
-// 	vars->obj = NULL;
-// 	new_obj(vars, &vars->obj, new_sph(new_vec3(0, 0, -1.2), 0.5, \
-// new_vec3(0.1, 0.2, 0.5), DIFFUSE)); //center
-// 	new_obj(vars, &vars->obj, new_sph(new_vec3(0, -100.5, -1), 100, \
-// new_vec3(0.8, 0.8, 0), DIFFUSE)); //ground
-// 	new_obj(vars, &vars->obj, new_sph(new_vec3(-1, 0, -1), 0.5, \
-// new_vec3(0.8, 0.8, 0.8), METAL)); //left
-// 	new_obj(vars, &vars->obj, new_sph(new_vec3(1, 0, -1), 0.5, \
-// new_vec3(0.8, 0.6, 0.2), METAL)); //right
-
 	/* init sphere objects, use malloc */
 	vars->sph_count = 4;
 	vars->obj_count = vars->sph_count; // + other_obj_count
@@ -78,15 +55,12 @@ new_vec3(0.8, 0.8, 0.8), METAL);	//left
 	vars->obj[3] = new_sphere(new_vec3(1, 0, -1), 0.5, \
 new_vec3(0.8, 0.6, 0.2), METAL);	//right
 
-	// vars->obj[4] = new_sphere(new_vec3(-2, 0, -2), 0.6, \
-// new_vec3(0.8, 0.8, 0.8), METAL);	//left
+	// vars->obj[4] = new_sphere(new_vec3(-0.5, 2, -2), 0.6, \
+// new_vec3(0.4, 0.4, 0.4), METAL);	//left
 // 	vars->obj[5] = new_sphere(new_vec3(5, 0, -1), 1, \
 // new_vec3(0.8, 0.6, 0.2), METAL);	//right
 
-	int	x = -1;
-	assign_bbox(vars->obj[0].bbox, vars->bbox);
-	while (++x < vars->obj_count)
-		update_aabb_box(vars->bbox, vars->obj[x].bbox, vars->bbox);
+	get_bbox_val(vars->obj, vars->obj_count, vars->bbox);
 }
 
 void	init_cam(t_rt *vars)

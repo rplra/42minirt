@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 22:30:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 12:05:43 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 15:44:31 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	update_sph_rec(t_rt *vars, int index, t_ray ray, float t)
  * https://raytracing.github.io/books/RayTracingInOneWeekend.html
  * https://youtu.be/ebzlMOw79Yw?si=8SXTPsEcSUtwft71
  */
-// float	has_hit_sphere(t_obj obj, t_interval ray_range, t_ray ray, t_rt *vars)
-// float	has_hit_sphere(t_obj *obj, int index, t_interval ray_range, t_ray ray, t_record *rec)
 bool	has_hit_sphere(t_rt *vars, int index, t_interval ray_range, t_ray ray)
 {
 	float		n[3];

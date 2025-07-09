@@ -6,30 +6,43 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 22:27:52 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 12:53:42 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 15:40:22 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 
+//static
 /*
- * initializes res to (0,0)
- * bbox value of obj (ranges frm 0 to argc) will be stored in res[3]
+ * child function in build_bvh_tree
+ * assigns bvh_node to obj *
  */
-void	get_bbox_val(t_obj *obj, int argc, t_interval res[3])
+static void	assign_bvh_node(t_bvh_tree *bvh, t_obj *obj, int id[2])
 {
-	int	x;
-
-	x = -1;
-	/*debug*/printf("get_bbox_val:ac:%d\n", argc);
-	assign_bbox(obj[0].bbox, res);
-	while (++x < argc)
-		update_aabb_box(res, obj[x].bbox, res);
+	/*debug*/printf("return %d~%d\n-------\n", id[0], id[1]);
+	bvh->id[L] = id[0];
+	bvh->type[L] = obj[0].type;
+	bvh->left = &obj[0];
+	if (id[1] - id[0] == 1)
+	{
+		bvh->id[R] = id[0];
+		bvh->type[R] = obj[0].type;
+		bvh->right = &obj[0];
+	}
+	else
+	{
+		bvh->id[R] = id[1] - 1;
+		bvh->type[R] = obj[1].type;
+		bvh->right = &obj[1];
+	}
 }
 
 // static
-/* returns the axis where the difference between max-min is largest */
-int	longest_axis(t_interval bbox[3])
+/*
+ * child function in sort_n_split
+ * returns the axis where the difference between max-min is largest
+ */
+static int	longest_axis(t_interval bbox[3])
 {
 	int	n[3];
 
@@ -44,80 +57,59 @@ int	longest_axis(t_interval bbox[3])
 	return (Z);
 }
 
-t_bvh_tree	*build_bvh_tree(t_obj *obj, t_uint *seed, int argc, int id[2], bool (*func[3])(t_obj, t_obj))
+//static
+/*
+ * child function in build_bvh_tree
+ * sort,split list into half & call build_bvh_tree recursively
+ */
+static void	sort_n_split(t_bvh_tree *bvh, t_obj *obj, \
+int id[2], bool (*func[3])(t_obj, t_obj))
 {
-	int			half[2];
-	int			mid;
-	int			axis;
+	int	mid;
+	int	axis;
+	int	half[2];
+
+	/*debug*/printf("else\n");
+	mid = ((id[1] - id[0]) / 2);
+	axis = longest_axis(bvh->bbox);
+	/*debug*/printf("merge_sort: id_dif:%d\n", id[1] - id[0]);
+	// merge_sort(obj, argc, func[axis]);
+	merge_sort(obj, id[1] - id[0], func[axis]);
+	bvh->type[L] = BVH;
+	bvh->type[R] = BVH;
+	bvh->id[L] = -1;
+	bvh->id[R] = -1;
+
+	half[0] = id[0];
+	half[1] = id[0] + mid;
+	/*debug*/printf("|ac[L]: %d~%d %d\n", half[0], half[1], mid);
+	bvh->left = build_bvh_tree(obj, half, func);
+	/* ********************************************************* */
+	half[0] = half[1];
+	half[1] = id[1];
+	/*debug*/printf("|ac[R]: %d~%d\n", half[0], half[1]);
+	bvh->right = build_bvh_tree(&obj[mid], half, func);
+	// mid, argc-mid
+}
+
+t_bvh_tree	*build_bvh_tree(t_obj *obj, int id[2], bool (*func[3])(t_obj, t_obj))
+{
 	t_bvh_tree	*bvh;
 
 	bvh = (t_bvh_tree *)malloc(sizeof(t_bvh_tree));
-	mid = (argc / 2);
-	// mid = ((argc[1] - argc[0]) / 2);
-	/*debug*/printf("id: %d~%d, argc:%d, diff:%d\n", id[0], id[1], argc, id[1]-id[0]);
+	// mid = (argc / 2);
+	// mid = ((id[1] - id[0]) / 2);
 
-	get_bbox_val(obj, argc, bvh->bbox);
+	get_bbox_val(obj, id[1] - id[0], bvh->bbox);
 	/*debug*/debug_print_bbox("fin_box", bvh->bbox);
 	/*debug*/printf("\n");
 
-	// if (id[1] - id[0] <= 0)
-	if (argc <= 0)
-	{
-		/*debug*/printf("hello\n");
+	if (id[1] - id[0] <= 0)
 		return (NULL);
-	}
-	// if ((id[1] - id[0] == 1) || (id[1] - id[0] == 2))
-	if ((argc == 1) || (argc == 2))
-	{
-		/*debug*/printf("return %d~%d\n-------\n", id[0], id[1]);
-		bvh->id[L] = id[0];
-		bvh->type[L] = obj[0].type;
-		bvh->left = &obj[0];
-		// if (id[1] - id[0] == 1)
-		if (argc == 1)
-		{
-			bvh->id[R] = id[0];
-			bvh->type[R] = obj[0].type;
-			bvh->right = &obj[0];
-		}
-		else
-		{
-			bvh->id[R] = id[1] - 1;
-			bvh->type[R] = obj[1].type;
-			bvh->right = &obj[1];
-		}
-	}
+	if ((id[1] - id[0] == 1) || (id[1] - id[0] == 2))
+		assign_bvh_node(bvh, obj, id);
 	else
-	{
-		/*debug*/printf("else\n");
-		// axis = rand_int(seed, 0, 2);
-		axis = longest_axis(bvh->bbox);
-		/*debug*/printf("merge_sort: ac:%d, id_dif:%d\n", argc, id[1] - id[0]);
-		merge_sort(obj, argc, func[axis]);
-		bvh->type[L] = BVH;
-		bvh->type[R] = BVH;
-		bvh->id[L] = -1;
-		bvh->id[R] = -1;
-
-		half[0] = id[0];
-		half[1] = id[0] + ((id[1] - id[0]) / 2);
-		//mid = half[1]-half[0]
-		/*debug*/printf("|ac[L]: %d~%d %d\n", half[0], half[1], mid);
-		bvh->left = build_bvh_tree(obj, seed, mid, half, func);
-		// mid, argc-mid
-		
-		//argc = half[1]
-		//mid = half[1]/2
-
-		/* ********************************************************* */
-		//mid = half[1] - half[0];
-		//half[1] = ((id[1] - id[0]) / 2) - mid
-		half[0] = half[1];		//2
-		half[1] = id[1];		//4
-		/*debug*/printf("|ac[R]: %d~%d\n", half[0], half[1]);
-		/*debug*/printf("mid: %d, %d\n\n", mid, argc-mid); //both are half[1]
-		bvh->right = build_bvh_tree(&obj[mid], seed, argc-mid, half, func);
-	}
+		sort_n_split(bvh, obj, id, func);
 	return (bvh);
 }
 
@@ -131,5 +123,5 @@ void	init_bvh_node(t_rt *vars)
 	id[0] = 0;
 	id[1] = vars->obj_count;
 	vars->bvh = build_bvh_tree(\
-vars->obj, &vars->seed, vars->obj_count, id, box_compare);
+vars->obj, id, box_compare);
 }

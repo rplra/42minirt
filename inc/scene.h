@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/09 21:43:11 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/10 08:01:50 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SCENE_H
 
 # include "../lib/quaternion/ft_vector.h" 
+# include "interval.h"
 
 typedef unsigned char	t_uchar;
 typedef unsigned int	t_uint;
@@ -45,6 +46,12 @@ typedef enum e_material_type
 	// DIELEC
 	// BUBBLE
 }			t_mat_type;
+
+// typedef struct s_mat
+// {
+// 	t_uchar			type;		//material type
+// 	t_vec3			albedo;		//obj base color
+// }	t_mat;
 
 typedef struct s_material
 {
@@ -109,9 +116,10 @@ typedef struct s_cylinder
 // tag / labelling of objects
 typedef enum	e_obj_type
 {
-	SPHERE,
-	PLANE,
-	CYLINDER,
+	SPHERE = 0,
+	PLANE = 1,
+	CYLINDER = 2,
+	BVH = 3,
 }				t_obj_type;
 
 // union of shapes, stores one of several shapes, one at a time
@@ -136,8 +144,22 @@ typedef struct s_obj
 	};
 	// t_colour	colour;				// obj's colour, removed since mat has albedo
 	t_material	material;			// rendering data
+	t_interval	bbox[3];
 }				t_obj;
 
+// typedef struct s_obj
+// {
+// 	t_obj_type		type;		// tells what type of obj
+// 	union
+// 	{
+// 		t_sphere	sph;
+// 		t_plane		plane;
+// 		t_cylinder	cyl;
+// 		// t_bvh_tree	*bvh;
+// 	};
+// 	t_mat			mat;
+// 	t_interval		bbox[3];
+// }	t_obj;
 
 // typedef struct s_scene
 // {

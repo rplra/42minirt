@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 21:50:50 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/09 22:15:11 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ mult_vec_scalar(cam_w, vars->camera.focus_dist));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[X], 2));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[Y], 2));
 
+	//pixel center
 	*vp_00_loc = add_vec(*vp_top_left, \
 div_vec_scalar(add_vec(vp_d[X], vp_d[Y]), 2));
 

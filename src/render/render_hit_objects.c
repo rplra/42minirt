@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/09 21:43:49 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/10 09:10:37 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * child function in hit
  * calls respective has_hit function depending on object type
  */
-void	init_hit_func(float (*has_hit[])())
+void	init_hit_func(bool (*has_hit[])())
 {
 	has_hit[PLANE] = has_hit_plane;
 	has_hit[SPHERE] = has_hit_sphere;
@@ -24,7 +24,7 @@ void	init_hit_func(float (*has_hit[])())
 }
 
 // hsim to replace with hers (this is temp func)
-float	has_hit_plane(t_obj obj, t_interval ray_range, t_ray ray)
+bool	has_hit_plane(t_obj obj, t_interval ray_range, t_ray ray)
 {
 	// to complete
 	(void) obj;
@@ -32,6 +32,19 @@ float	has_hit_plane(t_obj obj, t_interval ray_range, t_ray ray)
 	(void) ray_range;
 
 	return (0);
+}
+
+/* child function in has_hit_sphere, records details of the hitted obj */
+void	update_sph_rec(t_rt *rt, int index, t_ray ray, float t)
+{
+	t_vec3 (*get_surf_norm[3])(t_ray, t_obj, float);
+
+	init_surf_norm(get_surf_norm);
+	rt->hit.surf_norm = get_surf_norm[rt->obj[index].type](ray, rt->obj[index], t);			//if t>0
+	rt->hit.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));	//if t>0
+	rt->hit.obj = &rt->obj[index];
+	rt->hit.index = index;
+	rt->hit.t = t;
 }
 
 /*
@@ -56,34 +69,39 @@ float	has_hit_plane(t_obj obj, t_interval ray_range, t_ray ray)
  * https://raytracing.github.io/books/RayTracingInOneWeekend.html
  * https://youtu.be/ebzlMOw79Yw?si=8SXTPsEcSUtwft71
  */
-float	has_hit_sphere(t_obj obj, t_interval ray_range, t_ray ray)
+bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 {
 	float		n[3];
+	float		t;
 	float		discriminant;
-	float		tmp;
 	t_vec3		ray_to_center;
 
-	ray_to_center = subtract_vec(obj.sph.pos, ray.orig);
-	n[A] = scalar_product(ray.vector, ray.vector) + EPSILON;
-	n[B] = scalar_product(ray.vector, ray_to_center) + EPSILON;
+	// /*debug*/printf("has_hit ent:%d\n", index);
+	/* ************* get discriminant ************* */
+	ray_to_center = subtract_vec(rt->obj[index].sph.pos, ray.orig);
+	n[A] = scalar_product(ray.vector, ray.vector);
+	n[B] = scalar_product(ray.vector, ray_to_center);
 	n[C] = scalar_product(ray_to_center, ray_to_center) - \
-(obj.sph.rad * obj.sph.rad) + EPSILON;
-
+(rt->obj[index].sph.rad * rt->obj[index].sph.rad);
 	discriminant = (n[B] * n[B]) - (n[A] * n[C]);
-	if (discriminant < 0)
-		return (-1);
-	tmp = (n[B] - sqrt(discriminant)) / n[A];
-	if (tmp <= ray_range.min || tmp >= ray_range.max) //0 to 4294967295
+	if (discriminant < 0.001f)
+		return (0);
+
+	/* ****************** get t ****************** */
+	t = (n[B] - sqrt(discriminant)) / n[A];
+	if (t <= ray_range.min || t >= ray_range.max)
 	{
-		tmp = (n[B] + sqrt(discriminant)) / n[A];
-		if (tmp <= ray_range.min || tmp >= ray_range.max)
-			return (-1);
+		t = (n[B] + sqrt(discriminant)) / n[A];
+		if (t <= ray_range.min || t >= ray_range.max)
+			return (0);
 	}
-	/*debug*/printf("has_hit_sphere:%f %f\n", tmp, discriminant);
-	return (tmp);
+	/*debug*/printf("has_hit_sphere:%f %f\n", t, discriminant);
+
+	update_sph_rec(rt, index, ray, t);
+	return (1);
 }
 
-float	has_hit_cylinder(t_obj obj, t_interval ray_range, t_ray ray)
+bool	has_hit_cylinder(t_obj obj, t_interval ray_range, t_ray ray)
 {
 	// to complete
 	(void) obj;

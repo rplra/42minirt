@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:52:37 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/22 18:53:38 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/10 08:44:33 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,4 +15,82 @@
 void	debug_print_vec(char *str, t_vec3 vec)
 {
 	printf("%s: %f %f %f\n", str, vec.x, vec.y, vec.z);
+}
+
+// void	debug_print_lst(char *str, t_obj *lst)
+// {
+// 	t_obj	*tmp;
+
+// 	tmp = lst;
+// 	while (tmp)
+// 	{
+// 		if (str)
+// 			printf("%s: ", str);
+// 		if (tmp->type == SPHERE)
+// 			debug_print_vec("sph", tmp->sph.orig);
+// 		tmp = tmp->next;
+// 	}
+// }
+
+void	debug_print_arr(char *str, t_obj *obj, int obj_count)
+{
+	int	i;
+
+	i = -1;
+	while (++i < obj_count)
+	{
+		if (str)
+			printf("%s: %d: ", str, i);
+		if (obj->type == SPHERE)
+		{
+			printf("rad: %f\n%s: %d: bbox:\n", obj[i].sph.rad, str, i);
+			debug_print_bbox(" |sph_bbox", obj[i].bbox);
+			debug_print_vec(" |sph", obj[i].sph.pos);
+			printf("----------------\n");
+		}
+		else if (obj->type == CYLINDER)
+			debug_print_vec("cyl", obj[i].cyl.pos);
+		else if (obj->type == PLANE)
+			debug_print_vec("pl", obj[i].plane.pos);
+	}
+}
+
+void	debug_print_bbox(char *str, t_interval bbox[3])
+{
+	printf("%s[X]: %f %f\n", str, bbox[X].min, bbox[X].max);
+	printf("%s[Y]: %f %f\n", str, bbox[Y].min, bbox[Y].max);
+	printf("%s[Z]: %f %f\n", str, bbox[Z].min, bbox[Z].max);
+}
+
+void	debug_print_bvh(char *str, t_bvh_tree *bvh)
+{
+	if (!bvh)
+		return ;
+	printf("%s: BVH_NODE %d~%d:\n", str, bvh->id[L], bvh->id[R]);
+	debug_print_bbox(" |bvh_bbox", bvh->bbox);
+
+	if (bvh->type[L] != BVH)
+	{
+		printf("%s: bvh_id: %d:\n", str, bvh->id[L]);
+		debug_print_arr(" |bvh_l", (t_obj *)bvh->left, 1);
+	}
+	else
+	{
+		// printf("%s: bvh_id_l: BVH_NODE %d:\n", str, bvh->id[L]);
+		// debug_print_bbox(" |bvh_bbox", bvh->bbox);
+		// printf("|bvh_bbox[X]: %f %f\n\n", bvh->bbox[X].min, bvh->bbox[X].max);
+		debug_print_bvh(str, bvh->left);
+	}
+	if (bvh->type[R] != BVH)
+	{
+		printf("%s: bvh_id: %d:\n", str, bvh->id[R]);
+		debug_print_arr(" |bvh_r", (t_obj *)bvh->right, 1);
+	}
+	else
+	{
+		// printf("%s: bvh_id_r: BVH_NODE %d:\n", str, bvh->id[R]);
+		// debug_print_bbox(" |bvh_bbox", bvh->bbox);
+		// printf("|bvh_bbox[X]: %f %f\n\n", bvh->bbox[X].min, bvh->bbox[X].max);
+		debug_print_bvh(str, bvh->right);
+	}
 }

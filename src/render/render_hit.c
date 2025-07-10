@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_hit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/07 13:55:09 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/10 09:09:37 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,68 +68,28 @@ ray: the ray being tested against all scene objects
 */
 t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
 {
-	size_t		i;
-	float		t; 				// temp var holding hit distance
-	t_obj		*res;			// stores closest obj hit so far
-	float		min;			// keep track of the smallest (nearest hit point)
-	float		(*has_hit[3])(t_obj, t_interval, t_ray);
-	t_vec3		(*get_surf_norm[3])(t_ray, t_obj, float);
+	float		t;
+	t_obj		*res;
+	bool		(*has_hit[3])(t_rt *, int, t_interval, t_ray);
 
-	// init hit and normal function array
-	init_hit_func(has_hit);			
-	init_surf_norm(get_surf_norm);
+	init_hit_func(has_hit);
 	res = NULL;
-	min = ray_range.max;
-	i = -1;
-	while (++i < vars->obj_count)
-	{
-		// call hit function for object
-		t = has_hit[vars->obj[i].type](vars->obj[i], ray_range, ray);
-		// if t is within valid range and closer than previous closest
-		if (t > ray_range.min && t <= min)
+
+	// int	x = -1;
+	// while (++x < vars->obj_count)
+	// {
+		// /*debug*/printf("id:%d\n", x);
+		// t = has_hit[vars->obj[x].type](vars, x, ray_range, ray); //this returns t value only, more like get_root
+		t = hit_bvh(vars->bvh, ray_range, ray, vars);
+		// /*debug*/printf("t! %f %d\n", t, vars->hit.index);
+		if (t > 0)
 		{
-			res = &vars->obj[i]; // update closest object
-			min = t;			 // update closest distance
-			vars->hit.t = t;	 // save t val for lighting / shading
-			vars->hit.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, min)); //compute hit function
-			vars->hit.obj = res;
-			vars->hit.surf_norm = get_surf_norm[res->type](ray, *res, min);		//compute normal at hit point
+			res = &vars->obj[vars->hit.index];
+			// ray_range.max = vars->rec.t;	//maybe no need
 		}
-	}
+	// }
 	return (res);
 }
-
-// t_obj	*hit(t_rt *vars, t_ray ray, t_vec3 *surf_norm, t_vec3 *at)
-// {
-// 	float		t;
-// 	t_obj		*tmp;
-// 	t_obj		*res;
-// 	float		min;
-// 	float		(*has_hit[3])(t_obj, t_ray);
-// 	t_vec3      (*get_surf_norm[3])(t_ray, t_obj, float);
-
-// 	init_hit_func(has_hit);
-// 	init_surf_norm(get_surf_norm);
-// 	min = 2147483647.0;
-// 	res = NULL;
-// 	tmp = vars->obj;
-// 	while (tmp != NULL)
-// 	{
-// 		// /*debug*/printf("id:%d\n", x);
-// 		t = has_hit[tmp->type](*tmp, ray);
-// 		// /*debug*/printf("has_hit_sphere:t:%f\n", t);
-// 		if (t > 0.001 && t <= min) // if its new min, keep in record
-// 		{
-// 			res = tmp;
-// 			min = t;
-// 			// can split this out to end
-// 			*at = add_vec(ray.orig, mult_vec_scalar(ray.vector, min));
-// 			*surf_norm = get_surf_norm[res->type](ray, *res, min);
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// 	return (res);
-// }
 
 /* child function in hit_aabb */
 void	assign_ray_t(float t0, float t1, t_interval *ray_t)
@@ -138,14 +98,14 @@ void	assign_ray_t(float t0, float t1, t_interval *ray_t)
 	{
 		if (t0 > ray_t->min)
 			ray_t->min = t0;
-		else if (t1 < ray_t->max)
+		if (t1 < ray_t->max)
 			ray_t->max = t1;
 	}
 	else
 	{
 		if (t1 > ray_t->min)
 			ray_t->min = t1;
-		else if (t0 < ray_t->max)
+		if (t0 < ray_t->max)
 			ray_t->max = t0;
 	}
 }
@@ -168,29 +128,50 @@ int	hit_aabb(t_ray r, t_interval ray_t, t_interval bbox[3])
 		t[0] = (bbox[axis].min - ray_orig[axis]) * axis_inv;
 		t[1] = (bbox[axis].max - ray_orig[axis]) * axis_inv;
 		assign_ray_t(t[0], t[1], &ray_t);
-		if (ray_t.max <= ray_t.min)
-			return (-1);
+		if (ray_t.max < ray_t.min)
+			return (0);
 	}
-	return (0);
+	return (1);
 }
 
-int	hit_bvh(t_ray ray, t_interval ray_range, t_rt vars, t_interval bbox[3])
+bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
 {
-	t_obj *hit_left;
-	t_obj *hit_right;
+	bool	t[2];
+	bool	(*has_hit[3])(t_rt *, int, t_interval, t_ray);
 
-	if (!hit_aabb(ray, ray_range, bbox))
+	// /*debug*/debug_print_bbox("hit_bvh", bvh->bbox);
+	if (!hit_aabb(ray, ray_range, bvh->bbox))
+	{
+		// /*debug*/printf("\n\033[93mno aabb! %d~%d\033[0m\n\n", bvh->id[L], bvh->id[R]);
 		return (0);
+	}
 
-	// bool hit_left = left->hit(r, ray_t, rec); //call respective git function of obj
-	// bool hit_right = right->hit(r, interval(ray_t.min, hit_left ? rec.t : ray_t.max), rec);
+	t[L] = 0;
+	t[R] = 0;
+	if (bvh->type[L] != BVH || bvh->type[R] != BVH)
+		init_hit_func(has_hit);
 
-	hit_left = hit(&vars, ray_range, vars.ray);
-	if (hit_left)
-		hit_right = hit(&vars, new_interval(ray_range.min, vars.hit.t), ray);
+	/* ******************************************** */
+	if (bvh->type[L] != BVH)
+	{
+		// /*debug*/printf("bvh_id_L:%d  %d\n", bvh->id[L], bvh->type[L]);
+		t[L] = has_hit[bvh->type[L]](vars, bvh->id[L], ray_range, ray);
+	}
 	else
-		hit_right = hit(&vars, new_interval(ray_range.min, ray_range.max), ray);
-	if (hit_left || hit_right)
+		t[L] = hit_bvh(bvh->left, ray_range, ray, vars);
+
+	if (bvh->type[R] != BVH)
+	{
+		// /*debug*/printf("bvh_id_R:%d  %d, rec.t:%f\n", bvh->id[R], bvh->type[R], vars->hit.t);
+		if (t[L] > 0.01f)
+			ray_range.max = vars->hit.t;
+		t[R] = has_hit[bvh->type[R]](vars, bvh->id[R], ray_range, ray);
+	}
+	else
+		t[R] = hit_bvh(bvh->right, ray_range, ray, vars);
+	/* ******************************************** */
+	// /*debug*/printf("t[L] & t[R]: %d %d  %d~%d\n", t[L], t[R], bvh->id[L], bvh->id[R]);
+	if (t[L] > 0.001f || t[R] > 0.001f)
 		return (1);
 	return (0);
 }

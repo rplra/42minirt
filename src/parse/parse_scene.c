@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:02 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/09 21:48:37 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/10 08:49:44 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ int	parse_object(t_parse *file, t_rt *rt)
 	obj.material.reflect = 0.5;
 	obj.material.type = METAL;
 	obj.material.fuzz = 0.2;
+	create_bbox(&obj, obj.bbox);
 	return (add_object(rt, &obj));
 }

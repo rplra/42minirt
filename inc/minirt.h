@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/07 10:32:08 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/10 08:16:53 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@
 # define NO		0
 
 typedef unsigned int		t_uint;
+// typedef struct s_hit		t_hit;
 // typedef struct s_ray		t_ray;
-// typedef struct s_sph		t_sph;
+// typedef struct s_sph		t_sphere;
 // typedef struct s_obj		t_obj;
+typedef struct s_bvh_tree	t_bvh_tree;
 
 typedef struct s_img
 {
@@ -69,12 +71,15 @@ typedef struct s_rt
 	t_light		light;
 	t_obj		*obj;
 	size_t		obj_count;
+	t_vec3		color_bg[2];
 
 	// raytracing
 	t_hit		hit;
-	t_vec3		color_bg[2];
-	t_interval	bbox[3];	//bounding box, aabb = t_interval[3]
 	t_ray		ray;		//helper pointer
+
+	t_uint		seed;
+	t_bvh_tree	*bvh;
+	// t_interval	bbox[3];	//bounding box, aabb = t_interval[3]
 }				t_rt;
 
 // typedef struct s_vars

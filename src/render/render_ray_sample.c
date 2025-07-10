@@ -6,12 +6,10 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 21:53:42 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/10 07:55:24 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "render.h"
 #include "minirt.h"
 
 /*
@@ -62,7 +60,7 @@ int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
 	t_vec3			res;
 	(void)	x;
 
-	seed = 12349 + x;
+	seed = vars.seed + x;
 	k = -1;
 	color = new_vec3(0, 0, 0);
 	res.z = target.z;

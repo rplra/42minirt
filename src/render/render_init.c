@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/07 13:25:53 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/10 08:30:26 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,37 +28,34 @@ void	initialize_mlx(t_rt *vars)
 "miniRT");
 }
 
-//void	init_obj(t_rt *vars, t_scene *scene)
-//{
-// 	vars->obj = NULL;
-// 	new_obj(vars, &vars->obj, new_sph(new_vec3(0, 0, -1.2), 0.5, \
-// new_vec3(0.1, 0.2, 0.5), DIFFUSE)); //center
-// 	new_obj(vars, &vars->obj, new_sph(new_vec3(0, -100.5, -1), 100, \
-// new_vec3(0.8, 0.8, 0), DIFFUSE)); //ground
-// 	new_obj(vars, &vars->obj, new_sph(new_vec3(-1, 0, -1), 0.5, \
-// new_vec3(0.8, 0.8, 0.8), METAL)); //left
-// 	new_obj(vars, &vars->obj, new_sph(new_vec3(1, 0, -1), 0.5, \
-// new_vec3(0.8, 0.6, 0.2), METAL)); //right
+// void	init_obj(t_rt *vars)
+// {
+// 	/* init sphere objects, use malloc */
+// 	vars->obj_count = 4; // + other_obj_count
+// 	malloc_obj_ptr(&vars->obj, vars->obj_count);
 
-	/* init sphere objects, use malloc */
-	// vars->count_sph = 4;
-	// malloc_sph_ptr(&vars->sph, vars->count_sph);
+// // 	float r = cos(M_PI / 4);
+// // 	vars->sph[0] = new_sphere(new_vector3d(-r, 0, -1), r, \
+// // new_vector3d(0, 0, 1), DIFFUSE); //left
+// // 	vars->sph[1] = new_sphere(new_vector3d(r, 0, -1), r, \
+// // new_vector3d(1, 0, 0), DIFFUSE); //right
 
-// 	float r = cos(M_PI / 4);
-// 	vars->sph[0] = new_sphere(new_vector3d(-r, 0, -1), r, \
-// new_vector3d(0, 0, 1), DIFFUSE); //left
-// 	vars->sph[1] = new_sphere(new_vector3d(r, 0, -1), r, \
-// new_vector3d(1, 0, 0), DIFFUSE); //right
+// 	vars->obj[0] = new_sphere(new_vec3(0, 0, -1.2), 0.5, \
+// new_vec3(0.1, 0.2, 0.5), DIFFUSE);	//center
+// 	vars->obj[1] = new_sphere(new_vec3(0, -100.5, -1), 100, \
+// new_vec3(0.8, 0.8, 0), DIFFUSE);	//ground
+// 	vars->obj[2] = new_sphere(new_vec3(-1, 0, -1), 0.5, \
+// new_vec3(0.8, 0.8, 0.8), METAL);	//left
+// 	vars->obj[3] = new_sphere(new_vec3(1, 0, -1), 0.5, \
+// new_vec3(0.8, 0.6, 0.2), METAL);	//right
 
-// 	vars->sph[0] = new_sphere(new_vec3(0, 0, -1.2), 0.5, \
-// new_vec3(0.1, 0.2, 0.5), DIFFUSE); //center
-// 	vars->sph[1] = new_sphere(new_vec3(0, -100.5, -1), 100, \
-// new_vec3(0.8, 0.8, 0), DIFFUSE); //ground
-// 	vars->sph[2] = new_sphere(new_vec3(-1, 0, -1), 0.5, \
-// new_vec3(0.8, 0.8, 0.8), METAL); //left
-// 	vars->sph[3] = new_sphere(new_vec3(1, 0, -1), 0.5, \
-// new_vec3(0.8, 0.6, 0.2), METAL); //right
-//}
+// 	// vars->obj[4] = new_sphere(new_vec3(-0.5, 2, -2), 0.6, \
+// // new_vec3(0.4, 0.4, 0.4), METAL);	//left
+// // 	vars->obj[5] = new_sphere(new_vec3(5, 0, -1), 1, \
+// // new_vec3(0.8, 0.6, 0.2), METAL);	//right
+
+// 	get_bbox_val(vars->obj, vars->obj_count, vars->bbox);
+// }
 
 void	init_cam(t_rt *vars)
 {
@@ -81,27 +78,23 @@ void	init_cam(t_rt *vars)
 	vars->ray.vector = new_vec3(0, 0, 0);
 }
 
-void	init_bbox(t_rt *vars)
+void	init_hit(t_rt *vars)
 {
-	aabb(new_vec3(0, 0, 0), new_vec3(0, 0, 0), vars->bbox);
+	vars->hit.surf_norm = new_vec3(0, 0, 0);
+	vars->hit.t = 0;
+	vars->hit.index = -1;
 }
 
 void	init_variable(t_rt *vars)
 {
 	init_cam(vars);
-	init_bbox(vars);
+	// init_obj(vars);		//replace with info from parser
+	debug_print_arr("init_var", vars->obj, vars->obj_count);
+	init_bvh_node(vars);
+	init_hit(vars);
 	vars->color_bg[0] = new_vec3(0.5, 0.7, 1);
 	vars->color_bg[1] = new_vec3(1, 1, 1);
-	// vars->color_bg[0] = new_vector3d(0, 178, 255);
-	// vars->color_bg[1] = new_vector3d(0, 255, 255);
-	// vars->color_bg[1] = create_hsv(225, 62, 40);
-	// vars->color_bg[1] = create_hsv(166, 38, 100);
+	vars->seed = 12345;
 
-	// vars->color_bg[0] = create_hsv(199, 100, 100);
-	// vars->color_bg[1] = create_hsv(166, 10, 90);
-
-	vars->hit.surf_norm = new_vec3(0, 0, 0);
-	vars->hit.t = 0;
-	//init_obj(vars);
 	my_create_image(vars, &vars->img);
 }

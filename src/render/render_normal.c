@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_normal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:11:57 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/07 13:17:59 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/11 09:43:21 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ t_vec3	point_at(float t, t_ray ray)
 }
 
 /*
+ * checks if dot product is > 0,
+ * if true, reverse the ray by multiply -1
+ */
+t_vec3	set_face_norm(t_ray ray, t_vec3 surf_norm)
+{
+	if (scalar_product(ray.vector, surf_norm) > 0)	//if pointing in same direction
+		surf_norm = mult_vec_scalar(surf_norm, -1);	//reverse direction
+	return (surf_norm);
+}
+
+/*
  * child function in hit
  * calls respective get_surf_norm function depending on object type
  */
@@ -34,9 +45,8 @@ void	init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float))
 
 t_vec3	get_surf_norm_plane(t_ray ray, t_obj obj, float t)
 {
-	(void)	ray;
-	(void)	t;
-	return (obj.plane.normal);
+	(void) t;
+	return (set_face_norm(ray, obj.quad.normal));
 }
 
 /*
@@ -55,8 +65,7 @@ t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t)
 	surf_norm = subtract_vec(pt_ray, obj.sph.pos);
 	surf_norm = unit_vec3(surf_norm);
 	// so, reverse surf_norm if so
-	if (scalar_product(ray.vector, surf_norm) > 0) // pointing in same direction
-		surf_norm = mult_vec_scalar(surf_norm, -1);
+	surf_norm = set_face_norm(ray, surf_norm);
 	return (surf_norm);
 }
 

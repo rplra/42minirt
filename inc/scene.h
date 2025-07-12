@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/10 08:01:50 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/11 19:02:31 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,15 @@ typedef struct s_plane
 	t_vec3		normal;
 }				t_plane;
 
+typedef struct s_quad
+{
+	t_vec3		q;
+	t_vec3		coord[2];	//u, v
+	t_vec3		normal;
+	float		d;			//D in plane formula: Ax + By + Cz = D
+	t_vec3		w;			//const for calculating if point hit is within quad surface
+}				t_quad;
+
 typedef struct s_cylinder
 {
 	t_vec3		pos;
@@ -114,7 +123,7 @@ typedef struct s_cylinder
 }				t_cylinder;
 
 // tag / labelling of objects
-typedef enum	e_obj_type
+typedef enum e_obj_type
 {
 	SPHERE = 0,
 	PLANE = 1,
@@ -140,6 +149,7 @@ typedef struct s_obj
 	{
 		t_sphere	sph;
 		t_plane		plane;
+		t_quad		quad;
 		t_cylinder	cyl;
 	};
 	// t_colour	colour;				// obj's colour, removed since mat has albedo

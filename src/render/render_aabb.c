@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 22:14:28 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/11 22:19:12 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,52 @@
 #include "minirt.h"
 
 /* compares which smaller and returns in as 1st param in t_interval */
-static t_interval	assign_min_max(float a, float b)
+static t_interval	assign_min_max(float a, float v)
 {
 	t_interval	range;
 
-	if (a <= b)
+	if (a <= v)
 	{
 		range.min = a;
-		range.max = b;
+		range.max = v;
 	}
 	else
 	{
-		range.min = b;
+		range.min = v;
 		range.max = a;
 	}
 	return (range);
 }
 
-void	aabb(t_vec3 a, t_vec3 b, t_interval range[3])
+/* expand res range by num, res need to passed as &res */
+void	expand_box(float num, t_interval *res)
 {
-	range[X] = assign_min_max(a.x, b.x);
-	range[Y] = assign_min_max(a.y, b.y);
-	range[Z] = assign_min_max(a.z, b.z);
+	float	fin;
+
+	fin = num / 2;
+	*res = new_interval(res->min - fin, res->max + fin);
+}
+
+/* adds padding if bbox thickness on any axis (xyz) = 0 */
+void	add_padding(t_interval res[3])
+{
+	float	num;
+
+	num = 0.001f;
+	if (res[X].max - res[X].min < num)
+		expand_box(num, &res[X]);
+	if (res[Y].max - res[Y].min < num)
+		expand_box(num, &res[Y]);
+	if (res[Z].max - res[Z].min < num)
+		expand_box(num, &res[Z]);
+}
+
+void	aabb(t_vec3 a, t_vec3 v, t_interval res[3])
+{
+	res[X] = assign_min_max(a.x, v.x);
+	res[Y] = assign_min_max(a.y, v.y);
+	res[Z] = assign_min_max(a.z, v.z);
+	add_padding(res);
 }
 
 /*
@@ -77,5 +101,11 @@ void	get_bbox_val(t_obj *obj, int argc, t_interval res[3])
 	/*debug*/printf("get_bbox_val:ac:%d\n", argc);
 	assign_bbox(obj[0].bbox, res);
 	while (++x < argc)
+	{
+		// /*debug*/printf("combining: %d\n", x);
+		// /*debug*/debug_print_bbox(NULL, obj[x].bbox);
 		update_aabb_box(res, obj[x].bbox, res);
+	}
+	//5/2 =2 (mid)
+	// ac-mid = 5-2=3
 }

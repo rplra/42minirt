@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 22:27:52 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 21:09:53 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/12 13:53:26 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,10 @@ int id[2], bool (*func[3])(t_obj, t_obj))
 	int	half[2];
 
 	/*debug*/printf("else\n");
+	// mid = (argc / 2);
 	mid = ((id[1] - id[0]) / 2);
 	axis = longest_axis(bvh->bbox);
-	/*debug*/printf("merge_sort: id_dif:%d\n", id[1] - id[0]);
+	// /*debug*/printf("merge_sort:%d id_dif:%d\n", argc, id[1] - id[0]);
 	// merge_sort(obj, argc, func[axis]);
 	merge_sort(obj, id[1] - id[0], func[axis]);
 	bvh->type[L] = BVH;
@@ -82,12 +83,13 @@ int id[2], bool (*func[3])(t_obj, t_obj))
 
 	half[0] = id[0];
 	half[1] = id[0] + mid;
+
 	/*debug*/printf("|ac[L]: %d~%d %d\n", half[0], half[1], mid);
 	bvh->left = build_bvh_tree(obj, half, func);
 	/* ********************************************************* */
 	half[0] = half[1];
 	half[1] = id[1];
-	/*debug*/printf("|ac[R]: %d~%d\n", half[0], half[1]);
+	// /*debug*/printf("|ac[R]: %d~%d, %d\n", half[0], half[1], argc-mid);
 	bvh->right = build_bvh_tree(&obj[mid], half, func);
 	// mid, argc-mid
 }
@@ -97,13 +99,12 @@ t_bvh_tree	*build_bvh_tree(t_obj *obj, int id[2], bool (*func[3])(t_obj, t_obj))
 	t_bvh_tree	*bvh;
 
 	bvh = (t_bvh_tree *)malloc(sizeof(t_bvh_tree));
-	// mid = (argc / 2);
-	// mid = ((id[1] - id[0]) / 2);
+	// /*debug*/printf("_____build_tree_____\nac:%d %d\n", id[1] - id[0], argc);
+	// /*debug*/debug_print_bbox("obj[0]", obj[0].bbox);
 
 	get_bbox_val(obj, id[1] - id[0], bvh->bbox);
 	/*debug*/debug_print_bbox("fin_box", bvh->bbox);
 	/*debug*/printf("\n");
-
 	if (id[1] - id[0] <= 0)
 		return (NULL);
 	if ((id[1] - id[0] == 1) || (id[1] - id[0] == 2))

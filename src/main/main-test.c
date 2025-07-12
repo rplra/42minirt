@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:45:50 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 20:35:16 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/11 18:57:23 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@
 void	add_rec(t_hit *rec, t_obj obj)
 {
 	rec->obj = &obj;
-	debug_print_vec("obj_col", obj.mat.albedo);
-	debug_print_vec("hit_col", rec->obj->mat.albedo);
+	debug_print_vec("obj_col", obj.material.albedo);
+	debug_print_vec("hit_col", rec->obj->material.albedo);
 	// *rec->hit = new_sphere(obj.sph.orig, obj.sph.rad, obj.mat.albedo, obj.mat.type);
 }
 
@@ -264,6 +264,18 @@ int main()
 	// debug_print_arr("arr", vars.obj, vars.sph_count);
 	// free(vars.obj);
 	
+	/* __________________ expand_box __________________*/
+	// t_interval	pt[3];
+
+	// pt[X] = new_interval(-1, 1);
+	// pt[Y] = new_interval(0, 0);
+	// pt[Z] = new_interval(-1, 1);
+	// debug_print_bbox("pt_bf", pt);
+	// add_padding(pt);
+	// debug_print_bbox("pt_af", pt);
+	// /*debug*/printf("pt_af:%f %f\n", pt[X].min, pt[X].max);
+
+
 	/* __________________ bvh_node __________________*/
 	t_rt	vars;
 	init_obj(&vars);
@@ -273,7 +285,6 @@ int main()
 
 	vars.seed = 12345;
 
-	debug_print_bbox("vars_bbox", vars.bbox);
 	init_bvh_node(&vars);
 	printf("\n**********************************\n");
 	debug_print_bvh("bvh_node", vars.bvh);

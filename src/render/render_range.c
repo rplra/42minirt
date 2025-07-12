@@ -6,24 +6,24 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:42:33 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 15:43:16 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/11 12:38:40 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 
-float	get_min(float a, float b)
+float	get_min(float a, float v)
 {
-	if (a <= b)
+	if (a <= v)
 		return (a);
-	return (b);
+	return (v);
 }
 
-float	get_max(float a, float b)
+float	get_max(float a, float v)
 {
-	if (a >= b)
+	if (a >= v)
 		return (a);
-	return (b);
+	return (v);
 }
 
 bool	overlap(float t[2], float t2[2])
@@ -37,15 +37,15 @@ bool	overlap(float t[2], float t2[2])
 }
 
 /*
- * sets min value = smallest between a.min & b.min
- * same applies to max value
+ * sets min = smallest value between a.min & b.min
+ * same applies to max
  */
-t_interval	interval(t_interval a, t_interval b)
+t_interval	interval(t_interval a, t_interval v)
 {
 	t_interval	res;
 
-	res.min = get_min(a.min, b.min);
-	res.max = get_max(a.max, b.max);
+	res.min = get_min(a.min, v.min);
+	res.max = get_max(a.max, v.max);
 	return (res);
 }
 

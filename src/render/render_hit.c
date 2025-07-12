@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/10 09:09:37 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/12 13:42:29 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
 {
 	float		t;
 	t_obj		*res;
-	bool		(*has_hit[3])(t_rt *, int, t_interval, t_ray);
+	// bool		(*has_hit[3])(t_rt *, int, t_interval, t_ray);
 
-	init_hit_func(has_hit);
+	// init_hit_func(has_hit);
 	res = NULL;
 
 	// int	x = -1;
@@ -129,7 +129,10 @@ int	hit_aabb(t_ray r, t_interval ray_t, t_interval bbox[3])
 		t[1] = (bbox[axis].max - ray_orig[axis]) * axis_inv;
 		assign_ray_t(t[0], t[1], &ray_t);
 		if (ray_t.max < ray_t.min)
+		{
+			// /*debug*/printf("hit_aabb: %f %f\n", ray_t.max, ray_t.min);
 			return (0);
+		}
 	}
 	return (1);
 }
@@ -142,7 +145,7 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
 	// /*debug*/debug_print_bbox("hit_bvh", bvh->bbox);
 	if (!hit_aabb(ray, ray_range, bvh->bbox))
 	{
-		// /*debug*/printf("\n\033[93mno aabb! %d~%d\033[0m\n\n", bvh->id[L], bvh->id[R]);
+		/*debug*/printf("\n\033[93mno aabb! %d~%d\033[0m\n\n", bvh->id[L], bvh->id[R]);
 		return (0);
 	}
 
@@ -163,7 +166,7 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
 	if (bvh->type[R] != BVH)
 	{
 		// /*debug*/printf("bvh_id_R:%d  %d, rec.t:%f\n", bvh->id[R], bvh->type[R], vars->hit.t);
-		if (t[L] > 0.01f)
+		if (t[L] > EPSILON)
 			ray_range.max = vars->hit.t;
 		t[R] = has_hit[bvh->type[R]](vars, bvh->id[R], ray_range, ray);
 	}
@@ -171,7 +174,7 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
 		t[R] = hit_bvh(bvh->right, ray_range, ray, vars);
 	/* ******************************************** */
 	// /*debug*/printf("t[L] & t[R]: %d %d  %d~%d\n", t[L], t[R], bvh->id[L], bvh->id[R]);
-	if (t[L] > 0.001f || t[R] > 0.001f)
+	if (t[L] > EPSILON || t[R] > EPSILON)
 		return (1);
 	return (0);
 }

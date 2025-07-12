@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:19:29 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/07 10:06:58 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/11 16:49:23 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void print_ambient(const t_ambient *ambient)
 {
-    printf("Ambient ratio: %f\n", ambient->intensity);
-    printf("Ambient colour: (r=%f, g=%f, b=%f)\n",
-		ambient->colour.r, ambient->colour.g, ambient->colour.b);
+	printf("Ambient ratio: %f\n", ambient->intensity);
+	printf("Ambient colour: (r=%f, g=%f, b=%f)\n",
+ambient->colour.r, ambient->colour.g, ambient->colour.b);
 }
 
 void print_camera(const t_camera *camera)

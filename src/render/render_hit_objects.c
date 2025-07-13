@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/12 13:41:25 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/12 18:09:11 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,23 @@ bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 }
 
 /*
+ * child function in t_intersects_plane
+ * checks if alpha & beta is within certain range
+ * 
+ * flag decides which shape it'll render
+ * flag 0 = render quadrilaterals
+ * flag 1 = render triangles
+ */
+static bool	within_range(float alpha, float beta, int flag)
+{
+	if (flag == 0)
+		return ((alpha >= 0 && alpha <= 1) && (beta >= 0 && beta <= 1));
+	else if (flag == 1)
+		return (alpha > 0 && beta > 0 && (alpha + beta < 1));
+	return (0);
+}
+
+/*
  * child function in has_hit_plane
  * checks if hit point, t is within surface of plane/quad
  * Formula:
@@ -128,7 +145,7 @@ cross_product3d(intersect, rt->obj[i].quad.coord[Y]));
 	beta = scalar_product(rt->obj[i].quad.w, \
 cross_product3d(rt->obj[i].quad.coord[X], intersect));
 	/*debug*/printf("has_hit_plane:%f %f\n", alpha, beta);
-	if ((alpha < 0 || alpha > 1) || (beta < 0 || beta > 1))
+	if (!within_range(alpha, beta, 0))
 		return (0);
 	rt->hit.coord[X] = alpha;
 	rt->hit.coord[Y] = beta;

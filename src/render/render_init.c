@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/12 13:50:59 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/13 15:05:58 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void	init_obj(t_rt *rt)
 void	init_cam(t_rt *rt)
 {
 	rt->camera.pos = new_vec3(0, 0, 9); //-2,2,1
-	rt->camera.lookat = new_vec3(0, 0, 0);
+	// rt->camera.lookat = new_vec3(0, 0, 0);
 	/* ************** need to comment out above when include parser ************************ */
 
 	rt->camera.vfov = radian(90);
 	// vars->camera.vfov = radian(vars->camera.vfov);
 	rt->camera.vup = new_vec3(0, 1, 0);
-	// rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1)); // fixed
+	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1)); // fixed
 	rt->camera.defoc_ang = radian(0);
 	rt->camera.defoc_disk[X] = new_vec3(0, 0, 0);
 	rt->camera.defoc_disk[Y] = new_vec3(0, 0, 0);

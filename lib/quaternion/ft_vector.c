@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:36:20 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/25 11:24:28 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 07:54:02 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,12 @@ float	len_vec3(t_vec3 vector)
 (vector.z * vector.z)));
 }
 
-/* Normalize vector into unit vector */
+/*
+ * Normalize vector into unit vector
+ * returns x / sqrt(x*x + y*y + z*z),
+ *         y / sqrt(x*x + y*y + z*z),
+ *         z / sqrt(x*x + y*y + z*z)
+ */
 t_vec3	unit_vec3(t_vec3 vector)
 {
 	float	len;

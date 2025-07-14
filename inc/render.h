@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/12 18:02:31 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 09:00:15 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ t_obj		new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_mat_type ma
 t_obj		new_plane(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, t_material mat);
 t_obj		new_plane_2(t_vec3 position, t_vec3 normal, t_material mat);
 t_material	new_material(t_vec3 color, t_mat_type type);
-
+t_vec3		set_tmp_vec(t_vec3 normal);
 void		update_material(t_obj *obj, t_mat_type type, float fuzz);
 
 // void		new_obj(t_rt *vars, t_obj **lst, t_obj *new);

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 22:15:11 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 09:09:46 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
 	// /*debug*/printf("h:%f, viewport: %f %f\n", h, viewport[X], viewport[Y]);
 	*cam_w = unit_vec3(subtract_vec(vars->camera.pos, vars->camera.lookat));
 	/*debug*/printf("cam_w: %f %f %f\n", (*cam_w).x, (*cam_w).y, (*cam_w).z);
-	cam[X] = unit_vec3(cross_product3d(vars->camera.vup, *cam_w));
+	cam[X] = unit_vec3(cross_product(vars->camera.vup, *cam_w));
 	/*debug*/printf("cam[X]: %f %f %f\n", cam[X].x, cam[X].y, cam[X].z);
-	cam[Y] = mult_vec_scalar(cross_product3d(*cam_w, cam[X]), -1); // -v
+	cam[Y] = mult_vec_scalar(cross_product(*cam_w, cam[X]), -1); // -v
 	/*debug*/printf("cam[Y]: %f %f %f\n", cam[Y].x, cam[Y].y, cam[Y].z);
 	*viewport_u = mult_vec_scalar(cam[X], viewport[W]);
 	*viewport_v = mult_vec_scalar(cam[Y], viewport[H]);

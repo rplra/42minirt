@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/12 18:09:11 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 09:09:46 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,11 @@ static bool	t_intersects_plane(t_rt *rt, int i, t_ray ray, float t)
 	float	beta;
 
 	intersect = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
-	intersect = subtract_vec(intersect, rt->obj[i].quad.q);
-	alpha = scalar_product(rt->obj[i].quad.w, \
-cross_product3d(intersect, rt->obj[i].quad.coord[Y]));
-	beta = scalar_product(rt->obj[i].quad.w, \
-cross_product3d(rt->obj[i].quad.coord[X], intersect));
+	intersect = subtract_vec(intersect, rt->obj[i].plane.pos);
+	alpha = scalar_product(rt->obj[i].plane.w, \
+cross_product(intersect, rt->obj[i].plane.coord[Y]));
+	beta = scalar_product(rt->obj[i].plane.w, \
+cross_product(rt->obj[i].plane.coord[X], intersect));
 	/*debug*/printf("has_hit_plane:%f %f\n", alpha, beta);
 	if (!within_range(alpha, beta, 0))
 		return (0);
@@ -166,11 +166,11 @@ bool	has_hit_plane(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 	float	dot_np;
 	float	t;
 
-	denom = scalar_product(rt->obj[index].quad.normal, ray.vector);
+	denom = scalar_product(rt->obj[index].plane.normal, ray.vector);
 	if (fabs(denom) < EPSILON)
 		return (0);
-	dot_np = scalar_product(rt->obj[index].quad.normal, ray.orig);
-	t = (rt->obj[index].quad.d - dot_np) / denom;
+	dot_np = scalar_product(rt->obj[index].plane.normal, ray.orig);
+	t = (rt->obj[index].plane.d - dot_np) / denom;
 	/*debug*/printf("has_hit_pl: t: %f, ray: %f~%f\n", t, ray_range.min, ray_range.max);
 	if (t < ray_range.min || t > ray_range.max)
 		return (0);

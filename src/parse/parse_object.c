@@ -6,11 +6,41 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/09 22:13:18 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 09:10:31 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+t_vec3	set_tmp_vec(t_vec3 normal)
+{
+	t_vec3	tmp;
+
+	if (normal.x == 1)
+		tmp = new_vec3(0, 0, -1);
+	else if (normal.x != 0)
+		tmp = new_vec3(0, 0, 1);
+	else
+		tmp = new_vec3(1, 0, 0);
+	return (tmp);
+}
+
+void	assign_plane_components(t_obj *obj)
+{
+	t_vec3	n;
+	t_vec3	tmp_vec;
+
+	obj->type = PLANE;
+	tmp_vec = set_tmp_vec(obj->plane.normal);
+	obj->plane.coord[Y] = unit_vec3(cross_product(obj->plane.normal, tmp_vec));
+	obj->plane.coord[X] = cross_product(obj->plane.normal, obj->plane.coord[Y]);
+	//scale to certain size
+	obj->plane.coord[X] = mult_vec_scalar(obj->plane.coord[X], -4);
+	obj->plane.coord[Y] = mult_vec_scalar(obj->plane.coord[Y], 4);
+	n = cross_product(obj->plane.coord[X], obj->plane.coord[Y]);
+	obj->plane.d = scalar_product(obj->plane.normal, obj->plane.pos);
+	obj->plane.w = div_vec_scalar(n, scalar_product(n, n));
+}
 
 int	parse_plane(t_parse *file, t_obj *obj)
 {
@@ -38,8 +68,9 @@ int	parse_plane(t_parse *file, t_obj *obj)
 		return (1);
 	//printf("Converted colour: (r=%u, g=%u, b=%u)\n", obj->colour.r, obj->colour.g, obj->colour.b); // debug
 	free_array(values);
-	obj->type = PLANE;
 	obj->plane = tmp;
+	assign_plane_components(obj);
+	// obj->type = PLANE;
 	//printf("Printing struct\n");
 	//print_plane(obj);
 	return (0);

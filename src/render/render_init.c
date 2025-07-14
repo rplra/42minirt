@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/13 15:05:58 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 10:47:06 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void	init_obj(t_rt *rt)
 
 void	init_cam(t_rt *rt)
 {
-	rt->camera.pos = new_vec3(0, 0, 9); //-2,2,1
+	// rt->camera.pos = new_vec3(0, 0, 9); //-2,2,1
 	// rt->camera.lookat = new_vec3(0, 0, 0);
 	/* ************** need to comment out above when include parser ************************ */
 
-	rt->camera.vfov = radian(90);
-	// vars->camera.vfov = radian(vars->camera.vfov);
+	// rt->camera.vfov = radian(90);
+	rt->camera.vfov = radian(rt->camera.vfov);
 	rt->camera.vup = new_vec3(0, 1, 0);
 	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1)); // fixed
 	rt->camera.defoc_ang = radian(0);
@@ -64,16 +64,22 @@ void	init_hit(t_rt *rt)
 	rt->hit.index = -1;
 }
 
+/* reassign material to other types than default */
+void	edit_material(t_rt *rt)
+{
+	update_material(&rt->obj[4], DIFFUSE, 0);
+}
+
 void	init_variable(t_rt *rt)
 {
 	init_cam(rt);
-	init_obj(rt);		//replace with info from parser
+	// init_obj(rt);		//replace with info from parser
+	// edit_material(rt);		//custom assign material
 	debug_print_arr("init_var", rt->obj, rt->obj_count);
 	init_bvh_node(rt);
 	init_hit(rt);
 	rt->color_bg[0] = new_vec3(0.5, 0.7, 1);
 	rt->color_bg[1] = new_vec3(1, 1, 1);
 	rt->seed = 12345;
-
 	my_create_image(rt, &rt->img);
 }

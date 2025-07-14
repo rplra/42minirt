@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 21:36:01 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/11 17:51:10 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 08:49:45 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	copy_sph(t_obj *dest, t_obj src)
 
 void	copy_plane(t_obj *dest, t_obj src)
 {
-	dest->quad.q = src.quad.q;
-	dest->quad.coord[X] = src.quad.coord[X];
-	dest->quad.coord[Y] = src.quad.coord[Y];
-	dest->quad.normal = src.quad.normal;
-	dest->quad.d = src.quad.d;
-	dest->quad.w = src.quad.w;
+	dest->plane.pos = src.plane.pos;
+	dest->plane.coord[X] = src.plane.coord[X];
+	dest->plane.coord[Y] = src.plane.coord[Y];
+	dest->plane.normal = src.plane.normal;
+	dest->plane.d = src.plane.d;
+	dest->plane.w = src.plane.w;
 }
 
 void	copy_cyl(t_obj *dest, t_obj src)

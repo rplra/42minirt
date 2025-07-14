@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:52:37 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/11 22:19:47 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 08:49:45 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	debug_print_arr(char *str, t_obj *obj, int obj_count)
 			debug_print_vec("cyl", obj[i].cyl.pos);
 		else if (obj->type == PLANE)
 		{
-			debug_print_vec("pl", obj[i].quad.q);
+			debug_print_vec("pl", obj[i].plane.pos);
 			// debug_print_vec(" |pl_u", obj[i].quad.coord[X]);
 			// debug_print_vec(" |pl_v", obj[i].quad.coord[Y]);
 			debug_print_bbox(" |pl_bbox", obj[i].bbox);

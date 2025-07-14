@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:56:34 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/25 11:23:36 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 09:09:46 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_vec3	mult_vec(t_vec3 a, t_vec3 b)
  * Cross product of a cross b
  * Returns a new vector
  */
-t_vec3	cross_product3d(t_vec3 a, t_vec3 b)
+t_vec3	cross_product(t_vec3 a, t_vec3 b)
 {
 	t_vec3	result;
 

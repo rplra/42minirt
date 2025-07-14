@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_vector.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 21:37:14 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/02 09:07:01 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/14 09:09:46 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_vec3	subtract_vec(t_vec3 a, t_vec3 b);
 
 float	scalar_product(t_vec3 a, t_vec3 b);
 t_vec3	mult_vec(t_vec3 a, t_vec3 b);
-t_vec3	cross_product3d(t_vec3 a, t_vec3 b);
+t_vec3	cross_product(t_vec3 a, t_vec3 b);
 t_vec3	cross_product_quaternion(t_quat a, t_quat b);
 
 /* 

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:11:57 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/11 09:43:21 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 08:49:45 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float))
 t_vec3	get_surf_norm_plane(t_ray ray, t_obj obj, float t)
 {
 	(void) t;
-	return (set_face_norm(ray, obj.quad.normal));
+	return (set_face_norm(ray, obj.plane.normal));
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:35:35 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/11 19:18:16 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 08:50:28 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ void	aabb_cyl(t_obj *obj, t_interval res[3])
 /* aabb for plane & quadrilaterals(all diff form of planes) */
 void	aabb_plane(t_obj *obj, t_interval res[3])
 {
-	t_quad		plane;
+	t_plane		plane;
 	t_interval	bbox_side1[3];
 	t_interval	bbox_side2[3];
 
-	plane = obj->quad;
-	aabb(plane.q, add_vec(add_vec(plane.q, plane.coord[X]), plane.coord[Y]), bbox_side1);
-	aabb(add_vec(plane.q, plane.coord[X]), add_vec(plane.q, plane.coord[Y]), bbox_side2);
+	plane = obj->plane;
+	aabb(plane.pos, add_vec(add_vec(plane.pos, plane.coord[X]), plane.coord[Y]), bbox_side1);
+	aabb(add_vec(plane.pos, plane.coord[X]), add_vec(plane.pos, plane.coord[Y]), bbox_side2);
 	update_aabb_box(bbox_side1, bbox_side2, res);
 }
 

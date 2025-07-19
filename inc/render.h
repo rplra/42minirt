@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/14 21:36:16 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:22:49 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,9 @@ void		add_padding(t_interval res[3]);
 
 /* __________________ objs __________________ */
 t_obj		new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_mat_type mat_type);
-t_obj		new_plane(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, t_material mat);
-t_obj		new_plane_2(t_vec3 position, t_vec3 normal, t_material mat);
-t_material	new_material(t_vec3 color, t_mat_type type);
+t_obj		new_plane(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, t_mat mat);
+t_obj		new_plane_2(t_vec3 position, t_vec3 normal, t_mat mat);
+t_mat	new_material(t_vec3 color, t_mat_type type);
 t_vec3		set_tmp_vec(t_vec3 normal);
 void		update_material(t_obj *obj, t_mat_type type, float fuzz);
 
@@ -184,6 +184,7 @@ t_vec3		get_surf_norm_cyl(t_ray ray, t_obj obj, float t);
 t_vec3		ray_color(t_rt *vars, t_ray ray, t_uchar ray_bounce, \
 t_uint *seed);
 // t_vect3d	ray_color_loop(t_vars vars, t_ray ray, unsigned int *seed);
+t_vec3		bg_color(t_rt vars, t_ray ray);
 t_ray		new_ray(t_vec3 origin, t_vec3 dir);
 int			sample_pixels(t_rt vars, t_vec3 target, \
 t_vec3 viewport_d[2], int x);
@@ -193,6 +194,8 @@ t_vec3		point_at(float t, t_ray ray);
 /* __________________ color __________________ */
 t_vec3		lerp_rgb(t_vec3 c1, t_vec3 c2, float t);
 int			create_rgb(int r_value, int g_value, int b_value);
+float		clamp(float value, float min, float max);
+t_col		colour_clamp(t_col c);
 t_vec3		color_correction(t_vec3 color);
 t_vec3		split_rgb(int color);
 
@@ -229,22 +232,26 @@ void		debug_print_arr(char *str, t_obj *obj, int obj_count);
 void		debug_print_bvh(char *str, t_bvh_tree *bvh);
 void		debug_print_bbox(char *str, t_interval bbox[3]);
 
-/*			normal.c		*/
-// void		get_normal(t_hit *hit);
-// t_vec3	get_cylinder_normal(t_vec3 point, t_cylinder *cy);
 
 /*			light.c			*/
-t_vec3		ambient(t_hit *hit, t_ambient amb);
-t_vec3		diffuse(t_hit *hit, t_light *light);
-t_vec3		specular(t_hit *hit, t_light *light, t_camera *camera);
-t_vec3		light_col(t_hit *hit, t_rt *rt);
-t_vec3		reflect(t_vec3 I, t_vec3 N);
+t_col		ambient(t_hit *hit, t_ambient amb);
+t_col		diffuse(t_rt *rt, t_hit *point, float intensity);
+t_col		get_total_light(t_rt *rt, t_hit *point, t_uint *seed);
+t_col		sample_direct_light(t_rt *rt, t_hit *point, t_uint *seed);
 
 /*			shadow.c		*/
-int			is_shadow(t_rt	*rt, t_vec3 point, t_vec3 normal);
+int			is_shadowed(t_rt *rt, t_hit *point, t_vec3 light_dir, float t);
+
+t_vec3 		mat_lambertian(t_vec3 surf_norm, t_uint *seed);
+t_vec3 		mat_metal(t_vec3 incoming_ray, t_vec3 surf_norm, float fuzz, t_uint *seed);
 
 
-t_colour	sample_direct_light(t_rt *vars, t_hit *hit, t_uint *seed);
+
+
+
+
+
+
 
 
 #endif

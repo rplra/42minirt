@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parse_object.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/14 09:10:31 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/19 20:33:15 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+/*
+ * when a ray hits the plane, we need to know if it landed on the visible part of the plane
+ * these 2 functions make sure we have a clear map of the visible part
+ * picks a direction that is NOT the same as "up" (normal)
+ */
 t_vec3	set_tmp_vec(t_vec3 normal)
 {
 	t_vec3	tmp;
@@ -25,6 +30,7 @@ t_vec3	set_tmp_vec(t_vec3 normal)
 	return (tmp);
 }
 
+/* brief: use the normal and the temp vec to calc two perpendicular directions (forward and right) */
 void	assign_plane_components(t_obj *obj)
 {
 	t_vec3	n;
@@ -34,13 +40,12 @@ void	assign_plane_components(t_obj *obj)
 	tmp_vec = set_tmp_vec(obj->plane.normal);
 	obj->plane.coord[Y] = unit_vec3(cross_product(obj->plane.normal, tmp_vec));
 	obj->plane.coord[X] = cross_product(obj->plane.normal, obj->plane.coord[Y]);
-	//scale to certain size
 	obj->plane.coord[X] = mult_vec_scalar(obj->plane.coord[X], -4);
 	obj->plane.coord[Y] = mult_vec_scalar(obj->plane.coord[Y], 4);
 	n = cross_product(obj->plane.coord[X], obj->plane.coord[Y]);
 	obj->plane.d = scalar_product(obj->plane.normal, obj->plane.pos);
 	obj->plane.w = div_vec_scalar(n, scalar_product(n, n));
-}
+} 
 
 int	parse_plane(t_parse *file, t_obj *obj)
 {
@@ -70,7 +75,7 @@ int	parse_plane(t_parse *file, t_obj *obj)
 	free_array(values);
 	obj->plane = tmp;
 	assign_plane_components(obj);
-	// obj->type = PLANE;
+	//obj->type = PLANE;
 	//printf("Printing struct\n");
 	//print_plane(obj);
 	return (0);
@@ -107,6 +112,28 @@ int	parse_sphere(t_parse *file, t_obj *obj)
 	return (0);
 }
 
+static int	parse_cylinder_dimensions_and_color(t_parse *file,
+	t_cylinder *tmp, t_obj *obj)
+{
+	char	**values;
+	bool	valid;
+
+	tmp->rad = ft_atof(file->tokens[3], &valid) / 2;
+	if (!valid || tmp->rad <= 0)
+		return (print_error(file, ERROR_CYDIA, 3, file->tokens));
+	//printf("Cylinder radius: %f\n", tmp.rad);
+	tmp->height = ft_atof(file->tokens[4], &valid);
+	if (!valid || tmp->height <= 0)
+		return (print_error(file, ERROR_CYHT, 4, file->tokens));
+	//printf("Cylinder height: %f\n", tmp.height);
+	values = ft_split(file->tokens[5], ',');
+	if (is_colour(file, values, &obj->material.albedo))
+		return (1);
+	//printf("Converted colour: (r=%u, g=%u, b=%u)\n", obj->colour.r, obj->colour.g, obj->colour.b)
+	free_array(values);
+	return (0);
+}
+
 int	parse_cylinder(t_parse *file, t_obj *obj)
 {
 	t_cylinder	tmp;
@@ -128,19 +155,8 @@ int	parse_cylinder(t_parse *file, t_obj *obj)
 	//printf("Cylinder axis: (x=%f, y=%f, z=%f)\n", tmp.axis.x, tmp.axis.y, tmp.axis.z); // debug
 	tmp.axis = unit_vec3(tmp.axis);
 	free_array(values);
-	tmp.rad = ft_atof(file->tokens[3], &valid) / 2;
-	if (!valid || tmp.rad <= 0)
-		return (print_error(file, ERROR_CYDIA, 3, file->tokens));
-	//printf("Cylinder radius: %f\n", tmp.rad);
-	tmp.height = ft_atof(file->tokens[4], &valid);
-	if (!valid || tmp.height <= 0)
-		return (print_error(file, ERROR_CYHT, 4, file->tokens));
-	//printf("Cylinder height: %f\n", tmp.height);
-	values = ft_split(file->tokens[5], ',');
-	if (is_colour(file, values, &obj->material.albedo))
+	if (parse_cylinder_dimensions_and_color(file, &tmp, obj))
 		return (1);
-	//printf("Converted colour: (r=%u, g=%u, b=%u)\n", obj->colour.r, obj->colour.g, obj->colour.b);
-	free_array(values);
 	obj->type = CYLINDER;
 	obj->cyl = tmp;
 	//printf("Printing struct\n");

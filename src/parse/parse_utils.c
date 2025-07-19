@@ -3,39 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:34:27 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/11 16:50:01 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/19 20:17:41 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-bool	is_object(const char *token)
-{
-	return (ft_strcmp(token, "pl") == 0)
-			|| (ft_strcmp(token, "sp") == 0)
-			|| (ft_strcmp(token, "cy") == 0);
-}
-
-// to fix t_object structure
-int	add_object(t_rt *rt, t_obj *obj)
-{
-	t_obj	*new_objs;
-	size_t		old_size;
-	size_t		new_size;
-	
-	old_size = rt->obj_count * sizeof(t_obj);
-	new_size = (rt->obj_count + 1) * sizeof(t_obj);
-	new_objs = ft_realloc(rt->obj, old_size, new_size);
-	if (!new_objs)
-		return (1);
-	rt->obj = new_objs;
-	rt->obj[rt->obj_count] = *obj;
-	rt->obj_count++;
-	return (0);
-}
 
 int	count_params(char **params)
 {
@@ -47,7 +22,36 @@ int	count_params(char **params)
 	return (i);
 }
 
-int	is_colour(t_parse *scene, char **col, t_colour *colour)
+bool	is_object(const char *token)
+{
+	return (ft_strcmp(token, "pl") == 0)
+			|| (ft_strcmp(token, "sp") == 0)
+			|| (ft_strcmp(token, "cy") == 0);
+}
+
+int	add_object(t_rt *rt, t_obj *obj)
+{
+	t_obj		*new_objs;
+	size_t		old_size;
+	size_t		new_size;
+	
+	old_size = rt->obj_count * sizeof(t_obj);
+	new_size = (rt->obj_count + 1) * sizeof(t_obj);
+	new_objs = ft_realloc(rt->obj, old_size, new_size);
+	if (!new_objs)
+		return (1);
+	rt->obj = new_objs;
+	rt->obj[rt->obj_count] = *obj;
+	// printf("Added object #%zu: %s\n", rt->obj_count,
+    // obj->type == PLANE ? "PLANE" :
+    // obj->type == SPHERE ? "SPHERE" :
+    // obj->type == CYLINDER ? "CYLINDER" :
+    // "UNKNOWN");
+	rt->obj_count++;
+	return (0);
+}
+
+int	is_colour(t_parse *scene, char **col, t_col *colour)
 {
 	bool	valid;
 	

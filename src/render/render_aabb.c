@@ -6,19 +6,21 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/14 21:30:31 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/18 23:53:59 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*   aabb = axis-aligned bounding box
+ *   brief: optimization - creating and managing bb to make rt more efficient
  * ************************************************************************** */
 
 #include "minirt.h"
+// bvh
 
-// optimization; creating and managaing bb make rt more efficient
-
-/* compares which smaller and returns in as 1st param in t_interval */
-// packages them into range structure, small to big
+/*
+ * brief: packages them into range structure, small to big
+ * compares which smaller and returns in as 1st param in t_interval
+ */
 static t_interval	assign_min_max(float a, float v)
 {
 	t_interval	range;
@@ -59,7 +61,10 @@ void	add_padding(t_interval res[3])
 		expand_box(num, &res[Z]);
 }
 
-// creates a bounding box between 2 3d points (smallest box to fit 2 points)
+/* 
+ * creates a bounding box between 2 3d points
+ * (smallest box to fit 2 points)
+ */
 void	aabb(t_vec3 a, t_vec3 v, t_interval res[3])
 {
 	res[X] = assign_min_max(a.x, v.x);
@@ -73,8 +78,8 @@ void	aabb(t_vec3 a, t_vec3 v, t_interval res[3])
  * sets res[X].min to smallest value between them
  * sets res[X].max to biggest value between them
  * same applies to Y.min/max & Z.min/max
+ * combines 2 bounding box into one
  */
-// combines 2 bounding box into one
 void	update_aabb_box(t_interval box_0[3], t_interval box_1[3], \
 t_interval res[3])
 {
@@ -83,8 +88,7 @@ t_interval res[3])
 	res[Z] = interval(box_0[Z], box_1[Z]);
 }
 
-/* assigns value in src to res */
-// copies bb value from src to res
+/* copies value in src to res */
 void	assign_bbox(t_interval src[3], t_interval res[3])
 {
 	res[X].min = src[X].min;
@@ -106,7 +110,7 @@ void	get_bbox_val(t_obj *obj, int argc, t_interval res[3])
 	int	x;
 
 	x = -1;
-	/*debug*/printf("get_bbox_val:ac:%d\n", argc);
+	// /*debug*/printf("get_bbox_val:ac:%d\n", argc);
 	assign_bbox(obj[0].bbox, res);
 	while (++x < argc)
 	{
@@ -117,10 +121,4 @@ void	get_bbox_val(t_obj *obj, int argc, t_interval res[3])
 	//5/2 =2 (mid)
 	// ac-mid = 5-2=3
 }
-
-/* 
-	NOTE	- TO ADD FUNCTIONS
-			1. void	aabb_plane(t_obj *obj, t_interval res[3])
-			2. void	aabb_cylinder(t_obj *obj, t_interval res[3])
-*/
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_obj.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:13:15 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/14 09:11:50 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/18 16:22:49 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ t_obj	new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_mat_type mat
 	return (target);
 }
 
-t_material	new_material(t_vec3 color, t_mat_type type)
+t_mat	new_material(t_vec3 color, t_mat_type type)
 {
-	t_material	mat;
+	t_mat	mat;
 
 	mat.albedo = color;
 	mat.type = type;
@@ -35,7 +35,7 @@ t_material	new_material(t_vec3 color, t_mat_type type)
 }
 
 /* Q,u,v, color, mat_type */
-t_obj	new_plane(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, t_material mat)
+t_obj	new_plane(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, t_mat mat)
 {
 	t_obj	res;
 	t_vec3	n;
@@ -57,7 +57,7 @@ t_obj	new_plane(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, t_material mat)
 }
 
 /* Q, norm, material */
-t_obj	new_plane_2(t_vec3 position, t_vec3 normal, t_material mat)
+t_obj	new_plane_2(t_vec3 position, t_vec3 normal, t_mat mat)
 {
 	t_obj	res;
 	t_vec3	n;
@@ -88,6 +88,7 @@ t_obj	new_plane_2(t_vec3 position, t_vec3 normal, t_material mat)
 	create_bbox(&res, res.bbox);
 	return (res);
 }
+
 
 /*
  * custom plugin to assign material to objs

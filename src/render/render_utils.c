@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:18:14 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/02 14:22:28 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/19 12:22:09 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-/* checks if all vector values is near to zero */
+/*
+ * checks if all vector values is near to zero 
+ * useful for normalizing a vector to avoid dividing it by zero
+ * prevents error in math, normalize, intersection and shading
+*/
 bool	is_near_zero(t_vec3 vec)
 {
 	float	res[3];
@@ -25,7 +29,10 @@ bool	is_near_zero(t_vec3 vec)
 	return ((res[X] < s) && (res[Y] < s) && (res[Z] < s));
 }
 
-/* assigns value in t_vec3 to float[3] */
+/* 
+ * assigns value in t_vec3 to float[3]
+ * used in hit aabb
+ */
 void	vec3_to_arr(t_vec3 pt, float res[3])
 {
 	res[X] = pt.x;

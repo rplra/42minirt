@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/14 21:36:39 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:25:00 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 typedef unsigned char	t_uchar;
 typedef unsigned int	t_uint;
-typedef t_vec3			t_colour;
+typedef t_vec3			t_col;
 
 # define r	x
 # define g	y
@@ -39,7 +39,7 @@ typedef t_vec3			t_colour;
 // 	float		b;		
 // }				t_colour;
 
-typedef enum e_material_type
+typedef enum e_mat_type
 {
 	DIFFUSE,
 	METAL,
@@ -55,7 +55,7 @@ typedef enum e_material_type
 
 typedef struct s_material
 {
-	t_colour	albedo;				// obj's base colour
+	t_col	albedo;				// obj's base colour
 	float		ambient;			// ambient reflectance
 	float		specular;			// specular intensity (PHONG)
 	float		shininess;			// highlight sharpness (PHONG)
@@ -64,12 +64,12 @@ typedef struct s_material
 	float		refractive_index;	// index of refraction (for Snell's law) 
 	float		fuzz;				// material fuzziness (only for metal)
 	t_mat_type	type;				// diffuse / metal / dielec? / bubble?
-}				t_material;
+}				t_mat;
 
 typedef struct s_ambient
 {
 	float		intensity;
-	t_colour	colour;
+	t_col	colour;
 }				t_ambient;
 
 typedef struct s_camera
@@ -90,7 +90,7 @@ typedef struct s_light
 {
 	t_vec3		pos;
 	float		brightness;
-	t_colour	colour;
+	t_col	colour;
 }				t_light;
 
 typedef struct s_sphere
@@ -156,7 +156,7 @@ typedef struct s_obj
 		t_cylinder	cyl;
 	};
 	// t_colour	colour;				// obj's colour, removed since mat has albedo
-	t_material	material;			// rendering data
+	t_mat		material;			// rendering data
 	t_interval	bbox[3];
 }				t_obj;
 

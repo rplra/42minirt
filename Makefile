@@ -12,7 +12,7 @@ WHITE    		= \033[37m		# White
 NAME = miniRT
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinc -I$(MLX_DIR) #-g3 -fsanitize=address 
+CFLAGS = -Wall -Wextra -Werror -Iinc -I$(MLX_DIR) -g3 -fsanitize=address 
 RM = rm -rf
 
 # OS
@@ -47,7 +47,6 @@ OBJ_DIR		= 	obj
 MAIN_DIR 	= 	$(SRC_DIR)/main
 PARSE_DIR 	= 	$(SRC_DIR)/parse
 REND_DIR	=	$(SRC_DIR)/render
-RT_DIR		=	$(SRC_DIR)/raytracing
 KEY_DIR 	= 	$(SRC_DIR)/keybind
 UTILS_DIR 	= 	$(SRC_DIR)/utils
 
@@ -56,7 +55,6 @@ SRCS		=	$(wildcard $(MAIN_DIR)/main.c) \
 				$(wildcard $(REND_DIR)/*.c) \
 				$(wildcard $(KEY_DIR)/*.c) \
 				$(wildcard $(PARSE_DIR)/*.c) \
-				$(wildcard $(RT_DIR)/*.c) \
 				$(wildcard $(UTILS_DIR)/*.c)
 OBJS		=	$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 

@@ -6,38 +6,34 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 18:15:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 14:04:52 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/19 09:04:08 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+// mlx
 
 /*
  * Template function from mlx documentation
- * Places pixels on image
+ * brief: places a col dot (pixel) on image at the right spot (mem offset)
  *
  * Reference:
  * https://harm-smits.github.io/42docs/libs/minilibx/
  * getting_started.html#writing-pixels-to-a-image/
  */
-// puts a coloured dot (pixel) on img at the right spot
 void	my_mlx_pixel_put(t_rt vars, int x, int y, int color)
 {
 	int		offset;
 	char	*dst;
 
-	// check if pixel is within window bounds
 	if (x < 0 || y < 0 || x >= WIN_WIDTH || y >= WIN_HEIGHT)
 		return ;
-	// calc mem offset for pixel in img buffer
 	offset = ((y * vars.img.line_len) + (x * (vars.img.bpp / 8)));
 	dst = vars.img.addr + offset;
-	// writes the colour to that pixel address
 	*(unsigned int *)dst = color;
 }
 
-/* Renders the image black color*/
-// fills the img with black colour
+/* Renders the image in black color */
 void	clear_image(t_rt vars, int win_width, int win_height, int color)
 {
 	int	tmp;
@@ -52,7 +48,6 @@ void	clear_image(t_rt vars, int win_width, int win_height, int color)
 }
 
 /* Create image container to start draw */
-// creates img buffer 
 void	my_create_image(t_rt *vars, t_img *img)
 {
 	img->img = mlx_new_image(vars->mlx, WIN_WIDTH, WIN_HEIGHT);

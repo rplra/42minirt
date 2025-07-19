@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:13:41 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/05 13:08:58 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/13 13:29:53 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void *ft_realloc(void *ptr, size_t old_size, size_t new_size)
 		copy_size = old_size;
 	else
 		copy_size = new_size;
-	ft_memcpy(memory, ptr, copy_size);
+	if (copy_size > 0) // check only if there is copy size, otherwise it will segfault
+		ft_memcpy(memory, ptr, copy_size);
 	free(ptr);
 	return (memory);
 }

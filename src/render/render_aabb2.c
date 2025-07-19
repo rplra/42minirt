@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   render_aabb2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 22:23:53 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/11 12:38:40 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 21:39:13 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 
+// brief; organize and sort objects in 3d space based on their bb
+
+// compares 2 objs by min value of their bb of a given axis
+// checks which object comes first
 static bool	box_compare(t_obj a, t_obj v, int axis)
 {
 	t_interval	a_axis_interval[3];
@@ -27,21 +31,25 @@ static bool	box_compare(t_obj a, t_obj v, int axis)
 	return (a_axis_interval[axis].min < b_axis_interval[axis].min);
 }
 
+// compares 2 objs by min X val of bb
 static bool	box_compare_x(t_obj a, t_obj v)
 {
 	return (box_compare(a, v, X));
 }
 
+// compares 2 objs by min Y val of bb
 static bool	box_compare_y(t_obj a, t_obj v)
 {
 	return (box_compare(a, v, Y));
 }
 
+// compares 2 objs by min Z val of bb
 static bool	box_compare_z(t_obj a, t_obj v)
 {
 	return (box_compare(a, v, Z));
 }
 
+// array or function pointers
 void	init_box_compare(bool (*box_compare[])(t_obj, t_obj))
 {
 	box_compare[X] = box_compare_x;

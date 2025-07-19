@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/14 09:00:15 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 21:36:16 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_hit
 	t_vec3		surf_norm;		// surface normal at the point
 	t_obj		*obj;			// the object hit
 	float		t;				// ray paremeter (distance)
-	bool		front_face;		// for correct normal orientation
+	//bool		front_face;		// for correct normal orientation
 	float		coord[2];		// store u & v values (surface coordinates of hit point, for texture)
 	int			index;			// object index of the hitted obj
 }	t_hit;
@@ -241,6 +241,10 @@ t_vec3		light_col(t_hit *hit, t_rt *rt);
 t_vec3		reflect(t_vec3 I, t_vec3 N);
 
 /*			shadow.c		*/
-int			is_shadow(t_rt	*vars, t_vec3 point, t_vec3 normal, t_rt *rt);
+int			is_shadow(t_rt	*rt, t_vec3 point, t_vec3 normal);
+
+
+t_colour	sample_direct_light(t_rt *vars, t_hit *hit, t_uint *seed);
+
 
 #endif

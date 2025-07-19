@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_aabb.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/11 22:19:12 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 21:30:31 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 
 #include "minirt.h"
 
+// optimization; creating and managaing bb make rt more efficient
+
 /* compares which smaller and returns in as 1st param in t_interval */
+// packages them into range structure, small to big
 static t_interval	assign_min_max(float a, float v)
 {
 	t_interval	range;
@@ -56,6 +59,7 @@ void	add_padding(t_interval res[3])
 		expand_box(num, &res[Z]);
 }
 
+// creates a bounding box between 2 3d points (smallest box to fit 2 points)
 void	aabb(t_vec3 a, t_vec3 v, t_interval res[3])
 {
 	res[X] = assign_min_max(a.x, v.x);
@@ -70,6 +74,7 @@ void	aabb(t_vec3 a, t_vec3 v, t_interval res[3])
  * sets res[X].max to biggest value between them
  * same applies to Y.min/max & Z.min/max
  */
+// combines 2 bounding box into one
 void	update_aabb_box(t_interval box_0[3], t_interval box_1[3], \
 t_interval res[3])
 {
@@ -79,6 +84,7 @@ t_interval res[3])
 }
 
 /* assigns value in src to res */
+// copies bb value from src to res
 void	assign_bbox(t_interval src[3], t_interval res[3])
 {
 	res[X].min = src[X].min;
@@ -93,6 +99,8 @@ void	assign_bbox(t_interval src[3], t_interval res[3])
  * initializes res to (0,0)
  * bbox value of obj (ranges frm 0 to argc) will be stored in res[3]
  */
+// init res with bb of first obj, then iteratively expand to include bb of all arg object in array
+// computes bb for group of obj
 void	get_bbox_val(t_obj *obj, int argc, t_interval res[3])
 {
 	int	x;
@@ -109,3 +117,10 @@ void	get_bbox_val(t_obj *obj, int argc, t_interval res[3])
 	//5/2 =2 (mid)
 	// ac-mid = 5-2=3
 }
+
+/* 
+	NOTE	- TO ADD FUNCTIONS
+			1. void	aabb_plane(t_obj *obj, t_interval res[3])
+			2. void	aabb_cylinder(t_obj *obj, t_interval res[3])
+*/
+

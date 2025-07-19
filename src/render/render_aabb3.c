@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_aabb3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:35:35 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/14 08:50:28 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 21:42:38 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,18 @@ void	aabb_plane(t_obj *obj, t_interval res[3])
 // b2[Z] = 5+0, 5-4 (5, 1)
 
 
+// brief; help create figure out the bb for each obj
+
 /*
  * res = bound_box 
  * updates bound_box for static sphere
  * value returned in res
  */
+// calc bb for sphere
 void	aabb_sph(t_obj *obj, t_interval res[3])
 {
 	t_sphere	sph;
-	t_vec3		rvec;
+	t_vec3			rvec;
 
 	sph = obj->sph;
 	if (sph.rad < 0)
@@ -73,11 +76,14 @@ void	aabb_sph(t_obj *obj, t_interval res[3])
  * child function in get_bounding_box
  * calls different function based on obj type
  */
+// array of function pointers
 static void	init_bbox_func(void (*aabb_obj[])(t_obj *, t_interval[3]))
 {
+	//aabb_obj[PLANE] = aabb_plane;
 	aabb_obj[SPHERE] = aabb_sph;
 	aabb_obj[PLANE] = aabb_plane;
 	// aabb_obj[CYLINDER] = aabb_cyl;
+	// aabb_obj[CYLINDER] = aabb_cylinder;
 }
 
 /*
@@ -86,6 +92,7 @@ static void	init_bbox_func(void (*aabb_obj[])(t_obj *, t_interval[3]))
  * calls bound box function based on obj_type
  * result stored in bound_box
  */
+// based on obj given, calls bb func via func pointer arr and store in bound_box
 void	create_bbox(t_obj *obj, t_interval bound_box[3])
 {
 	void	(*func[3])(t_obj *, t_interval[3]);
@@ -95,6 +102,12 @@ void	create_bbox(t_obj *obj, t_interval bound_box[3])
 		/*debug*/printf("invalid bbox_type! %d\n", obj->type);
 		return ;
 	}
+	// Initialize all function pointers to NULL first
+	func[0] = NULL; // add
+	func[1] = NULL; // add
+	func[2] = NULL; // add
 	init_bbox_func(func);
+	if (func[obj->type] == NULL) //add
+		return ; // dont implmenet bbox
 	func[obj->type](obj, bound_box);
 }

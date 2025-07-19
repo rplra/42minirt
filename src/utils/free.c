@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 11:50:40 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/10 08:06:02 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/10 11:36:23 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	free_arrays(char **arr1, char **arr2, char **arr3, char **arr4)
 	return (0);
 }
 
-void	free_scene(t_rt *rt)
+void	cleanup(t_rt *rt)
 {
 	if (rt->obj)
 	{
@@ -52,6 +52,6 @@ void	free_scene(t_rt *rt)
 void	cleanup_and_exit(t_rt *rt)
 {
 	if (rt)
-		free_scene(rt);
+		cleanup(rt);
 	exit(1);
 }

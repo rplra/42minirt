@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:27:39 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/07 10:31:43 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/08 07:58:40 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,14 @@ t_colour	light_col(t_hit *hit, t_rt *rt)
 	t_colour	diffuse_col;
 	t_colour	specular_col;
 	t_colour	final_col;
+	int			shadow;
 
+	shadow = is_shadow(rt, hit->at, hit->surf_norm);
+	if (shadow)
+		return (ambient(hit, rt->ambient));
 	ambient_col = ambient(hit, rt->ambient);
 	diffuse_col = diffuse(hit, &rt->light);
 	specular_col = specular(hit, &rt->light, &rt->camera);
 	final_col = add_vec(ambient_col, diffuse_col);
-	final_col = add_vec(final_col, specular_col);
-	// final_col = colour_clamp(final_col);
-	return (final_col);
+	return (add_vec(final_col, specular_col));
 }

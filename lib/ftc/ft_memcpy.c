@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:51:22 by rraja-az          #+#    #+#             */
-/*   Updated: 2024/06/21 17:11:48 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/13 13:29:10 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	const char	*s;
 	size_t		i;
 
-	if (dest == NULL && src == NULL)
-		return (NULL);
+	// if (dest == NULL && src == NULL)
+	// 	return (NULL);
+	if (dest == NULL || src == NULL || n == 0)
+		return (dest);
 	d = (char *)dest;
 	s = (const char *)src;
 	i = 0;

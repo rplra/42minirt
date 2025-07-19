@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_hit_objects.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/14 09:09:46 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 21:34:12 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
  * child function in hit
  * calls respective has_hit function depending on object type
  */
+// init func pointer arrays
 void	init_hit_func(bool (*has_hit[])())
 {
 	has_hit[PLANE] = has_hit_plane;
@@ -23,27 +24,43 @@ void	init_hit_func(bool (*has_hit[])())
 	has_hit[CYLINDER] = has_hit_cylinder;
 }
 
-// hsim to replace with hers (this is temp func)
 bool	has_hit_cylinder(t_obj obj, t_interval ray_range, t_ray ray)
 {
-	// to complete
-	(void) obj;
-	(void) ray;
-	(void) ray_range;
+	t_vec3	diff;
+	float	denom;
+	float	t;
 
-	return (0);
+	denom = scalar_product(ray.vector, obj.plane.normal);
+	if (denom > -EPSILON && denom < EPSILON)
+		return (-1);
+	diff = subtract_vec(obj.plane.pos, ray.orig);
+	t = scalar_product(diff, obj.plane.normal) / denom;
+	if (t < ray_range.min || t > ray_range.max)
+		return (-1);
+	return (t);
+
+	// (void) obj;
+	// (void) ray;
+	// (void) ray_range;
+
+	// return (0);
 }
 
 /* child function in has_hit_sphere, records details of the hitted obj */
+// updates the hit structure on details where ray hit
 void	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
 {
 	t_vec3 (*get_surf_norm[3])(t_ray, t_obj, float);
 
 	init_surf_norm(get_surf_norm);
+	// get surface normal
 	rt->hit.surf_norm = get_surf_norm[rt->obj[index].type](ray, rt->obj[index], t);	//if t>0
+	// hit point
 	rt->hit.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));					//if t>0
+	// which object was hit
 	// rt->hit.obj = &rt->obj[index];
 	rt->hit.index = index;
+	// distance
 	rt->hit.t = t;
 }
 
@@ -69,6 +86,7 @@ void	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
  * https://raytracing.github.io/books/RayTracingInOneWeekend.html
  * https://youtu.be/ebzlMOw79Yw?si=8SXTPsEcSUtwft71
  */
+// checks if ray intersects with sphere
 bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 {
 	float		n[3];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/14 10:47:06 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/19 11:30:12 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,16 @@ void	init_cam(t_rt *rt)
 	// rt->camera.lookat = new_vec3(0, 0, 0);
 	/* ************** need to comment out above when include parser ************************ */
 
-	// rt->camera.vfov = radian(90);
 	rt->camera.vfov = radian(rt->camera.vfov);
 	rt->camera.vup = new_vec3(0, 1, 0);
 	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1)); // fixed
-	rt->camera.defoc_ang = radian(0);
-	rt->camera.defoc_disk[X] = new_vec3(0, 0, 0);
-	rt->camera.defoc_disk[Y] = new_vec3(0, 0, 0);
+	rt->camera.defoc_ang = DEFOC_ANG;
+	rt->camera.defoc_disk[X] = new_vec3(DEFOC_XX, DEFOC_XY, DEFOC_XZ);
+	rt->camera.defoc_disk[Y] = new_vec3(DEFOC_YX, DEFOC_YY, DEFOC_YZ);
 	rt->camera.focus_dist = len_vec3(subtract_vec(rt->camera.pos, rt->camera.lookat));
 	/*debug*/printf("focus_dist:%f\n", rt->camera.focus_dist);
-
-	rt->camera.ray_bounce = 5;
-	rt->camera.sample_per_pixel = 5;
-
+	rt->camera.ray_bounce = SAMPLE_RAY_BOUNCE;
+	rt->camera.sample_per_pixel = SAMPLE_PER_PIXEL;
 	rt->ray.orig = rt->camera.pos; //be careful with this one, maybe copy safer?
 	rt->ray.vector = new_vec3(0, 0, 0);
 }
@@ -73,7 +70,7 @@ void	edit_material(t_rt *rt)
 void	init_variable(t_rt *rt)
 {
 	init_cam(rt);
-	// init_obj(rt);		//replace with info from parser
+	// init_obj(rt);			//replace with info from parser
 	// edit_material(rt);		//custom assign material
 	debug_print_arr("init_var", rt->obj, rt->obj_count);
 	init_bvh_node(rt);

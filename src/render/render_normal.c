@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_normal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:11:57 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/14 08:49:45 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/14 21:52:33 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
  * 3d point along a vector ray
  * vec = origin + (t * direction)
  */
+// 
 t_vec3	point_at(float t, t_ray ray)
 {
 	return (add_vec(ray.orig, mult_vec_scalar(ray.vector, t)));

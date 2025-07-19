@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 13:09:38 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/10 09:05:27 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/10 11:21:03 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int main(int ac, char **av)
 	mlx_loop(rt.mlx);
 	
 	// cleanup
-	free_scene(&rt);	//might not need to free when translation & rotation
+	cleanup(&rt);	//might not need to free when translation & rotation
 	//free_malloc(&rt, 1);
 	return (0);
 }

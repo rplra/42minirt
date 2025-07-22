@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/19 12:25:01 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:06:21 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@
 # define LIGHT_BRIGHTNESS_MIN	0.0
 # define LIGHT_BRIGHTNESS_MAX	1.0
 # define LIGHT_RADIUS			0.1
+
+/*	plane	*/
+# define PLANE_X	-25
+# define PLANE_Y	25
 
 /*	material	*/
 # define MAT_TYPE		METAL

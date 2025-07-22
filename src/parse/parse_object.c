@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/19 20:33:15 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:03:20 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	assign_plane_components(t_obj *obj)
 	tmp_vec = set_tmp_vec(obj->plane.normal);
 	obj->plane.coord[Y] = unit_vec3(cross_product(obj->plane.normal, tmp_vec));
 	obj->plane.coord[X] = cross_product(obj->plane.normal, obj->plane.coord[Y]);
-	obj->plane.coord[X] = mult_vec_scalar(obj->plane.coord[X], -4);
-	obj->plane.coord[Y] = mult_vec_scalar(obj->plane.coord[Y], 4);
+	obj->plane.coord[X] = mult_vec_scalar(obj->plane.coord[X], PLANE_X);
+	obj->plane.coord[Y] = mult_vec_scalar(obj->plane.coord[Y], PLANE_Y);
 	n = cross_product(obj->plane.coord[X], obj->plane.coord[Y]);
 	obj->plane.d = scalar_product(obj->plane.normal, obj->plane.pos);
 	obj->plane.w = div_vec_scalar(n, scalar_product(n, n));
@@ -138,7 +138,6 @@ int	parse_cylinder(t_parse *file, t_obj *obj)
 {
 	t_cylinder	tmp;
 	char		**values;
-	bool		valid;
 
 	if (count_params(file->tokens) != 6)
 		return (print_error(file, ERROR_CYCOUNT, -1, file->tokens));

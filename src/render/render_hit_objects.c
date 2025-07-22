@@ -6,36 +6,14 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/14 09:09:46 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/20 18:46:03 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-/*
- * child function in hit
- * calls respective has_hit function depending on object type
- */
-void	init_hit_func(bool (*has_hit[])())
-{
-	has_hit[PLANE] = has_hit_plane;
-	has_hit[SPHERE] = has_hit_sphere;
-	has_hit[CYLINDER] = has_hit_cylinder;
-}
-
-// hsim to replace with hers (this is temp func)
-bool	has_hit_cylinder(t_obj obj, t_interval ray_range, t_ray ray)
-{
-	// to complete
-	(void) obj;
-	(void) ray;
-	(void) ray_range;
-
-	return (0);
-}
-
 /* child function in has_hit_sphere, records details of the hitted obj */
-void	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
+int	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
 {
 	t_vec3 (*get_surf_norm[3])(t_ray, t_obj, float);
 
@@ -45,6 +23,8 @@ void	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
 	// rt->hit.obj = &rt->obj[index];
 	rt->hit.index = index;
 	rt->hit.t = t;
+	/*debug*/printf("update_hit_rec: t! %f\n", t);
+	return (1);
 }
 
 /*
@@ -83,13 +63,12 @@ bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 	n[B] = scalar_product(ray.vector, ray_to_center);
 	n[C] = scalar_product(ray_to_center, ray_to_center) - \
 (rt->obj[index].sph.rad * rt->obj[index].sph.rad);
-	discriminant = (n[B] * n[B]) - (n[A] * n[C]);
+	discriminant = ft_square(n[B]) - (n[A] * n[C]);
 	if (discriminant < 0.001f)
 		return (0);
 
 	/* ****************** get t ****************** */
 	t = (n[B] - sqrt(discriminant)) / n[A];
-
 	/* *********** if t intersects obj *********** */
 	if (t <= ray_range.min || t >= ray_range.max)
 	{
@@ -98,8 +77,8 @@ bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 			return (0);
 	}
 	/*debug*/printf("has_hit_sphere:%f %f\n", t, discriminant);
-
-	update_hit_rec(rt, index, ray, t);
+	// if (t < rt->hit.t)
+		update_hit_rec(rt, index, ray, t);
 	return (1);
 }
 
@@ -111,12 +90,14 @@ bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
  * flag 0 = render quadrilaterals
  * flag 1 = render triangles
  */
-static bool	within_range(float alpha, float beta, int flag)
+bool	within_plane_range(float alpha, float beta, int flag)
 {
 	if (flag == 0)
 		return ((alpha >= 0 && alpha <= 1) && (beta >= 0 && beta <= 1));
 	else if (flag == 1)
 		return (alpha > 0 && beta > 0 && (alpha + beta < 1));
+	else if (flag == 2) //ellipse, wip
+		return (ft_square(alpha) + ft_square(beta) <= 1);
 	return (0);
 }
 
@@ -138,6 +119,7 @@ static bool	t_intersects_plane(t_rt *rt, int i, t_ray ray, float t)
 	float	alpha;
 	float	beta;
 
+	// pt = o + t*d
 	intersect = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
 	intersect = subtract_vec(intersect, rt->obj[i].plane.pos);
 	alpha = scalar_product(rt->obj[i].plane.w, \
@@ -145,7 +127,7 @@ cross_product(intersect, rt->obj[i].plane.coord[Y]));
 	beta = scalar_product(rt->obj[i].plane.w, \
 cross_product(rt->obj[i].plane.coord[X], intersect));
 	/*debug*/printf("has_hit_plane:%f %f\n", alpha, beta);
-	if (!within_range(alpha, beta, 0))
+	if (!within_plane_range(alpha, beta, 0))
 		return (0);
 	rt->hit.coord[X] = alpha;
 	rt->hit.coord[Y] = beta;
@@ -154,8 +136,8 @@ cross_product(rt->obj[i].plane.coord[X], intersect));
 
 /*
  * gets t(hit point) value and check if it is within plane surface
- * D = D in plane formula ABCD=0
- * d = d in (P= origin + t*d)
+ * D = D in plane formula ABCD=0, D=dot(plane.corner, norm)
+ * d = d in (P= ray_origin + t*d)
  * 
  * Formula:
  * t = D - dot(n, P) / dot(n, d)
@@ -167,16 +149,18 @@ bool	has_hit_plane(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 	float	t;
 
 	denom = scalar_product(rt->obj[index].plane.normal, ray.vector);
-	if (fabs(denom) < EPSILON)
+	if (fabs(denom) < EPSILON) //if ray parallel to plane
 		return (0);
 	dot_np = scalar_product(rt->obj[index].plane.normal, ray.orig);
 	t = (rt->obj[index].plane.d - dot_np) / denom;
+	/*debug*/printf("pl_d: %d %f\n", index, rt->obj[index].plane.d);
 	/*debug*/printf("has_hit_pl: t: %f, ray: %f~%f\n", t, ray_range.min, ray_range.max);
 	if (t < ray_range.min || t > ray_range.max)
 		return (0);
 	if (!t_intersects_plane(rt, index, ray, t))
 		return (0);
-	update_hit_rec(rt, index, ray, t);
+	// if (t < rt->hit.t)
+		update_hit_rec(rt, index, ray, t);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:11:57 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/14 08:49:45 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/22 10:21:13 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,38 +69,112 @@ t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t)
 	return (surf_norm);
 }
 
+// cyl cap test
 t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t)
 {
-	t_vec3	pt_ray;
-	t_vec3	base_from_intersection;
-	float	distance_to_axis;
-	t_vec3	axis_point;
-	t_vec3	surf_norm;
-
-	// intersection point at ray
-	pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
-	// vector from base intersection to point
-	base_from_intersection = subtract_vec(pt_ray, obj.cyl.pos);
-	// projection onto axis to see how far along axis the point is
-	distance_to_axis = scalar_product(base_from_intersection, obj.cyl.axis);
-	// bottom cap
-	if (distance_to_axis <= 0)
-		return (mult_vec_scalar(obj.cyl.axis, -1));
-	// top cap
-	else if (distance_to_axis >= obj.cyl.height)
-		return (obj.cyl.axis);
-	// sides
-	else
-	{
-		axis_point = add_vec(obj.cyl.pos, mult_vec_scalar(obj.cyl.axis, distance_to_axis));
-		surf_norm = subtract_vec(pt_ray, axis_point);
-		return (unit_vec3(surf_norm));
-	}
-	// flip normal if facing the same direction as the ray
-	if (scalar_product(ray.vector, surf_norm) > 0)
-		surf_norm = mult_vec_scalar(surf_norm, -1);
-	return (surf_norm);
+	(void) t;
+	return (set_face_norm(ray, obj.cyl.axis));
 }
+
+// t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t)
+// {
+// 	t_vec3		pt_ray;
+// 	t_vec3		surf_norm;
+// 	t_interval	cyl_axis;
+// 	float		alpha;
+// 	float		beta;
+
+
+// 	pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
+// 	pt_ray = new_vec3(pt_ray.x, 0, pt_ray.z);	//cylinder infinite on y
+	
+// 	t_vec3 pt_ray2 = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
+// 	alpha = scalar_product(pt_ray2, unit_vec3(obj.cyl.coord[X]));
+// 	beta = scalar_product(pt_ray2, unit_vec3(obj.cyl.coord[Y]));
+
+// 	// /*debug*/printf("snorm_cyl: %f %f | %f %f\n", pt_ray.x, pt_ray.z, alpha, beta);
+	
+// 	cyl_axis = get_cyl_axis_height(obj.cyl);
+// 	// cyl_axis.min = obj.cyl.pos.y - (obj.cyl.axis.y * (obj.cyl.height / 2));
+// 	// cyl_axis.max = obj.cyl.pos.y + (obj.cyl.axis.y * (obj.cyl.height / 2));
+
+// 	float dist = scalar_product(pt_ray, pt_ray);	//x sq + 0 + z sq = r sq
+// 	float dist2 = ft_square(alpha) + ft_square(beta);	//x sq + 0 + z sq = r sq
+
+// 	/*debug*/printf("snorm_dist: %f %f\n", dist, dist2);
+// 	if (dist < ft_square(obj.cyl.rad) && pt_ray.y >= cyl_axis.max - EPSILON)
+// 	{
+// 		/*debug*/printf("surf_norm top!\n");
+// 		return (set_face_norm(ray, obj.cyl.axis));
+// 	}
+// 	else if (dist < ft_square(obj.cyl.rad) && pt_ray.y <= cyl_axis.min + EPSILON)
+// 	{
+// 		/*debug*/printf("surf_norm bottom!\n");
+// 		return (set_face_norm(ray, mult_vec_scalar(obj.cyl.axis, -1)));
+// 	}
+
+// 	/* ************************************************************** */
+// 	//n= <normal>, obj_center - pt_ray
+// 	// surf_norm = subtract_vec(pt_ray, obj.cyl.pos);
+// 	// surf_norm = unit_vec3(surf_norm);
+// 	// /*debug*/debug_print_vec("surf_norm_cyl", surf_norm);
+// 	// so, reverse surf_norm if so
+// 	surf_norm = set_face_norm(ray, surf_norm);
+// 	return (surf_norm);
+// }
+
+// cyl body only
+// t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t)
+// {
+// 	t_vec3	pt_ray;
+// 	t_vec3	surf_norm;
+
+// 	pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
+// 	// pt_ray = new_vec3(pt_ray.x, 0, pt_ray.z);	//cylinder infinite on y
+
+// 	/* ************************************************************** */
+// 	//n= <normal>, obj_center - pt_ray
+// 	surf_norm = subtract_vec(pt_ray, obj.cyl.pos);
+// 	surf_norm = unit_vec3(surf_norm);
+// 	// so, reverse surf_norm if so
+// 	surf_norm = set_face_norm(ray, surf_norm);
+// 	return (surf_norm);
+// }
+
+//lyara
+// t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t)
+// {
+// 	t_vec3	pt_ray;
+// 	t_vec3	base_from_intersection;
+// 	float	distance_to_axis;
+// 	t_vec3	axis_point;
+// 	t_vec3	surf_norm;
+
+// 	// intersection point at ray
+// 	pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
+// 	// vector from base intersection to point
+// 	base_from_intersection = subtract_vec(pt_ray, obj.cyl.pos);
+// 	// projection onto axis to see how far along axis the point is
+// 	distance_to_axis = scalar_product(base_from_intersection, obj.cyl.axis);
+// 	// bottom cap
+// 	if (distance_to_axis <= 0)
+// 		return (mult_vec_scalar(obj.cyl.axis, -1));
+// 	// top cap
+// 	else if (distance_to_axis >= obj.cyl.height)
+// 		return (obj.cyl.axis);
+// 	// sides
+// 	else
+// 	{
+// 		axis_point = add_vec(obj.cyl.pos, mult_vec_scalar(obj.cyl.axis, distance_to_axis));
+// 		surf_norm = subtract_vec(pt_ray, axis_point);
+// 		return (unit_vec3(surf_norm));
+// 	}
+// 	// flip normal if facing the same direction as the ray
+// 	surf_norm = set_face_norm(ray, surf_norm);
+// 	// if (scalar_product(ray.vector, surf_norm) > 0)
+// 	// 	surf_norm = mult_vec_scalar(surf_norm, -1);
+// 	return (surf_norm);
+// }
 
 // normalize cylinder
 /* t_vec3	get_cylinder_normal(t_vec3 point, t_cylinder *cy)

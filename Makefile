@@ -12,7 +12,7 @@ WHITE    		= \033[37m		# White
 NAME = miniRT
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinc -I$(MLX_DIR) #-g3 -fsanitize=address 
+CFLAGS = -Wall -Wextra -Werror -Iinc -I$(MLX_DIR) -g3 -fsanitize=address 
 RM = rm -rf
 
 # OS
@@ -52,7 +52,7 @@ KEY_DIR 	= 	$(SRC_DIR)/keybind
 UTILS_DIR 	= 	$(SRC_DIR)/utils
 
 # Sources
-SRCS		=	$(wildcard $(MAIN_DIR)/main.c) \
+SRCS		=	$(wildcard $(MAIN_DIR)/main-hl.c) \
 				$(wildcard $(REND_DIR)/*.c) \
 				$(wildcard $(KEY_DIR)/*.c) \
 				$(wildcard $(PARSE_DIR)/*.c) \

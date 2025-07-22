@@ -6,20 +6,11 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/12 13:42:29 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/22 11:30:09 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-/*
- * child function in hit
- * calls respective get_surf_norm function depending on object type
- */
-// void	init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float))
-// {
-// 	get_surf_norm[SPHERE] = get_surf_norm_sph;
-// }
 
 /*
  * child function in ray_color
@@ -63,10 +54,21 @@
 // }
 
 /*
+ * child function in hit
+ * calls respective has_hit function depending on object type
+ */
+void	init_hit_func(bool (*has_hit[])())
+{
+	has_hit[PLANE] = has_hit_plane;
+	has_hit[SPHERE] = has_hit_sphere;
+	has_hit[CYLINDER] = has_hit_cylinder;
+}
+
+/*
 ray_range: defines the minimum and maximum valid t values (distance along the ray).
 ray: the ray being tested against all scene objects
 */
-t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
+t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
 {
 	float		t;
 	t_obj		*res;
@@ -80,11 +82,15 @@ t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
 	// {
 		// /*debug*/printf("id:%d\n", x);
 		// t = has_hit[vars->obj[x].type](vars, x, ray_range, ray); //this returns t value only, more like get_root
-		t = hit_bvh(vars->bvh, ray_range, ray, vars);
+		t = hit_bvh(rt->bvh, ray_range, ray, rt);
 		// /*debug*/printf("t! %f %d\n", t, vars->hit.index);
 		if (t > 0)
 		{
-			res = &vars->obj[vars->hit.index];
+			//get the index of smallest t in hit_records
+			res = &rt->obj[rt->hit.index];
+			/*debug*/printf("hitted type: %d\n", res->type);
+			/*debug*/debug_print_vec(" |hitted", res->cyl.pos);
+			/*debug*/debug_print_vec(" |hitted_col", res->material.albedo);
 			// ray_range.max = vars->rec.t;	//maybe no need
 		}
 	// }
@@ -143,11 +149,11 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
 	bool	(*has_hit[3])(t_rt *, int, t_interval, t_ray);
 
 	// /*debug*/debug_print_bbox("hit_bvh", bvh->bbox);
-	if (!hit_aabb(ray, ray_range, bvh->bbox))
-	{
-		/*debug*/printf("\n\033[93mno aabb! %d~%d\033[0m\n\n", bvh->id[L], bvh->id[R]);
-		return (0);
-	}
+	// if (!hit_aabb(ray, ray_range, bvh->bbox))
+	// {
+	// 	/*debug*/printf("\n\033[93mno aabb! %d~%d\033[0m\n\n", bvh->id[L], bvh->id[R]);
+	// 	return (0);
+	// }
 
 	t[L] = 0;
 	t[R] = 0;

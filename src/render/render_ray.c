@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/10 07:58:09 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/20 11:23:32 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,9 @@ t_uint *seed)
 
 	if (ray_bounce <= 0)
 		return (new_vec3(0, 0, 0));
-	res = hit(vars, new_interval(0.001f, 2147483647.0), ray); //assigns surf_norm
+	// vars->hit.t = 2147483647;
+
+		res = hit(vars, new_interval(0.001f, 2147483647.0), ray); //assigns surf_norm
 	// /*debug*/printf("res_7: %d\n", res);
 
 	if (res != NULL)

@@ -6,3 +6,7 @@
 
 # Object files and binaries
 *.o
+
+# Archive
+libft.a
+libmlx.a

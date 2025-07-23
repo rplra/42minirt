@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:47:34 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/22 12:21:19 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/23 10:43:25 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,27 +188,36 @@
 // 	return (flag);
 // }
 
+//static
 /*
  * ( x/pointA )sq + ( y/pointB )sq = r sq
  */
-static bool	t_intersects_cap(t_cylinder cyl, t_ray ray, float t)
+bool	t_intersects_cap(t_cylinder cyl, int id, t_ray ray, float t)
 {
 	float	alpha;
 	float	beta;
 	t_vec3	intersect;
+	(void) id;
 
+/* ********************************************************** */
+	// p= o +t*d
 	intersect = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
-/* ********************************************************** */
-// render circle
-// intersect = subtract_vec(intersect, rt->obj[i].cyl.pos); //center of cyl
-// alpha = intersect.x / rt->obj[i].cyl.rad;
-// beta = intersect.z / rt->obj[i].cyl.rad;
-/* ********************************************************** */
-intersect = subtract_vec(intersect, cyl.pos);
-alpha = scalar_product(intersect, unit_vec3(cyl.coord[X])) / cyl.rad;
-beta = scalar_product(intersect, unit_vec3(cyl.coord[Y])) / cyl.rad;
+	// t_vec3	center = add_vec(add_vec(cyl.pos, div_vec_scalar(cyl.coord[Y],2)), div_vec_scalar(cyl.coord[X],2));
+	// intersect = subtract_vec(intersect, center); //default=corner, if ellipse=center 
 
-/*debug*/printf("has_hit_cap:%f %f\n", alpha, beta);
+	if (id == 1) //id=top_cap
+		intersect = subtract_vec(intersect, add_vec(cyl.pos, \
+mult_vec_scalar(cyl.axis, cyl.height/2))); // center
+	else if (id == 0) //id=bottom_cap
+		intersect = subtract_vec(intersect, subtract_vec(cyl.pos, \
+mult_vec_scalar(cyl.axis, cyl.height/2))); // center
+
+	alpha = scalar_product(cyl.w, \
+cross_product(intersect, (cyl.coord[Y])));
+	beta = scalar_product(cyl.w, \
+cross_product((cyl.coord[X]), intersect));
+
+// /*debug*/printf("has_hit_cap:%f %f\n", alpha, beta);
 	/* ********************************************************** */
 	if (!within_plane_range(alpha, beta, 2))
 		return (0);
@@ -225,89 +234,98 @@ beta = scalar_product(intersect, unit_vec3(cyl.coord[Y])) / cyl.rad;
  * O is ray_origin, d is d in (P=(o+t*d))
  * 
  * cyl.d = dot(cyl_center, cyl_axis)
+ * 
  * Reference:
  * https://hugi.scene.org/online/hugi24/coding%20graphics%20chris%20dragan%20raytracing%20shapes.htm
  * Raytracing the Next Week
  * 
  */
-bool	check_hit_cap(t_rt *rt, int i, t_interval ray_range, t_ray ray, float t)
+float	has_hit_cap(t_rt *rt, int i, t_interval ray_range, t_ray ray)
 {
 	float	denom;
 	float	dot_np;
 	float	t_cap;
 	float	tmp_cap[2];
-	// (void)	t;
+	int		id;
 
+	//should we do both axises, +1 & -1
 	denom = scalar_product(rt->obj[i].cyl.axis, ray.vector);
 	if (fabs(denom) < EPSILON)
-		return (0);
+		return (-1);
 	dot_np = scalar_product(rt->obj[i].cyl.axis, ray.orig);
-	// *t_cap = (rt->obj[i].cyl.d[0] - dot_np) / denom;
-	tmp_cap[0] = (rt->obj[i].cyl.d[0] - dot_np) / denom;
+	tmp_cap[0] = (rt->obj[i].cyl.d[0] - dot_np) / denom; //might need to flip axis
 	tmp_cap[1] = (rt->obj[i].cyl.d[1] - dot_np) / denom;
-	// take the smallest one
-	if (tmp_cap[0] < tmp_cap[1])
-		t_cap = tmp_cap[0];
-	else
-		t_cap = tmp_cap[1];
-	// /*debug*/printf("has_hit_cap: t: %f, ray: %f~%f\n", t_cap, ray_range.min, ray_range.max);
+	// take the smallest
+	id = 1;
+	if (tmp_cap[0] > ray_range.min && tmp_cap[0] < tmp_cap[1])
+		id = 0;
+	t_cap = tmp_cap[id];
+	/*debug*/printf("has_hit_cap %d: %f %f %f\n", id, t_cap, tmp_cap[0], tmp_cap[1]);
 	if (t_cap < ray_range.min || t_cap > ray_range.max)
-		return (0);
-	if (!t_intersects_cap(rt->obj[i].cyl, ray, t_cap))// || t_cap > t)
-		return (0);
-	// if (t_cap > t)
-	// 	return (0);
-	update_hit_rec(rt, i, ray, t_cap);
-	/*debug*/printf("hit_cap %d: %f %f\n", i, t_cap, t);
-	return (1);
+		return (-1);
+	if (!t_intersects_cap(rt->obj[i].cyl, id, ray, t_cap))
+		return (-1);
+	return (t_cap);
 }
 
-// bool	check_hit_cap(t_rt *rt, int i, t_interval ray_range, t_ray ray, float *t_cap)
+// bool	check_hit_cap(t_rt *rt, int i, t_interval ray_range, t_ray ray, float t) // t is only for check if t_cap<t
 // {
 // 	float	denom;
 // 	float	dot_np;
+// 	float	t_cap;
 // 	float	tmp_cap[2];
+// 	int		id;
+// 	// (void)	t;
 
 // 	denom = scalar_product(rt->obj[i].cyl.axis, ray.vector);
+// 	// denom2 = scalar_product(mult_vec_scalar(rt->obj[i].cyl.axis, -1), ray.vector);
 // 	if (fabs(denom) < EPSILON)
 // 		return (0);
 // 	dot_np = scalar_product(rt->obj[i].cyl.axis, ray.orig);
-// 	// *t_cap = (rt->obj[i].cyl.d[0] - dot_np) / denom;
-// 	tmp_cap[0] = (rt->obj[i].cyl.d[0] - dot_np) / denom;
+// 	// dot_np = scalar_product(mult_vec_scalar(rt->obj[i].cyl.axis, -1), ray.orig);
+// 	tmp_cap[0] = (rt->obj[i].cyl.d[0] - dot_np) / denom; //might need to flip axis
 // 	tmp_cap[1] = (rt->obj[i].cyl.d[1] - dot_np) / denom;
 // 	// take the smallest one
-// 	if (tmp_cap[0] < tmp_cap[1])
-// 		*t_cap = tmp_cap[0];
-// 	else
-// 		*t_cap = tmp_cap[1];
-// 	/*debug*/printf("has_hit_cap: t: %f, ray: %f~%f\n", *t_cap, ray_range.min, ray_range.max);
-// 	if (*t_cap < ray_range.min || *t_cap > ray_range.max)
+// 	id = 1;
+// 	// if (tmp_cap[0] > ray_range.min && tmp_cap[0] < tmp_cap[1])
+// 		// id = 0;
+// 	t_cap = tmp_cap[id];
+// 	/*debug*/printf("has_hit_cap %d: %f %f %f\n", id, t_cap, tmp_cap[0], tmp_cap[1]);
+// 	// /*debug*/printf("has_hit_cap: t: %f, ray: %f~%f\n", t_cap, ray_range.min, ray_range.max);
+// 	if (t_cap < ray_range.min || t_cap > ray_range.max)
 // 		return (0);
-// 	if (!t_intersects_cap(rt->obj[i].cyl, ray, *t_cap)) // t_cap > t
-// 		return (0);
-// 	// if (t_cap > t)
-// 	// return (0)
-// 	// update_hit_rec();
-// 	/*debug*/printf("rt_hit(cap): %f\n", *t_cap);
+// 	// if (!t_intersects_cap(rt->obj[i].cyl, id, ray, t_cap))// || t_cap > t)
+// 		// return (0);
+// 	// /*debug*/printf("has_hit_cap: t: %f, ray: %f~%f\n", t_cap, ray_range.min, t);
+
+// 	// if t is valid && t_cap > t
+// 	// if (t_cap < t) //need this when combine with cyl_body rendering
+// 		// return (0);
+// 	// rt->hit.setting = 1;
+// 	// update_hit_rec(rt, i, ray, t_cap);
+// 	/*debug*/printf("hit_cap %d: %f %f\n", i, t_cap, t);
 // 	return (1);
 // }
 
-bool	check_hit_body(t_rt *rt, int i, t_ray ray, float t[2])
+float	check_hit_body(t_rt *rt, int i, t_ray ray, float t[2])
 {
-	bool		flag;
+	// bool		flag;
 	float		pt_hit[2];
 	t_interval	cyl_height;
 
+	// flag = 0;
 	cyl_height = get_cyl_axis_height(rt->obj[i].cyl);
 	get_point_on_surf(rt->obj[i].cyl, ray, t, pt_hit);
-	flag = 0;
 	if (((pt_hit[0] > cyl_height.min && pt_hit[0] < cyl_height.max) || \
 (pt_hit[1] > cyl_height.min && pt_hit[1] < cyl_height.max)))
 	{
-		update_hit_rec(rt, i, ray, t[0]);
-		flag = 1;
+		// return (1);
+		return (t[0]);
+		// update_hit_rec(rt, i, ray, t[0]);
+		// rt->hit.setting = 0;
+		// flag = 1;
 	}
-	return (flag);
+	return (-1);
 }
 
 /*
@@ -327,11 +345,13 @@ bool	t_intersects_cyl(t_rt *rt, int i, t_interval ray_range, t_ray ray, float t[
 
 	/* ************** check if t_caps lies within plane range (plane-ray formula) ************** */
 	// flag = check_hit_cap(rt, i, ray_range, ray, t[0]);
-
-	// if (!flag)
+	// flag = check_hit_cap(rt, i, new_interval(ray_range.min, t[0]), ray, t[0]);
+	// if (flag)
+		// /*debug*/printf("hit_caps!\n");
+	// if (!flag && (t[0] <= ray_range.min || t[0] >= ray_range.max))
+	// 	flag = 0;
+	// else if (!flag)
 		flag = check_hit_body(rt, i, ray, t);
-	// if (!flag)
-		// flag = 0;
 	/* *********************** long version *********************** */
 
 		// cyl_height = get_cyl_axis_height(rt->obj[i].cyl);
@@ -354,6 +374,52 @@ bool	t_intersects_cyl(t_rt *rt, int i, t_interval ray_range, t_ray ray, float t[
 	return (flag);
 }
 
+float	has_hit_body(t_cylinder cyl, t_interval ray_range, t_ray ray, float t[2])
+{
+	float	n[3];
+	float	discriminant;
+	t_vec3	ray_to_center;
+	t_vec3	ray_dir;
+	t_vec3	highlighted_axis;
+
+	/* ************* get discriminant ************* */
+	ray_to_center = subtract_vec(cyl.pos, ray.orig); // C-O
+	highlighted_axis = mult_vec_scalar(cyl.axis, scalar_product(ray_to_center, cyl.axis));
+	ray_to_center = subtract_vec(ray_to_center, highlighted_axis); // C-O - ((C-0).V)*V
+    ray_dir =  subtract_vec(ray.vector, mult_vec_scalar(cyl.axis, scalar_product(ray.vector, cyl.axis))); // d - (d.V)*V
+	
+	/* initial version */
+	// ray_to_center = subtract_vec(rt->obj[index].cyl.pos, ray.orig); // C-O
+    // ray_to_center = new_vec3(ray_to_center.x, 0, ray_to_center.z); //set y to 0
+	// ray_dir = new_vec3(ray.vector.x, 0, ray.vector.z);
+
+	// /*debug*/debug_print_vec("ray_dir", ray_dir);
+	// /*debug*/debug_print_vec("ray_dir2", ray_dir2);
+
+	n[A] = scalar_product(ray_dir, ray_dir);
+	if (n[A] < EPSILON)
+		return (-1);
+	n[B] = scalar_product(ray_dir, ray_to_center);
+	n[C] = scalar_product(ray_to_center, ray_to_center) - \
+ft_square(cyl.rad);
+	discriminant = ft_square(n[B]) - (n[A] * n[C]);
+	if (discriminant < EPSILON)
+		return (-1);
+
+	/* ****************** get t ****************** */
+	t[0] = (n[B] - sqrt(discriminant)) / n[A];
+	t[1] = (n[B] + sqrt(discriminant)) / n[A];
+
+	/* *************** if t intersects obj ************** */
+	if (t[0] <= ray_range.min || t[0] >= ray_range.max)
+	{
+		t[0] = (n[B] + sqrt(discriminant)) / n[A];
+		if (t[0] <= ray_range.min || t[0] >= ray_range.max)
+			return (-1);
+		/*debug*/printf("has_hit_cap: inv!\n");
+	}
+	return (t[0]);
+}
 
 /*
  * checks if ray to point falls within the cylinder space
@@ -372,70 +438,49 @@ bool	has_hit_cylinder(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 	(void)	ray;
 
 	float	t[2];
-	float	n[3];
-	float	discriminant;
-	t_vec3	ray_to_center;
-	t_vec3	ray_dir;
-	// t_vec3	ray_to_center2;
-	// t_vec3	ray_dir2;
-	t_vec3	highlighted_axis;
+	float	hit_body = 0;
+	float	hit_cap = 0;
 
-	// /*debug*/printf("has_hit ent:%d\n", index);
-	/* ************* get discriminant ************* */
-	ray_to_center = subtract_vec(rt->obj[index].cyl.pos, ray.orig); // C-O
-	highlighted_axis = mult_vec_scalar(rt->obj[index].cyl.axis, scalar_product(ray_to_center, rt->obj[index].cyl.axis));
-	ray_to_center = subtract_vec(ray_to_center, highlighted_axis); // C-O - ((C-0).V)*V
-    ray_dir =  subtract_vec(ray.vector, mult_vec_scalar(rt->obj[index].cyl.axis, scalar_product(ray.vector, rt->obj[index].cyl.axis))); // d - (d.V)*V
-	
-	/* initial version */
-	// ray_to_center = subtract_vec(rt->obj[index].cyl.pos, ray.orig); // C-O
-    // ray_to_center = new_vec3(ray_to_center.x, 0, ray_to_center.z); //set y to 0
-	// ray_dir = new_vec3(ray.vector.x, 0, ray.vector.z);
+	hit_body = has_hit_body(rt->obj[index].cyl, ray_range, ray, t);
+	if (hit_body != -1)
+		hit_body = check_hit_body(rt, index, ray, t);
+	hit_cap = has_hit_cap(rt, index, ray_range, ray);
 
-	// /*debug*/debug_print_vec("ray_dir", ray_dir);
-	// /*debug*/debug_print_vec("ray_dir2", ray_dir2);
-
-	n[A] = scalar_product(ray_dir, ray_dir);
-	// if (n[A] < EPSILON)
-		// /*debug*/printf("\na is 0!\n\n");
-	// {
-	// 	if (!intersect_caps(rt, index, ray))
-	// 		return (0);
-	// 	return (1);
-	// }
-	n[B] = scalar_product(ray_dir, ray_to_center);
-	n[C] = scalar_product(ray_to_center, ray_to_center) - \
-ft_square(rt->obj[index].cyl.rad);
-	discriminant = ft_square(n[B]) - (n[A] * n[C]);
-	if (discriminant < 0.001f)
+	if (hit_body == -1 && hit_cap == -1)
 		return (0);
 
-	/* ****************** get t ****************** */
-	t[0] = (n[B] - sqrt(discriminant)) / n[A];
-	t[1] = (n[B] + sqrt(discriminant)) / n[A];
-
-	/* *************** if t intersects obj ************** */
-	if (t[0] <= ray_range.min || t[0] >= ray_range.max)
+	/* *************************** if both ok *************************** */
+	if (hit_body != -1 && hit_cap != -1)
 	{
-		t[0] = (n[B] + sqrt(discriminant)) / n[A];
-		if (t[0] <= ray_range.min || t[0] >= ray_range.max)
-			return (0);
+		if (hit_cap >= hit_body)
+		{
+			/*debug*/printf("has_hit_cyl:b: %f < %f\n", hit_cap, hit_body);
+			update_hit_rec(rt, index, ray, hit_cap);
+			rt->hit.setting = 0;
+			return (1);
+		}
+		// update_hit_rec(rt, index, ray, t[0]);
+		// rt->hit.setting = 1;
+		// return (1);
 	}
 
-	// if (!cyl_body)
-	// return (0)
-	// if (cyl_cap)
-	// return (cyl_cap)
-	// else
-	// return (cyl_body)
+	/* *************************** cap ok *************************** */
+	if (hit_cap != -1 && hit_body == -1)
+	{
+		/*debug*/printf("has_hit_cyl: %f < %f\n", hit_cap, hit_body);
+		update_hit_rec(rt, index, ray, hit_cap);
+		rt->hit.setting = 0;
+		return (1);
+	}
 
-	// /*debug*/printf("has_hit_cyl:%f %f\n", t[0], rt->hit.t);
+	/* *************************** body ok *************************** */
+	if (hit_body != -1 && hit_cap == -1)
+	{
+		update_hit_rec(rt, index, ray, t[0]);
+		rt->hit.setting = 1;
+		return (1);
+	}
 
-	// /*debug*/printf("rt_hit(init): %f\n\n", rt->hit.t);
-	/* ***********  truncate cylinder height  *********** */
-    // if (!check_hit_cap(rt, index, ray_range, ray))
-    if (!t_intersects_cyl(rt, index, ray_range, ray, t))
-		return (0);
-	// /*debug*/printf("rt_hit(fin): %f\n\n", rt->hit.t);
-	return (1);
+	// return (1);
+	return (0);
 }

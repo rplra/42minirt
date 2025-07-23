@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/19 16:59:10 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/22 13:02:57 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_vec3	set_tmp_vec(t_vec3 normal)
 {
 	t_vec3	tmp;
 
-	if (normal.x == 1)
+	if (normal.x == 1)	//i think this is additional
 		tmp = new_vec3(0, 0, -1);
 	else if (normal.x != 0)
 		tmp = new_vec3(0, 0, 1);

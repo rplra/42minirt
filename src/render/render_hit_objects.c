@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/20 18:46:03 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/22 21:51:38 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 /* child function in has_hit_sphere, records details of the hitted obj */
 int	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
 {
-	t_vec3 (*get_surf_norm[3])(t_ray, t_obj, float);
+	t_vec3 (*get_surf_norm[3])(t_ray, t_obj, float, t_uchar);
 
 	init_surf_norm(get_surf_norm);
-	rt->hit.surf_norm = get_surf_norm[rt->obj[index].type](ray, rt->obj[index], t);	//if t>0
-	rt->hit.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));					//if t>0
+	rt->hit.surf_norm = get_surf_norm[rt->obj[index].type](ray, rt->obj[index], t, rt->hit.setting);	//if t>0
+	rt->hit.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
 	// rt->hit.obj = &rt->obj[index];
 	rt->hit.index = index;
 	rt->hit.t = t;
@@ -97,7 +97,7 @@ bool	within_plane_range(float alpha, float beta, int flag)
 	else if (flag == 1)
 		return (alpha > 0 && beta > 0 && (alpha + beta < 1));
 	else if (flag == 2) //ellipse, wip
-		return (ft_square(alpha) + ft_square(beta) <= 1);
+		return (ft_square(alpha) + ft_square(beta) <= ft_square(0.5));
 	return (0);
 }
 
@@ -119,16 +119,25 @@ static bool	t_intersects_plane(t_rt *rt, int i, t_ray ray, float t)
 	float	alpha;
 	float	beta;
 
-	// pt = o + t*d
+	// pt = o + t*d, then pt - C
+	/* ******************* for quads only & triangles ******************* */
 	intersect = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
 	intersect = subtract_vec(intersect, rt->obj[i].plane.pos);
+
+	/* ******** for ellipse, need to shift from corner to center ******** */
+	// t_vec3	center = add_vec(add_vec(rt->obj[i].plane.pos, div_vec_scalar(rt->obj[i].plane.coord[Y],2)), div_vec_scalar(rt->obj[i].plane.coord[X], 2));
+	// intersect = subtract_vec(intersect, center); //default=corner, if ellipse=center 
+
+	/* ******************* alpha beta calculation ********************** */
 	alpha = scalar_product(rt->obj[i].plane.w, \
 cross_product(intersect, rt->obj[i].plane.coord[Y]));
 	beta = scalar_product(rt->obj[i].plane.w, \
 cross_product(rt->obj[i].plane.coord[X], intersect));
-	/*debug*/printf("has_hit_plane:%f %f\n", alpha, beta);
+	// /*debug*/printf("has_hit_plane:%f %f\n", alpha, beta);
 	if (!within_plane_range(alpha, beta, 0))
 		return (0);
+
+	/* ******************* optional if no texture ********************** */
 	rt->hit.coord[X] = alpha;
 	rt->hit.coord[Y] = beta;
 	return (1);

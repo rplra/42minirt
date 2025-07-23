@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:13:15 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/22 11:23:04 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/23 10:11:19 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_obj	new_cyl(t_vec3 position, t_vec3 normal, float radius, float height, t_mate
 	t_vec3	n;
 	t_obj	res;
 	t_vec3	tmp_vec;
+	float	half_height = height/2;
 
 	res.type = CYLINDER;
 	res.material.fuzz = 0;
@@ -41,9 +42,7 @@ t_obj	new_cyl(t_vec3 position, t_vec3 normal, float radius, float height, t_mate
 
 	res.cyl.pos = position;
 	res.cyl.axis = unit_vec3(normal);
-
-	// get top coords
-	res.cyl.corner = new_vec3(position.x - radius, position.y + (height/2), position.z + radius);
+	// res.cyl.axis = mult_vec_scalar(unit_vec3(normal), -1);
 
 	tmp_vec = set_tmp_vec(res.cyl.axis);
 	res.cyl.coord[Y] = unit_vec3(cross_product(res.cyl.axis, tmp_vec));
@@ -51,19 +50,30 @@ t_obj	new_cyl(t_vec3 position, t_vec3 normal, float radius, float height, t_mate
 	//scale to certain size
 	// res.cyl.coord[X] = mult_vec_scalar(res.cyl.coord[X], -1); //diameter
 	// res.cyl.coord[Y] = mult_vec_scalar(res.cyl.coord[Y], 1);
-	res.cyl.coord[X] = mult_vec_scalar(res.cyl.coord[X], radius * 2); //-2 diameter
+	res.cyl.coord[X] = mult_vec_scalar(res.cyl.coord[X], radius * -2); //-2 diameter
 	res.cyl.coord[Y] = mult_vec_scalar(res.cyl.coord[Y], radius * 2);
 	n = cross_product(res.cyl.coord[X], res.cyl.coord[Y]);
 
-	// /*debug*/debug_print_vec("\ncyl_cap_norm", res.cyl.axis);
-	// /*debug*/debug_print_vec("cap_coord_u", res.cyl.coord[X]);
-	// /*debug*/debug_print_vec("cap_coord_v", res.cyl.coord[Y]);
+	// get corner coords
+	// res.cyl.corner = new_vec3(position.x - radius, position.y + (height/2), position.z + radius);
+
+	// corner of bottom cap, corner of top cap
+	// this corner of center
+	res.cyl.corner = subtract_vec(subtract_vec(res.cyl.pos, div_vec_scalar(res.cyl.coord[X], 2)), div_vec_scalar(res.cyl.coord[Y], 2));
+
+	/*debug*/debug_print_vec("\ncyl_corner_center", res.cyl.corner);
+	/*debug*/debug_print_vec("cyl_cap_norm", res.cyl.axis);
+	/*debug*/debug_print_vec("cap_coord_u", res.cyl.coord[X]);
+	/*debug*/debug_print_vec("cap_coord_v", res.cyl.coord[Y]);
 	// /*debug*/debug_print_vec("norm_u", unit_vec3(res.cyl.coord[X]));
 	// /*debug*/debug_print_vec("norm_v", unit_vec3(res.cyl.coord[Y]));
 
-	res.cyl.d[0] = scalar_product(res.cyl.axis, new_vec3(position.x + radius, position.y - (height/2), position.z - radius)); //depends on height
-	res.cyl.d[1] = scalar_product(res.cyl.axis, res.cyl.corner); //official use corner
-	// res.cyl.w = div_vec_scalar(n, scalar_product(n, n));
+	res.cyl.d[0] = scalar_product(res.cyl.axis, subtract_vec(res.cyl.corner, mult_vec_scalar(res.cyl.axis, half_height))); //official use corner
+	res.cyl.d[1] = scalar_product(res.cyl.axis, add_vec(res.cyl.corner, mult_vec_scalar(res.cyl.axis, half_height))); //official use corner
+	// res.cyl.d[1] = scalar_product(res.cyl.axis, res.cyl.pos); //official use corner
+	// res.cyl.d[0] = scalar_product(res.cyl.axis, subtract_vec(res.cyl.corner, mult_vec_scalar(res.cyl.axis, half_height))); //official use corner
+	// res.cyl.d[1] = scalar_product(res.cyl.axis, add_vec(res.cyl.corner, mult_vec_scalar(res.cyl.axis, half_height))); //official use corner
+	res.cyl.w = div_vec_scalar(n, scalar_product(n, n));
 	create_bbox(&res, res.bbox);
 	return (res);
 }

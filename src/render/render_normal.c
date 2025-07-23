@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:11:57 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/22 10:21:13 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/23 10:26:06 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,17 @@ t_vec3	set_face_norm(t_ray ray, t_vec3 surf_norm)
  * child function in hit
  * calls respective get_surf_norm function depending on object type
  */
-void	init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float))
+void	init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float, t_uchar))
 {
 	get_surf_norm[PLANE] = get_surf_norm_plane;
 	get_surf_norm[SPHERE] = get_surf_norm_sph;
 	get_surf_norm[CYLINDER] = get_surf_norm_cyl;
 }
 
-t_vec3	get_surf_norm_plane(t_ray ray, t_obj obj, float t)
+t_vec3	get_surf_norm_plane(t_ray ray, t_obj obj, float t, t_uchar setting)
 {
 	(void) t;
+	(void) setting;
 	return (set_face_norm(ray, obj.plane.normal));
 }
 
@@ -55,10 +56,11 @@ t_vec3	get_surf_norm_plane(t_ray ray, t_obj obj, float t)
  * reverse direction of surf_norm if so
  * returns a surf_norm in unit vector
  */
-t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t)
+t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t, t_uchar setting)
 {
 	t_vec3	pt_ray;
 	t_vec3	surf_norm;
+	(void) setting;
 
 	// also known as set_face_normal
 	pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
@@ -70,9 +72,34 @@ t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t)
 }
 
 // cyl cap test
-t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t)
+// t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
+// {
+// 	(void) t;
+// 	(void) ray;
+// 	(void) setting;
+// 	// t_vec3	axis = mult_vec_scalar(obj.cyl.axis, -1);
+// 	// return (set_face_norm(ray, axis));
+// 	return (set_face_norm(ray, obj.cyl.axis));
+// }
+
+/*
+ * renders 3d or flat based on identifier id
+ * id = 0: renders 3D
+ * else  : renders flat 2D
+ */
+t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
 {
-	(void) t;
+	t_vec3	pt_ray;
+	t_vec3	surf_norm;
+
+	if (setting == 1)
+	{
+		pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
+		surf_norm = subtract_vec(pt_ray, obj.cyl.pos);
+		// surf_norm = unit_vec3(surf_norm);
+		surf_norm = set_face_norm(ray, unit_vec3(surf_norm));
+		return (surf_norm);
+	}
 	return (set_face_norm(ray, obj.cyl.axis));
 }
 
@@ -85,61 +112,38 @@ t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t)
 // 	float		beta;
 
 
+// 	// pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
+// 	// pt_ray = new_vec3(pt_ray.x, 0, pt_ray.z);	//cylinder infinite on y
+	
 // 	pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
-// 	pt_ray = new_vec3(pt_ray.x, 0, pt_ray.z);	//cylinder infinite on y
-	
-// 	t_vec3 pt_ray2 = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
-// 	alpha = scalar_product(pt_ray2, unit_vec3(obj.cyl.coord[X]));
-// 	beta = scalar_product(pt_ray2, unit_vec3(obj.cyl.coord[Y]));
+// 	// alpha = scalar_product(pt_ray, unit_vec3(obj.cyl.coord[X]));
+// 	// beta = scalar_product(pt_ray, unit_vec3(obj.cyl.coord[Y]));
 
-// 	// /*debug*/printf("snorm_cyl: %f %f | %f %f\n", pt_ray.x, pt_ray.z, alpha, beta);
-	
 // 	cyl_axis = get_cyl_axis_height(obj.cyl);
 // 	// cyl_axis.min = obj.cyl.pos.y - (obj.cyl.axis.y * (obj.cyl.height / 2));
 // 	// cyl_axis.max = obj.cyl.pos.y + (obj.cyl.axis.y * (obj.cyl.height / 2));
 
-// 	float dist = scalar_product(pt_ray, pt_ray);	//x sq + 0 + z sq = r sq
-// 	float dist2 = ft_square(alpha) + ft_square(beta);	//x sq + 0 + z sq = r sq
+// 	float dist = ft_square(alpha) + ft_square(beta);	//x sq + 0 + z sq = r sq
 
-// 	/*debug*/printf("snorm_dist: %f %f\n", dist, dist2);
-// 	if (dist < ft_square(obj.cyl.rad) && pt_ray.y >= cyl_axis.max - EPSILON)
+// 	if ((dist <= ft_square(0.5) && pt_ray.y >= cyl_axis.max - EPSILON) || \
+// (dist <= ft_square(0.5) && pt_ray.y <= cyl_axis.min + EPSILON))
 // 	{
-// 		/*debug*/printf("surf_norm top!\n");
+// 		/*debug*/printf("surf_norm cap!\n");
 // 		return (set_face_norm(ray, obj.cyl.axis));
 // 	}
-// 	else if (dist < ft_square(obj.cyl.rad) && pt_ray.y <= cyl_axis.min + EPSILON)
-// 	{
-// 		/*debug*/printf("surf_norm bottom!\n");
-// 		return (set_face_norm(ray, mult_vec_scalar(obj.cyl.axis, -1)));
-// 	}
-
-// 	/* ************************************************************** */
-// 	//n= <normal>, obj_center - pt_ray
-// 	// surf_norm = subtract_vec(pt_ray, obj.cyl.pos);
-// 	// surf_norm = unit_vec3(surf_norm);
-// 	// /*debug*/debug_print_vec("surf_norm_cyl", surf_norm);
-// 	// so, reverse surf_norm if so
-// 	surf_norm = set_face_norm(ray, surf_norm);
-// 	return (surf_norm);
-// }
-
-// cyl body only
-// t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t)
-// {
-// 	t_vec3	pt_ray;
-// 	t_vec3	surf_norm;
-
-// 	pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
-// 	// pt_ray = new_vec3(pt_ray.x, 0, pt_ray.z);	//cylinder infinite on y
 
 // 	/* ************************************************************** */
 // 	//n= <normal>, obj_center - pt_ray
 // 	surf_norm = subtract_vec(pt_ray, obj.cyl.pos);
 // 	surf_norm = unit_vec3(surf_norm);
+// 	// /*debug*/debug_print_vec("surf_norm_cyl", surf_norm);
 // 	// so, reverse surf_norm if so
 // 	surf_norm = set_face_norm(ray, surf_norm);
+// 	/*debug*/printf("surf_norm_body\n");
 // 	return (surf_norm);
 // }
+
+
 
 //lyara
 // t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t)

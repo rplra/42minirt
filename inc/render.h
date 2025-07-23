@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/22 11:56:28 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/22 19:15:49 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_hit
 	bool		front_face;		// for correct normal orientation
 	float		coord[2];		// store u & v values (surface coordinates of hit point, for texture)
 	int			index;			// object index of the hitted obj
+	t_uchar		setting;		// helper variable for rendering cyl
 }	t_hit;
 
 // typedef struct s_record
@@ -147,7 +148,7 @@ t_obj		new_cyl_2(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, float radius, 
 /* __________________ func_pointers __________________ */
 // void		init_new_obj_func(t_obj (*add_obj[])(t_vec3, float, t_vec3, t_uchar));
 void		init_box_compare(bool (*box_compare[])(t_obj, t_obj));
-void		init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float));
+void		init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float, t_uchar));
 void		init_hit_func(bool (*has_hit[])());
 
 /* __________________ merge_sort __________________ */
@@ -178,9 +179,9 @@ void		get_point_on_surf(t_cylinder cyl, t_ray ray, float t[2], float res[2]);
 t_interval	get_cyl_axis_height(t_cylinder cyl);
 
 t_vec3		set_face_norm(t_ray ray, t_vec3 surf_norm);
-t_vec3		get_surf_norm_plane(t_ray ray, t_obj obj, float t);
-t_vec3		get_surf_norm_sph(t_ray ray, t_obj obj, float t);
-t_vec3		get_surf_norm_cyl(t_ray ray, t_obj obj, float t);
+t_vec3		get_surf_norm_plane(t_ray ray, t_obj obj, float t, t_uchar setting);
+t_vec3		get_surf_norm_sph(t_ray ray, t_obj obj, float t, t_uchar setting);
+t_vec3		get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting);
 
 /* __________________ ray __________________ */
 t_vec3		ray_color(t_rt *vars, t_ray ray, t_uchar ray_bounce, \

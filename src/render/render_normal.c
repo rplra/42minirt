@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:11:57 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/23 10:26:06 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/24 14:49:10 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_vec3	point_at(float t, t_ray ray)
  */
 t_vec3	set_face_norm(t_ray ray, t_vec3 surf_norm)
 {
+	(void) ray;
 	if (scalar_product(ray.vector, surf_norm) > 0)	//if pointing in same direction
 		surf_norm = mult_vec_scalar(surf_norm, -1);	//reverse direction
 	return (surf_norm);
@@ -55,6 +56,10 @@ t_vec3	get_surf_norm_plane(t_ray ray, t_obj obj, float t, t_uchar setting)
  * if scalar_product of ray . surf_norm > 0, (means ray hits inner side)
  * reverse direction of surf_norm if so
  * returns a surf_norm in unit vector
+ * 
+ * Formula: P-C
+ * if dot(ray_dir, P-C) > 0,
+ * invert the direction
  */
 t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t, t_uchar setting)
 {
@@ -84,20 +89,28 @@ t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t, t_uchar setting)
 
 /*
  * renders 3d or flat based on identifier id
- * id = 0: renders 3D
+ * projects cyl_center to be parallel to hit_point
+ * then, subtract P-C (same as sphere), & normalize
+ * 
+ * id = 1: renders 3D
  * else  : renders flat 2D
  */
 t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
 {
+	float	t2;
 	t_vec3	pt_ray;
+	t_vec3	p_to_c;
 	t_vec3	surf_norm;
 
 	if (setting == 1)
 	{
-		pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t)); // .at
-		surf_norm = subtract_vec(pt_ray, obj.cyl.pos);
-		// surf_norm = unit_vec3(surf_norm);
-		surf_norm = set_face_norm(ray, unit_vec3(surf_norm));
+		pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
+		p_to_c = subtract_vec(pt_ray, obj.cyl.pos);
+		
+		t2 = scalar_product(p_to_c, obj.cyl.axis);
+		surf_norm = add_vec(obj.cyl.pos, mult_vec_scalar(obj.cyl.axis, t2));
+		surf_norm = subtract_vec(pt_ray, surf_norm);
+		surf_norm = unit_vec3(surf_norm);
 		return (surf_norm);
 	}
 	return (set_face_norm(ray, obj.cyl.axis));
@@ -142,8 +155,6 @@ t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
 // 	/*debug*/printf("surf_norm_body\n");
 // 	return (surf_norm);
 // }
-
-
 
 //lyara
 // t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t)

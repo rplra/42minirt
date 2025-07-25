@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/22 21:51:38 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/25 10:02:38 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
 	init_surf_norm(get_surf_norm);
 	rt->hit.surf_norm = get_surf_norm[rt->obj[index].type](ray, rt->obj[index], t, rt->hit.setting);	//if t>0
 	rt->hit.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
+	// rt->hit.at = add_vec(rt->hit.at, mult_vec_scalar(rt->hit.surf_norm, EPSILON));
 	// rt->hit.obj = &rt->obj[index];
 	rt->hit.index = index;
 	rt->hit.t = t;
@@ -77,8 +78,7 @@ bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 			return (0);
 	}
 	/*debug*/printf("has_hit_sphere:%f %f\n", t, discriminant);
-	// if (t < rt->hit.t)
-		update_hit_rec(rt, index, ray, t);
+	update_hit_rec(rt, index, ray, t);
 	return (1);
 }
 
@@ -122,8 +122,8 @@ static bool	t_intersects_plane(t_rt *rt, int i, t_ray ray, float t)
 	// pt = o + t*d, then pt - C
 	/* ******************* for quads only & triangles ******************* */
 	intersect = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
+	
 	intersect = subtract_vec(intersect, rt->obj[i].plane.pos);
-
 	/* ******** for ellipse, need to shift from corner to center ******** */
 	// t_vec3	center = add_vec(add_vec(rt->obj[i].plane.pos, div_vec_scalar(rt->obj[i].plane.coord[Y],2)), div_vec_scalar(rt->obj[i].plane.coord[X], 2));
 	// intersect = subtract_vec(intersect, center); //default=corner, if ellipse=center 
@@ -168,8 +168,7 @@ bool	has_hit_plane(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 		return (0);
 	if (!t_intersects_plane(rt, index, ray, t))
 		return (0);
-	// if (t < rt->hit.t)
-		update_hit_rec(rt, index, ray, t);
+	update_hit_rec(rt, index, ray, t);
 	return (1);
 }
 

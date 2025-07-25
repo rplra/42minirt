@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/22 11:30:09 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/24 14:46:20 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,33 @@
 // 	return (res);
 // }
 
+// hit without bvh
+// /*
+// ray_range: defines the minimum and maximum valid t values (distance along the ray).
+// ray: the ray being tested against all scene objects
+// */
+// t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
+// {
+// 	float		t;
+// 	t_obj		*res;
+// 	bool		(*has_hit[3])(t_rt *, int, t_interval, t_ray);
+
+// 	init_hit_func(has_hit);
+// 	res = NULL;
+
+// 	int	x = -1;
+// 	while (++x < rt->obj_count)
+// 	{
+// 		t = has_hit[rt->obj[x].type](rt, x, ray_range, ray);
+// 		if (t > 0)
+// 		{
+// 			res = &rt->obj[rt->hit.index];
+// 			ray_range.max = rt->hit.t;
+// 		}
+// 	}
+// 	return (res);
+// }
+
 /*
  * child function in hit
  * calls respective has_hit function depending on object type
@@ -72,28 +99,17 @@ t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
 {
 	float		t;
 	t_obj		*res;
-	// bool		(*has_hit[3])(t_rt *, int, t_interval, t_ray);
 
-	// init_hit_func(has_hit);
 	res = NULL;
 
-	// int	x = -1;
-	// while (++x < vars->obj_count)
-	// {
-		// /*debug*/printf("id:%d\n", x);
-		// t = has_hit[vars->obj[x].type](vars, x, ray_range, ray); //this returns t value only, more like get_root
-		t = hit_bvh(rt->bvh, ray_range, ray, rt);
-		// /*debug*/printf("t! %f %d\n", t, vars->hit.index);
-		if (t > 0)
-		{
-			//get the index of smallest t in hit_records
-			res = &rt->obj[rt->hit.index];
-			/*debug*/printf("hitted type: %d\n", res->type);
-			/*debug*/debug_print_vec(" |hitted", res->cyl.pos);
-			/*debug*/debug_print_vec(" |hitted_col", res->material.albedo);
-			// ray_range.max = vars->rec.t;	//maybe no need
-		}
-	// }
+	t = hit_bvh(rt->bvh, ray_range, ray, rt);
+	if (t > 0)
+	{
+		res = &rt->obj[rt->hit.index];
+		// /*debug*/printf("hitted type: %d\n", res->type);
+		// /*debug*/debug_print_vec(" |hitted", res->cyl.pos);
+		// /*debug*/debug_print_vec(" |hitted_col", res->material.albedo);
+	}
 	return (res);
 }
 
@@ -149,11 +165,11 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
 	bool	(*has_hit[3])(t_rt *, int, t_interval, t_ray);
 
 	// /*debug*/debug_print_bbox("hit_bvh", bvh->bbox);
-	// if (!hit_aabb(ray, ray_range, bvh->bbox))
-	// {
-	// 	/*debug*/printf("\n\033[93mno aabb! %d~%d\033[0m\n\n", bvh->id[L], bvh->id[R]);
-	// 	return (0);
-	// }
+	if (!hit_aabb(ray, ray_range, bvh->bbox))
+	{
+		// /*debug*/printf("\n\033[93mno aabb! %d~%d\033[0m\n\n", bvh->id[L], bvh->id[R]);
+		return (0);
+	}
 
 	t[L] = 0;
 	t[R] = 0;

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/22 19:15:49 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/24 14:47:45 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,9 +171,10 @@ t_obj		*hit(t_rt *rt, t_interval ray_range, t_ray ray);
 bool		hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars);
 bool		has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray);
 bool		has_hit_plane(t_rt *rt, int index, t_interval ray_range, t_ray ray);
-bool		has_hit_cylinder(t_rt *rt, int index, t_interval ray_range, t_ray ray);
-int			update_hit_rec(t_rt *vars, int index, t_ray ray, float t);
 bool		within_plane_range(float alpha, float beta, int flag);
+bool		has_hit_cylinder(t_rt *rt, int index, t_interval ray_range, t_ray ray);
+float		has_hit_cap(t_rt *rt, int i, t_interval ray_range, t_ray ray);
+int			update_hit_rec(t_rt *vars, int index, t_ray ray, float t);
 
 void		get_point_on_surf(t_cylinder cyl, t_ray ray, float t[2], float res[2]);
 t_interval	get_cyl_axis_height(t_cylinder cyl);
@@ -204,7 +205,6 @@ bool		is_near_zero(t_vec3 vec);
 void		vec3_to_arr(t_vec3 pt, float res[3]);
 void		swap_float(float t[2]);
 
-
 /* __________________ random __________________ */
 float		rand_lcg(unsigned int *seed);
 float		rand_lcg_range(unsigned int *seed, float min, float max);
@@ -227,7 +227,6 @@ void		init_obj(t_rt *rt);
 void		init_sph_scene(t_rt *rt);
 void		init_plane_scene(t_rt *rt);
 void		init_cyl_scene(t_rt *rt);
-
 
 /* __________________ debug_print functions __________________ */
 void		debug_print_vec(char *str, t_vec3 vec);

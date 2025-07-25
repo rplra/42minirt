@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/22 21:54:45 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/25 10:01:44 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void	init_obj(t_rt *rt)
 
 void	init_cam(t_rt *rt)
 {
-	// rt->camera.pos = new_vec3(0, 0, 9); //not parser
-	rt->camera.pos = new_vec3(-2, 0, 11); //not parser
+	// rt->camera.pos = new_vec3(0, 3, 4); //not parser
+	// rt->camera.pos = new_vec3(-2, 0, 11); //not parser
 	/* ************** need to comment out above when include parser ************************ */
 
-	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1)); // fixed
-	rt->camera.vfov = radian(90);	//not parser
-	// rt->camera.vfov = radian(rt->camera.vfov);	//parser
+	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1));
+	// rt->camera.vfov = radian(90);	//not parser
+	rt->camera.vfov = radian(rt->camera.vfov);	//parser
 	rt->camera.vup = new_vec3(0, 1, 0);
 	rt->camera.defoc_ang = radian(0);
 	rt->camera.defoc_disk[X] = new_vec3(0, 0, 0);
@@ -69,14 +69,16 @@ void	init_hit(t_rt *rt)
 /* reassign material to other types than default */
 void	edit_material(t_rt *rt)
 {
-	update_material(&rt->obj[4], DIFFUSE, 0);
+	update_material(&rt->obj[0], METAL, 0);
+	update_material(&rt->obj[1], DIFFUSE, 0);
+	update_material(&rt->obj[2], METAL, 0);
 }
 
 void	init_variable(t_rt *rt)
 {
 	init_cam(rt);
-	init_obj(rt);		//replace with info from parser
-	// edit_material(rt);		//custom assign material
+	// init_obj(rt);		//replace with info from parser
+	edit_material(rt);		//custom assign material
 	debug_print_arr("init_var", rt->obj, rt->obj_count);
 	init_bvh_node(rt);
 	debug_print_arr("init_bvh", rt->obj, rt->obj_count);

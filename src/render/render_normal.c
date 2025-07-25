@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:11:57 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/24 14:49:10 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/25 14:52:50 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,19 +102,46 @@ t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
 	t_vec3	p_to_c;
 	t_vec3	surf_norm;
 
+	pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
 	if (setting == 1)
 	{
-		pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
 		p_to_c = subtract_vec(pt_ray, obj.cyl.pos);
-		
 		t2 = scalar_product(p_to_c, obj.cyl.axis);
 		surf_norm = add_vec(obj.cyl.pos, mult_vec_scalar(obj.cyl.axis, t2));
 		surf_norm = subtract_vec(pt_ray, surf_norm);
 		surf_norm = unit_vec3(surf_norm);
 		return (surf_norm);
 	}
-	return (set_face_norm(ray, obj.cyl.axis));
+	t_interval cyl_height = get_cyl_axis_height(obj.cyl);
+
+	t2 = scalar_product(pt_ray, obj.cyl.axis);
+	if (t2 >= cyl_height.max - EPSILON)
+		return (obj.cyl.axis);
+	return (mult_vec_scalar(obj.cyl.axis, -1));
+
+	// return (set_face_norm(ray, obj.cyl.axis));
 }
+
+// t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
+// {
+// 	float	t2;
+// 	t_vec3	pt_ray;
+// 	t_vec3	p_to_c;
+// 	t_vec3	surf_norm;
+
+// 	if (setting == 1)
+// 	{
+// 		pt_ray = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
+// 		p_to_c = subtract_vec(pt_ray, obj.cyl.pos);
+		
+// 		t2 = scalar_product(p_to_c, obj.cyl.axis);
+// 		surf_norm = add_vec(obj.cyl.pos, mult_vec_scalar(obj.cyl.axis, t2));
+// 		surf_norm = subtract_vec(pt_ray, surf_norm);
+// 		surf_norm = unit_vec3(surf_norm);
+// 		return (surf_norm);
+// 	}
+// 	return (set_face_norm(ray, obj.cyl.axis));
+// }
 
 // t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t)
 // {

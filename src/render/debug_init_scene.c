@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 16:56:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/25 08:34:31 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/25 14:52:14 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	init_cyl_scene(t_rt *rt)
 	// rt->obj[1] = new_cyl(new_vec3(0,0,0), new_vec3(1,0,0), 2, 0.2, right_blue);
 	rt->obj[2] = new_cyl(new_vec3(-1,0,0), new_vec3(-1,0,0), 2, 0.2, up_orange);
 	rt->obj[3] = new_cyl(new_vec3(-2.5,0,0), new_vec3(1,0,0), 2, 0.2, down_teal);
-	// rt->obj[4] = new_cyl(new_vec3(-3,0,0), new_vec3(1,0,0), 2, 0.2, right_blue);
+	// rt->obj[3] = new_cyl(new_vec3(-3,0,0), new_vec3(1,0,0), 2, 0.2, right_blue);
 	
 	// rt->obj[0] = new_cyl(new_vec3(-3,-2,5), new_vec3(1,0,0), 2, 0.1, left_red);
 	// rt->obj[1] = new_cyl(new_vec3(-2,-2,0), new_vec3(0,0,1), 2, 0.1, center_green);

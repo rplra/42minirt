@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/23 14:10:43 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/25 14:10:49 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ t_uint *seed)
 		return (new_vec3(0, 0, 0));
 	// vars->hit.t = 2147483647;
 
-		res = hit(vars, new_interval(0.00001f, 2147483647.0), ray); //assigns surf_norm
+	res = hit(vars, new_interval(0.00001f, 2147483647.0), ray); //assigns surf_norm
 	// /*debug*/printf("res_7: %d\n", res);
 
 	if (res != NULL)
@@ -153,10 +153,10 @@ t_uint *seed)
 res->material.albedo));
 // 0.5)); //weaken its color reflectance by 50% everytime it bounce
 
-// mult_vec_scalar(vars.sph[state].mat.albedo, 0.8)));
-// 		return (new_vector3d(0.5*255*(surf_norm.x+1),
-// 0.5*255*(surf_norm.y+1),
-// 0.5*255*(surf_norm.z+1)));
+// mult_vec_scalar(res->material.albedo, 0.8);
+// 		return (new_vec3(0.5*255*(vars->hit.surf_norm.x+1),
+// 0.5*255*(vars->hit.surf_norm.y+1),
+// 0.5*255*(vars->hit.surf_norm.z+1)));
 	}
 	return (bg_color(*vars, ray));
 }

@@ -46,13 +46,15 @@ SRC_DIR		= 	src
 OBJ_DIR		= 	obj
 MAIN_DIR 	= 	$(SRC_DIR)/main
 PARSE_DIR 	= 	$(SRC_DIR)/parse
-REND_DIR	=	$(SRC_DIR)/render
+BVH_DIR 	= 	$(SRC_DIR)/bvh
+RENDER_DIR	=	$(SRC_DIR)/render
 KEY_DIR 	= 	$(SRC_DIR)/keybind
 UTILS_DIR 	= 	$(SRC_DIR)/utils
 
 # Sources
 SRCS		=	$(wildcard $(MAIN_DIR)/main.c) \
-				$(wildcard $(REND_DIR)/*.c) \
+				$(wildcard $(BVH_DIR)/*.c) \
+				$(wildcard $(RENDER_DIR)/*.c) \
 				$(wildcard $(KEY_DIR)/*.c) \
 				$(wildcard $(PARSE_DIR)/*.c) \
 				$(wildcard $(UTILS_DIR)/*.c)

@@ -3,20 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   key_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:32 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/25 11:08:56 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/26 20:49:07 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "keybind.h"
+#include "minirt.h"
 
 /* prints out current keycode number */
-int	key_press(int keycode, void *param)
+int	key_press(int keycode, t_rt *rt)
 {
-	(void)param;
 	printf("🟡 keycode is %i\n", keycode);
-	// add on other keypress here
+	close_window(keycode, rt);
+	handle_render_mode(rt, keycode);
+	handle_selection(rt, keycode);
+	handle_translation(rt, keycode);
+	init_cam(rt);
+	init_bvh_node(rt);
+	init_hit(rt);
+	my_render_image(rt);
 	return (0);
 }

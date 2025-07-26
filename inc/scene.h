@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/18 16:25:00 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:27:39 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef enum e_mat_type
 
 typedef struct s_material
 {
-	t_col	albedo;				// obj's base colour
+	t_col		albedo;				// obj's base colour
 	float		ambient;			// ambient reflectance
 	float		specular;			// specular intensity (PHONG)
 	float		shininess;			// highlight sharpness (PHONG)
@@ -90,7 +90,7 @@ typedef struct s_light
 {
 	t_vec3		pos;
 	float		brightness;
-	t_col	colour;
+	t_col		colour;
 }				t_light;
 
 typedef struct s_sphere

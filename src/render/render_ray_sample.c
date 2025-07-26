@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/19 16:36:32 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:25:07 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
 	k = -1;
 	color = new_vec3(0, 0, 0);
 	res.z = target.z;
+	///*debug*/printf("sample_pixels: sample_per_pixel=%d, ray_bounce=%d\n",
+	//	vars.camera.sample_per_pixel, vars.camera.ray_bounce);
+
 	while (++k < vars.camera.sample_per_pixel)
 	{
 		offset = sample_sq_rand(&seed);

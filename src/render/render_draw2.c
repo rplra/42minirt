@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/19 13:17:48 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/26 12:54:37 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,4 +165,7 @@ vars->img.img, 0, 0);
 	ft_draw(*vars, vp_00_loc, vp_d);
 	mlx_put_image_to_window(vars->mlx, vars->mlx_win, \
 vars->img.img, 0, 0);
+	draw_panel(vars);
+	keybind_guide(vars);
+	selection_guide(vars);
 }

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:13:15 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/18 16:22:49 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/25 20:33:32 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ t_obj	new_plane_2(t_vec3 position, t_vec3 normal, t_mat mat)
 	res.plane.coord[Y] = mult_vec_scalar(res.plane.coord[Y], 4);
 	n = cross_product(res.plane.coord[X], res.plane.coord[Y]);
 	/* ************************************************************* */
-	/*debug*/debug_print_vec("\nquad_norm", res.plane.normal);
-	/*debug*/debug_print_vec("plane_coord_u", res.plane.coord[X]);
-	/*debug*/debug_print_vec("plane_coord_v", res.plane.coord[Y]);
+	// /*debug*/debug_print_vec("\nquad_norm", res.plane.normal);
+	// /*debug*/debug_print_vec("plane_coord_u", res.plane.coord[X]);
+	// /*debug*/debug_print_vec("plane_coord_v", res.plane.coord[Y]);
 
 	res.plane.d = scalar_product(res.plane.normal, res.plane.pos);
 	res.plane.w = div_vec_scalar(n, scalar_product(n, n));

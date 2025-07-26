@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/18 16:22:49 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:17:26 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,9 @@ typedef struct s_bvh_tree
 /* __________________ initialization __________________ */
 void		initialize_mlx(t_rt *rt);
 void		init_variable(t_rt *rt);
+void		init_cam(t_rt *rt);
+void		init_hit(t_rt *rt);
+
 
 /* __________________ aabb __________________ */
 void		aabb(t_vec3 a, t_vec3 v, t_interval range[3]);
@@ -129,7 +132,7 @@ void		add_padding(t_interval res[3]);
 t_obj		new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_mat_type mat_type);
 t_obj		new_plane(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, t_mat mat);
 t_obj		new_plane_2(t_vec3 position, t_vec3 normal, t_mat mat);
-t_mat	new_material(t_vec3 color, t_mat_type type);
+t_mat		new_material(t_vec3 color, t_mat_type type);
 t_vec3		set_tmp_vec(t_vec3 normal);
 void		update_material(t_obj *obj, t_mat_type type, float fuzz);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/10 08:16:53 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/25 20:25:36 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # include "parse.h"
 # include "interval.h"
 # include "render.h"
+# include "transform.h"
 
 # define RED "\033[31m"
 # define RESET "\033[0m"
@@ -48,6 +49,7 @@ typedef unsigned int		t_uint;
 // typedef struct s_sph		t_sphere;
 // typedef struct s_obj		t_obj;
 typedef struct s_bvh_tree	t_bvh_tree;
+// typedef struct s_sel 		t_sel; 
 
 typedef struct s_img
 {
@@ -65,6 +67,10 @@ typedef struct s_rt
 	void		*mlx_win;
 	t_img		img;
 
+	//interactive
+	bool		preview_mode;
+	t_sel		sel;
+
 	//scene
 	t_ambient	ambient;
 	t_camera	camera;
@@ -80,6 +86,9 @@ typedef struct s_rt
 	t_uint		seed;
 	t_bvh_tree	*bvh;
 	// t_interval	bbox[3];	//bounding box, aabb = t_interval[3]
+
+	//transform
+	t_transform transform;
 }				t_rt;
 
 // typedef struct s_vars

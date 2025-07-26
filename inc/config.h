@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/22 11:06:21 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/25 20:46:51 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@
 //# define PI 3.14159265358979323846
 
 /*	window	*/
-# define WIN_WIDTH	600
-# define WIN_HEIGHT	400
+# define WIN_WIDTH		600
+# define WIN_HEIGHT		400
+# define PANEL_WIDTH	200
+# define TOTAL_WIDTH	(WIN_WIDTH + PANEL_WIDTH)
 
 /*	ambient	*/
 # define AMBIENT_RATIO_MIN	0.0
@@ -30,6 +32,15 @@
 /*	colour	*/
 # define COL_MIN	0
 # define COL_MAX	255
+
+# define BLACK		0x000000  // (0, 0, 0)
+# define GREEN		0x00FF00  // (0, 255, 0)
+# define YELLOW		0xFFFF00  // (255, 255, 0)
+# define BLUE		0x0000FF  // (0, 0, 255)
+# define MAGENTA	0xFF00FF  // (255, 0, 255)
+# define CYAN		0x00FFFF  // (0, 255, 255)
+# define WHITE		0xFFFFFF  // (255, 255, 255)
+# define GREY		0x808080  // (128, 128, 128)
 
 /*	vector	*/
 # define VEC_MIN	-1
@@ -65,6 +76,7 @@
 # define SAMPLE_SOFT_SHADOW		15  // > == softer shadow
 # define SAMPLE_RAY_BOUNCE		5	// > == more realistic lighting
 # define SAMPLE_PER_PIXEL		5	// > == smoother img
+# define SAMPLE_PREVIEW			1
 
 
 #endif

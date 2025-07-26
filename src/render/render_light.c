@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:27:39 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/19 17:29:59 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:35:51 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ t_col	get_total_light(t_rt *rt, t_hit *point, t_uint *seed)
 	float		t;
 	float		diffuse_intensity;
 
-	light_pos = randomized_light_pos(rt, seed);
+	if (rt->preview_mode)
+		light_pos = rt->light.pos;
+	else
+		light_pos = randomized_light_pos(rt, seed);
 	light_dir = subtract_vec(light_pos, point->at);
 	t = len_vec3(light_dir);
 	light_dir = unit_vec3(light_dir);
@@ -93,7 +96,10 @@ t_col	sample_direct_light(t_rt *rt, t_hit *point, t_uint *seed)
 	if (!point || !point->obj || rt->light.brightness <= 0)
 		return (new_vec3(0, 0, 0));
 	total_light = new_vec3(0, 0, 0);
-	samples = SAMPLE_SOFT_SHADOW;
+	if (rt->preview_mode)
+		samples = SAMPLE_PREVIEW;
+	else
+		samples = SAMPLE_SOFT_SHADOW;
 	i = -1;
 	while (++i < samples)
 		total_light = add_vec(total_light, get_total_light(rt, point, seed));

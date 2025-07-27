@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/22 11:03:20 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/27 20:22:30 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_vec3	set_tmp_vec(t_vec3 normal)
 {
 	t_vec3	tmp;
 
-	if (normal.x == 1)
+	if (normal.x == 1)	//i think this is additional
 		tmp = new_vec3(0, 0, -1);
 	else if (normal.x != 0)
 		tmp = new_vec3(0, 0, 1);
@@ -45,7 +45,31 @@ void	assign_plane_components(t_obj *obj)
 	n = cross_product(obj->plane.coord[X], obj->plane.coord[Y]);
 	obj->plane.d = scalar_product(obj->plane.normal, obj->plane.pos);
 	obj->plane.w = div_vec_scalar(n, scalar_product(n, n));
-} 
+}
+
+void	assign_cyl_components(t_obj *obj)
+{
+	t_vec3	n;
+	t_vec3	tmp_vec;
+	t_vec3	axis_height;
+
+	obj->type = CYLINDER;
+	tmp_vec = set_tmp_vec(obj->cyl.axis);
+
+	obj->cyl.coord[Y] = unit_vec3(cross_product(obj->cyl.axis, tmp_vec));
+	obj->cyl.coord[X] = cross_product(obj->cyl.axis, obj->cyl.coord[Y]);
+	//scale to certain size
+	obj->cyl.coord[X] = mult_vec_scalar(obj->cyl.coord[X], obj->cyl.rad * -2);
+	obj->cyl.coord[Y] = mult_vec_scalar(obj->cyl.coord[Y], obj->cyl.rad * 2);
+	n = cross_product(obj->cyl.coord[X], obj->cyl.coord[Y]);
+
+	axis_height = mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2);
+	obj->cyl.d[0] = scalar_product(obj->cyl.axis, \
+subtract_vec(obj->cyl.pos, axis_height)); //official use corner
+	obj->cyl.d[1] = scalar_product(obj->cyl.axis, \
+add_vec(obj->cyl.pos, axis_height)); //official use corner
+	obj->cyl.w = div_vec_scalar(n, scalar_product(n, n));
+}
 
 int	parse_plane(t_parse *file, t_obj *obj)
 {
@@ -156,8 +180,11 @@ int	parse_cylinder(t_parse *file, t_obj *obj)
 	free_array(values);
 	if (parse_cylinder_dimensions_and_color(file, &tmp, obj))
 		return (1);
-	obj->type = CYLINDER;
+	//printf("Converted colour: (r=%u, g=%u, b=%u)\n", obj->colour.r, obj->colour.g, obj->colour.b);
+	free_array(values);
 	obj->cyl = tmp;
+	assign_cyl_components(obj);
+	// obj->type = CYLINDER;
 	//printf("Printing struct\n");
 	//print_cylinder(obj);
 	return (0);

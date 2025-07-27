@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/26 19:17:26 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/27 20:36:12 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_hit
 	//bool		front_face;		// for correct normal orientation
 	float		coord[2];		// store u & v values (surface coordinates of hit point, for texture)
 	int			index;			// object index of the hitted obj
+	t_uchar		setting;		// helper variable for rendering cyl
 }	t_hit;
 
 // typedef struct s_record
@@ -129,15 +130,17 @@ void		add_padding(t_interval res[3]);
 
 
 /* __________________ objs __________________ */
-t_obj		new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_mat_type mat_type);
-t_obj		new_plane(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, t_mat mat);
-t_obj		new_plane_2(t_vec3 position, t_vec3 normal, t_mat mat);
-t_mat		new_material(t_vec3 color, t_mat_type type);
+t_mat	new_material(t_vec3 color, t_mat_type type);
 t_vec3		set_tmp_vec(t_vec3 normal);
 void		update_material(t_obj *obj, t_mat_type type, float fuzz);
+//debug
+t_obj		new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_mat_type mat_type);
+t_obj		new_plane_2(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, t_mat mat);
+t_obj		new_plane(t_vec3 position, t_vec3 normal, t_mat mat);
+// t_obj		new_cyl(t_vec3 position, t_vec3 normal, t_mat mat);
+t_obj		new_cyl(t_vec3 position, t_vec3 normal, float radius, float height, t_mat mat);
+t_obj		new_cyl_2(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, float radius, float height, t_mat mat);
 
-// void		new_obj(t_rt *vars, t_obj **lst, t_obj *new);
-// void		obj_add_back(t_obj **lst, t_obj *new);
 
 /* __________________ lst __________________ */
 // int			ft_lstsize_obj(t_obj *lst);
@@ -148,7 +151,7 @@ void		update_material(t_obj *obj, t_mat_type type, float fuzz);
 /* __________________ func_pointers __________________ */
 // void		init_new_obj_func(t_obj (*add_obj[])(t_vec3, float, t_vec3, t_uchar));
 void		init_box_compare(bool (*box_compare[])(t_obj, t_obj));
-void		init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float));
+void		init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float, t_uchar));
 void		init_hit_func(bool (*has_hit[])());
 
 /* __________________ merge_sort __________________ */
@@ -157,11 +160,8 @@ void		copy_obj(t_obj *dest, t_obj src);
 void		merge_sort(t_obj *res, int argc, bool (*func)(t_obj, t_obj));
 
 /* __________________ bvh __________________ */
-// t_bvh_tree	*build_bvh_tree(t_obj *obj, int id[2], \
-// bool (*func[3])(t_obj, t_obj));
 t_bvh_tree	*build_bvh_tree(t_obj *obj, int id[2], bool (*func[3])(t_obj, t_obj));
 void		init_bvh_node(t_rt *vars);
-// bool		box_compare(t_obj a, t_obj b);
 
 /* __________________ img render __________________ */
 void		my_mlx_pixel_put(t_rt vars, int x, int y, int color);
@@ -174,14 +174,18 @@ t_obj		*hit(t_rt *rt, t_interval ray_range, t_ray ray);
 bool		hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars);
 bool		has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray);
 bool		has_hit_plane(t_rt *rt, int index, t_interval ray_range, t_ray ray);
-bool		has_hit_cylinder(t_obj obj, t_interval ray_range, t_ray ray);
-void		update_hit_rec(t_rt *vars, int index, t_ray ray, float t);
+bool		within_plane_range(float alpha, float beta, int flag);
+bool		has_hit_cylinder(t_rt *rt, int index, t_interval ray_range, t_ray ray);
+float		has_hit_cap(t_rt *rt, int i, t_interval ray_range, t_ray ray);
+int			update_hit_rec(t_rt *vars, int index, t_ray ray, float t);
 
-void		init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float));
+void		get_point_on_surf(t_cylinder cyl, t_ray ray, float t[2], float res[2]);
+t_interval	get_cyl_axis_height(t_cylinder cyl);
+
 t_vec3		set_face_norm(t_ray ray, t_vec3 surf_norm);
-t_vec3		get_surf_norm_plane(t_ray ray, t_obj obj, float t);
-t_vec3		get_surf_norm_sph(t_ray ray, t_obj obj, float t);
-t_vec3		get_surf_norm_cyl(t_ray ray, t_obj obj, float t);
+t_vec3		get_surf_norm_plane(t_ray ray, t_obj obj, float t, t_uchar setting);
+t_vec3		get_surf_norm_sph(t_ray ray, t_obj obj, float t, t_uchar setting);
+t_vec3		get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting);
 
 /* __________________ ray __________________ */
 t_vec3		ray_color(t_rt *vars, t_ray ray, t_uchar ray_bounce, \
@@ -205,6 +209,7 @@ t_vec3		split_rgb(int color);
 /* __________________ utils __________________ */
 bool		is_near_zero(t_vec3 vec);
 void		vec3_to_arr(t_vec3 pt, float res[3]);
+void		swap_float(float t[2]);
 
 /* __________________ random __________________ */
 float		rand_lcg(unsigned int *seed);
@@ -227,6 +232,7 @@ void		free_render(t_rt *vars, int indicator);
 void		init_obj(t_rt *rt);
 void		init_sph_scene(t_rt *rt);
 void		init_plane_scene(t_rt *rt);
+void		init_cyl_scene(t_rt *rt);
 
 /* __________________ debug_print functions __________________ */
 void		debug_print_vec(char *str, t_vec3 vec);

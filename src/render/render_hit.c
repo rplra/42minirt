@@ -6,20 +6,11 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/19 11:02:35 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/27 20:27:37 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-/*
- * child function in hit
- * calls respective get_surf_norm function depending on object type
- */
-// void	init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float))
-// {
-// 	get_surf_norm[SPHERE] = get_surf_norm_sph;
-// }
 
 /*
  * child function in ray_color
@@ -68,28 +59,21 @@
  * 1. use bvh tree to efficiently find intersections (returns boolean)
  * 2. check for hit > get ptr to obj > return ptr to obj hit
 */
-t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
+t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
 {
 	float		t;
 	t_obj		*res;
-	// bool		(*has_hit[3])(t_rt *, int, t_interval, t_ray); // check for intersections with diff obj types
 
-	// init_hit_func(has_hit);
 	res = NULL;
 
-	// int	x = -1;
-	// while (++x < vars->obj_count)
-	// {
-		// /*debug*/printf("id:%d\n", x);
-		// t = has_hit[vars->obj[x].type](vars, x, ray_range, ray); //this returns t value only, more like get_root
-		t = hit_bvh(vars->bvh, ray_range, ray, vars);
-		// /*debug*/printf("t! %f %d\n", t, vars->hit.index);
-		if (t > 0)
-		{
-			res = &vars->obj[vars->hit.index];
-			// ray_range.max = vars->rec.t;	//maybe no need
-		}
-	// }
+	t = hit_bvh(rt->bvh, ray_range, ray, rt);
+	if (t > 0)
+	{
+		res = &rt->obj[rt->hit.index];
+		// /*debug*/printf("hitted type: %d\n", res->type);
+		// /*debug*/debug_print_vec(" |hitted", res->cyl.pos);
+		// /*debug*/debug_print_vec(" |hitted_col", res->material.albedo);
+	}
 	return (res);
 }
 

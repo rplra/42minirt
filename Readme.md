@@ -17,6 +17,10 @@ https://www.realtimerendering.com/raytracing.html
 
 [Vector dot product](https://youtu.be/ayiI1pYdujI?si=Hx3tvD3R2SW92ikA)
 
+[Hit different shapes by Chris Dragan](https://hugi.scene.org/online/hugi24/coding%20graphics%20chris%20dragan%20raytracing%20shapes.htm)
+
+[Equation of circles](https://youtu.be/OC1fqS-J9k4?si=Y_iyNYYAKVOx2eLb)
+
 [Short explaination of dot product shows 2 vectors in similar or opposite direction](https://youtu.be/2PrSUK1VrKA?si=zBUXAkeZcYTvpbtU)
 
 [Raycast algorithm & simplification walkthrough](https://youtu.be/ebzlMOw79Yw?si=E7u7UQfy6_-x9bzU)

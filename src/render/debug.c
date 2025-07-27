@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:52:37 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/14 08:49:45 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/22 13:50:31 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,21 @@ void	debug_print_arr(char *str, t_obj *obj, int obj_count)
 			printf("----------------\n");
 		}
 		else if (obj->type == CYLINDER)
-			debug_print_vec("cyl", obj[i].cyl.pos);
+		{
+			// printf("bbox:\n");
+			// debug_print_bbox(" |cyl_bbox", obj[i].bbox);
+			// printf(" |d: %f\n", obj[i].cyl.d);
+			// printf(" |cyl_height: %f\n |cyl_rad: %f\n", obj[i].cyl.height, obj[i].cyl.rad);
+			debug_print_vec(" |cyl", obj[i].cyl.pos);
+			debug_print_vec(" |cyl_axis", obj[i].cyl.axis);
+			debug_print_vec(" |cyl_coord[X]", obj[i].cyl.coord[X]);
+			debug_print_vec(" |cyl_coord[Y]", obj[i].cyl.coord[Y]);
+			// debug_print_vec(" |cyl_col", obj[i].material.albedo);
+		}
 		else if (obj->type == PLANE)
 		{
 			debug_print_vec("pl", obj[i].plane.pos);
+			// printf(" |d: %f\n", obj[i].plane.d);
 			// debug_print_vec(" |pl_u", obj[i].quad.coord[X]);
 			// debug_print_vec(" |pl_v", obj[i].quad.coord[Y]);
 			debug_print_bbox(" |pl_bbox", obj[i].bbox);

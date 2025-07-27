@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:22:13 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/26 12:15:08 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/27 23:04:05 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # define TRANSFORM_H
 
 # define TRANSLATE	0.5f
-# define SCALE		1.0f
+# define SCALE_UP	1.1f
+# define SCALE_DOWN 0.9f
 # define ROTATE		1.0f
 
 typedef struct s_transform

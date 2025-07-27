@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:47:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/26 21:01:05 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/27 23:04:52 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,8 @@ void		handle_rotation(t_rt *rt, int keycode);
 
 bool		translation_key(int keycode);
 t_vec3		translation_delta(int keycode);
-
+bool		scale_key(int keycode);
+float		scale_factor(int keycode);
 
 void		print_selected(t_rt *rt);
 

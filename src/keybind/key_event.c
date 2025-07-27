@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:25:47 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/26 21:00:30 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/27 23:03:07 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,27 @@ void	handle_translation(t_rt *rt, int keycode)
 			obj->cyl.pos = add_vec(obj->cyl.pos, delta);
 			/*debug*/printf("   New Pos: (%.2f, %.2f, %.2f)\n",
 				obj->cyl.pos.x, obj->cyl.pos.y, obj->cyl.pos.z);
+		}
+	}
+}
+
+void	handle_scale(t_rt *rt, int keycode)
+{
+	float	scale;;
+	t_obj	*obj;
+
+	if (!scale_key(keycode))
+		return;
+	scale = scale_factor(keycode);
+	if (rt->sel.type == SEL_OBJ)
+	{
+		obj = &rt->obj[rt->sel.obj_index];
+		if (obj->type == SPHERE)
+			obj->sph.rad *= scale;
+		else if (obj->type == CYLINDER)
+		{
+			obj->cyl.rad *= scale;
+			obj->cyl.height *= scale;
 		}
 	}
 }

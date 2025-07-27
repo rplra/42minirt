@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:33:48 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/26 20:30:51 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/27 23:03:39 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,21 @@ t_vec3	translation_delta(int keycode)
 	return (new_vec3(0, 0, 0));
 }
 
+bool	scale_key(int keycode)
+{
+	return (keycode == KEY_PLUS || keycode == KEY_MINUS);
+}
+
+float	scale_factor(int keycode)
+{
+	if (keycode == KEY_PLUS)
+		return (SCALE_UP);
+	if (keycode == KEY_MINUS)
+		return (SCALE_DOWN);
+	return (1.0f);
+}
+
+// to update
 bool	rotation_key(int keycode)
 {
 	return (keycode == KEY_UP || keycode == KEY_DOWN ||

@@ -4,8 +4,11 @@
 # VSCode settings
 .vscode/
 
-# Object files and binaries
+# Object files
 *.o
+
+# Executable
+miniRT
 
 # Archive
 libft.a

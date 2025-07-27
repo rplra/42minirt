@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/27 20:22:30 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:52:28 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ int	parse_cylinder(t_parse *file, t_obj *obj)
 	if (parse_cylinder_dimensions_and_color(file, &tmp, obj))
 		return (1);
 	//printf("Converted colour: (r=%u, g=%u, b=%u)\n", obj->colour.r, obj->colour.g, obj->colour.b);
-	free_array(values);
+	//free_array(values);
 	obj->cyl = tmp;
 	assign_cyl_components(obj);
 	// obj->type = CYLINDER;

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:18:14 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/27 20:35:16 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:38:00 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	swap_float(float t[2])
 
 	if (t[0] > t[1])
 	{
-		/*debug*/printf("swap!\n");
+		// /*debug*/printf("swap!\n");
 		tmp = t[0];
 		t[0] = t[1];
 		t[1] = tmp;

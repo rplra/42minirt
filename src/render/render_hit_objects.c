@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/27 20:25:19 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:39:32 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
 	rt->hit.surf_norm = get_surf_norm[rt->obj[index].type](ray, rt->obj[index], t, rt->hit.setting);	//if t>0
 	rt->hit.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
 	// rt->hit.at = add_vec(rt->hit.at, mult_vec_scalar(rt->hit.surf_norm, EPSILON));
-	// rt->hit.obj = &rt->obj[index];
+	rt->hit.obj = &rt->obj[index];
 	rt->hit.index = index;
 	rt->hit.t = t;
-	/*debug*/printf("update_hit_rec: t! %f\n", t);
+	// /*debug*/printf("update_hit_rec: t! %f\n", t);
 	return (1);
 }
 
@@ -77,7 +77,7 @@ bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 		if (t <= ray_range.min || t >= ray_range.max)
 			return (0);
 	}
-	/*debug*/printf("has_hit_sphere:%f %f\n", t, discriminant);
+	// /*debug*/printf("has_hit_sphere:%f %f\n", t, discriminant);
 	update_hit_rec(rt, index, ray, t);
 	return (1);
 }
@@ -173,8 +173,8 @@ bool	has_hit_plane(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 		return (0);
 	dot_np = scalar_product(rt->obj[index].plane.normal, ray.orig);
 	t = (rt->obj[index].plane.d - dot_np) / denom;
-	/*debug*/printf("pl_d: %d %f\n", index, rt->obj[index].plane.d);
-	/*debug*/printf("has_hit_pl: t: %f, ray: %f~%f\n", t, ray_range.min, ray_range.max);
+	// /*debug*/printf("pl_d: %d %f\n", index, rt->obj[index].plane.d);
+	// /*debug*/printf("has_hit_pl: t: %f, ray: %f~%f\n", t, ray_range.min, ray_range.max);
 	if (t < ray_range.min || t > ray_range.max)
 		return (0);
 	if (!t_intersects_plane(rt, index, ray, t))
@@ -182,77 +182,3 @@ bool	has_hit_plane(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 	update_hit_rec(rt, index, ray, t);
 	return (1);
 }
-
-/*
- * check all sph objects to see which is the closest hit
- * 
- * derived from quadratic equation discriminant formula
- * b sq - 4ac >= 0 (hit sphere)
- * b sq - 4ac < 0 (doesnt hit sphere)
- * full formula:
- * [-b +- sqrt(b sq - 4ac)]  /  2a
- * shortened:
- * [b +- sqrt(b sq - ac)]  /  a
- * 
- * res = discriminant
- * expanded frm sphere equation x sq + y sq + z sq - r sq = 0
- * vector from point P on ray -> sphere center C
- * 
- * returns the closest point if there are 2 roots
- * unsigned int max: 4294967295 as limit num
- * 
- * formula expansion reference:
- * https://raytracing.github.io/books/RayTracingInOneWeekend.html
- * https://youtu.be/ebzlMOw79Yw?si=8SXTPsEcSUtwft71
- * 
- * n[3]: used for coefficients in quad equation
- * discriminant: used to determine if ray hits sphere
- * 1. get vector from ray origin to sphere center
- * 2. project from ray-to-center onto ray direction
- * 3. get distance from ray origin to sphere center
- * 4. quadratic discriminant (negative == no hit)
- * 5. get closest intersection point > check if within ray range
- */
-bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
-{
-	float		n[3];
-	float		t;
-	float		discriminant;
-	t_vec3		ray_to_center;
-
-	// /*debug*/printf("has_hit sphere:%d\n", index);
-	/* ************* get discriminant ************* */
-	ray_to_center = subtract_vec(rt->obj[index].sph.pos, ray.orig);
-	n[A] = scalar_product(ray.vector, ray.vector);
-	n[B] = scalar_product(ray.vector, ray_to_center);
-	n[C] = scalar_product(ray_to_center, ray_to_center) - \
-(rt->obj[index].sph.rad * rt->obj[index].sph.rad);
-	discriminant = (n[B] * n[B]) - (n[A] * n[C]);
-	if (discriminant < 0.001f) 
-		return (0);
-
-	/* ****************** get t ****************** */
-	t = (n[B] - sqrt(discriminant)) / n[A];
-
-	/* *********** if t intersects obj *********** */
-	if (t <= ray_range.min || t >= ray_range.max)
-	{
-		t = (n[B] + sqrt(discriminant)) / n[A];
-		if (t <= ray_range.min || t >= ray_range.max)
-			return (0);
-	}
-	///*debug*/printf("has_hit_sphere:%f %f\n", t, discriminant);
-	update_hit_rec(rt, index, ray, t);
-	return (1);
-}
-
-// to update
-bool	has_hit_cylinder(t_obj obj, t_interval ray_range, t_ray ray)
-{
-	(void) obj;
-	(void) ray;
-	(void) ray_range;
-
-	return (0);
-}
-

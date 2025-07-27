@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main-test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:45:50 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/11 18:57:23 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/27 22:38:13 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,7 +289,7 @@ int main()
 	printf("\n**********************************\n");
 	debug_print_bvh("bvh_node", vars.bvh);
 	printf("\n**********************************\n");
-	debug_print_arr("obj", vars.obj, vars.obj_count);
+	// debug_print_arr("obj", vars.obj, vars.obj_count);
 	free_bvh(vars.bvh);
 	free(vars.obj);
 

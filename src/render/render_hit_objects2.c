@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_hit_objects2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:47:34 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/25 14:50:26 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/27 22:37:32 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,12 @@ bool	has_hit_cylinder(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 	/* *************************** if both ok *************************** */
 	if (hit_body != -1 && hit_cap != -1)
 	{
-		/*debug*/printf("has_hit_cyl:%d: %f < %f\n", index, hit_cap, hit_body);
-		/*debug*/debug_print_vec("has_hit_cyl: ray.orig", ray.orig);
-		/*debug*/debug_print_vec("has_hit_cyl: ray.dir", ray.vector);
+		// /*debug*/printf("has_hit_cyl:%d: %f < %f\n", index, hit_cap, hit_body);
+		// /*debug*/debug_print_vec("has_hit_cyl: ray.orig", ray.orig);
+		// /*debug*/debug_print_vec("has_hit_cyl: ray.dir", ray.vector);
 		if (hit_cap < hit_body)
 		{
-			/*debug*/printf("has_hit_cyl:s\n");
+			// /*debug*/printf("has_hit_cyl:s\n");
 			// /*debug*/printf("has_hit_cyl:%d: %f < %f\n", index, hit_cap, hit_body);
 			update_hit_rec(rt, index, ray, hit_cap);
 			rt->hit.setting = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:52:37 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/22 13:50:31 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/27 22:38:26 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	debug_print_bvh(char *str, t_bvh_tree *bvh)
 	if (bvh->type[L] != BVH)
 	{
 		printf("%s: bvh_id: %d:\n", str, bvh->id[L]);
-		debug_print_arr(" |bvh_l", (t_obj *)bvh->left, 1);
+		// debug_print_arr(" |bvh_l", (t_obj *)bvh->left, 1);
 	}
 	else
 	{
@@ -100,7 +100,7 @@ void	debug_print_bvh(char *str, t_bvh_tree *bvh)
 	if (bvh->type[R] != BVH)
 	{
 		printf("%s: bvh_id: %d:\n", str, bvh->id[R]);
-		debug_print_arr(" |bvh_r", (t_obj *)bvh->right, 1);
+		// debug_print_arr(" |bvh_r", (t_obj *)bvh->right, 1);
 	}
 	else
 	{

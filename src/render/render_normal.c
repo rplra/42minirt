@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:11:57 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/27 20:30:20 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:33:11 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,7 @@ t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t, t_uchar setting)
 }
 
 // cyl cap test
-/*
- * 1. get intersection point
- * 2. get the vect from base centre to hit point > get distance
- * 3. check distance against which surface it hits 
- * 	  (<= 0 is bottom, >= ht is top, else sides)
- * 4. set the norm to face light source ray
- */
-t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
+//t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
 // {
 // 	(void) t;
 // 	(void) ray;
@@ -198,6 +191,13 @@ t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
 // }
 
 //lyara
+/*
+ * 1. get intersection point
+ * 2. get the vect from base centre to hit point > get distance
+ * 3. check distance against which surface it hits 
+ * 	  (<= 0 is bottom, >= ht is top, else sides)
+ * 4. set the norm to face light source ray
+ */
 // t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t)
 // {
 // 	t_vec3	pt_ray;

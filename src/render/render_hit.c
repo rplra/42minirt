@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/27 20:27:37 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:32:28 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,17 @@
 // 	}
 // 	return (res);
 // }
+
+/*
+ * child function in hit
+ * calls respective has_hit function depending on object type
+ */
+void	init_hit_func(bool (*has_hit[])())
+{
+	has_hit[PLANE] = has_hit_plane;
+	has_hit[SPHERE] = has_hit_sphere;
+	has_hit[CYLINDER] = has_hit_cylinder;
+}
 
 /*
  * ray_range: defines the minimum and maximum valid t values (distance along the ray).

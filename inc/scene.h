@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/27 20:19:08 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:45:05 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,6 @@ typedef struct s_obj
 	{
 		t_sphere	sph;
 		t_plane		plane;
-		// t_plane		plane;
 		t_cylinder	cyl;
 	};
 	// t_colour	colour;				// obj's colour, removed since mat has albedo

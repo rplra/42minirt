@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/27 22:38:37 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/27 23:44:50 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	init_cam(t_rt *rt)
 void	init_hit(t_rt *rt)
 {
 	rt->hit.surf_norm = new_vec3(0, 0, 0);
+	// rt->hit.t = 2147483648;
 	rt->hit.t = 0;
 	rt->hit.index = -1;
 	rt->hit.setting = -1;
@@ -92,10 +93,12 @@ void	edit_mat(t_rt *rt)
 
 void	init_variable(t_rt *rt)
 {
+	// init_obj(rt);
+	// edit_mat(rt);
+	/* ************** need to comment out above when include parser ************************ */
+	
 	rt->preview_mode = 1;
 	init_cam(rt);
-	// init_obj(rt);			//replace with info from parser
-	// edit_mat(rt);		//custom assign material
 	// debug_print_arr("init_var", rt->obj, rt->obj_count);
 	init_bvh_node(rt);
 	// debug_print_arr("init_bvh", rt->obj, rt->obj_count);

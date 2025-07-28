@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/14 09:09:46 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/28 09:55:51 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
 
 	// /*debug*/printf("h:%f, viewport: %f %f\n", h, viewport[X], viewport[Y]);
 	*cam_w = unit_vec3(subtract_vec(vars->camera.pos, vars->camera.lookat));
-	/*debug*/printf("cam_w: %f %f %f\n", (*cam_w).x, (*cam_w).y, (*cam_w).z);
 	cam[X] = unit_vec3(cross_product(vars->camera.vup, *cam_w));
-	/*debug*/printf("cam[X]: %f %f %f\n", cam[X].x, cam[X].y, cam[X].z);
 	cam[Y] = mult_vec_scalar(cross_product(*cam_w, cam[X]), -1); // -v
-	/*debug*/printf("cam[Y]: %f %f %f\n", cam[Y].x, cam[Y].y, cam[Y].z);
+	// /*debug*/printf("cam_w: %f %f %f\n", (*cam_w).x, (*cam_w).y, (*cam_w).z);
+	// /*debug*/printf("cam[X]: %f %f %f\n", cam[X].x, cam[X].y, cam[X].z);
+	// /*debug*/printf("cam[Y]: %f %f %f\n", cam[Y].x, cam[Y].y, cam[Y].z);
 	*viewport_u = mult_vec_scalar(cam[X], viewport[W]);
 	*viewport_v = mult_vec_scalar(cam[Y], viewport[H]);
 	// /*debug*/printf("cam_w: %f %f %f\n", (*cam_w).x, (*cam_w).y, (*cam_w).z);
@@ -51,7 +51,7 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
 
 	// *viewport_u = new_vector3d(viewport[X], 0, 0);
 	// *viewport_v = new_vector3d(0, -viewport[Y], 0);
-	/*debug*/printf("vp_uv in: %f %f %f, %f %f %f\n", (*viewport_u).x, (*viewport_u).y, (*viewport_u).z, (*viewport_v).x, (*viewport_v).y, (*viewport_v).z);
+	// /*debug*/printf("vp_uv in: %f %f %f, %f %f %f\n", (*viewport_u).x, (*viewport_u).y, (*viewport_u).z, (*viewport_v).x, (*viewport_v).y, (*viewport_v).z);
 }
 
 /*
@@ -119,24 +119,35 @@ static void	ft_draw(t_rt vars, t_vec3 viewport_00, t_vec3 viewport_d[2])
 	}
 }
 
+void	update_cam_pos(t_rt *rt)
+{
+	rt->camera.pos = quaternion_rotate_adv(rt->camera.pos, rt->camera.transform.rotate); //not parser
+	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1));
+	rt->camera.focus_dist = len_vec3(subtract_vec(rt->camera.pos, rt->camera.lookat));
+	rt->ray.orig = rt->camera.pos;
+}
+
 /*
  * vp_00 = center of pixel 00 in viewport
  * vp_d = dydx or dudv of viewport
  */
-void	my_render_image(t_rt *vars)
+void	my_render_image(t_rt *rt)
 {
 	t_vec3	vp_d[2];
 	t_vec3	vp_00_loc;
 	t_vec3	vp_top_left;
 
 	//clear before draw
-	clear_image(*vars, WIN_WIDTH, WIN_HEIGHT, 0x000000);
-	mlx_put_image_to_window(vars->mlx, vars->mlx_win, \
-vars->img.img, 0, 0);
+	clear_image(*rt, WIN_WIDTH, WIN_HEIGHT, 0x000000);
+	mlx_put_image_to_window(rt->mlx, rt->mlx_win, \
+rt->img.img, 0, 0);
+
 	//draw
-	get_viewport_coords(vars, &vp_00_loc, &vp_top_left, vp_d);
-	ft_draw(*vars, vp_00_loc, vp_d);
+	update_cam_pos(rt);
+	get_viewport_coords(rt, &vp_00_loc, &vp_top_left, vp_d);
+	ft_draw(*rt, vp_00_loc, vp_d);
+
 	//push draw result to window
-	mlx_put_image_to_window(vars->mlx, vars->mlx_win, \
-vars->img.img, 0, 0);
+	mlx_put_image_to_window(rt->mlx, rt->mlx_win, \
+rt->img.img, 0, 0);
 }

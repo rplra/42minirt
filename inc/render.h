@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/24 14:47:45 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/28 08:04:54 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,6 @@ typedef struct s_ray		t_ray;
 typedef struct s_img		t_img;
 typedef struct s_interval	t_interval;
 typedef unsigned char		t_uchar;
-
-enum	e_vector_values
-{
-	X = 0,
-	Y = 1,
-	Z = 2,
-	W = 0,
-	H = 1
-};
 
 enum	e_quadratic_values
 {
@@ -74,40 +65,12 @@ enum	e_bvh_node
 typedef struct s_bvh_tree
 {
 	int			id[2];
+	int			id_orig[2];
 	void		*left;
 	void		*right;
 	t_obj_type	type[2];		//can remove this if using t_obj
 	t_interval	bbox[3];
 }	t_bvh_tree;
-
-
-/* ******************************************* */
-// typedef struct s_mat
-// {
-// 	t_uchar			type;		//material type
-// 	t_vec3			albedo;		//obj base color
-// }	t_mat;
-
-// typedef struct s_sph
-// {
-// 	t_vec3			orig;		//origin
-// 	float			rad;		//radius
-// 	// t_mat		mat;
-// }	t_sph;
-
-// typedef struct s_obj
-// {
-// 	t_obj_type		type;		// tells what type of obj
-// 	union
-// 	{
-// 		t_sph		sph;
-// 		t_plane		plane;
-// 		t_cylinder	cyl;
-// 		// t_bvh_tree	*bvh;
-// 	};
-// 	t_mat			mat;
-// 	t_interval		bbox[3];
-// }	t_obj;
 
 /* __________________ initialization __________________ */
 void		initialize_mlx(t_rt *rt);
@@ -125,7 +88,6 @@ t_interval	new_interval(float min, float max);
 t_interval	interval(t_interval a, t_interval v);
 void		add_padding(t_interval res[3]);
 
-
 /* __________________ objs __________________ */
 t_material	new_material(t_vec3 color, t_mat_type type);
 t_vec3		set_tmp_vec(t_vec3 normal);
@@ -137,7 +99,6 @@ t_obj		new_plane(t_vec3 position, t_vec3 normal, t_material mat);
 // t_obj		new_cyl(t_vec3 position, t_vec3 normal, t_material mat);
 t_obj		new_cyl(t_vec3 position, t_vec3 normal, float radius, float height, t_material mat);
 t_obj		new_cyl_2(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, float radius, float height, t_material mat);
-
 
 /* __________________ lst __________________ */
 // int			ft_lstsize_obj(t_obj *lst);
@@ -165,6 +126,9 @@ void		my_mlx_pixel_put(t_rt vars, int x, int y, int color);
 void		my_create_image(t_rt *vars, t_img *img);
 void		my_render_image(t_rt *vars);
 void		clear_image(t_rt vars, int win_width, int win_height, int color);
+
+/* __________________ rotate __________________ */
+t_ray		rotate_ray_to_local(t_quat q_rot, t_ray ray);
 
 /* __________________ hit __________________ */
 t_obj		*hit(t_rt *rt, t_interval ray_range, t_ray ray);

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:47:34 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/25 14:50:26 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/28 09:15:40 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ float	check_hit_body(t_rt *rt, int i, t_ray ray, float t[2])
 // (pt_hit[1] > cyl_height.min && pt_hit[1] < cyl_height.max)))
 	if (pt_hit[0] > cyl_height.min + EPSILON && pt_hit[0] < cyl_height.max + EPSILON)
 	{
-		if (t[1] < t[0])
-			/*debug*/printf("body_small! %f > %f\n", t[0], t[1]);
+		// if (t[1] < t[0])
+			// /*debug*/printf("body_small! %f > %f\n", t[0], t[1]);
 		return (t[0]);
 	}
 	return (-1);
@@ -93,13 +93,12 @@ bool	has_hit_cylinder(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 	/* *************************** if both ok *************************** */
 	if (hit_body != -1 && hit_cap != -1)
 	{
-		/*debug*/printf("has_hit_cyl:%d: %f < %f\n", index, hit_cap, hit_body);
-		/*debug*/debug_print_vec("has_hit_cyl: ray.orig", ray.orig);
-		/*debug*/debug_print_vec("has_hit_cyl: ray.dir", ray.vector);
+		// /*debug*/printf("has_hit_cyl:%d: %f < %f\n", index, hit_cap, hit_body);
+		// /*debug*/debug_print_vec("has_hit_cyl: ray.orig", ray.orig);
+		// /*debug*/debug_print_vec("has_hit_cyl: ray.dir", ray.vector);
 		if (hit_cap < hit_body)
 		{
-			/*debug*/printf("has_hit_cyl:s\n");
-			// /*debug*/printf("has_hit_cyl:%d: %f < %f\n", index, hit_cap, hit_body);
+			// /*debug*/printf("has_hit_cyl:s\n");
 			update_hit_rec(rt, index, ray, hit_cap);
 			rt->hit.setting = 0;
 			return (1);

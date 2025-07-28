@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 21:37:14 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/14 09:09:46 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/28 07:57:51 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_VECTOR_H
 # include <stdarg.h>
 # include <math.h>
+# include "ft_enum.h"
 
 /*
  * Vector Library 
@@ -55,11 +56,13 @@ float	radian(float deg);
 
 t_quat	new_quaternion(t_vec3 set, float deg);
 t_quat	conjugate_quaternion(t_quat q1);
-float	len_quaternion(t_quat q1);
 void	norm_quaternion(t_quat *q1);
+float	len_quaternion(t_quat q1);
 t_quat	quaternion_multiply(t_quat q1, t_quat q2);
+t_vec3	local_to_global(t_quat q1, t_vec3 initpoint);
+t_vec3	global_to_local(t_quat q1, t_vec3 initpoint);
+
 t_vec3	quaternion_rotate(t_quat q1, t_vec3 initpoint);
-t_vec3	quaternion_rotate_adv( \
-t_quat x, t_quat y, t_quat z, t_vec3 initpoint);
+t_vec3	quaternion_rotate_adv(t_vec3 initpoint, t_vec3 rotation);
 
 #endif

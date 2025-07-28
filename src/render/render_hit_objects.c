@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/25 10:02:38 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/28 09:11:25 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
 	// rt->hit.obj = &rt->obj[index];
 	rt->hit.index = index;
 	rt->hit.t = t;
-	/*debug*/printf("update_hit_rec: t! %f\n", t);
+	// /*debug*/printf("update_hit_rec: t! %f\n", t);
 	return (1);
 }
 
@@ -156,6 +156,10 @@ bool	has_hit_plane(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 	float	denom;
 	float	dot_np;
 	float	t;
+
+	// transform frm world space to obj space
+	if (rt->obj[index].b_rotate == 1)
+		ray = rotate_ray_to_local(rt->obj[index].rotate, ray);
 
 	denom = scalar_product(rt->obj[index].plane.normal, ray.vector);
 	if (fabs(denom) < EPSILON) //if ray parallel to plane

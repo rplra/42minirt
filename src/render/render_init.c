@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/25 16:00:00 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/28 09:52:16 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,12 @@ void	init_obj(t_rt *rt)
 
 void	init_cam(t_rt *rt)
 {
+	rt->camera.transform.rotate.x = 0;
+	rt->camera.transform.rotate.y = 0;
+	rt->camera.transform.rotate.z = 0;
+
 	rt->camera.pos = new_vec3(0, 2, 4); //not parser
+	// rt->camera.pos = quaternion_rotate_adv(rt->camera.pos, rt->camera.transform.rotate); //not parser
 	// rt->camera.pos = new_vec3(-2, 0, 11); //not parser
 	/* ************** need to comment out above when include parser ************************ */
 

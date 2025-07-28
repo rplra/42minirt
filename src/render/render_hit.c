@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/25 16:00:31 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/28 10:02:24 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,17 +101,40 @@ t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
 	t_obj		*res;
 
 	res = NULL;
-
+	
 	t = hit_bvh(rt->bvh, ray_range, ray, rt);
 	if (t > 0)
 	{
 		res = &rt->obj[rt->hit.index];
+		// if (res->b_rotate == 1)
+		// {
+		// 	rt->hit.at = local_to_global(res->rotate, rt->hit.at);
+		// 	rt->hit.surf_norm = local_to_global(res->rotate, rt->hit.surf_norm);
+		// }
 		// /*debug*/printf("hitted type: %d\n", res->type);
 		// /*debug*/debug_print_vec(" |hitted", res->cyl.pos);
 		// /*debug*/debug_print_vec(" |hitted_col", res->material.albedo);
 	}
 	return (res);
 }
+
+// t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
+// {
+// 	float		t;
+// 	t_obj		*res;
+
+// 	res = NULL;
+
+// 	t = hit_bvh(rt->bvh, ray_range, ray, rt);
+// 	if (t > 0)
+// 	{
+// 		res = &rt->obj[rt->hit.index];
+// 		// /*debug*/printf("hitted type: %d\n", res->type);
+// 		// /*debug*/debug_print_vec(" |hitted", res->cyl.pos);
+// 		// /*debug*/debug_print_vec(" |hitted_col", res->material.albedo);
+// 	}
+// 	return (res);
+// }
 
 /* child function in hit_aabb */
 void	assign_ray_t(float t0, float t1, t_interval *ray_t)
@@ -180,6 +203,7 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
 	if (bvh->type[L] != BVH)
 	{
 		// /*debug*/printf("bvh_id_L:%d  %d\n", bvh->id[L], bvh->type[L]);
+		// transform frm world space to obj space
 		t[L] = has_hit[bvh->type[L]](vars, bvh->id[L], ray_range, ray);
 	}
 	else

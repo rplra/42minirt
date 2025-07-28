@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/25 09:00:58 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/28 08:30:08 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../lib/quaternion/ft_vector.h" 
 # include "interval.h"
+# include "transform.h"
 
 typedef unsigned char	t_uchar;
 typedef unsigned int	t_uint;
@@ -42,7 +43,7 @@ typedef t_vec3			t_colour;
 typedef enum e_material_type
 {
 	DIFFUSE,
-	METAL,
+	METAL
 	// DIELEC
 	// BUBBLE
 }			t_mat_type;
@@ -84,6 +85,7 @@ typedef struct s_camera
 	t_vec3		defoc_disk[2];
 	int			sample_per_pixel;
 	t_uchar		ray_bounce;			//how many times a ray should bounce
+	t_transform	transform;
 }				t_camera;
 
 typedef struct s_light
@@ -106,6 +108,7 @@ typedef struct s_plane
 	t_vec3		coord[2];	//u, v
 	float		d;			//D is in plane formula: Ax + By + Cz = D
 	t_vec3		w;			//const for calculating if point hit is within quad surface
+	bool		b_rotate;
 }				t_plane;
 
 typedef struct s_quad
@@ -162,6 +165,9 @@ typedef struct s_obj
 	// t_colour	colour;				// obj's colour, removed since mat has albedo
 	t_material	material;			// rendering data
 	t_interval	bbox[3];
+
+	t_quat		rotate;
+	bool		b_rotate;
 }				t_obj;
 
 // typedef struct s_obj

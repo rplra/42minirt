@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/10 08:16:53 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/28 08:32:11 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@
 # include "../lib/inc/libft.h"
 # include "../lib/gnl/get_next_line.h"
 # include "../lib/quaternion/ft_vector.h"
+# include "../lib/quaternion/ft_enum.h"
 # include "config.h"
 # include "keybind.h"
 # include "utils.h"
 # include "scene.h"
 # include "parse.h"
-# include "interval.h"
+// # include "interval.h"
 # include "render.h"
 
 # define RED "\033[31m"
@@ -58,6 +59,15 @@ typedef struct s_img
 	int			endian;
 }				t_img;
 
+typedef struct s_key
+{
+	float		deg;
+	t_vec3		rot;		//rotation
+	t_quat		q_rot;
+	t_vec3		offset;
+}	t_key;
+
+
 typedef struct s_rt
 {
 	//mlx
@@ -79,6 +89,7 @@ typedef struct s_rt
 
 	t_uint		seed;
 	t_bvh_tree	*bvh;
+	t_key		key;
 	// t_interval	bbox[3];	//bounding box, aabb = t_interval[3]
 }				t_rt;
 

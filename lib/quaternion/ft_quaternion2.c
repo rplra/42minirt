@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:55:02 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/30 15:09:24 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 22:20:34 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ t_vec3	quaternion_rotate_adv(t_vec3 initpoint, t_vec3 rotation, int flag)
 
 	init_rotation_quat(q, rotation);
 	// if (flag)
-		quat = quaternion_zyx(q);
+		// quat = quaternion_zyx(q);
 	// else
-		// quat = quaternion_xyz(q);
+		quat = quaternion_xyz(q);
 	norm_quaternion(&quat);	//maybe
 	result = quaternion_rotate(quat, initpoint, flag);
 

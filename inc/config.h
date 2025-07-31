@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/31 12:39:58 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 22:04:55 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 //# define PI 3.14159265358979323846
 
 /*	window	*/
-# define WIN_WIDTH		600
-# define WIN_HEIGHT		400
+# define WIN_WIDTH		400
+# define WIN_HEIGHT		300
 # define PANEL_WIDTH	200
 # define TOTAL_WIDTH	(WIN_WIDTH + PANEL_WIDTH)
 
@@ -63,8 +63,8 @@
 # define LIGHT_RADIUS			0.1
 
 /*	plane	*/
-# define PLANE_X				-25
-# define PLANE_Y				25
+# define PLANE_X				-4
+# define PLANE_Y				4
 
 /*	material	*/
 # define MAT_TYPE				METAL

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 16:56:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 11:06:03 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 21:57:53 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ new_vec3(0.8, 0.6, 0.2), METAL);	//right
 
 void	init_plane_scene(t_rt *rt)
 {
-	rt->obj_count = 1;
+	rt->obj_count = 5;
 	malloc_obj_ptr(&rt->obj, rt->obj_count);
 
-	// t_material	left_red = new_material(new_vec3(1, 0.2, 0.2), DIFFUSE);
+	t_mat	left_red = new_material(new_vec3(1, 0.2, 0.2), DIFFUSE);
 	t_mat	back_green = new_material(new_vec3(0.2, 1, 0.2), DIFFUSE);
-	// t_material	right_blue = new_material(new_vec3(0.2, 0.2, 1), DIFFUSE);
-	// t_material	up_orange = new_material(new_vec3(1, 0.5, 0), METAL);
-	// t_material	down_teal = new_material(new_vec3(0.2, 0.8, 0.8), METAL);
+	t_mat	right_blue = new_material(new_vec3(0.2, 0.2, 1), DIFFUSE);
+	t_mat	up_orange = new_material(new_vec3(1, 0.5, 0), METAL);
+	t_mat	down_teal = new_material(new_vec3(0.2, 0.8, 0.8), METAL);
 
 	// rt->obj[0] = new_plane(new_vec3(-3,-2,5), new_vec3(0,0,-4), new_vec3(0,4,0), left_red);
 	// rt->obj[2] = new_plane(new_vec3(3,-2,1), new_vec3(0,0,4), new_vec3(0,4,0), right_blue);
@@ -55,13 +55,13 @@ void	init_plane_scene(t_rt *rt)
 	// rt->obj[3] = new_plane(new_vec3(-2,3,1), new_vec3(4,0,0), new_vec3(0,0,4), up_orange);
 	// rt->obj[4] = new_plane(new_vec3(-2,-3,5), new_vec3(4,0,0), new_vec3(0,0,-4), down_teal);
 
-	rt->obj[0] = new_plane(new_vec3(2,-2,0), new_vec3(0,0,1), back_green);
+	// rt->obj[0] = new_plane(new_vec3(2,-2,0), new_vec3(0,0,1), back_green);
 	// rt->obj[0] = new_plane(new_vec3(-2,-2,0), new_vec3(0,0,1), back_green);
-	// rt->obj[0] = new_plane(new_vec3(-2,-2,0), new_vec3(0,0,1), back_green);
-	// rt->obj[1] = new_plane(new_vec3(-3,-2,5), new_vec3(1,0,0), left_red);
-	// rt->obj[2] = new_plane(new_vec3(-2,3,1), new_vec3(0,-1,0), up_orange);
-	// rt->obj[3] = new_plane(new_vec3(-2,-3,5), new_vec3(0,1,0), down_teal);
-	// rt->obj[4] = new_plane(new_vec3(3,-2,1), new_vec3(-1,0,0), right_blue);
+	rt->obj[0] = new_plane(new_vec3(-2,-2,0), new_vec3(0,0,1), back_green);
+	rt->obj[1] = new_plane(new_vec3(-3,-2,5), new_vec3(1,0,0), left_red);
+	rt->obj[2] = new_plane(new_vec3(-2,3,1), new_vec3(0,-1,0), up_orange);
+	rt->obj[3] = new_plane(new_vec3(-2,-3,5), new_vec3(0,1,0), down_teal);
+	rt->obj[4] = new_plane(new_vec3(3,-2,1), new_vec3(-1,0,0), right_blue);
 
 	// rt->obj[0] = new_plane(new_vec3(-3,0,3), new_vec3(1,0,0), left_red);
 	// rt->obj[1] = new_plane(new_vec3(0,0,0), new_vec3(0,0,1), back_green);

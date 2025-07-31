@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:25:47 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/31 13:36:59 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 22:25:10 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	handle_translation(t_rt *rt, int keycode)
 			/*debug*/printf("   Old Pos @%p: (%.2f, %.2f, %.2f)\n", (void*)&obj->plane.pos,
 				obj->plane.pos.x, obj->plane.pos.y, obj->plane.pos.z);
 			obj->plane.pos = add_vec(obj->plane.pos, delta);
+			obj->plane.d = scalar_product(obj->plane.normal, obj->plane.pos);
 			/*debug*/printf("   New Pos: (%.2f, %.2f, %.2f)\n",
 				obj->plane.pos.x, obj->plane.pos.y, obj->plane.pos.z);
 		}
@@ -108,13 +109,20 @@ void	handle_translation(t_rt *rt, int keycode)
 		}
 		else if (obj->type == CYLINDER)
 		{
+			t_vec3	axis_height = mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2);
 			/*debug*/printf("   Old Pos @%p: (%.2f, %.2f, %.2f)\n", (void*)&obj->cyl.pos,
-				obj->cyl.pos.x, obj->cyl.pos.y, obj->cyl.pos.z);
+obj->cyl.pos.x, obj->cyl.pos.y, obj->cyl.pos.z);
 			obj->cyl.pos = add_vec(obj->cyl.pos, delta);
+			obj->cyl.d[0] = scalar_product(obj->cyl.axis, \
+subtract_vec(obj->cyl.pos, axis_height));
+			obj->cyl.d[1] = scalar_product(obj->cyl.axis, \
+add_vec(obj->cyl.pos, axis_height));
 			/*debug*/printf("   New Pos: (%.2f, %.2f, %.2f)\n",
-				obj->cyl.pos.x, obj->cyl.pos.y, obj->cyl.pos.z);
+obj->cyl.pos.x, obj->cyl.pos.y, obj->cyl.pos.z);
 		}
 		aabb_translate(*obj, obj->bbox, delta);
+		copy_bbox(obj->bbox_ori, obj->bbox);
+		obj->bbox_center = get_bbox_center(obj->bbox);
 	}
 }
 

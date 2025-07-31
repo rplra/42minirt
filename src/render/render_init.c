@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 13:17:24 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 22:12:39 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ void	initialize_mlx(t_rt *rt)
 void	init_obj(t_rt *rt)
 {
 	// init_sph_scene(rt);
-	// init_plane_scene(rt);
-	init_cyl_scene(rt);
+	init_plane_scene(rt);
+	// init_cyl_scene(rt);
 }
 
 void	init_cam(t_rt *rt)
 {
 	rt->camera.transform.rotate = new_vec3(0, 0, 0);
 
-	// rt->camera.pos = new_vec3(0, 0, 5); //not parser
+	// rt->camera.pos = new_vec3(0, 0, 9); //not parser
 	// rt->camera.pos = new_vec3(-2, 0, 11); //not parser
 	/* ************** need to comment out above when include parser ************************ */
 	

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 10:41:42 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/31 13:07:04 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 19:24:24 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	print_selected(t_rt *rt)
 {
 	t_obj	*obj;
+	int		id;
 
 	if (rt->sel.type == SEL_CAMERA)
 	{
@@ -30,7 +31,8 @@ void	print_selected(t_rt *rt)
 	}
 	else if (rt->sel.type == SEL_OBJ)
 	{
-		obj = &rt->obj[rt->sel.obj_index];
+		id = get_obj_index(rt->obj, rt->obj_count, rt->sel.obj_index);
+		obj = &rt->obj[id];
 		printf(">> Selected: OBJECT %d (", rt->sel.obj_index);
 		if (obj->type == SPHERE)
 		{

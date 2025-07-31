@@ -5,15 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 08:06:48 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/28 08:33:21 by hsim             ###   ########.fr       */
+/*   Created: 2025/07/22 11:22:13 by rraja-az          #+#    #+#             */
+/*   Updated: 2025/07/31 11:09:24 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../lib/quaternion/ft_vector.h"
 
 #ifndef TRANSFORM_H
 # define TRANSFORM_H
 
-# include "../lib/quaternion/ft_vector.h"
+# define TRANSLATE	0.5f
+# define SCALE_UP	1.1f
+# define SCALE_DOWN 0.9f
+# define ROTATE		1.0f
 
 typedef struct s_transform
 {

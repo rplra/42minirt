@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 22:27:52 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/12 13:53:26 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 12:36:35 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  */
 static void	assign_bvh_node(t_bvh_tree *bvh, t_obj *obj, int id[2])
 {
-	/*debug*/printf("return %d~%d\n-------\n", id[0], id[1]);
+	// /*debug*/printf("return %d~%d\n-------\n", id[0], id[1]);
 	bvh->id[L] = id[0];
 	bvh->type[L] = obj[0].type;
 	bvh->left = &obj[0];
@@ -69,7 +69,7 @@ int id[2], bool (*func[3])(t_obj, t_obj))
 	int	axis;
 	int	half[2];
 
-	/*debug*/printf("else\n");
+	// /*debug*/printf("else\n");
 	// mid = (argc / 2);
 	mid = ((id[1] - id[0]) / 2);
 	axis = longest_axis(bvh->bbox);
@@ -84,7 +84,7 @@ int id[2], bool (*func[3])(t_obj, t_obj))
 	half[0] = id[0];
 	half[1] = id[0] + mid;
 
-	/*debug*/printf("|ac[L]: %d~%d %d\n", half[0], half[1], mid);
+	// /*debug*/printf("|ac[L]: %d~%d %d\n", half[0], half[1], mid);
 	bvh->left = build_bvh_tree(obj, half, func);
 	/* ********************************************************* */
 	half[0] = half[1];
@@ -103,8 +103,8 @@ t_bvh_tree	*build_bvh_tree(t_obj *obj, int id[2], bool (*func[3])(t_obj, t_obj))
 	// /*debug*/debug_print_bbox("obj[0]", obj[0].bbox);
 
 	get_bbox_val(obj, id[1] - id[0], bvh->bbox);
-	/*debug*/debug_print_bbox("fin_box", bvh->bbox);
-	/*debug*/printf("\n");
+	// /*debug*/debug_print_bbox("fin_box", bvh->bbox);
+	// /*debug*/printf("\n");
 	if (id[1] - id[0] <= 0)
 		return (NULL);
 	if ((id[1] - id[0] == 1) || (id[1] - id[0] == 2))

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 09:36:27 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 11:45:10 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	get_bbox_val(t_obj *obj, int argc, t_interval res[3])
 	int	x;
 
 	x = -1;
-	/*debug*/printf("get_bbox_val:ac:%d\n", argc);
+	// /*debug*/printf("get_bbox_val:ac:%d\n", argc);
 	// assign_bbox(obj[0].bbox, res);
 	copy_bbox(res, obj[0].bbox);
 	while (++x < argc)

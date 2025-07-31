@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/28 08:32:11 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 11:10:55 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # include "parse.h"
 // # include "interval.h"
 # include "render.h"
+# include "transform.h"
 
 # define RED "\033[31m"
 # define RESET "\033[0m"
@@ -49,6 +50,7 @@ typedef unsigned int		t_uint;
 // typedef struct s_sph		t_sphere;
 // typedef struct s_obj		t_obj;
 typedef struct s_bvh_tree	t_bvh_tree;
+typedef struct s_sel 		t_sel; 
 
 typedef struct s_img
 {
@@ -75,6 +77,10 @@ typedef struct s_rt
 	void		*mlx_win;
 	t_img		img;
 
+	//interactive
+	bool		preview_mode;
+	t_sel		sel;
+
 	//scene
 	t_ambient	ambient;
 	t_camera	camera;
@@ -90,7 +96,9 @@ typedef struct s_rt
 	t_uint		seed;
 	t_bvh_tree	*bvh;
 	t_key		key;
-	// t_interval	bbox[3];	//bounding box, aabb = t_interval[3]
+
+	//transform
+	t_transform transform;
 }				t_rt;
 
 // typedef struct s_vars

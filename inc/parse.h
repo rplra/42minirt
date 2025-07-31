@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:39:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/09 22:00:13 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/19 20:15:32 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ int		parse_cylinder(t_parse *file, t_obj *obj);
 bool	is_object(const char *token);
 int		add_object(t_rt *rt, t_obj *obj);
 int		count_params(char **params);
-int		is_colour(t_parse *scene, char **col, t_colour *colour);
+int		is_colour(t_parse *scene, char **col, t_col *colour);
 int		is_vector(t_parse *scene, char **values, t_vec3 *vector, bool check_normal);
+int		handle_parse_error(int fd, char *line, t_parse *file);
 
 /*		parse_debug.c		*/
 void	print_ambient(const t_ambient *ambient);

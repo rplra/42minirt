@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   key_close.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:07:08 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 22:12:23 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/25 20:24:58 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "keybind.h"
+#include "minirt.h"
 
 /*dont use mlx_destroy_window, have fsan error*/
 int	close_window(int keycode, t_rt *vars)

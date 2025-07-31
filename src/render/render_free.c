@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   render_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:09:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/10 08:05:10 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/19 09:47:02 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+// utils
 
+/* frees a single block of memory */
 void	free_one(void *vars)
 {
 	if (!vars)
@@ -31,6 +33,7 @@ void	free_one(void *vars)
 // 	}
 // }
 
+/* frees all nodes in BVH */
 void	free_bvh(t_bvh_tree *bvh)
 {
 	if (!bvh)
@@ -45,6 +48,7 @@ void	free_bvh(t_bvh_tree *bvh)
 /* 
  * consolidate all mallocs and free when exit program
  * indicator controls what to free
+ * brief: free all resources used by renderer
  */
 void	free_render(t_rt *vars, int indicator)
 {

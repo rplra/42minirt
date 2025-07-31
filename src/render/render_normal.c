@@ -6,14 +6,15 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:11:57 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/29 09:09:30 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 11:54:00 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 /*
- * 3d point along a vector ray
+ * brief: gets the coordinate of the intersection hit
+ * returns a 3d point along a vector ray
  * vec = origin + (t * direction)
  */
 t_vec3	point_at(float t, t_ray ray)
@@ -22,6 +23,8 @@ t_vec3	point_at(float t, t_ray ray)
 }
 
 /*
+ * brief: set surface normal at hit point to face against the incoming ray 
+ * why? so that we always have the norm to point toward light source
  * checks if dot product is > 0,
  * if true, reverse the ray by multiply -1
  */
@@ -60,6 +63,10 @@ t_vec3	get_surf_norm_plane(t_ray ray, t_obj obj, float t, t_uchar setting)
  * Formula: P-C
  * if dot(ray_dir, P-C) > 0,
  * invert the direction
+ * 
+ * 1. get intersection point
+ * 2. get the vect from centre of sphere to hit point > normalize
+ * 3. set the norm to face light source ray
  */
 t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t, t_uchar setting)
 {
@@ -77,7 +84,7 @@ t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t, t_uchar setting)
 }
 
 // cyl cap test
-// t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
+//t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
 // {
 // 	(void) t;
 // 	(void) ray;
@@ -113,14 +120,13 @@ t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
 		return (surf_norm);
 	}
 
-	t_interval cyl_height = get_cyl_axis_height(obj.cyl);
+	// t_interval cyl_height = get_cyl_axis_height(obj.cyl);
+	// t2 = scalar_product(pt_ray, obj.cyl.axis);
+	// if (t2 >= cyl_height.max - EPSILON)
+	// 	return (obj.cyl.axis);
+	// return (mult_vec_scalar(obj.cyl.axis, -1));
 
-	t2 = scalar_product(pt_ray, obj.cyl.axis);
-	if (t2 >= cyl_height.max - EPSILON)
-		return (obj.cyl.axis);
-	return (mult_vec_scalar(obj.cyl.axis, -1));
-
-	// return (set_face_norm(ray, obj.cyl.axis));
+	return (set_face_norm(ray, obj.cyl.axis));
 }
 
 // t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
@@ -185,6 +191,13 @@ t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
 // }
 
 //lyara
+/*
+ * 1. get intersection point
+ * 2. get the vect from base centre to hit point > get distance
+ * 3. check distance against which surface it hits 
+ * 	  (<= 0 is bottom, >= ht is top, else sides)
+ * 4. set the norm to face light source ray
+ */
 // t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t)
 // {
 // 	t_vec3	pt_ray;
@@ -218,28 +231,3 @@ t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
 // 	// 	surf_norm = mult_vec_scalar(surf_norm, -1);
 // 	return (surf_norm);
 // }
-
-// normalize cylinder
-/* t_vec3	get_cylinder_normal(t_vec3 point, t_cylinder *cy)
-{
-	t_vec3	base_from_intersection;
-	float	distance_to_axis;
-	t_vec3	axis_point;
-	t_vec3	normal;
-
-	base_from_intersection = subtract_vec(point, cy->axis);
-	distance_to_axis = scalar_product(base_from_intersection, cy->axis);
-	// check if the intersection happens at the bottom cap
-	if (distance_to_axis <= 0)
-		return (mult_vec_scalar(cy->axis, -1));
-	// check if the intersection happens at the top cap
-	else if (distance_to_axis >= cy->height)
-		return (cy->axis);
-	// else, intersection happens at the sides of the cylinder
-	else
-	{
-		axis_point = add_vec(cy->pos, mult_vec_scalar(cy->axis, distance_to_axis));
-		normal = subtract_vec(point, axis_point);
-		return (unit_vec3(normal));
-	}
-} */

@@ -6,52 +6,47 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:32 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 10:12:59 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 13:13:44 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keybind.h"
+#include "render.h"
 
-bool	rotation_key_cam(int keycode)
+t_uint	get_obj_index(t_obj *obj, int obj_count, t_uint id)
 {
-	return (keycode == KEY_UP || keycode == KEY_DOWN ||
-keycode == KEY_LEFT || keycode == KEY_RIGHT ||
-keycode == KEY_ARROW_L || keycode == KEY_ARROW_R);
-}
+	int	i;
 
-bool	rotation_key_obj(int keycode)
-{
-	return (keycode == KEY_O || keycode == KEY_P);
-}
-
-/* all keypress button that allow img render to happen */
-bool	control_key(int keycode)
-{
-	return (keycode == KEY_R);
+	i = -1;
+	while (++i < obj_count)
+	{
+		if (obj[i].id == id)
+			return (i);
+	}
+	return (0);
 }
 
 /* prints out current keycode number */
-int	key_press(int keycode, void *param)
+int	key_press(int keycode, t_rt *rt)
 {
-	t_rt	*rt;
-
-	rt = (t_rt *)param;
 	printf("🟡 keycode is %i\n", keycode);
 
-	// add on other keypress here
-	if (rotation_key_cam(keycode))
-		apply_rotation_cam(keycode, rt);
-	if (rotation_key_obj(keycode))
-		apply_rotation_obj(keycode, rt);
-	if (keycode == KEY_R)
-		reset_rotation_cam((t_rt *)param);
+	// close_window(keycode, rt);
+	handle_render_mode(rt, keycode);
+	handle_selection(rt, keycode);
+	handle_translation(rt, keycode);
+	handle_scale(rt, keycode);
+	handle_rotation(rt, keycode);
 
 	//if valid keypress, render image
 	if (rotation_key_cam(keycode) || rotation_key_obj(keycode) || \
 control_key(keycode))
 	{
+		// init_cam(rt);
+		// init_hit(rt);
+
+		update_cam_pos(rt);
 		init_bvh_node(rt);
-		/*debug*/debug_print_arr("rot_bvh", rt->obj, rt->obj_count);
 		my_render_image(rt);
 	}
 	return (0);

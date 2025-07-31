@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 16:56:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/30 17:05:49 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 11:06:03 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	init_plane_scene(t_rt *rt)
 	malloc_obj_ptr(&rt->obj, rt->obj_count);
 
 	// t_material	left_red = new_material(new_vec3(1, 0.2, 0.2), DIFFUSE);
-	t_material	back_green = new_material(new_vec3(0.2, 1, 0.2), DIFFUSE);
+	t_mat	back_green = new_material(new_vec3(0.2, 1, 0.2), DIFFUSE);
 	// t_material	right_blue = new_material(new_vec3(0.2, 0.2, 1), DIFFUSE);
 	// t_material	up_orange = new_material(new_vec3(1, 0.5, 0), METAL);
 	// t_material	down_teal = new_material(new_vec3(0.2, 0.8, 0.8), METAL);
@@ -94,7 +94,7 @@ void	init_cyl_scene(t_rt *rt)
 	// t_material  left_red = new_material(new_vec3(1, 0.2, 0.2), DIFFUSE);
 	// t_material  center_green = new_material(new_vec3(0.2, 1, 0.2), METAL);
 	// t_material  right_blue = new_material(new_vec3(0.2, 0.2, 1), METAL);
-	t_material  up_orange = new_material(new_vec3(1, 0.5, 0), METAL);
+	t_mat  up_orange = new_material(new_vec3(1, 0.5, 0), METAL);
 	// t_material  down_teal = new_material(new_vec3(0.2, 0.8, 0.8), METAL);
 
 	// rt->obj[0] = new_cyl(new_vec3(0,0,-1), new_vec3(0,1,0), 2, 2, center_green);

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:47:34 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 09:20:47 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 10:51:48 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,9 @@ bool	has_hit_cylinder(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 	/* *************************** if both ok *************************** */
 	if (hit_body != -1 && hit_cap != -1)
 	{
+		// /*debug*/printf("has_hit_cyl:%d: %f < %f\n", index, hit_cap, hit_body);
+		// /*debug*/debug_print_vec("has_hit_cyl: ray.orig", ray.orig);
+		// /*debug*/debug_print_vec("has_hit_cyl: ray.dir", ray.vector);
 		// /*debug*/printf("has_hit_cyl:%d: %f < %f\n", index, hit_cap, hit_body);
 		// /*debug*/debug_print_vec("has_hit_cyl: ray.orig", ray.orig);
 		// /*debug*/debug_print_vec("has_hit_cyl: ray.dir", ray.vector);

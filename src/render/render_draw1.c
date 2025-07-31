@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_utils_draw1.c                                   :+:      :+:    :+:   */
+/*   render_draw1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 18:15:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/06/24 22:15:02 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/19 09:04:08 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+// mlx
 
 /*
  * Template function from mlx documentation
- * Places pixels on image
+ * brief: places a col dot (pixel) on image at the right spot (mem offset)
  *
  * Reference:
  * https://harm-smits.github.io/42docs/libs/minilibx/
@@ -32,7 +33,7 @@ void	my_mlx_pixel_put(t_rt vars, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-/* Renders the image black color*/
+/* Renders the image in black color */
 void	clear_image(t_rt vars, int win_width, int win_height, int color)
 {
 	int	tmp;

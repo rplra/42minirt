@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:42:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/09 22:11:51 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/18 12:20:52 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,9 @@ void		exit_with_error(char *msg);
 void		perror_exit(char *perrmsg);
 
 int			free_array(char **arr);
-int			free_arrays(char **arr1, char **arr2, char **arr3, char **arr4);
-void		free_scene(t_rt *rt);
+void		cleanup(t_rt *rt);
 void		cleanup_and_exit(t_rt *rt);
 
 void		flush_gnl(int fd);
-float		clamp(float value, float min, float max);
-t_colour	colour_clamp(t_colour c);
 
 #endif

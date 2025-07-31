@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/30 16:50:50 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 10:51:16 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
 	rt->hit.surf_norm = get_surf_norm[rt->obj[index].type](ray, rt->obj[index], t, rt->hit.setting);	//if t>0
 	rt->hit.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
 	// rt->hit.at = add_vec(rt->hit.at, mult_vec_scalar(rt->hit.surf_norm, EPSILON));
-	// rt->hit.obj = &rt->obj[index];
+	rt->hit.obj = &rt->obj[index];
 	rt->hit.index = index;
 	rt->hit.t = t;
 	// /*debug*/printf("update_hit_rec: t! %f\n", t);
@@ -77,22 +77,25 @@ bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 		if (t <= ray_range.min || t >= ray_range.max)
 			return (0);
 	}
-	/*debug*/printf("has_hit_sphere:%f %f\n", t, discriminant);
+	// /*debug*/printf("has_hit_sphere:%f %f\n", t, discriminant);
 	update_hit_rec(rt, index, ray, t);
 	return (1);
 }
 
 /*
  * child function in t_intersects_plane
- * checks if alpha & beta is within certain range
+ * checks if alpha & beta (barycentric coords) is within certain range
  * 
  * flag decides which shape it'll render
  * flag 0 = render quadrilaterals
  * flag 1 = render triangles
+ * 
+ * brief: checks if intersection point's coords are within the visible part of the plane
+ * else, the ray hit infinite part of the plane which we dont want to care
  */
 bool	within_plane_range(float alpha, float beta, int flag)
 {
-	if (flag == 0)
+	if (flag == 0) 
 		return ((alpha >= 0 && alpha <= 1) && (beta >= 0 && beta <= 1));
 	else if (flag == 1)
 		return (alpha > 0 && beta > 0 && (alpha + beta < 1));
@@ -104,6 +107,8 @@ bool	within_plane_range(float alpha, float beta, int flag)
 /*
  * child function in has_hit_plane
  * checks if hit point, t is within surface of plane/quad
+ * ensures only hits within finite surface is valid
+ * 
  * Formula:
  * alpha = w . (p x v)
  * beta  = w . (u x p)
@@ -150,7 +155,13 @@ cross_product(rt->obj[i].plane.coord[X], intersect));
  * 
  * Formula:
  * t = D - dot(n, P) / dot(n, d)
+ * 
+ * denom: dot prod btw plane's normal and ray's direction (if near 0, ray is parallel)
+ * 1. get denom > plane's norm > distance from ray's origin to hit point
+ * 2. check if hit point is within ray range 
+ * 3. check if hit point is within finite bounds
  */
+
 bool	has_hit_plane(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 {
 	float	denom;
@@ -175,4 +186,3 @@ bool	has_hit_plane(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 	update_hit_rec(rt, index, ray, t);
 	return (1);
 }
-

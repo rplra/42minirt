@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light_utils.c                                      :+:      :+:    :+:   */
+/*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/21 18:47:46 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/02 10:06:04 by rraja-az         ###   ########.fr       */
+/*   Created: 2025/07/19 20:05:01 by rraja-az          #+#    #+#             */
+/*   Updated: 2025/07/19 20:15:16 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-// reflect(I, N) = 2 * dot(N, I) * N - I
-// computes the direction of the reflected vector
-t_vec3 reflect(t_vec3 I, t_vec3 N)
+int	handle_parse_error(int fd, char *line, t_parse *file)
 {
-	return (subtract_vec(mult_vec_scalar(N, 2 * scalar_product(N, I)), I));
+	free(line);
+	free_array(file->tokens);
+	flush_gnl(fd);
+	close(fd);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 12:38:03 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 13:17:24 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	initialize_mlx(t_rt *rt)
 "miniRT");
 }
 
+//debug
 void	init_obj(t_rt *rt)
 {
 	// init_sph_scene(rt);

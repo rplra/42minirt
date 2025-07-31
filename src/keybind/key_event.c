@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:25:47 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/31 13:07:58 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 13:36:59 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ void	handle_translation(t_rt *rt, int keycode)
 	}
 	else if (rt->sel.type == SEL_OBJ)
 	{
-		obj = &rt->obj[rt->sel.obj_index];
+		int id = get_obj_index(rt->obj, rt->obj_count, rt->sel.obj_index);
+		obj = &rt->obj[id];
+		// obj = &rt->obj[rt->sel.obj_index];
 		/*debug*/printf("++ Translating OBJECT %d (%s)\n", rt->sel.obj_index,
 			obj->type == SPHERE ? "SPHERE" :
 			obj->type == PLANE ? "PLANE" :
@@ -112,6 +114,7 @@ void	handle_translation(t_rt *rt, int keycode)
 			/*debug*/printf("   New Pos: (%.2f, %.2f, %.2f)\n",
 				obj->cyl.pos.x, obj->cyl.pos.y, obj->cyl.pos.z);
 		}
+		aabb_translate(*obj, obj->bbox, delta);
 	}
 }
 

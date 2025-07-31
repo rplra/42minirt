@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:32 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 13:13:44 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 13:26:46 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ t_uint	get_obj_index(t_obj *obj, int obj_count, t_uint id)
 	return (0);
 }
 
+bool	valid_keypress(int keycode)
+{
+	return (rotation_key_cam(keycode) || rotation_key_obj(keycode) ||
+control_key(keycode) || translation_key(keycode));
+}
+
 /* prints out current keycode number */
 int	key_press(int keycode, t_rt *rt)
 {
@@ -39,8 +45,9 @@ int	key_press(int keycode, t_rt *rt)
 	handle_rotation(rt, keycode);
 
 	//if valid keypress, render image
-	if (rotation_key_cam(keycode) || rotation_key_obj(keycode) || \
-control_key(keycode))
+	// if (rotation_key_cam(keycode) || rotation_key_obj(keycode) || \
+// control_key(keycode) || translation_key(keycode))
+	if (valid_keypress(keycode))
 	{
 		// init_cam(rt);
 		// init_hit(rt);

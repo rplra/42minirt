@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 21:37:14 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/28 07:57:51 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/29 16:27:00 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_quat	quaternion_multiply(t_quat q1, t_quat q2);
 t_vec3	local_to_global(t_quat q1, t_vec3 initpoint);
 t_vec3	global_to_local(t_quat q1, t_vec3 initpoint);
 
-t_vec3	quaternion_rotate(t_quat q1, t_vec3 initpoint);
-t_vec3	quaternion_rotate_adv(t_vec3 initpoint, t_vec3 rotation);
+t_vec3	quaternion_rotate(t_quat q1, t_vec3 initpoint, int flag);
+t_vec3	quaternion_rotate_adv(t_vec3 initpoint, t_vec3 rotation, int flag);
 
 #endif

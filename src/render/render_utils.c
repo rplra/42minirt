@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:18:14 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/20 14:41:16 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 10:15:28 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,17 @@ void	swap_float(float t[2])
 		t[0] = t[1];
 		t[1] = tmp;
 	}
+}
+
+t_uint	get_obj_index(t_obj *obj, int obj_count, t_uint id)
+{
+	int	i;
+
+	i = -1;
+	while (++i <= obj_count)
+	{
+		if (obj[i].id == id)
+			return (i);
+	}
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/03 10:38:50 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:43:37 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # define PI 3.14159265358979323846
 
 /*	window	*/
-# define WIN_WIDTH	600
-# define WIN_HEIGHT	400
+# define WIN_WIDTH	300
+# define WIN_HEIGHT	200
 
 /*	ambient	*/
 # define AMBIENT_RATIO_MIN	0.0

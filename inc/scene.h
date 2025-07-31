@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/28 08:30:08 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 10:09:16 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_ambient
 typedef struct s_camera
 {
 	t_vec3		pos;
+	t_vec3		ori;
 	t_vec3		vup;				//camera orientation
 	float		vfov;				//vertical fov (need change to hfov)
 
@@ -159,15 +160,17 @@ typedef struct s_obj
 	{
 		t_sphere	sph;
 		t_plane		plane;
-		// t_plane		plane;
 		t_cylinder	cyl;
 	};
+	t_uint		id;
 	// t_colour	colour;				// obj's colour, removed since mat has albedo
 	t_material	material;			// rendering data
 	t_interval	bbox[3];
+	t_interval	bbox_ori[3];
+	t_vec3		bbox_center;
 
-	t_quat		rotate;
 	bool		b_rotate;
+	t_vec3		rotate;
 }				t_obj;
 
 // typedef struct s_obj

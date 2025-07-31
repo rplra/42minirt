@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:52:37 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/22 13:50:31 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 10:02:49 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,6 @@ void	debug_print_vec(char *str, t_vec3 vec)
 	printf("%s: %f %f %f\n", str, vec.x, vec.y, vec.z);
 }
 
-// void	debug_print_lst(char *str, t_obj *lst)
-// {
-// 	t_obj	*tmp;
-
-// 	tmp = lst;
-// 	while (tmp)
-// 	{
-// 		if (str)
-// 			printf("%s: ", str);
-// 		if (tmp->type == SPHERE)
-// 			debug_print_vec("sph", tmp->sph.orig);
-// 		tmp = tmp->next;
-// 	}
-// }
-
 void	debug_print_arr(char *str, t_obj *obj, int obj_count)
 {
 	int	i;
@@ -40,27 +25,27 @@ void	debug_print_arr(char *str, t_obj *obj, int obj_count)
 	while (++i < obj_count)
 	{
 		if (str)
-			printf("%s: %d: ", str, i);
-		if (obj->type == SPHERE)
+			printf("%s: %d: ", str, obj[i].id);
+		if (obj[i].type == SPHERE)
 		{
-			printf("rad: %f\n%s: %d: bbox:\n", obj[i].sph.rad, str, i);
+			printf("rad: %f\n%s: %d: bbox:\n", obj[i].sph.rad, str, obj[i].id);
 			debug_print_bbox(" |sph_bbox", obj[i].bbox);
 			debug_print_vec(" |sph", obj[i].sph.pos);
 			printf("----------------\n");
 		}
-		else if (obj->type == CYLINDER)
+		else if (obj[i].type == CYLINDER)
 		{
-			// printf("bbox:\n");
-			// debug_print_bbox(" |cyl_bbox", obj[i].bbox);
+			printf("bbox:\n");
+			debug_print_bbox(" |cyl_bbox", obj[i].bbox);
 			// printf(" |d: %f\n", obj[i].cyl.d);
 			// printf(" |cyl_height: %f\n |cyl_rad: %f\n", obj[i].cyl.height, obj[i].cyl.rad);
 			debug_print_vec(" |cyl", obj[i].cyl.pos);
-			debug_print_vec(" |cyl_axis", obj[i].cyl.axis);
-			debug_print_vec(" |cyl_coord[X]", obj[i].cyl.coord[X]);
-			debug_print_vec(" |cyl_coord[Y]", obj[i].cyl.coord[Y]);
+			// debug_print_vec(" |cyl_axis", obj[i].cyl.axis);
+			// debug_print_vec(" |cyl_coord[X]", obj[i].cyl.coord[X]);
+			// debug_print_vec(" |cyl_coord[Y]", obj[i].cyl.coord[Y]);
 			// debug_print_vec(" |cyl_col", obj[i].material.albedo);
 		}
-		else if (obj->type == PLANE)
+		else if (obj[i].type == PLANE)
 		{
 			debug_print_vec("pl", obj[i].plane.pos);
 			// printf(" |d: %f\n", obj[i].plane.d);

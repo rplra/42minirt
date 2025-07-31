@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:11:57 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/25 14:52:50 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/29 09:09:30 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
 		surf_norm = unit_vec3(surf_norm);
 		return (surf_norm);
 	}
+
 	t_interval cyl_height = get_cyl_axis_height(obj.cyl);
 
 	t2 = scalar_product(pt_ray, obj.cyl.axis);

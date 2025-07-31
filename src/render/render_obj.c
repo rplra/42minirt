@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:13:15 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/25 08:45:10 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 09:23:10 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ t_obj	new_cyl(t_vec3 position, t_vec3 normal, float radius, float height, t_mate
 	res.cyl.d[1] = scalar_product(res.cyl.axis, add_vec(res.cyl.pos, mult_vec_scalar(res.cyl.axis, height / 2))); //official use corner
 	res.cyl.w = div_vec_scalar(n, scalar_product(n, n));
 	create_bbox(&res, res.bbox);
+	copy_bbox(res.bbox_ori, res.bbox);
+	res.bbox_center = get_bbox_center(res.bbox);
 	return (res);
 }
 
@@ -130,6 +132,8 @@ t_obj	new_plane(t_vec3 position, t_vec3 normal, t_material mat)
 	res.plane.d = scalar_product(res.plane.normal, res.plane.pos);
 	res.plane.w = div_vec_scalar(n, scalar_product(n, n));
 	create_bbox(&res, res.bbox);
+	copy_bbox(res.bbox_ori, res.bbox);
+	res.bbox_center = get_bbox_center(res.bbox);
 	return (res);
 }
 

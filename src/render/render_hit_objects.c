@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/28 09:11:25 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/30 16:50:50 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,15 +159,15 @@ bool	has_hit_plane(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 
 	// transform frm world space to obj space
 	if (rt->obj[index].b_rotate == 1)
-		ray = rotate_ray_to_local(rt->obj[index].rotate, ray);
+		ray = transform_ray(rt->obj[index], ray);
 
 	denom = scalar_product(rt->obj[index].plane.normal, ray.vector);
 	if (fabs(denom) < EPSILON) //if ray parallel to plane
 		return (0);
 	dot_np = scalar_product(rt->obj[index].plane.normal, ray.orig);
 	t = (rt->obj[index].plane.d - dot_np) / denom;
-	/*debug*/printf("pl_d: %d %f\n", index, rt->obj[index].plane.d);
-	/*debug*/printf("has_hit_pl: t: %f, ray: %f~%f\n", t, ray_range.min, ray_range.max);
+	// /*debug*/printf("pl_d: %d %f\n", index, rt->obj[index].plane.d);
+	// /*debug*/printf("has_hit_pl: t: %f, ray: %f~%f\n", t, ray_range.min, ray_range.max);
 	if (t < ray_range.min || t > ray_range.max)
 		return (0);
 	if (!t_intersects_plane(rt, index, ray, t))

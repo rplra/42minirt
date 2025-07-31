@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/28 08:04:54 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 10:14:34 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,14 @@ void		init_variable(t_rt *rt);
 /* __________________ aabb __________________ */
 void		aabb(t_vec3 a, t_vec3 v, t_interval range[3]);
 void		create_bbox(t_obj *obj, t_interval bound_box[3]);
+void		copy_bbox(t_interval dest[3], t_interval src[3]);
 void		update_aabb_box(t_interval box_0[3], t_interval box_1[3], \
 t_interval res[3]);
 void		get_bbox_val(t_obj *obj, int argc, t_interval res[3]);
-void		assign_bbox(t_interval src[3], t_interval res[3]);
+void		aabb_rotate(t_obj obj, t_interval dest[3]);
+void		aabb_translate(t_obj obj, t_interval res[3], t_vec3 offset);
+
+t_vec3		get_bbox_center(t_interval bbox[3]);
 
 t_interval	new_interval(float min, float max);
 t_interval	interval(t_interval a, t_interval v);
@@ -92,6 +96,8 @@ void		add_padding(t_interval res[3]);
 t_material	new_material(t_vec3 color, t_mat_type type);
 t_vec3		set_tmp_vec(t_vec3 normal);
 void		update_material(t_obj *obj, t_mat_type type, float fuzz);
+t_uint		get_obj_index(t_obj *obj, int obj_count, t_uint id);
+
 //debug
 t_obj		new_sphere(t_vec3 position, float sph_radius, t_vec3 color, t_mat_type mat_type);
 t_obj		new_plane_2(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, t_material mat);
@@ -107,7 +113,6 @@ t_obj		new_cyl_2(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, float radius, 
 // t_obj		*ft_lst_forward(t_obj *obj, size_t n);
 
 /* __________________ func_pointers __________________ */
-// void		init_new_obj_func(t_obj (*add_obj[])(t_vec3, float, t_vec3, t_uchar));
 void		init_box_compare(bool (*box_compare[])(t_obj, t_obj));
 void		init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float, t_uchar));
 void		init_hit_func(bool (*has_hit[])());
@@ -128,7 +133,10 @@ void		my_render_image(t_rt *vars);
 void		clear_image(t_rt vars, int win_width, int win_height, int color);
 
 /* __________________ rotate __________________ */
-t_ray		rotate_ray_to_local(t_quat q_rot, t_ray ray);
+t_ray		rotate_ray_to_local(t_vec3 rotation, t_ray ray);
+void		transform_hit_pt(t_rt *rt, t_obj res);
+t_ray		transform_ray(t_obj obj, t_ray ray);
+void		transform_bbox(t_rt *rt, t_uint index);
 
 /* __________________ hit __________________ */
 t_obj		*hit(t_rt *rt, t_interval ray_range, t_ray ray);
@@ -151,7 +159,6 @@ t_vec3		get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting);
 /* __________________ ray __________________ */
 t_vec3		ray_color(t_rt *vars, t_ray ray, t_uchar ray_bounce, \
 t_uint *seed);
-// t_vect3d	ray_color_loop(t_vars vars, t_ray ray, unsigned int *seed);
 t_ray		new_ray(t_vec3 origin, t_vec3 dir);
 int			sample_pixels(t_rt vars, t_vec3 target, \
 t_vec3 viewport_d[2], int x);

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/28 09:55:51 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/29 18:30:05 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static void	ft_draw(t_rt vars, t_vec3 viewport_00, t_vec3 viewport_d[2])
 
 void	update_cam_pos(t_rt *rt)
 {
-	rt->camera.pos = quaternion_rotate_adv(rt->camera.pos, rt->camera.transform.rotate); //not parser
+	rt->camera.pos = quaternion_rotate_adv(rt->camera.ori, rt->camera.transform.rotate, 1); //not parser
 	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1));
 	rt->camera.focus_dist = len_vec3(subtract_vec(rt->camera.pos, rt->camera.lookat));
 	rt->ray.orig = rt->camera.pos;

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 21:36:01 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/25 09:01:16 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/30 17:49:23 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,36 @@ void	init_copy_func(void (*copy[3])(t_obj *, t_obj))
 	copy[CYLINDER] = copy_cyl;
 }
 
+void	copy_bbox(t_interval dest[3], t_interval src[3])
+{
+	dest[X].min = src[X].min;
+	dest[X].max = src[X].max;
+	dest[Y].min = src[Y].min;
+	dest[Y].max = src[Y].max;
+	dest[Z].min = src[Z].min;
+	dest[Z].max = src[Z].max;
+}
+
 void	copy_obj(t_obj *dest, t_obj src)
 {
 	void	(*copy[3])(t_obj *, t_obj);
 
+	dest->id = src.id;
 	dest->type = src.type;
 	dest->material.albedo = src.material.albedo;
 	dest->material.type = src.material.type;
 	dest->material.specular = src.material.specular;
 	dest->material.reflect = src.material.reflect;
 	dest->material.fuzz = src.material.fuzz;
+	dest->bbox_center = src.bbox_center;
+	dest->b_rotate = src.b_rotate;
+	dest->rotate = src.rotate;
 
 	init_copy_func(copy);
 	copy[src.type](dest, src);
-	create_bbox(dest, dest->bbox);
+
+	copy_bbox(dest->bbox, src.bbox);
+	copy_bbox(dest->bbox_ori, src.bbox_ori);
 }
 
 void	copy_array(t_obj *dest, t_obj *src, int n)

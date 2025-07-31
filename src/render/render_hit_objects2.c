@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:47:34 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/28 09:15:40 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 09:20:47 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ bool	has_hit_cylinder(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 	float	t[2];
 	float	hit_body = 0;
 	float	hit_cap = 0;
+
+	if (rt->obj[index].b_rotate == 1)
+		ray = transform_ray(rt->obj[index], ray);
 
 	hit_body = has_hit_body(rt->obj[index].cyl, ray_range, ray, t);
 	if (hit_body != -1)

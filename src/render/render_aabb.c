@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/19 19:40:35 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 09:36:27 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ void	add_padding(t_interval res[3])
 		expand_box(num, &res[Z]);
 }
 
-void	aabb(t_vec3 a, t_vec3 v, t_interval res[3])
+void	aabb(t_vec3 pt_a, t_vec3 pt_b, t_interval res[3])
 {
-	res[X] = assign_min_max(a.x, v.x);
-	res[Y] = assign_min_max(a.y, v.y);
-	res[Z] = assign_min_max(a.z, v.z);
+	res[X] = assign_min_max(pt_a.x, pt_b.x);
+	res[Y] = assign_min_max(pt_a.y, pt_b.y);
+	res[Z] = assign_min_max(pt_a.z, pt_b.z);
 	add_padding(res);
 }
 
@@ -78,17 +78,6 @@ t_interval res[3])
 	res[Z] = interval(box_0[Z], box_1[Z]);
 }
 
-/* assigns value in src to res */
-void	assign_bbox(t_interval src[3], t_interval res[3])
-{
-	res[X].min = src[X].min;
-	res[Y].min = src[Y].min;
-	res[Z].min = src[Z].min;
-	res[X].max = src[X].max;
-	res[Y].max = src[Y].max;
-	res[Z].max = src[Z].max;
-}
-
 /*
  * initializes res to (0,0)
  * bbox value of obj (ranges frm 0 to argc) will be stored in res[3]
@@ -99,7 +88,8 @@ void	get_bbox_val(t_obj *obj, int argc, t_interval res[3])
 
 	x = -1;
 	/*debug*/printf("get_bbox_val:ac:%d\n", argc);
-	assign_bbox(obj[0].bbox, res);
+	// assign_bbox(obj[0].bbox, res);
+	copy_bbox(res, obj[0].bbox);
 	while (++x < argc)
 	{
 		// /*debug*/printf("combining: %d\n", x);

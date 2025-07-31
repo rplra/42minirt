@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:02 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/25 09:56:40 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 09:52:34 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,19 @@ void	assign_material(t_material *material)
 	material->fuzz = 0.2;
 }
 
+void	assign_rotation(t_obj *obj)
+{
+	obj->b_rotate = 0;
+	obj->rotate = new_vec3(0, 0, 0);
+}
+
+void	assign_bbox(t_obj *obj)
+{
+	create_bbox(obj, obj->bbox);
+	copy_bbox(obj->bbox_ori, obj->bbox);
+	obj->bbox_center = get_bbox_center(obj->bbox);
+}
+
 int	parse_object(t_parse *file, t_rt *rt)
 {
 	t_obj obj;
@@ -75,6 +88,8 @@ int	parse_object(t_parse *file, t_rt *rt)
 	// obj.material.reflect = 0.5;
 	// obj.material.type = METAL;
 	// obj.material.fuzz = 0.2;
-	create_bbox(&obj, obj.bbox);
+	assign_rotation(&obj);
+	assign_bbox(&obj);
+	obj.id = rt->obj_count;
 	return (add_object(rt, &obj));
 }

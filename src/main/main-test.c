@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:45:50 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/11 18:57:23 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/30 12:03:48 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,23 +275,31 @@ int main()
 	// debug_print_bbox("pt_af", pt);
 	// /*debug*/printf("pt_af:%f %f\n", pt[X].min, pt[X].max);
 
+	/* __________________ t_vec3 assign __________________*/
+	t_vec3	dest;
+	t_vec3	src;
+
+	src = new_vec3(0,10,8);
+	dest = src;
+	src = new_vec3(0,0,0);
+	debug_print_vec("dest", dest);
 
 	/* __________________ bvh_node __________________*/
-	t_rt	vars;
-	init_obj(&vars);
+	// t_rt	vars;
+	// init_obj(&vars);
 
-	// debug_print_arr("obj_init", vars.obj, vars.obj_count);
-	// debug_print_bbox("bbox_main", vars.bbox);
+	// // debug_print_arr("obj_init", vars.obj, vars.obj_count);
+	// // debug_print_bbox("bbox_main", vars.bbox);
 
-	vars.seed = 12345;
+	// vars.seed = 12345;
 
-	init_bvh_node(&vars);
-	printf("\n**********************************\n");
-	debug_print_bvh("bvh_node", vars.bvh);
-	printf("\n**********************************\n");
-	debug_print_arr("obj", vars.obj, vars.obj_count);
-	free_bvh(vars.bvh);
-	free(vars.obj);
+	// init_bvh_node(&vars);
+	// printf("\n**********************************\n");
+	// debug_print_bvh("bvh_node", vars.bvh);
+	// printf("\n**********************************\n");
+	// debug_print_arr("obj", vars.obj, vars.obj_count);
+	// free_bvh(vars.bvh);
+	// free(vars.obj);
 
 	return (0);	
 }

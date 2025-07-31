@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:55:02 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/28 08:47:03 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/30 15:09:24 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,69 +35,35 @@ scalar_product(q1.vector, q2.vector);
  * Quaternion Rotation
  * in Unit Quaternion, q inverse = conjugate quaternion
  * normalize quaternion, then multiply them
- * new pt = q . p . q inverse
- * q1= the rotation quaternion
- */
-t_vec3	quaternion_rotate(t_quat q1, t_vec3 initpoint)
-{
-	t_quat	q2;
-	t_quat	qpoint;
-	t_quat	result;
-
-	qpoint.scalar = 0.0;
-	qpoint.vector = initpoint;
-	norm_quaternion(&q1);
-	q2 = conjugate_quaternion(q1);
-	result = quaternion_multiply(q1, qpoint);
-	result = quaternion_multiply(result, q2);
-	return (result.vector);
-}
-
-/*
- * Quaternion Rotation
- * rotate object local axis in the world axis
- * (object is rotated, but object is still aligned to its local axis)
  * 
- * new pt = q . p . q conjugate
- * q1= the rotation quaternion
- */
-t_vec3	local_to_global(t_quat q1, t_vec3 initpoint)
-{
-	t_quat	q2;
-	t_quat	qpoint;
-	t_quat	result;
-
-	qpoint.scalar = 0.0;
-	qpoint.vector = initpoint;
-	norm_quaternion(&q1);
-	q2 = conjugate_quaternion(q1);
-	result = quaternion_multiply(q1, qpoint);
-	result = quaternion_multiply(result, q2);
-	return (result.vector);
-}
-
-/*
- * Quaternion Rotation
- * rotate world global axis to the obj local axis
- * ( object is rotated within its own axis,
- *   object is now not aligned to its local axis )
+ * if flag=1 (default)
+ * new pt = q . p . q inverse (local_to_global)
+ * if flag=0
+ * new pt = q inverse . p . q (global_to_local)
  * 
- * new pt = q conjugate . p . q
  * q1= the rotation quaternion
  */
-t_vec3	global_to_local(t_quat q1, t_vec3 initpoint)
+t_vec3	quaternion_rotate(t_quat q1, t_vec3 initpoint, int flag)
 {
-	t_quat	q2;
+	t_quat	conjugate;
 	t_quat	qpoint;
 	t_quat	result;
 
 	qpoint.scalar = 0.0;
 	qpoint.vector = initpoint;
 	norm_quaternion(&q1);
-	q2 = conjugate_quaternion(q1);
-	result = quaternion_multiply(q2, qpoint);
-	result = quaternion_multiply(result, q1);
-	return (result.vector);	//not sure if need normalize
+	conjugate = conjugate_quaternion(q1);
+	if (flag)
+	{
+		result = quaternion_multiply(q1, qpoint);
+		result = quaternion_multiply(result, conjugate);
+	}
+	else
+	{
+		result = quaternion_multiply(conjugate, qpoint);
+		result = quaternion_multiply(result, q1);
+	}
+	return (result.vector);
 }
 
 void	init_rotation_quat(t_quat q[3], t_vec3 rotation)
@@ -107,11 +73,22 @@ void	init_rotation_quat(t_quat q[3], t_vec3 rotation)
 	q[Z] = new_quaternion(new_vec3(0, 0, 1), rotation.z);
 }
 
-void	init_conjugate_quat(t_quat conjugate[3], t_quat q[3])
+t_quat	quaternion_zyx(t_quat q[3])
 {
-	conjugate[X] = conjugate_quaternion(q[X]);
-	conjugate[Y] = conjugate_quaternion(q[Y]);
-	conjugate[Z] = conjugate_quaternion(q[Z]);
+	t_quat	result;
+
+	result = quaternion_multiply(q[Z], q[Y]);
+	result = quaternion_multiply(result, q[X]);
+	return (result);
+}
+
+t_quat	quaternion_xyz(t_quat q[3])
+{
+	t_quat	result;
+
+	result = quaternion_multiply(q[X], q[Y]);
+	result = quaternion_multiply(result, q[Z]);
+	return (result);
 }
 
 /*
@@ -119,32 +96,28 @@ void	init_conjugate_quat(t_quat conjugate[3], t_quat q[3])
  * normally will normalize quaternion before rotation
  * new point = x . y . z . point . x inverse . y inverse . z inverse
  * quaternion multiplication on:
- * left (q2 . q1) = rotation on global axis,
+ * left  (q2 . q1) = rotation on global axis,
  * right (q1 . q2) = rotation on local axis 
+ * 
+ * flag=0 : x.y.z . pt | (global_to_local)
+ * flag=1 : z.y.x . pt | (local_to_global)
  */
-t_vec3	quaternion_rotate_adv(t_vec3 initpoint, t_vec3 rotation)
+t_vec3	quaternion_rotate_adv(t_vec3 initpoint, t_vec3 rotation, int flag)
 {
-	t_quat	qpoint;
-	t_quat	result;
-	t_quat	conjugate[3];
 	t_quat	q[3];
+	t_quat	quat;
+	t_vec3	result;
 
-	qpoint.scalar = 0.0;
-	qpoint.vector = initpoint;
 	init_rotation_quat(q, rotation);
-	init_conjugate_quat(conjugate, q);
-	// conjugate[X] = conjugate_quaternion(q[X]);
-	// conjugate[Y] = conjugate_quaternion(q[Y]);
-	// conjugate[Z] = conjugate_quaternion(q[Z]);
-	result = quaternion_multiply(q[Z], q[Y]);
-	result = quaternion_multiply(result, q[X]);
-	result = quaternion_multiply(result, qpoint);
-	result = quaternion_multiply(result, conjugate[Z]);
-	result = quaternion_multiply(result, conjugate[Y]);
-	result = quaternion_multiply(result, conjugate[X]);
-	// norm_quaternion(&result);
+	// if (flag)
+		quat = quaternion_zyx(q);
+	// else
+		// quat = quaternion_xyz(q);
+	norm_quaternion(&quat);	//maybe
+	result = quaternion_rotate(quat, initpoint, flag);
+
 	// return (unit_vec3(result.vector));
-	return (result.vector);
+	return (result);
 }
 
 /*

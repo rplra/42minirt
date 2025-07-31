@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:47:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/28 10:01:14 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/29 22:03:07 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@
 #  define KEY_A 97
 #  define KEY_S 115
 #  define KEY_D 100
+#  define KEY_R 114
+#  define KEY_O 111
+#  define KEY_P 112
 #  define KEY_PLUS 61
 #  define KEY_MINUS 45
 #  define KEY_ARROW_L 44
@@ -85,6 +88,9 @@ typedef struct s_rt	t_rt;
 int			close_window(int keycode, t_rt *vars);
 int			close_window_x(int keycode, t_rt *vars);
 int			key_press(int keycode, void *param);
-void    	apply_rotation(int keycode, t_rt *rt);
+void    	apply_rotation_cam(int keycode, t_rt *rt);
+void    	apply_rotation_obj(int keycode, t_rt *rt);
+
+void    	reset_rotation_cam(t_rt *rt);
 
 #endif

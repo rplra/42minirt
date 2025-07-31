@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/28 10:02:24 by hsim             ###   ########.fr       */
+/*   Updated: 2025/07/31 09:23:38 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,44 +97,23 @@ ray: the ray being tested against all scene objects
 */
 t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
 {
-	float		t;
-	t_obj		*res;
+	float	t;
+	t_obj	*res;
 
 	res = NULL;
-	
+
 	t = hit_bvh(rt->bvh, ray_range, ray, rt);
 	if (t > 0)
 	{
 		res = &rt->obj[rt->hit.index];
-		// if (res->b_rotate == 1)
-		// {
-		// 	rt->hit.at = local_to_global(res->rotate, rt->hit.at);
-		// 	rt->hit.surf_norm = local_to_global(res->rotate, rt->hit.surf_norm);
-		// }
+		if (res->b_rotate == 1)
+			transform_hit_pt(rt, *res);
 		// /*debug*/printf("hitted type: %d\n", res->type);
 		// /*debug*/debug_print_vec(" |hitted", res->cyl.pos);
 		// /*debug*/debug_print_vec(" |hitted_col", res->material.albedo);
 	}
 	return (res);
 }
-
-// t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
-// {
-// 	float		t;
-// 	t_obj		*res;
-
-// 	res = NULL;
-
-// 	t = hit_bvh(rt->bvh, ray_range, ray, rt);
-// 	if (t > 0)
-// 	{
-// 		res = &rt->obj[rt->hit.index];
-// 		// /*debug*/printf("hitted type: %d\n", res->type);
-// 		// /*debug*/debug_print_vec(" |hitted", res->cyl.pos);
-// 		// /*debug*/debug_print_vec(" |hitted_col", res->material.albedo);
-// 	}
-// 	return (res);
-// }
 
 /* child function in hit_aabb */
 void	assign_ray_t(float t0, float t1, t_interval *ray_t)
@@ -156,7 +135,7 @@ void	assign_ray_t(float t0, float t1, t_interval *ray_t)
 }
 
 /* hit function for bounding_box aabb */
-int	hit_aabb(t_ray r, t_interval ray_t, t_interval bbox[3])
+bool	hit_aabb(t_ray r, t_interval ray_t, t_interval bbox[3])
 {
 	int		axis;
 	float	axis_inv; //inverse axis, adinv
@@ -182,14 +161,14 @@ int	hit_aabb(t_ray r, t_interval ray_t, t_interval bbox[3])
 	return (1);
 }
 
-bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
+bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *rt)
 {
 	bool	t[2];
 	bool	(*has_hit[3])(t_rt *, int, t_interval, t_ray);
 
-	// /*debug*/debug_print_bbox("hit_bvh", bvh->bbox);
 	if (!hit_aabb(ray, ray_range, bvh->bbox))
 	{
+		/*debug*/debug_print_bbox("hit_bvh", bvh->bbox);
 		// /*debug*/printf("\n\033[93mno aabb! %d~%d\033[0m\n\n", bvh->id[L], bvh->id[R]);
 		return (0);
 	}
@@ -204,20 +183,29 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
 	{
 		// /*debug*/printf("bvh_id_L:%d  %d\n", bvh->id[L], bvh->type[L]);
 		// transform frm world space to obj space
-		t[L] = has_hit[bvh->type[L]](vars, bvh->id[L], ray_range, ray);
+		// if (rt->obj[bvh->id[L]].b_rotate == 1)
+			// t[L] = has_hit[bvh->type[L]](rt, bvh->id[L], ray_range, \
+// rotate_ray_to_local(rt->obj[bvh->type[L]].rotate, ray));
+		// else
+			t[L] = has_hit[bvh->type[L]](rt, bvh->id[L], ray_range, ray);
 	}
 	else
-		t[L] = hit_bvh(bvh->left, ray_range, ray, vars);
+		t[L] = hit_bvh(bvh->left, ray_range, ray, rt);
 
 	if (bvh->type[R] != BVH)
 	{
 		// /*debug*/printf("bvh_id_R:%d  %d, rec.t:%f\n", bvh->id[R], bvh->type[R], vars->hit.t);
 		if (t[L] > EPSILON)
-			ray_range.max = vars->hit.t;
-		t[R] = has_hit[bvh->type[R]](vars, bvh->id[R], ray_range, ray);
+			ray_range.max = rt->hit.t;
+
+		// if (rt->obj[bvh->id[R]].b_rotate == 1)
+			// t[R] = has_hit[bvh->type[R]](rt, bvh->id[R], ray_range, \
+// rotate_ray_to_local(rt->obj[bvh->type[R]].rotate, ray));
+		// else
+			t[R] = has_hit[bvh->type[R]](rt, bvh->id[R], ray_range, ray);
 	}
 	else
-		t[R] = hit_bvh(bvh->right, ray_range, ray, vars);
+		t[R] = hit_bvh(bvh->right, ray_range, ray, rt);
 	/* ******************************************** */
 	// /*debug*/printf("t[L] & t[R]: %d %d  %d~%d\n", t[L], t[R], bvh->id[L], bvh->id[R]);
 	if (t[L] > EPSILON || t[R] > EPSILON)

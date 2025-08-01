@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 12:44:55 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 17:45:19 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ void		initialize_mlx(t_rt *rt);
 void		init_variable(t_rt *rt);
 void		init_cam(t_rt *rt);
 void		init_hit(t_rt *rt);
-
+void		update_cam_pos(t_rt *rt);
+void		set_render_quality(t_rt *rt);
 
 /* __________________ aabb __________________ */
 void		aabb(t_vec3 a, t_vec3 v, t_interval range[3]);
@@ -140,7 +141,6 @@ void		clear_image(t_rt vars, int win_width, int win_height, int color);
 void		transform_hit_pt(t_rt *rt, t_obj res);
 t_ray		transform_ray(t_obj obj, t_ray ray);
 void		transform_bbox(t_rt *rt, t_uint index);
-void		update_cam_pos(t_rt *rt);
 
 /* __________________ hit __________________ */
 t_obj		*hit(t_rt *rt, t_interval ray_range, t_ray ray);

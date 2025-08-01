@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:47:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/01 13:10:08 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 18:06:10 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,11 @@
 #  define KEY_E				101
 #  define KEY_P				112
 #  define KEY_R				114
+#  define KEY_U				117
 #  define KEY_O				111
 #  define KEY_P				112
+#  define KEY_I				105
+#  define KEY_J				106
 #  define KEY_K				107
 #  define KEY_L				108
 
@@ -135,7 +138,7 @@ float		scale_factor(int keycode);
 
 void		print_selected(t_rt *rt);
 
-bool		rotation_key_cam(int keycode);
+bool		rotation_key(int keycode);
 bool		rotation_key_obj(int keycode);
 bool		control_key(int keycode);
 

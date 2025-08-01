@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:25:47 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/01 13:13:50 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 18:08:04 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	handle_render_mode(t_rt *rt, int keycode)
 {
-	if (keycode == KEY_P)
+	if (keycode == KEY_DOWN)
 		rt->preview_mode = 1;
-	if (keycode == KEY_R)
+	if (keycode == KEY_UP)
 		rt->preview_mode = 0;
 	// /*debug*/printf("preview_mode=%d\n", rt->preview_mode);
 	// init_cam(rt);
@@ -89,26 +89,26 @@ void	handle_translation(t_rt *rt, int keycode)
 		obj = &rt->obj[id];
 		// obj = &rt->obj[rt->sel.obj_index];
 		/*debug*/printf("++ Translating OBJECT %d (%s)\n", rt->sel.obj_index,
-			obj->type == SPHERE ? "SPHERE" :
-			obj->type == PLANE ? "PLANE" :
-			obj->type == CYLINDER ? "CYLINDER" : "UNKNOWN");
+obj->type == SPHERE ? "SPHERE" :
+obj->type == PLANE ? "PLANE" :
+obj->type == CYLINDER ? "CYLINDER" : "UNKNOWN");
 
 		if (obj->type == PLANE)
 		{
 			/*debug*/printf("   Old Pos @%p: (%.2f, %.2f, %.2f)\n", (void*)&obj->plane.pos,
-				obj->plane.pos.x, obj->plane.pos.y, obj->plane.pos.z);
+obj->plane.pos.x, obj->plane.pos.y, obj->plane.pos.z);
 			obj->plane.pos = add_vec(obj->plane.pos, delta);
 			obj->plane.d = scalar_product(obj->plane.normal, obj->plane.pos);
 			/*debug*/printf("   New Pos: (%.2f, %.2f, %.2f)\n",
-				obj->plane.pos.x, obj->plane.pos.y, obj->plane.pos.z);
+obj->plane.pos.x, obj->plane.pos.y, obj->plane.pos.z);
 		}
 		else if (obj->type == SPHERE)
 		{
 			/*debug*/printf("   Old Pos @%p: (%.2f, %.2f, %.2f)\n", (void*)&obj->sph.pos,
-				obj->sph.pos.x, obj->sph.pos.y, obj->sph.pos.z);
-			obj->sph.pos = add_vec(obj->sph.pos, delta);
+obj->sph.pos.x, obj->sph.pos.y, obj->sph.pos.z);
+obj->sph.pos = add_vec(obj->sph.pos, delta);
 			/*debug*/printf("   New Pos: (%.2f, %.2f, %.2f)\n",
-				obj->sph.pos.x, obj->sph.pos.y, obj->sph.pos.z);
+obj->sph.pos.x, obj->sph.pos.y, obj->sph.pos.z);
 		}
 		else if (obj->type == CYLINDER)
 		{

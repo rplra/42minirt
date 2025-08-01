@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/01 13:05:05 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 18:15:24 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,20 @@ void	init_obj(t_rt *rt)
 	// init_cyl_scene(rt);
 }
 
+void	set_render_quality(t_rt *rt)
+{
+	if (rt->preview_mode)
+	{
+		rt->camera.ray_bounce = SAMPLE_PREVIEW;
+		rt->camera.sample_per_pixel = SAMPLE_PREVIEW;
+	}
+	else
+	{
+		rt->camera.ray_bounce = SAMPLE_RAY_BOUNCE;
+		rt->camera.sample_per_pixel = SAMPLE_PER_PIXEL;
+	}
+}
+
 void	init_cam(t_rt *rt)
 {
 	
@@ -54,10 +68,7 @@ void	init_cam(t_rt *rt)
 	rt->camera.defoc_disk[Y] = new_vec3(DEFOC_YX, DEFOC_YY, DEFOC_YZ);
 	rt->camera.focus_dist = len_vec3(subtract_vec(rt->camera.pos, rt->camera.lookat));
 	// /*debug*/printf("focus_dist:%f\n", rt->camera.focus_dist);
-
-	rt->camera.ray_bounce = 5;
-	rt->camera.sample_per_pixel = 5;
-
+	set_render_quality(rt);
 	rt->ray.orig = rt->camera.pos;
 	rt->ray.vector = new_vec3(0, 0, 0);
 }

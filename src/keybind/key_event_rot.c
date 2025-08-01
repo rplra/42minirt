@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 22:47:23 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/01 13:11:09 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 18:06:10 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,34 +49,34 @@ void	apply_rotation_cam(int keycode, t_rt *rt)
 	float	deg;
 
 	deg = 1;
-	if (keycode == KEY_UP)
+	if (keycode == KEY_I)
 		rt->camera.transform.rotate.x -= deg;
-	else if (keycode == KEY_DOWN)
+	else if (keycode == KEY_K)
 		rt->camera.transform.rotate.x += deg;
-	else if (keycode == KEY_LEFT)
+	else if (keycode == KEY_J)
 		rt->camera.transform.rotate.y -= deg;
-	else if (keycode == KEY_RIGHT)
+	else if (keycode == KEY_L)
 		rt->camera.transform.rotate.y += deg;
-	else if (keycode == KEY_ARROW_L)
+	else if (keycode == KEY_U)
 		rt->camera.transform.rotate.z -= (deg + 20);
-	else if (keycode == KEY_ARROW_R)
+	else if (keycode == KEY_O)
 		rt->camera.transform.rotate.z += (deg + 20);
 	// /*debug*/debug_print_vec("cam_rot", rt->camera.transform.rotate);
 }
 
 t_vec3	rotation_delta(int keycode)
 {
-	if (keycode == KEY_UP)
+	if (keycode == KEY_I)
 		return (new_vec3(-ROTATE, 0, 0));
-	else if (keycode == KEY_DOWN)
+	else if (keycode == KEY_K)
 		return (new_vec3(ROTATE, 0, 0));
-	else if (keycode == KEY_LEFT)
+	else if (keycode == KEY_J)
 		return (new_vec3(0, -ROTATE, 0));
-	else if (keycode == KEY_RIGHT)
+	else if (keycode == KEY_L)
 		return (new_vec3(0, ROTATE, 0));
-	else if (keycode == KEY_ARROW_L)
+	else if (keycode == KEY_U)
 		return (new_vec3(0, 0, -ROTATE - 20));
-	else if (keycode == KEY_ARROW_R)
+	else if (keycode == KEY_O)
 		return (new_vec3(0, 0, ROTATE + 20));
 	return (new_vec3(0, 0, 0));
 }
@@ -102,7 +102,7 @@ void	handle_rotation(t_rt *rt, int keycode)
 	
 	if (keycode == KEY_R)
 		reset_cam(rt);
-	if (!rotation_key_cam(keycode))
+	if (!rotation_key(keycode))
 		return ;
 	delta = rotation_delta(keycode);
 	if (rt->sel.type == SEL_CAMERA)

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:33:48 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/31 12:53:13 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 18:08:33 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,15 @@ float	scale_factor(int keycode)
 	return (1.0f);
 }
 
-bool	rotation_key_cam(int keycode)
+bool	rotation_key(int keycode)
 {
-	return (keycode == KEY_UP || keycode == KEY_DOWN ||
-keycode == KEY_LEFT || keycode == KEY_RIGHT ||
-keycode == KEY_ARROW_L || keycode == KEY_ARROW_R);
-}
-
-bool	rotation_key_obj(int keycode)
-{
-	return (keycode == KEY_K || keycode == KEY_L);
+	return (keycode == KEY_I || keycode == KEY_J ||
+keycode == KEY_K || keycode == KEY_L ||
+keycode == KEY_U || keycode == KEY_O);
 }
 
 /* all keypress button that allow img render to happen */
 bool	control_key(int keycode)
 {
-	return (keycode == KEY_R);
+	return (keycode == KEY_R || keycode == KEY_UP || keycode == KEY_DOWN);
 }

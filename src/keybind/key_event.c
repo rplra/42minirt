@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:25:47 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/31 22:25:10 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 13:13:50 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,11 @@ void	handle_translation(t_rt *rt, int keycode)
 	{
 		/*debug*/printf("++ Translating CAMERA\n");
 		rt->camera.pos = add_vec(rt->camera.pos, delta);
+		rt->camera.transform.translate = add_vec(rt->camera.transform.translate, delta);
+		// rt->camera.ori = add_vec(rt->camera.ori, delta);
 		/*debug*/printf("   New CAMERA Pos: (%.2f, %.2f, %.2f)\n",
 			rt->camera.pos.x, rt->camera.pos.y, rt->camera.pos.z);
+			// rt->camera.ori.x, rt->camera.ori.y, rt->camera.ori.z);
 	}
 	else if (rt->sel.type == SEL_LIGHT)
 	{

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:13:15 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 11:06:03 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 12:18:37 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,12 +147,3 @@ void	update_material(t_obj *obj, t_mat_type type, float fuzz)
 	if (type == METAL)
 		obj->material.fuzz = fuzz;
 }
-
-// /*
-//  * returns obj function that returns a malloc-ed pointer
-//  * for specified obj_type
-//  */
-// void	init_new_obj_func(t_obj (*add_obj[])(t_vec3, float, t_vec3, t_uchar))
-// {
-// 	add_obj[SPHERE] = new_sphere;
-// }

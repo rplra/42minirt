@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:35:35 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/30 08:27:38 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 12:00:11 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,17 @@ void	aabb_cyl(t_obj *obj, t_interval res[3])
 void	aabb_plane(t_obj *obj, t_interval res[3])
 {
 	t_plane		plane;
+	t_vec3		corner;
 	t_interval	bbox_side1[3];
 	t_interval	bbox_side2[3];
 
 	plane = obj->plane;
-	aabb(plane.pos, add_vec(add_vec(plane.pos, plane.coord[X]), plane.coord[Y]), bbox_side1);
-	aabb(add_vec(plane.pos, plane.coord[X]), add_vec(plane.pos, plane.coord[Y]), bbox_side2);
+	corner = subtract_vec(plane.pos, div_vec_scalar(plane.coord[X], 2));
+	corner = subtract_vec(corner, div_vec_scalar(plane.coord[Y], 2));
+	aabb(corner, add_vec(add_vec(corner, plane.coord[X]), plane.coord[Y]), bbox_side1);
+	aabb(add_vec(corner, plane.coord[X]), add_vec(corner, plane.coord[Y]), bbox_side2);
+	// aabb(plane.pos, add_vec(add_vec(plane.pos, plane.coord[X]), plane.coord[Y]), bbox_side1);
+	// aabb(add_vec(plane.pos, plane.coord[X]), add_vec(plane.pos, plane.coord[Y]), bbox_side2);
 	update_aabb_box(bbox_side1, bbox_side2, res);
 }
 

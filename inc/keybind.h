@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:47:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 12:43:17 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 13:10:08 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,6 @@ bool		control_key(int keycode);
 t_uint		get_obj_index(t_obj *obj, int obj_count, t_uint id);
 void		update_cam_pos(t_rt *rt);
 
-void		reset_rotation_cam(t_rt *rt);
+void		reset_cam(t_rt *rt);
 
 #endif

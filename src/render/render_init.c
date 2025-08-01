@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 22:12:39 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 13:05:05 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,17 @@ void	init_obj(t_rt *rt)
 
 void	init_cam(t_rt *rt)
 {
-	rt->camera.transform.rotate = new_vec3(0, 0, 0);
-
+	
 	// rt->camera.pos = new_vec3(0, 0, 9); //not parser
 	// rt->camera.pos = new_vec3(-2, 0, 11); //not parser
+	// rt->camera.vfov = radian(90);	//not parser
 	/* ************** need to comment out above when include parser ************************ */
-	
+
+	rt->camera.transform.rotate = new_vec3(0, 0, 0);
+	rt->camera.transform.translate = new_vec3(0, 0, 0);
 	rt->camera.ori = new_vec3(rt->camera.pos.x, rt->camera.pos.y, rt->camera.pos.z);
 	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1));
-	// rt->camera.vfov = radian(90);	//not parser
 	rt->camera.vup = new_vec3(0, 1, 0);
-	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1)); // fixed
 	rt->camera.defoc_ang = DEFOC_ANG;
 	rt->camera.defoc_disk[X] = new_vec3(DEFOC_XX, DEFOC_XY, DEFOC_XZ);
 	rt->camera.defoc_disk[Y] = new_vec3(DEFOC_YX, DEFOC_YY, DEFOC_YZ);
@@ -87,7 +87,7 @@ void	init_variable(t_rt *rt)
 	// edit_material(rt);		//custom assign material
 
 	/* ************** need to comment out below when include parser ************************ */
-	// init_obj(rt);			//not parser
+	// init_obj(rt);				//not parser
 	/* ************** need to comment out above when include parser ************************ */
 
 	// /*debug*/debug_print_arr("init_var", rt->obj, rt->obj_count);

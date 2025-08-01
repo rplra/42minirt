@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/31 10:51:16 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 12:05:42 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
 	init_surf_norm(get_surf_norm);
 	rt->hit.surf_norm = get_surf_norm[rt->obj[index].type](ray, rt->obj[index], t, rt->hit.setting);	//if t>0
 	rt->hit.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
-	// rt->hit.at = add_vec(rt->hit.at, mult_vec_scalar(rt->hit.surf_norm, EPSILON));
 	rt->hit.obj = &rt->obj[index];
 	rt->hit.index = index;
 	rt->hit.t = t;
@@ -89,6 +88,7 @@ bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
  * flag decides which shape it'll render
  * flag 0 = render quadrilaterals
  * flag 1 = render triangles
+ * flag 2 = render ellipse (for cylinder cap only)
  * 
  * brief: checks if intersection point's coords are within the visible part of the plane
  * else, the ray hit infinite part of the plane which we dont want to care
@@ -96,10 +96,10 @@ bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 bool	within_plane_range(float alpha, float beta, int flag)
 {
 	if (flag == 0) 
-		return ((alpha >= 0 && alpha <= 1) && (beta >= 0 && beta <= 1));
+		return ((alpha >= -0.5 && alpha <= 0.5) && (beta >= -0.5 && beta <= 0.5));
 	else if (flag == 1)
 		return (alpha > 0 && beta > 0 && (alpha + beta < 1));
-	else if (flag == 2) //ellipse, wip
+	else if (flag == 2)
 		return (ft_square(alpha) + ft_square(beta) <= ft_square(0.5));
 	return (0);
 }
@@ -127,8 +127,8 @@ static bool	t_intersects_plane(t_rt *rt, int i, t_ray ray, float t)
 	// pt = o + t*d, then pt - C
 	/* ******************* for quads only & triangles ******************* */
 	intersect = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
-	
 	intersect = subtract_vec(intersect, rt->obj[i].plane.pos);
+	
 	/* ******** for ellipse, need to shift from corner to center ******** */
 	// t_vec3	center = add_vec(add_vec(rt->obj[i].plane.pos, div_vec_scalar(rt->obj[i].plane.coord[Y],2)), div_vec_scalar(rt->obj[i].plane.coord[X], 2));
 	// intersect = subtract_vec(intersect, center); //default=corner, if ellipse=center 

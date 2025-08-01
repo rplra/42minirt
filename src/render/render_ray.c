@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 11:06:03 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 14:09:43 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,12 @@ t_vec3	ray_color(t_rt *rt, t_ray ray, t_uchar ray_bounce, t_uint *seed)
 	obj_hit = hit(rt, new_interval(0.001f, 2147483647.0), ray);
 	if (obj_hit == NULL)
 		return (bg_color(*rt, ray));
+	/* ****************************************** */
 	point = rt->hit;
 	if (point.obj == NULL)
 		return (new_vec3(0, 0, 0));
+	/* ****************************************** */
+
 	colour = ambient(&point, rt->ambient);
 	if (ray_bounce == rt->camera.ray_bounce)
 		colour = add_vec(colour, sample_direct_light(rt, &point, seed));

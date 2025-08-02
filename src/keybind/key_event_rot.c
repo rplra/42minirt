@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 22:47:23 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/01 18:06:10 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/02 14:54:22 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	reset_cam(t_rt *rt)
 	rt->camera.transform.rotate = new_vec3(0, 0, 0);
 	rt->camera.transform.translate = new_vec3(0, 0, 0);
 	rt->camera.pos = new_vec3(rt->camera.ori.x, rt->camera.ori.y, rt->camera.ori.z);
+	rt->camera.vup = rt->camera.vup_ori;
 }
 
 void	handle_rotation(t_rt *rt, int keycode)

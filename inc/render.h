@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/01 17:45:19 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/02 14:55:44 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ void		clear_image(t_rt vars, int win_width, int win_height, int color);
 /* __________________ rotate __________________ */
 // t_ray		rotate_ray_to_local(t_vec3 rotation, t_ray ray);
 void		transform_hit_pt(t_rt *rt, t_obj res);
+// t_ray		transform_ray(t_rt *rt, t_obj obj, t_ray ray);
 t_ray		transform_ray(t_obj obj, t_ray ray);
 void		transform_bbox(t_rt *rt, t_uint index);
 

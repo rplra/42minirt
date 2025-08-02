@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/31 11:52:46 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 19:48:37 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,11 @@ typedef struct s_camera
 	t_vec3		pos;
 	t_vec3		ori;
 	t_vec3		vup;				//camera orientation
+	t_vec3		vup_ori;				//camera orientation
 	float		vfov;				//vertical fov (need change to hfov)
 
 	t_vec3		lookat;				//camera pointing to				
+	t_vec3		lookat_ori;				//camera pointing to				
 	float		focus_dist;
 	float		defoc_ang;			//blur angle
 	t_vec3		defoc_disk[2];

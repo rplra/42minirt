@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 12:45:16 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/02 13:08:55 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
  * 2. computes cam's local coords frame (basis vector)
  * 3. scale the cam's axis to viewport size (entire width and ht of screen) & the defoc disk
  */
-static void	get_viewport_uv(t_rt *vars, t_vec3 *viewport_u, \
+static void	get_viewport_uv(t_rt *rt, t_vec3 *viewport_u, \
 t_vec3 *viewport_v, t_vec3 *cam_w)
 {
 	float		h;
@@ -35,17 +35,22 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
 	float		viewport[2];
 	t_vec3		cam[2];
 
-	h = tan(vars->camera.vfov / 2) * vars->camera.focus_dist;
-	viewport[H] = 2 * h;
-	viewport[W] = (viewport[H] * WIN_WIDTH) / WIN_HEIGHT;
+	h = tan(rt->camera.vfov / 2) * rt->camera.focus_dist;
+	// viewport[H] = 2 * h;
+	// viewport[W] = (viewport[H] * WIN_WIDTH) / WIN_HEIGHT;
 	// for hfov method, push changes later
-	// viewport[W] = 2 * h;
-	// viewport[H] = (viewport[W] * WIN_HEIGHT) / WIN_WIDTH;
+	viewport[W] = 2 * h;
+	viewport[H] = (viewport[W] * WIN_HEIGHT) / WIN_WIDTH;
 
 	// /*debug*/printf("h:%f, viewport: %f %f\n", h, viewport[X], viewport[Y]);
-	*cam_w = unit_vec3(subtract_vec(vars->camera.pos, vars->camera.lookat));
-	cam[X] = unit_vec3(cross_product(vars->camera.vup, *cam_w));
+	*cam_w = unit_vec3(subtract_vec(rt->camera.pos, rt->camera.lookat));
+	cam[X] = unit_vec3(cross_product(rt->camera.vup, *cam_w));
 	cam[Y] = mult_vec_scalar(cross_product(*cam_w, cam[X]), -1); // -v
+	
+	
+	// *cam_w = quaternion_rotate_adv(*cam_w, rt->camera.transform.rotate, 1);
+	// cam[X] = quaternion_rotate_adv(cam[X], rt->camera.transform.rotate, 1);
+	// cam[Y] = quaternion_rotate_adv(cam[Y], rt->camera.transform.rotate, 1);
 	// /*debug*/printf("cam_w: %f %f %f\n", (*cam_w).x, (*cam_w).y, (*cam_w).z);
 	// /*debug*/printf("cam[X]: %f %f %f\n", cam[X].x, cam[X].y, cam[X].z);
 	// /*debug*/printf("cam[Y]: %f %f %f\n", cam[Y].x, cam[Y].y, cam[Y].z);
@@ -55,10 +60,10 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
 	// /*debug*/printf("cam_u: %f %f %f\n", cam[X].x, cam[X].y, cam[X].z);
 	// /*debug*/printf("cam_v: %f %f %f\n", cam[Y].x, cam[Y].y, cam[Y].z);
 	
-	defoc_radius = vars->camera.focus_dist * tan(vars->camera.defoc_ang / 2);
+	defoc_radius = rt->camera.focus_dist * tan(rt->camera.defoc_ang / 2);
 
-	vars->camera.defoc_disk[X] = mult_vec_scalar(cam[X], defoc_radius); // right vector
-	vars->camera.defoc_disk[Y] = mult_vec_scalar(cam[Y], defoc_radius); // up vector
+	rt->camera.defoc_disk[X] = mult_vec_scalar(cam[X], defoc_radius); // right vector
+	rt->camera.defoc_disk[Y] = mult_vec_scalar(cam[Y], defoc_radius); // up vector
 
 	// *viewport_u = new_vector3d(viewport[X], 0, 0);
 	// *viewport_v = new_vector3d(0, -viewport[Y], 0);
@@ -83,17 +88,17 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
  * 4. move halfway left > move halfway up to get to the top left pixel
  * 5. set the start to the center of the top left pixel
  */
-static void	get_viewport_coords(t_rt *vars, t_vec3 *vp_00_loc, \
+static void	get_viewport_coords(t_rt *rt, t_vec3 *vp_00_loc, \
 t_vec3 *vp_top_left, t_vec3 vp_d[2])
 {
 	t_vec3	vp[2];
 	t_vec3	cam_w;
 
-	get_viewport_uv(vars, &vp[X], &vp[Y], &cam_w);	
+	get_viewport_uv(rt, &vp[X], &vp[Y], &cam_w);	
 	vp_d[X] = div_vec_scalar(vp[X], WIN_WIDTH);
 	vp_d[Y] = div_vec_scalar(vp[Y], WIN_HEIGHT);
-	*vp_top_left = subtract_vec(vars->camera.pos, \
-mult_vec_scalar(cam_w, vars->camera.focus_dist));
+	*vp_top_left = subtract_vec(rt->camera.pos, \
+mult_vec_scalar(cam_w, rt->camera.focus_dist));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[X], 2));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[Y], 2));
 	*vp_00_loc = add_vec(*vp_top_left, \
@@ -116,7 +121,7 @@ div_vec_scalar(add_vec(vp_d[X], vp_d[Y]), 2));
  * 2. get the col at the pixel
  * 3. draw pixel on screen
  */
-static void	ft_draw(t_rt vars, t_vec3 viewport_00, t_vec3 viewport_d[2])
+static void	ft_draw(t_rt rt, t_vec3 viewport_00, t_vec3 viewport_d[2])
 {
 	int		x;
 	int		y;
@@ -139,8 +144,8 @@ static void	ft_draw(t_rt vars, t_vec3 viewport_00, t_vec3 viewport_d[2])
 			target.x = viewport_00.x + (x * viewport_d[X].x) + (y * viewport_d[Y].x);
 // x = viewport_00.x + (x * dx.x)  |->  + (offset.x * dx.x)
 //                   + (y * dy.x)  |->  + (offset.y * dy.x)
-			color = sample_pixels(vars, target, viewport_d, x);
-			my_mlx_pixel_put(vars, x, y, color);
+			color = sample_pixels(rt, target, viewport_d, x);
+			my_mlx_pixel_put(rt, x, y, color);
 		}
 	}
 }
@@ -164,7 +169,6 @@ void	my_render_image(t_rt *rt)
 rt->img.img, 0, 0);
 
 	//draw
-	// update_cam_pos(rt);
 	get_viewport_coords(rt, &vp_00_loc, &vp_top_left, vp_d);
 	ft_draw(*rt, vp_00_loc, vp_d);
 

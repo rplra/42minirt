@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 22:08:23 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/01 17:46:38 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/02 14:56:16 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static t_ray	rotate_ray_to_local(t_vec3 rotation, t_ray ray)
  */
 t_ray	transform_ray(t_obj obj, t_ray ray)
 {
+	(void) obj;
 	ray.orig = subtract_vec(ray.orig, obj.bbox_center);
 	ray = rotate_ray_to_local(obj.rotate, ray);
 	ray.orig = subtract_vec(ray.orig, mult_vec_scalar(obj.bbox_center, -1));
@@ -44,7 +45,7 @@ void	transform_hit_pt(t_rt *rt, t_obj res)
 	
 	rt->hit.at = quaternion_rotate_adv(rt->hit.at, res.rotate, 1);
 	rt->hit.surf_norm = quaternion_rotate_adv(rt->hit.surf_norm, res.rotate, 1);
-
+	
 	rt->hit.at = add_vec(rt->hit.at, mult_vec_scalar(res.bbox_center, -1));
 }
 
@@ -62,8 +63,10 @@ void	update_cam_pos(t_rt *rt)
 	
 	pos = add_vec(rt->camera.ori, rt->camera.transform.translate);
 	rt->camera.pos = quaternion_rotate_adv(pos, rt->camera.transform.rotate, 1);
-	// rt->camera.pos = quaternion_rotate_adv(rt->camera.ori, rt->camera.transform.rotate, 1);
+	rt->camera.vup = quaternion_rotate_adv(rt->camera.vup_ori, rt->camera.transform.rotate, 1);
+	// rt->camera.vup = unit_vec3(rt->camera.vup);
 	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1));
 	rt->camera.focus_dist = len_vec3(subtract_vec(rt->camera.pos, rt->camera.lookat));
+
 	rt->ray.orig = rt->camera.pos;
 }

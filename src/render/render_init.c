@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/01 18:15:24 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/01 19:49:11 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ void	init_cam(t_rt *rt)
 	rt->camera.transform.translate = new_vec3(0, 0, 0);
 	rt->camera.ori = new_vec3(rt->camera.pos.x, rt->camera.pos.y, rt->camera.pos.z);
 	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1));
+	/*kiv*/rt->camera.lookat_ori = add_vec(rt->camera.pos, new_vec3(0, 0, -1));
 	rt->camera.vup = new_vec3(0, 1, 0);
+	/*kiv*/rt->camera.vup_ori = new_vec3(0, 1, 0);
 	rt->camera.defoc_ang = DEFOC_ANG;
 	rt->camera.defoc_disk[X] = new_vec3(DEFOC_XX, DEFOC_XY, DEFOC_XZ);
 	rt->camera.defoc_disk[Y] = new_vec3(DEFOC_YX, DEFOC_YY, DEFOC_YZ);

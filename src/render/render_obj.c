@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:13:15 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/01 12:18:37 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/02 18:46:21 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ t_obj	new_cyl(t_vec3 position, t_vec3 normal, float radius, float height, t_mat 
 	res.cyl.coord[Y] = mult_vec_scalar(res.cyl.coord[Y], radius * 2);
 	n = cross_product(res.cyl.coord[X], res.cyl.coord[Y]);
 
+	// (0,1,0 * -2) = (0,-2,0)
+
 	// corner of bottom cap, corner of top cap
 	// t_vec3 corner = subtract_vec(subtract_vec(res.cyl.pos, \
 // div_vec_scalar(res.cyl.coord[X], 2)), div_vec_scalar(res.cyl.coord[Y], 2));
@@ -61,8 +63,10 @@ t_obj	new_cyl(t_vec3 position, t_vec3 normal, float radius, float height, t_mat 
 	// /*debug*/debug_print_vec("norm_u", unit_vec3(res.cyl.coord[X]));
 	// /*debug*/debug_print_vec("norm_v", unit_vec3(res.cyl.coord[Y]));
 
-	res.cyl.d[0] = scalar_product(res.cyl.axis, subtract_vec(res.cyl.pos, mult_vec_scalar(res.cyl.axis, height / 2))); //official use corner
-	res.cyl.d[1] = scalar_product(res.cyl.axis, add_vec(res.cyl.pos, mult_vec_scalar(res.cyl.axis, height / 2))); //official use corner
+	res.cyl.d[0] = scalar_product(res.cyl.axis, subtract_vec(res.cyl.pos, \
+mult_vec_scalar(res.cyl.axis, height / 2))); //official use corner
+	res.cyl.d[1] = scalar_product(res.cyl.axis, add_vec(res.cyl.pos, \
+mult_vec_scalar(res.cyl.axis, height / 2))); //official use corner
 	res.cyl.w = div_vec_scalar(n, scalar_product(n, n));
 	create_bbox(&res, res.bbox);
 	copy_bbox(res.bbox_ori, res.bbox);

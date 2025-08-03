@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:25:47 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/01 18:08:04 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/03 13:19:33 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,46 +106,64 @@ obj->plane.pos.x, obj->plane.pos.y, obj->plane.pos.z);
 		{
 			/*debug*/printf("   Old Pos @%p: (%.2f, %.2f, %.2f)\n", (void*)&obj->sph.pos,
 obj->sph.pos.x, obj->sph.pos.y, obj->sph.pos.z);
-obj->sph.pos = add_vec(obj->sph.pos, delta);
+			obj->sph.pos = add_vec(obj->sph.pos, delta);
 			/*debug*/printf("   New Pos: (%.2f, %.2f, %.2f)\n",
 obj->sph.pos.x, obj->sph.pos.y, obj->sph.pos.z);
 		}
 		else if (obj->type == CYLINDER)
 		{
-			t_vec3	axis_height = mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2);
 			/*debug*/printf("   Old Pos @%p: (%.2f, %.2f, %.2f)\n", (void*)&obj->cyl.pos,
-obj->cyl.pos.x, obj->cyl.pos.y, obj->cyl.pos.z);
+			obj->cyl.pos.x, obj->cyl.pos.y, obj->cyl.pos.z);
+			
 			obj->cyl.pos = add_vec(obj->cyl.pos, delta);
+
+			t_vec3	axis_height = mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2);
 			obj->cyl.d[0] = scalar_product(obj->cyl.axis, \
 subtract_vec(obj->cyl.pos, axis_height));
 			obj->cyl.d[1] = scalar_product(obj->cyl.axis, \
 add_vec(obj->cyl.pos, axis_height));
+
 			/*debug*/printf("   New Pos: (%.2f, %.2f, %.2f)\n",
 obj->cyl.pos.x, obj->cyl.pos.y, obj->cyl.pos.z);
 		}
 		aabb_translate(*obj, obj->bbox, delta);
-		copy_bbox(obj->bbox_ori, obj->bbox);
-		obj->bbox_center = get_bbox_center(obj->bbox);
+		// copy_bbox(obj->bbox_ori, obj->bbox);
+		// obj->bbox_center = get_bbox_center(obj->bbox);
 	}
 }
 
 void	handle_scale(t_rt *rt, int keycode)
 {
-	float	scale;;
+	int		id;
 	t_obj	*obj;
+	float	scale;
 
 	if (!scale_key(keycode))
 		return;
 	scale = scale_factor(keycode);
 	if (rt->sel.type == SEL_OBJ)
 	{
-		obj = &rt->obj[rt->sel.obj_index];
+		id = get_obj_index(rt->obj, rt->obj_count, rt->sel.obj_index);
+		obj = &rt->obj[id];
 		if (obj->type == SPHERE)
 			obj->sph.rad *= scale;
 		else if (obj->type == CYLINDER)
 		{
 			obj->cyl.rad *= scale;
 			obj->cyl.height *= scale;
+
+			obj->cyl.coord[X] = mult_vec_scalar(obj->cyl.coord[X], scale);
+			obj->cyl.coord[Y] = mult_vec_scalar(obj->cyl.coord[Y], scale);
+			obj->cyl.d[0] = scalar_product(obj->cyl.axis, subtract_vec(obj->cyl.pos, \
+mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2)));
+			obj->cyl.d[1] = scalar_product(obj->cyl.axis, add_vec(obj->cyl.pos, \
+mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2)));
+			t_vec3	n = cross_product(obj->cyl.coord[X], obj->cyl.coord[Y]);
+			obj->cyl.w = div_vec_scalar(n, scalar_product(n, n));
+			//coord, n, d, w, bbox
 		}
+		create_bbox(obj, obj->bbox);
+		// copy_bbox(obj->bbox_ori, obj->bbox);
+		// obj->bbox_center = get_bbox_center(obj->bbox);
 	}
 }

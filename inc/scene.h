@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/01 19:48:37 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/02 22:46:31 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ typedef struct s_camera
 	float		vfov;				//vertical fov (need change to hfov)
 
 	t_vec3		lookat;				//camera pointing to				
-	t_vec3		lookat_ori;				//camera pointing to				
 	float		focus_dist;
 	float		defoc_ang;			//blur angle
 	t_vec3		defoc_disk[2];
@@ -114,14 +113,14 @@ typedef struct s_plane
 	bool		b_rotate;
 }				t_plane;
 
-typedef struct s_quad
-{
-	t_vec3		pos;
-	t_vec3		coord[2];	//u, v
-	t_vec3		normal;
-	float		d;			//D in plane formula: Ax + By + Cz = D
-	t_vec3		w;			//const for calculating if point hit is within quad surface
-}				t_quad;
+// typedef struct s_quad
+// {
+// 	t_vec3		pos;
+// 	t_vec3		coord[2];	//u, v
+// 	t_vec3		normal;
+// 	float		d;			//D in plane formula: Ax + By + Cz = D
+// 	t_vec3		w;			//const for calculating if point hit is within quad surface
+// }				t_quad;
 
 typedef struct s_cylinder
 {

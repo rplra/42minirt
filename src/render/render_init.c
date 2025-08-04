@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/02 15:15:43 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/04 18:35:10 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	init_cam(t_rt *rt)
 	rt->camera.ori = new_vec3(rt->camera.pos.x, rt->camera.pos.y, rt->camera.pos.z);
 	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1));
 	rt->camera.vup = new_vec3(0, 1, 0);
-	/*kiv*/rt->camera.vup_ori = new_vec3(0, 1, 0);
+	rt->camera.vup_ori = new_vec3(0, 1, 0);
 	rt->camera.defoc_ang = DEFOC_ANG;
 	rt->camera.defoc_disk[X] = new_vec3(DEFOC_XX, DEFOC_XY, DEFOC_XZ);
 	rt->camera.defoc_disk[Y] = new_vec3(DEFOC_YX, DEFOC_YY, DEFOC_YZ);
@@ -108,8 +108,10 @@ void	init_variable(t_rt *rt)
 	init_hit(rt);
 	rt->sel.type = SEL_CAMERA;
 	rt->sel.obj_index = 0;
-	rt->color_bg[0] = new_vec3(0.5, 0.7, 1);
-	rt->color_bg[1] = new_vec3(1, 1, 1);
+	rt->color_bg[0] = mult_vec_scalar(new_vec3(0.4, 0.6, 1), rt->ambient.intensity);
+	rt->color_bg[1] = mult_vec_scalar(rt->ambient.colour, rt->ambient.intensity);
+	// rt->color_bg[0] = new_vec3(0.5, 0.7, 1);
+	// rt->color_bg[1] = new_vec3(1, 1, 1);
 	rt->seed = 12345;
 	my_create_image(rt, &rt->img);
 }

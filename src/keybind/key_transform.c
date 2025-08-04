@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:33:48 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/01 18:08:33 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/04 18:19:48 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ keycode == KEY_U || keycode == KEY_O);
 /* all keypress button that allow img render to happen */
 bool	control_key(int keycode)
 {
-	return (keycode == KEY_R || keycode == KEY_UP || keycode == KEY_DOWN);
+	return (keycode == KEY_R || keycode == KEY_UP || keycode == KEY_DOWN
+|| keycode == KEY_SPACE);
 }

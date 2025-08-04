@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:19:29 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/27 20:21:32 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/03 17:00:04 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void print_camera(const t_camera *camera)
 		camera->pos.x, camera->pos.y, camera->pos.z);
 	printf("Camera ort: (x=%f, y=%f, z=%f)\n",
 		camera->vup.x, camera->vup.y, camera->vup.z);
-	printf("Camera fov: %f\n", camera->vfov);
+	printf("Camera fov: %f\n", camera->hfov);
 }
 
 void print_light(const t_light *light)

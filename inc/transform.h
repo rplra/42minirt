@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:22:13 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/02 13:31:45 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/04 18:09:36 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 typedef struct s_transform
 {
 	t_vec3		translate;
-	t_vec3		scale;
+	// t_vec3		scale;
 	t_vec3		rotate;
 }				t_transform;
 

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:47:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/01 18:06:10 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/04 18:16:18 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void		handle_selection(t_rt *rt, int keycode);
 void		handle_translation(t_rt *rt, int keycode);
 void		handle_scale(t_rt *rt, int keycode);
 void		handle_rotation(t_rt *rt, int keycode);
+void		handle_show_light(t_rt *rt, int keycode);
 
 bool		translation_key(int keycode);
 t_vec3		translation_delta(int keycode);
@@ -143,6 +144,7 @@ bool		rotation_key_obj(int keycode);
 bool		control_key(int keycode);
 
 t_uint		get_obj_index(t_obj *obj, int obj_count, t_uint id);
+t_uint		get_light_index(t_obj *obj, int obj_count);
 void		update_cam_pos(t_rt *rt);
 
 void		reset_cam(t_rt *rt);

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/01 14:26:00 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/04 18:41:59 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_col	handle_metal(t_rt *rt, t_ray *ray, t_hit *point, t_uint *seed)
  * 2. recursively calls ray_color col until bounce exhausted
  * 3. multiplies col result by mat's albedo
 */
-static t_col	handle_diffuse(t_rt *rt, t_hit *point, t_uint *seed)
+t_col	handle_diffuse(t_rt *rt, t_hit *point, t_uint *seed)
 {
 	t_mat	*mat;
 	t_ray	bounce;
@@ -48,7 +48,7 @@ static t_col	handle_diffuse(t_rt *rt, t_hit *point, t_uint *seed)
 	return (mult_vec(indirect_light, mat->albedo));
 }
 
-static t_col	handle_material(t_rt *rt, t_ray *ray, t_hit *point, t_uint *seed)
+t_col	handle_material(t_rt *rt, t_ray *ray, t_hit *point, t_uint *seed)
 {
 	if (point->obj->material.type == METAL)
 		return (handle_metal(rt, ray, point, seed));
@@ -67,30 +67,116 @@ static t_col	handle_material(t_rt *rt, t_ray *ray, t_hit *point, t_uint *seed)
  * 5. for the rest, add indirect light contribution from material
  * recursion = global illumination
  */
-t_vec3	ray_color(t_rt *rt, t_ray ray, t_uchar ray_bounce, t_uint *seed)
+// t_vec3	ray_color(t_rt *rt, t_ray ray, t_uchar ray_bounce, t_uint *seed)
+// {
+// 	t_obj	*obj_hit;
+// 	t_hit	point;
+// 	t_col	colour;
+
+// 	if (ray_bounce <= 0)
+// 		return (new_vec3(0, 0, 0));
+// 	obj_hit = hit(rt, new_interval(0.001f, 2147483647.0), ray);
+// 	if (obj_hit == NULL)
+// 		return (bg_color(*rt, ray));
+// 	/* ******************** i think can remove ********************** */
+// 	point = rt->hit;
+// 	if (point.obj == NULL)	//obj_hit is same as point.obj
+// 		return (new_vec3(0, 0, 0));
+// 	/* ************************************************************** */
+
+// 	colour = ambient(&point, rt->ambient);
+// 	if (ray_bounce == rt->camera.ray_bounce)
+// 		colour = add_vec(colour, sample_direct_light(rt, &point, seed));
+// 	if (ray_bounce > 0)
+// 		colour = add_vec(colour, handle_material(rt, &ray, &point, seed));
+// 	// /*debug*/printf("final col: (%f, %f, %f)\n", colour.x, colour.y, colour.z);
+// 	return (colour);
+// }
+
+/*
+ * ray_color v2, uses sample_direct_light
+ * bg_color = ambient, so
+ * ambient is added when we return bg_color
+ */
+// t_vec3	ray_color(t_rt *rt, t_ray ray, t_uchar ray_bounce, t_uint *seed)
+// {
+// 	t_obj	*obj_hit;
+// 	t_hit	point;
+// 	t_ray	bounce;
+// 	t_col	emitted_col;
+// 	t_col	bounced_col;
+
+// 	if (ray_bounce <= 0)
+// 		return (new_vec3(0, 0, 0));
+// 	obj_hit = hit(rt, new_interval(0.001f, 2147483647.0), ray);
+// 	if (obj_hit == NULL)
+// 		return (bg_color(*rt, ray));	//ambient
+// 	/* ************************************************************** */
+// 	// colour = mult_vec_scalar(rt->ambient.colour, rt->ambient.intensity);
+// 	/* ************************************************************** */
+// 	point = rt->hit;
+// 	emitted_col = new_vec3(0,0,0);
+// 	if (ray_bounce == rt->camera.ray_bounce)
+// 		emitted_col = sample_direct_light(rt, &point, seed);
+// 	bounce.orig = rt->hit.at;
+
+// 	if (obj_hit->material.type == METAL)
+// 	{
+// 		bounce.vector = mat_metal(ray.vector, rt->hit.surf_norm, obj_hit->material.fuzz, seed);
+// 		if (scalar_product(bounce.vector, rt->hit.surf_norm) <= 0)
+// 			return (new_vec3(0,0,0));
+// 	}
+// 	else if (obj_hit->material.type == DIFFUSE)
+// 		bounce.vector = mat_lambertian(rt->hit.surf_norm, seed);
+
+// 	bounced_col = (mult_vec(ray_color(rt, bounce, ray_bounce - 1, seed), \
+// obj_hit->material.albedo));
+// 	return (add_vec(emitted_col, bounced_col));
+// }
+
+t_col	emitted(t_obj *obj)
+{
+	if (obj->material.type == LIGHT)
+		return (obj->material.albedo);
+	return (new_vec3(0.01, 0.01, 0.01));
+}
+
+/* ray_color v3, objs as light */
+t_vec3	ray_color(t_rt *rt, t_ray ray, t_uchar ray_bounce, \
+t_uint *seed)
 {
 	t_obj	*obj_hit;
-	t_hit	point;
-	t_col	colour;
+	t_ray	bounce;
+	t_vec3	emitted_col;
+	t_vec3	bounced_col;
 
 	if (ray_bounce <= 0)
 		return (new_vec3(0, 0, 0));
-	obj_hit = hit(rt, new_interval(0.001f, 2147483647.0), ray);
+
+	obj_hit = hit(rt, new_interval(0.00001f, 2147483647.0), ray); //assigns surf_norm
 	if (obj_hit == NULL)
 		return (bg_color(*rt, ray));
-	/* ****************************************** */
-	point = rt->hit;
-	if (point.obj == NULL)
-		return (new_vec3(0, 0, 0));
-	/* ****************************************** */
+	bounce.orig = rt->hit.at;
+		
+	emitted_col = emitted(obj_hit);
+	if (obj_hit->material.type == LIGHT)
+	{
+		if (rt->show_light == 0 && ray_bounce == rt->camera.ray_bounce)
+			return (bg_color(*rt, ray));
+		return (emitted_col);
+	}
+	else if (obj_hit->material.type == METAL)
+	{
+		bounce.vector = mat_metal(ray.vector, rt->hit.surf_norm, obj_hit->material.fuzz, seed);
+		if (scalar_product(bounce.vector, rt->hit.surf_norm) <= 0)
+			return (new_vec3(0,0,0));
+	}
+	else if (obj_hit->material.type == DIFFUSE)
+		bounce.vector = mat_lambertian(rt->hit.surf_norm, seed);
 
-	colour = ambient(&point, rt->ambient);
-	if (ray_bounce == rt->camera.ray_bounce)
-		colour = add_vec(colour, sample_direct_light(rt, &point, seed));
-	if (ray_bounce > 0)
-		colour = add_vec(colour, handle_material(rt, &ray, &point, seed));
-	// /*debug*/printf("final col: (%f, %f, %f)\n", colour.x, colour.y, colour.z);
-	return (colour);
+	bounced_col = (mult_vec(ray_color(rt, bounce, ray_bounce - 1, seed), \
+obj_hit->material.albedo));
+	return (add_vec(emitted_col, bounced_col));
 }
 
 // /*

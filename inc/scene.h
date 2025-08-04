@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/02 22:46:31 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/04 18:11:15 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ typedef t_vec3			t_col;
 typedef enum e_mat_type
 {
 	DIFFUSE,
-	METAL
+	METAL,
+	LIGHT
 	// DIELEC
 	// BUBBLE
 }			t_mat_type;
@@ -79,7 +80,7 @@ typedef struct s_camera
 	t_vec3		ori;
 	t_vec3		vup;				//camera orientation
 	t_vec3		vup_ori;				//camera orientation
-	float		vfov;				//vertical fov (need change to hfov)
+	float		hfov;				//vertical fov (need change to hfov)
 
 	t_vec3		lookat;				//camera pointing to				
 	float		focus_dist;

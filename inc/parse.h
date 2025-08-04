@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:39:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/19 20:15:32 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/03 23:02:17 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ char	**tokenize(char *line);
 /*		parse_scene.c		*/
 int		parse_scene(t_parse *file, t_rt *rt);
 int		parse_object(t_parse *file, t_rt *rt);
+void	assign_bbox(t_obj *obj);
+void	assign_rotation(t_obj *obj);
 
 /*		parse_setup.c		*/
 int		parse_ambient(char **params, t_parse *file, t_ambient *ambient);

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/01 12:12:29 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/04 17:38:40 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
 	(void)	x;
 
 	seed = vars.seed + x;
+	// seed = vars.seed;
 	k = -1;
 	color = new_vec3(0, 0, 0);
 	res.z = target.z;

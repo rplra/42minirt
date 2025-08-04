@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/01 18:12:09 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/04 19:11:07 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@
 /*	sample	*/
 # define SAMPLE_SOFT_SHADOW		15  // > == softer shadow
 # define SAMPLE_RAY_BOUNCE		5	// > == more realistic lighting
-# define SAMPLE_PER_PIXEL		5	// > == smoother img
-# define SAMPLE_PREVIEW			1
+# define SAMPLE_PER_PIXEL		30	// > == smoother img
+# define SAMPLE_PREVIEW			2
 
 #endif

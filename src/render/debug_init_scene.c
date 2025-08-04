@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 16:56:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 21:57:53 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/03 16:56:20 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,17 @@ void	init_plane_scene(t_rt *rt)
 
 	// rt->obj[0] = new_plane(new_vec3(2,-2,0), new_vec3(0,0,1), back_green);
 	// rt->obj[0] = new_plane(new_vec3(-2,-2,0), new_vec3(0,0,1), back_green);
-	rt->obj[0] = new_plane(new_vec3(-2,-2,0), new_vec3(0,0,1), back_green);
-	rt->obj[1] = new_plane(new_vec3(-3,-2,5), new_vec3(1,0,0), left_red);
-	rt->obj[2] = new_plane(new_vec3(-2,3,1), new_vec3(0,-1,0), up_orange);
-	rt->obj[3] = new_plane(new_vec3(-2,-3,5), new_vec3(0,1,0), down_teal);
-	rt->obj[4] = new_plane(new_vec3(3,-2,1), new_vec3(-1,0,0), right_blue);
+	// rt->obj[0] = new_plane(new_vec3(-2,-2,0), new_vec3(0,0,1), back_green);
+	// rt->obj[1] = new_plane(new_vec3(-3,-2,5), new_vec3(1,0,0), left_red);
+	// rt->obj[2] = new_plane(new_vec3(-2,3,1), new_vec3(0,-1,0), up_orange);
+	// rt->obj[3] = new_plane(new_vec3(-2,-3,5), new_vec3(0,1,0), down_teal);
+	// rt->obj[4] = new_plane(new_vec3(3,-2,1), new_vec3(-1,0,0), right_blue);
 
-	// rt->obj[0] = new_plane(new_vec3(-3,0,3), new_vec3(1,0,0), left_red);
-	// rt->obj[1] = new_plane(new_vec3(0,0,0), new_vec3(0,0,1), back_green);
-	// rt->obj[2] = new_plane(new_vec3(3,0,3), new_vec3(0,-1,0), up_orange);
-	// rt->obj[3] = new_plane(new_vec3(0,3,3), new_vec3(0,1,0), down_teal);
-	// rt->obj[4] = new_plane(new_vec3(0,-3,3), new_vec3(-1,0,0), right_blue);
+	rt->obj[0] = new_plane(new_vec3(-3,0,1), new_vec3(1,0,0), left_red);
+	rt->obj[1] = new_plane(new_vec3(0,0,0), new_vec3(0,0,1), back_green);
+	rt->obj[2] = new_plane(new_vec3(3,0,1), new_vec3(-1,0,0), up_orange);
+	rt->obj[3] = new_plane(new_vec3(0,3,1), new_vec3(0,-1,0), down_teal);
+	rt->obj[4] = new_plane(new_vec3(0,-3,1), new_vec3(0,1,0), right_blue);
 
 	//(-3,-2,5), (-3,0,3) (centerpt) left
 	//(-2,-2,0), (0,0,0) (centerpt) center

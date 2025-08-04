@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/02 15:15:43 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/04 18:26:02 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	init_cam(t_rt *rt)
 	rt->camera.ori = new_vec3(rt->camera.pos.x, rt->camera.pos.y, rt->camera.pos.z);
 	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1));
 	rt->camera.vup = new_vec3(0, 1, 0);
-	/*kiv*/rt->camera.vup_ori = new_vec3(0, 1, 0);
+	rt->camera.vup_ori = new_vec3(0, 1, 0);
 	rt->camera.defoc_ang = DEFOC_ANG;
 	rt->camera.defoc_disk[X] = new_vec3(DEFOC_XX, DEFOC_XY, DEFOC_XZ);
 	rt->camera.defoc_disk[Y] = new_vec3(DEFOC_YX, DEFOC_YY, DEFOC_YZ);
@@ -84,20 +84,38 @@ void	init_hit(t_rt *rt)
 }
 
 /* reassign material to other types than default */
-void	edit_mat(t_rt *rt)
+void	edit_material(t_rt *rt)
 {
-	update_material(&rt->obj[0], METAL, 0);
-	update_material(&rt->obj[1], DIFFUSE, 0);
-	update_material(&rt->obj[2], METAL, 0);
+	update_material(&rt->obj[0], LIGHT, 0);
+	rt->obj[0].material.albedo = mult_vec_scalar(new_vec3(1,1,1), 4);
+	// update_material(&rt->obj[1], DIFFUSE, 0);
+	// update_material(&rt->obj[2], METAL, 0);
+}
+
+void	init_light(t_rt *rt)
+{
+	t_obj	light;
+
+	light.type = SPHERE;
+	light.sph.pos = rt->light.pos;
+	light.sph.rad = 0.5;
+	light.material.albedo = mult_vec_scalar(rt->light.colour, rt->light.brightness * 4);
+	light.material.type = LIGHT;
+	assign_rotation(&light);
+	assign_bbox(&light);
+	light.id = rt->obj_count;
+	add_object(rt, &light);
 }
 
 void	init_variable(t_rt *rt)
 {
-	
+
 	rt->preview_mode = 1;
+	rt->show_light = 1;
 	init_cam(rt);
 	// edit_material(rt);		//custom assign material
 
+	init_light(rt);			//variation
 	/* ************** need to comment out below when include parser ************************ */
 	// init_obj(rt);				//not parser
 	/* ************** need to comment out above when include parser ************************ */
@@ -108,8 +126,9 @@ void	init_variable(t_rt *rt)
 	init_hit(rt);
 	rt->sel.type = SEL_CAMERA;
 	rt->sel.obj_index = 0;
-	rt->color_bg[0] = new_vec3(0.5, 0.7, 1);
-	rt->color_bg[1] = new_vec3(1, 1, 1);
+	rt->color_bg[0] = mult_vec_scalar(new_vec3(0.4, 0.6, 1), rt->ambient.intensity);
+	rt->color_bg[1] = mult_vec_scalar(rt->ambient.colour, rt->ambient.intensity);
+	// rt->color_bg[1] = new_vec3(1, 1, 1);
 	rt->seed = 12345;
 	my_create_image(rt, &rt->img);
 }

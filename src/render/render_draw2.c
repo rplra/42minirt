@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/02 13:08:55 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/03 17:00:04 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
 	float		viewport[2];
 	t_vec3		cam[2];
 
-	h = tan(rt->camera.vfov / 2) * rt->camera.focus_dist;
+	h = tan(rt->camera.hfov / 2) * rt->camera.focus_dist;
 	// viewport[H] = 2 * h;
 	// viewport[W] = (viewport[H] * WIN_WIDTH) / WIN_HEIGHT;
 	// for hfov method, push changes later

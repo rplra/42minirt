@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:25:47 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/03 13:19:33 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/04 18:18:30 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,25 @@ void	handle_selection(t_rt *rt, int keycode)
 	/*debug*/print_selected(rt);
 }
 
+void	handle_show_light(t_rt *rt, int keycode)
+{
+	if (keycode != KEY_SPACE)
+		return ;
+	if (rt->sel.type == SEL_LIGHT)
+	{
+		if (!rt->show_light && keycode == KEY_SPACE)
+			rt->show_light = 1;
+		else if (rt->show_light && keycode == KEY_SPACE)
+			rt->show_light = 0;
+	}
+
+}
+
 void	handle_translation(t_rt *rt, int keycode)
 {
 	t_vec3	delta;
 	t_obj	*obj;
+	int		id;
 
 	if (!translation_key(keycode))
 		return;
@@ -79,15 +94,21 @@ void	handle_translation(t_rt *rt, int keycode)
 	else if (rt->sel.type == SEL_LIGHT)
 	{
 		/*debug*/printf("++ Translating LIGHT\n");
-		rt->light.pos = add_vec(rt->light.pos, delta);
+		id = get_light_index(rt->obj, rt->obj_count);
+		obj = &rt->obj[id];
+		obj->sph.pos = add_vec(obj->sph.pos, delta);
+
+		// rt->light.pos = add_vec(rt->light.pos, delta);
+
 		/*debug*/printf("   New LIGHT Pos: (%.2f, %.2f, %.2f)\n",
-			rt->light.pos.x, rt->light.pos.y, rt->light.pos.z);
+obj->sph.pos.x, obj->sph.pos.y, obj->sph.pos.z);
+// rt->light.pos.x, rt->light.pos.y, rt->light.pos.z);
+		aabb_translate(*obj, obj->bbox, delta);
 	}
 	else if (rt->sel.type == SEL_OBJ)
 	{
-		int id = get_obj_index(rt->obj, rt->obj_count, rt->sel.obj_index);
+		id = get_obj_index(rt->obj, rt->obj_count, rt->sel.obj_index);
 		obj = &rt->obj[id];
-		// obj = &rt->obj[rt->sel.obj_index];
 		/*debug*/printf("++ Translating OBJECT %d (%s)\n", rt->sel.obj_index,
 obj->type == SPHERE ? "SPHERE" :
 obj->type == PLANE ? "PLANE" :
@@ -127,8 +148,6 @@ add_vec(obj->cyl.pos, axis_height));
 obj->cyl.pos.x, obj->cyl.pos.y, obj->cyl.pos.z);
 		}
 		aabb_translate(*obj, obj->bbox, delta);
-		// copy_bbox(obj->bbox_ori, obj->bbox);
-		// obj->bbox_center = get_bbox_center(obj->bbox);
 	}
 }
 
@@ -163,7 +182,5 @@ mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2)));
 			//coord, n, d, w, bbox
 		}
 		create_bbox(obj, obj->bbox);
-		// copy_bbox(obj->bbox_ori, obj->bbox);
-		// obj->bbox_center = get_bbox_center(obj->bbox);
 	}
 }

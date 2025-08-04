@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:32 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/04 18:55:14 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/04 19:42:04 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_uint	get_light_index(t_obj *obj, int obj_count)
 
 bool	valid_keypress(int keycode)
 {
-	return (rotation_key(keycode) || scale_factor(keycode) ||
+	return (rotation_key(keycode) || scale_key(keycode) ||
 control_key(keycode) || translation_key(keycode));
 }
 
@@ -71,6 +71,7 @@ int	key_press(int keycode, t_rt *rt)
 
 	if (valid_keypress(keycode))
 	{
+		/*debug*/printf("keycode! %d\n", keycode);
 		// init_cam(rt);
 		// init_hit(rt);
 		update_cam_pos(rt);

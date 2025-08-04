@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:32 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/04 18:54:04 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/04 19:42:56 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_uint	get_obj_index(t_obj *obj, int obj_count, t_uint id)
 
 bool	valid_keypress(int keycode)
 {
-	return (rotation_key(keycode) || scale_factor(keycode) ||
+	return (rotation_key(keycode) || scale_key(keycode) ||
 control_key(keycode) || translation_key(keycode));
 }
 

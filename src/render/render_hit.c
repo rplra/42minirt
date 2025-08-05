@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/02 22:22:39 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 19:09:03 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,31 @@ t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
 	}
 	return (res);
 }
+
+// t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
+// {
+// 	float		t;
+// 	t_obj		*res;
+// 	bool		(*has_hit[3])(t_rt *, int, t_interval, t_ray);
+	
+// 	int	x = -1;
+// 	int	obj_count = vars->obj_count;
+
+// 	init_hit_func(has_hit);
+// 	res = NULL;
+// 	while (++x < obj_count)
+// 	{
+// 		// /*debug*/printf("id:%d\n", x);
+// 		t = has_hit[vars->obj[x].type](vars, x, ray_range, ray); //this returns t value only, more like get_root
+// 		// /*debug*/printf("t! %f %d\n", t, vars->hit.index);
+// 		if (t > 0)
+// 		{
+// 			res = &vars->obj[vars->hit.index];
+// 			ray_range.max = vars->hit.t;
+// 		}
+// 	}
+// 	return (res);
+// }
 
 /*
  * child function in hit_aabb
@@ -181,33 +206,24 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *rt)
 	if (bvh->type[L] != BVH)
 	{
 		// /*debug*/printf("bvh_id_L:%d  %d\n", bvh->id[L], bvh->type[L]);
-		// transform frm world space to obj space
-		// if (rt->obj[bvh->id[L]].b_rotate == 1)
-			// t[L] = has_hit[bvh->type[L]](rt, bvh->id[L], ray_range, \
-// rotate_ray_to_local(rt->obj[bvh->type[L]].rotate, ray));
-		// else
-			t[L] = has_hit[bvh->type[L]](rt, bvh->id[L], ray_range, ray);
+		t[L] = has_hit[bvh->type[L]](rt, bvh->id[L], ray_range, ray);
 	}
 	else
 		t[L] = hit_bvh(bvh->left, ray_range, ray, rt);
 
+	// shorten ray_range.max if hit found
+	if (t[L])
+		ray_range.max = rt->hit.t;
 	if (bvh->type[R] != BVH)
 	{
 		// /*debug*/printf("bvh_id_R:%d  %d, rec.t:%f\n", bvh->id[R], bvh->type[R], vars->hit.t);
-		if (t[L] > EPSILON)
-			ray_range.max = rt->hit.t;
-
-		// if (rt->obj[bvh->id[R]].b_rotate == 1)
-			// t[R] = has_hit[bvh->type[R]](rt, bvh->id[R], ray_range, \
-// rotate_ray_to_local(rt->obj[bvh->type[R]].rotate, ray));
-		// else
-			t[R] = has_hit[bvh->type[R]](rt, bvh->id[R], ray_range, ray);
+		t[R] = has_hit[bvh->type[R]](rt, bvh->id[R], ray_range, ray);
 	}
 	else
 		t[R] = hit_bvh(bvh->right, ray_range, ray, rt);
 	/* ******************************************** */
 	// /*debug*/printf("t[L] & t[R]: %d %d  %d~%d\n", t[L], t[R], bvh->id[L], bvh->id[R]);
-	if (t[L] > EPSILON || t[R] > EPSILON)
+	if (t[L] || t[R])
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 13:08:10 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 20:49:58 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,8 +165,7 @@ t_vec3		ray_color(t_rt *vars, t_ray ray, t_uchar ray_bounce, \
 t_uint *seed);
 t_vec3		bg_color(t_rt vars, t_ray ray);
 t_ray		new_ray(t_vec3 origin, t_vec3 dir);
-int			sample_pixels(t_rt vars, t_vec3 target, \
-t_vec3 viewport_d[2], int x);
+int			sample_pixels(t_rt rt, t_vec3 target, t_vec3 viewport_d[2], t_uint *seed);
 t_vec3		sample_sq_rand(unsigned int *seed);
 t_vec3		point_at(float t, t_ray ray);
 

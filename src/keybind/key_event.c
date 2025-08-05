@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:25:47 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/04 18:18:30 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 16:08:20 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	handle_selection(t_rt *rt, int keycode)
 		}
 		else if (rt->sel.type == SEL_OBJ)
 		{
-			if (rt->sel.obj_index < (int)rt->obj_count - 1)
+			if (rt->sel.obj_index < (int)rt->obj_count - 2) //-1 for light
 				rt->sel.obj_index++;
 			else
 				rt->sel.type = SEL_CAMERA;
@@ -84,7 +84,7 @@ void	handle_translation(t_rt *rt, int keycode)
 	if (rt->sel.type == SEL_CAMERA)
 	{
 		/*debug*/printf("++ Translating CAMERA\n");
-		rt->camera.pos = add_vec(rt->camera.pos, delta);
+		// rt->camera.pos = add_vec(rt->camera.pos, delta);
 		rt->camera.transform.translate = add_vec(rt->camera.transform.translate, delta);
 		// rt->camera.ori = add_vec(rt->camera.ori, delta);
 		/*debug*/printf("   New CAMERA Pos: (%.2f, %.2f, %.2f)\n",

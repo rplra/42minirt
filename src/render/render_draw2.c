@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 14:38:19 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 20:49:32 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,9 @@ static void	ft_draw(t_rt rt, t_vec3 viewport_00, t_vec3 viewport_d[2])
 			target.x = viewport_00.x + (x * viewport_d[X].x) + (y * viewport_d[Y].x);
 // x = viewport_00.x + (x * dx.x)  |->  + (offset.x * dx.x)
 //                   + (y * dy.x)  |->  + (offset.y * dy.x)
-			int num = (y * WIN_WIDTH) + x;
-			color = sample_pixels(rt, target, viewport_d, num);
+			// int num = (y * WIN_WIDTH) + x;
+			rt.seed += (y * WIN_WIDTH) + x;
+			color = sample_pixels(rt, target, viewport_d, &rt.seed);
 			my_mlx_pixel_put(rt, x, y, color);
 		}
 	}

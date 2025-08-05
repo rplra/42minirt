@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 15:31:03 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 20:52:20 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,18 @@ t_vec3	sample_sq_rand(unsigned int *seed)
  * 1. pick a random spot on the disk
  * 2. move cam's center to random point
  */
-t_vec3	sample_defoc_disk(t_rt vars, unsigned int *seed)
+t_vec3	sample_defoc_disk(t_rt rt, unsigned int *seed)
 {
 	t_vec3	pt;
 	t_vec3	res;
 
 	pt = rand_unit_disk(seed);
-	// res = vars.cam_orig;
-	res = add_vec(vars.camera.pos, add_vec(mult_vec_scalar(\
-vars.camera.defoc_disk[X], pt.x), mult_vec_scalar(vars.camera.defoc_disk[Y], pt.y)));
-	// /*debug*/debug_print_vec("sample_defoc:cam:", vars.camera.pos);
-	// /*debug*/debug_print_vec("sample_defoc:x:", vars.camera.defoc_disk[X]);
-	// /*debug*/debug_print_vec("sample_defoc:y:", vars.camera.defoc_disk[Y]);
+	// res = rt.cam_orig;
+	res = add_vec(rt.camera.pos, add_vec(mult_vec_scalar(\
+rt.camera.defoc_disk[X], pt.x), mult_vec_scalar(rt.camera.defoc_disk[Y], pt.y)));
+	// /*debug*/debug_print_vec("sample_defoc:cam:", rt.camera.pos);
+	// /*debug*/debug_print_vec("sample_defoc:x:", rt.camera.defoc_disk[X]);
+	// /*debug*/debug_print_vec("sample_defoc:y:", rt.camera.defoc_disk[Y]);
 	// /*debug*/debug_print_vec("sample_defoc:pt:", pt);
 	// /*debug*/debug_print_vec("sample_defoc:res:", res);
 	return (res);
@@ -71,27 +71,24 @@ vars.camera.defoc_disk[X], pt.x), mult_vec_scalar(vars.camera.defoc_disk[Y], pt.
  * 5. then after sampling it will average out the colour and correct it via gamma
  * 6. lastly converts the final colour to displayable RGB value
  */
-int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
+int	sample_pixels(t_rt rt, t_vec3 target, t_vec3 viewport_d[2], t_uint *seed)
 {
 	int				k;
-	unsigned int	seed;
+	// unsigned int	seed;
 	t_vec3			offset;
 	t_vec3			color;
 	t_vec3			res;
-	(void)	x;
 
-	// seed = vars.seed + x + (vars.camera.sample_per_pixel * 73856093);
-	seed = vars.seed;
 	k = -1;
 	color = new_vec3(0, 0, 0);
 	res.z = target.z;
 	///*debug*/printf("sample_pixels: sample_per_pixel=%d, ray_bounce=%d\n",
-	//	vars.camera.sample_per_pixel, vars.camera.ray_bounce);
+	//	rt.camera.sample_per_pixel, rt.camera.ray_bounce);
 
-	while (++k < vars.camera.sample_per_pixel)
+	while (++k < rt.camera.sample_per_pixel)
 	{
-		seed += x + (vars.camera.sample_per_pixel * 73856093);
-		offset = sample_sq_rand(&seed);
+		*seed += (rt.camera.sample_per_pixel * 73856093);
+		offset = sample_sq_rand(seed);
 		// res.x = target.x + (offset.x * viewport_d.x);
 		// res.y = target.y + (offset.y * viewport_d.y);
 		res.x = target.x + (offset.x * viewport_d[X].x) + \
@@ -104,17 +101,18 @@ int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
 		// auto pixel_sample = pixel00_loc
 		//						+ ((i + offset.x()) * pixel_delta_u)
 		//						+ ((j + offset.y()) * pixel_delta_v);
-		if (vars.camera.defoc_ang > 0)
-			vars.ray.orig = sample_defoc_disk(vars, &seed);
-		vars.ray.vector = subtract_vec(res, vars.ray.orig);
+		if (rt.camera.defoc_ang > 0)
+			rt.ray.orig = sample_defoc_disk(rt, seed);
+		rt.ray.vector = subtract_vec(res, rt.ray.orig);
+
+		/* add translate cam ray here */
+
 		// /*debug*/printf("ft_draw:tar:%f %f %f\n", target.x, target.y, target.z);
 		// /*debug*/printf("ft_draw:res:%f %f %f\n", res.x, res.y, res.z);
-		color = add_vec(color, ray_color(&vars, vars.ray, vars.camera.ray_bounce, &seed));
+		color = add_vec(color, ray_color(&rt, rt.ray, rt.camera.ray_bounce, seed));
 		// /*debug*/printf("color:%f %f %f\n", color.x, color.y, color.z);
 	}
-	color = div_vec_scalar(color, vars.camera.sample_per_pixel);
-	// /*debug*/printf("before gamma: %f %f %f\n", color.x, color.y, color.z);
+	color = div_vec_scalar(color, rt.camera.sample_per_pixel);
 	color = color_correction(color);
-	// /*debug*/printf("after gamma: %f %f %f\n", color.x, color.y, color.z);
 	return (create_rgb(color.x, color.y, color.z));
 }

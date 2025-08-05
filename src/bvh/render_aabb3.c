@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:35:35 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/01 12:00:11 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 15:56:57 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,4 @@ void	create_bbox(t_obj *obj, t_interval bound_box[3])
 	}
 	init_bbox_func(func);
 	func[obj->type](obj, bound_box);
-	// if (obj->b_rotate == 1)
-	// {
-	// 	/*debug*/printf("pika!\n");
-	// 	aabb_rotate(*obj, bound_box);
-	// }
 }

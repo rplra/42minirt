@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 14:03:29 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 18:02:10 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void	init_cam(t_rt *rt)
 void	init_hit(t_rt *rt)
 {
 	rt->hit.surf_norm = new_vec3(0, 0, 0);
-	// rt->hit.t = 2147483648;
-	rt->hit.t = 0;
+	rt->hit.t = 2147483648;
+	// rt->hit.t = 0;
 	rt->hit.index = -1;
 	rt->hit.setting = -1;
 }

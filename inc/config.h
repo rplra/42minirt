@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/05 15:02:39 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 20:55:32 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 //# define PI 3.14159265358979323846
 
 /*	window	*/
-# define WIN_WIDTH		800
-# define WIN_HEIGHT		600
+# define WIN_WIDTH		600
+# define WIN_HEIGHT		400
 
 /*	menu	*/
 # if WIN_HEIGHT <= 400

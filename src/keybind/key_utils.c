@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:32 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/04 19:42:04 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 16:56:06 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int	key_press(int keycode, t_rt *rt)
 		// init_cam(rt);
 		// init_hit(rt);
 		update_cam_pos(rt);
-		if (keycode == KEY_UP || keycode == KEY_DOWN)
-			set_render_quality(rt);
+		// if (keycode == KEY_UP || keycode == KEY_DOWN)
+			// set_render_quality(rt);
 		if (scale_key(keycode) || translation_key(keycode))
 			update_bbox(rt);
 		free_bvh(rt->bvh);

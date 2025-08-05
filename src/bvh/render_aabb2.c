@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 22:23:53 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/29 08:25:52 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 19:16:43 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ static bool	box_compare(t_obj a, t_obj v, int axis)
 	// /*debug*/debug_print_vec("b", b.sph.orig);
 	create_bbox(&a, a_axis_interval);
 	create_bbox(&v, b_axis_interval);
-
-	// /*debug*/printf("a.[%d].min: %f, b.[%d].min: %f\n", axis, a_axis_interval[axis].min, axis, b_axis_interval[axis].min);
-	// return (a.sph.orig.z < b.sph.orig.z);
-	return (a_axis_interval[axis].min < b_axis_interval[axis].min);
+	return (a_axis_interval[axis].min <= b_axis_interval[axis].min);
 }
 
 static bool	box_compare_x(t_obj a, t_obj v)

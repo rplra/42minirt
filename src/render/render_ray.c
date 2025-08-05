@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 12:33:50 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 19:09:49 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,35 +256,34 @@ obj_hit->material.albedo));
  * checks if ray hits any object
  * defines what color the ray should be
  */
-/* t_vec3	ray_color(t_rt *vars, t_ray ray, t_uchar ray_bounce, \
-t_uint *seed)
-{
-	(void) ray;
-	(void) seed;
-	t_obj	*res;
-	t_ray		bounce;
-	// t_vec3		surf_norm;
+// t_vec3	ray_color(t_rt *vars, t_ray ray, t_uchar ray_bounce, \
+// t_uint *seed)
+// {
+// 	(void) ray;
+// 	(void) seed;
+// 	t_obj	*res;
+// 	t_ray		bounce;
+// 	// t_vec3		surf_norm;
 
-	if (ray_bounce <= 0)
-		return (new_vec3(0, 0, 0));
-	res = hit(vars, new_interval(0.001f, 2147483647.0), ray); //assigns surf_norm
-	// debugprintf("res_7: %d\n", res);
+// 	if (ray_bounce <= 0)
+// 		return (new_vec3(0, 0, 0));
+// 	res = hit(vars, new_interval(EPSILON, 2147483647.0), ray); //assigns surf_norm
 
-	if (res != NULL)
-	{
-		bounce.orig = vars->hit.at;
-		if (res->material.type == METAL)
-			bounce.vector = mat_metal(ray.vector, vars->hit.surf_norm, 0, seed);
-		else if (res->material.type == DIFFUSE)
-			bounce.vector = mat_lambertian(vars->hit.surf_norm, seed);
-		return (mult_vec(ray_color(vars, bounce, ray_bounce - 1, seed), \
-res->material.albedo));
-// 0.5)); //weaken its color reflectance by 50% everytime it bounce
+// 	if (res != NULL)
+// 	{
+// 		bounce.orig = vars->hit.at;
+// 		if (res->material.type == METAL)
+// 			bounce.vector = mat_metal(ray.vector, vars->hit.surf_norm, 0, seed);
+// 		else if (res->material.type == DIFFUSE)
+// 			bounce.vector = mat_lambertian(vars->hit.surf_norm, seed);
+// 		return (mult_vec(ray_color(vars, bounce, ray_bounce - 1, seed), \
+// res->material.albedo));
+// // 0.5)); //weaken its color reflectance by 50% everytime it bounce
 
-// mult_vec_scalar(vars.sph[state].mat.albedo, 0.8)));
-// 		return (new_vector3d(0.5*255*(surf_norm.x+1),
-// 0.5*255*(surf_norm.y+1),
-// 0.5*255*(surf_norm.z+1)));
-	}
-	return (bg_color(*vars, ray));
-} */
+// // mult_vec_scalar(vars.sph[state].mat.albedo, 0.8)));
+// // 		return (new_vector3d(0.5*255*(surf_norm.x+1),
+// // 0.5*255*(surf_norm.y+1),
+// // 0.5*255*(surf_norm.z+1)));
+// 	}
+// 	return (bg_color(*vars, ray));
+// }

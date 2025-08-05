@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/02 14:55:16 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 17:43:42 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,16 @@ bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 
 	// /*debug*/printf("has_hit ent:%d\n", index);
 	/* ************* get discriminant ************* */
+	// if (rt->obj[index].b_rotate == 1)
+		// ray = transform_ray(rt->obj[index], ray);
+
 	ray_to_center = subtract_vec(rt->obj[index].sph.pos, ray.orig);
 	n[A] = scalar_product(ray.vector, ray.vector);
 	n[B] = scalar_product(ray.vector, ray_to_center);
 	n[C] = scalar_product(ray_to_center, ray_to_center) - \
 (rt->obj[index].sph.rad * rt->obj[index].sph.rad);
 	discriminant = ft_square(n[B]) - (n[A] * n[C]);
-	if (discriminant < 0.001f)
+	if (discriminant < 0)
 		return (0);
 
 	/* ****************** get t ****************** */

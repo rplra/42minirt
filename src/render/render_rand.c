@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_rand.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:15:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/19 16:28:50 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/05 10:29:20 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static float	lcg(unsigned int *seed)
  */
 float	rand_lcg(unsigned int *seed)
 {
-	return (lcg(seed) / 4294967295.0);
+	return (lcg(seed) / 4294967296.0);
 }
 
 /*
@@ -59,7 +59,7 @@ float	rand_lcg(unsigned int *seed)
  */
 float	rand_lcg_range(unsigned int *seed, float min, float max)
 {
-	return (min + ((max - min) * (lcg(seed) / 4294967295.0)));
+	return (min + ((max - min) * (lcg(seed) / 4294967296.0)));
 }
 
 /* 

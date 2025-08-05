@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/04 17:38:40 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 15:31:03 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
 	t_vec3			res;
 	(void)	x;
 
-	seed = vars.seed + x;
-	// seed = vars.seed;
+	// seed = vars.seed + x + (vars.camera.sample_per_pixel * 73856093);
+	seed = vars.seed;
 	k = -1;
 	color = new_vec3(0, 0, 0);
 	res.z = target.z;
@@ -90,6 +90,7 @@ int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
 
 	while (++k < vars.camera.sample_per_pixel)
 	{
+		seed += x + (vars.camera.sample_per_pixel * 73856093);
 		offset = sample_sq_rand(&seed);
 		// res.x = target.x + (offset.x * viewport_d.x);
 		// res.y = target.y + (offset.y * viewport_d.y);

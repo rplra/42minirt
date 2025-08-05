@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_color.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 19:11:59 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/19 09:02:21 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/05 10:52:39 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,14 @@ static float	linear_to_gamma(float n)
 t_vec3	color_correction(t_vec3 color)
 {
 	t_vec3	res;
+
+	// for NaNs check, NaN will not equal to itself
+	if (color.x != color.x)
+		color.x = 0;
+	if (color.y != color.y)
+		color.y = 0;
+	if (color.z != color.z)
+		color.z = 0;
 
 	res.x = (int)(linear_to_gamma(color.x) * 256.0f);
 	res.y = (int)(linear_to_gamma(color.y) * 256.0f);

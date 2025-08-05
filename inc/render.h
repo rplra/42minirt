@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/02 14:55:44 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 13:08:10 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,12 +134,11 @@ void		init_bvh_node(t_rt *vars);
 void		my_mlx_pixel_put(t_rt vars, int x, int y, int color);
 void		my_create_image(t_rt *vars, t_img *img);
 void		my_render_image(t_rt *vars);
+void		my_create_menu(t_rt *rt, t_img *img, char *filepath, int size[2]);
 void		clear_image(t_rt vars, int win_width, int win_height, int color);
 
 /* __________________ rotate __________________ */
-// t_ray		rotate_ray_to_local(t_vec3 rotation, t_ray ray);
 void		transform_hit_pt(t_rt *rt, t_obj res);
-// t_ray		transform_ray(t_rt *rt, t_obj obj, t_ray ray);
 t_ray		transform_ray(t_obj obj, t_ray ray);
 void		transform_bbox(t_rt *rt, t_uint index);
 

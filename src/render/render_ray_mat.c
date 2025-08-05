@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/03 19:06:37 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 10:58:00 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ float fuzz, t_uint *seed)
 t_vec3	mat_lambertian(t_vec3 surf_norm, t_uint *seed)
 {
 	t_vec3	res;
+	(void)	seed;
 
-	res = add_vec(surf_norm, rand_vec(seed));
+	res = add_vec(surf_norm, rand_unit_vec(seed));
 	if (is_near_zero(res))
 		res = surf_norm;
 	return (res);

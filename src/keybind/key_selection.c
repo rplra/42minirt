@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 20:23:59 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/31 13:08:39 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 15:05:42 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ static void	setup_selection(t_rt *rt, int x, int *y, int line_ht)
 	{
 		*y += line_ht;
 		col = highlight_sel(rt, types[i], 0);
-		mlx_string_put(rt->mlx, rt->mlx_win, x + 20, *y, col, names[i]);
+		mlx_string_put(rt->mlx, rt->mlx_win, x, *y, col, names[i]);
+		// mlx_string_put(rt->mlx, rt->mlx_win, x + 20, *y, col, names[i]);
 	}
 }
 
@@ -80,7 +81,8 @@ static void obj_selection(t_rt *rt, int x, int *y, int line_ht)
 		{
 			*y += line_ht;
 			col = highlight_sel(rt, SEL_OBJ, i);
-			mlx_string_put(rt->mlx, rt->mlx_win, x + 20, *y, col, label);
+			mlx_string_put(rt->mlx, rt->mlx_win, x, *y, col, label);
+			// mlx_string_put(rt->mlx, rt->mlx_win, x + 20, *y, col, label);
 		}
 	}
 }
@@ -92,10 +94,25 @@ void	selection_guide(t_rt *rt)
 	int	y;
 	int	line_ht;
 
-	x = WIN_WIDTH + 10;
-	y = 290;
+	x = WIN_WIDTH + (PANEL_WIDTH * 0.48);
+	y = WIN_HEIGHT * 0.9;
 	line_ht = 12;
 	mlx_string_put(rt->mlx, rt->mlx_win, x, y, WHITE, "SELECTION");
 	setup_selection(rt, x, &y, line_ht);
 	obj_selection(rt, x, &y, line_ht);
 }
+
+/* original selection guide */
+// void	selection_guide(t_rt *rt)
+// {
+// 	int	x;
+// 	int	y;
+// 	int	line_ht;
+
+// 	x = WIN_WIDTH + 20;
+// 	y = 290;
+// 	line_ht = 12;
+// 	mlx_string_put(rt->mlx, rt->mlx_win, x, y, WHITE, "SELECTION");
+// 	setup_selection(rt, x, &y, line_ht);
+// 	obj_selection(rt, x, &y, line_ht);
+// }

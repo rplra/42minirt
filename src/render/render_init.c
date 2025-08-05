@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/04 18:26:02 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 14:03:29 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,15 @@ void	init_light(t_rt *rt)
 	add_object(rt, &light);
 }
 
+void	assign_int(int value[2], int width, int height)
+{
+	value[W] = width;
+	value[H] = height;
+}
+
 void	init_variable(t_rt *rt)
 {
+	int	dimension[2];
 
 	rt->preview_mode = 1;
 	rt->show_light = 1;
@@ -126,9 +133,11 @@ void	init_variable(t_rt *rt)
 	init_hit(rt);
 	rt->sel.type = SEL_CAMERA;
 	rt->sel.obj_index = 0;
-	rt->color_bg[0] = mult_vec_scalar(new_vec3(0.4, 0.6, 1), rt->ambient.intensity);
+	rt->color_bg[0] = mult_vec_scalar(new_vec3(0.4, 0.6, 1), rt->ambient.intensity + 0.01);
 	rt->color_bg[1] = mult_vec_scalar(rt->ambient.colour, rt->ambient.intensity);
 	// rt->color_bg[1] = new_vec3(1, 1, 1);
 	rt->seed = 12345;
 	my_create_image(rt, &rt->img);
+	assign_int(dimension, PANEL_WIDTH, WIN_HEIGHT);
+	my_create_menu(rt, &rt->img_menu, MENU, dimension);
 }

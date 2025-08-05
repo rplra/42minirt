@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/04 18:12:00 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 12:49:40 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_rt
 	void		*mlx;
 	void		*mlx_win;
 	t_img		img;
+	t_img		img_menu;
 
 	//interactive
 	bool		preview_mode;

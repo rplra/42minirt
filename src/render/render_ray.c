@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/04 18:41:59 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 12:33:50 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,6 @@ t_uint *seed)
 	}
 	else if (obj_hit->material.type == DIFFUSE)
 		bounce.vector = mat_lambertian(rt->hit.surf_norm, seed);
-
 	bounced_col = (mult_vec(ray_color(rt, bounce, ray_bounce - 1, seed), \
 obj_hit->material.albedo));
 	return (add_vec(emitted_col, bounced_col));

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/04 19:11:07 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 15:02:39 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,21 @@
 //# define PI 3.14159265358979323846
 
 /*	window	*/
-# define WIN_WIDTH		400
-# define WIN_HEIGHT		300
-# define PANEL_WIDTH	200
+# define WIN_WIDTH		800
+# define WIN_HEIGHT		600
+
+/*	menu	*/
+# if WIN_HEIGHT <= 400
+#  define MENU			"asset/menu-400.xpm"
+#  define PANEL_WIDTH	133
+# elif WIN_HEIGHT <= 600
+#  define MENU			"asset/menu-600.xpm"
+#  define PANEL_WIDTH	199
+# elif WIN_HEIGHT <= 800
+#  define MENU			"asset/menu-800.xpm"
+#  define PANEL_WIDTH	266
+# endif
+
 # define TOTAL_WIDTH	(WIN_WIDTH + PANEL_WIDTH)
 
 /*	ambient	*/
@@ -67,7 +79,7 @@
 # define PLANE_Y				4
 
 /*	material	*/
-# define MAT_TYPE				METAL
+# define MAT_TYPE				DIFFUSE
 # define MAT_SPECULAR			0.5
 # define MAT_REFLECT			0.5
 # define MAT_FUZZ				0.2
@@ -75,7 +87,7 @@
 /*	sample	*/
 # define SAMPLE_SOFT_SHADOW		15  // > == softer shadow
 # define SAMPLE_RAY_BOUNCE		5	// > == more realistic lighting
-# define SAMPLE_PER_PIXEL		30	// > == smoother img
+# define SAMPLE_PER_PIXEL		100	// > == smoother img
 # define SAMPLE_PREVIEW			2
 
 #endif

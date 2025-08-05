@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 18:15:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/19 09:04:08 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/05 13:08:40 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@
  * https://harm-smits.github.io/42docs/libs/minilibx/
  * getting_started.html#writing-pixels-to-a-image/
  */
-void	my_mlx_pixel_put(t_rt vars, int x, int y, int color)
+void	my_mlx_pixel_put(t_rt rt, int x, int y, int color)
 {
 	int		offset;
 	char	*dst;
 
 	if (x < 0 || y < 0 || x >= WIN_WIDTH || y >= WIN_HEIGHT)
 		return ;
-	offset = ((y * vars.img.line_len) + (x * (vars.img.bpp / 8)));
-	dst = vars.img.addr + offset;
+	offset = ((y * rt.img.line_len) + (x * (rt.img.bpp / 8)));
+	dst = rt.img.addr + offset;
 	*(unsigned int *)dst = color;
 }
 
 /* Renders the image in black color */
-void	clear_image(t_rt vars, int win_width, int win_height, int color)
+void	clear_image(t_rt rt, int win_width, int win_height, int color)
 {
 	int	tmp;
 
@@ -42,15 +42,30 @@ void	clear_image(t_rt vars, int win_width, int win_height, int color)
 	{
 		tmp = win_width;
 		while (tmp >= 0)
-			my_mlx_pixel_put(vars, tmp--, win_height, color);
+			my_mlx_pixel_put(rt, tmp--, win_height, color);
 		win_height--;
 	}
 }
 
 /* Create image container to start draw */
-void	my_create_image(t_rt *vars, t_img *img)
+void	my_create_image(t_rt *rt, t_img *img)
 {
-	img->img = mlx_new_image(vars->mlx, WIN_WIDTH, WIN_HEIGHT);
+	img->img = mlx_new_image(rt->mlx, WIN_WIDTH, WIN_HEIGHT);
+	if (!img->img)
+		ft_perror("🚨 Error in creating main image!", 0, 0);
+	img->addr = mlx_get_data_addr(img->img, \
+&img->bpp, \
+&img->line_len, \
+&img->endian);
+}
+
+/*
+ * initializes image pointer for menu
+ * @param size image dimensions (width & height)
+ */
+void	my_create_menu(t_rt *rt, t_img *img, char *filepath, int size[2])
+{
+	img->img = mlx_xpm_file_to_image(rt->mlx, filepath, &size[W], &size[H]);
 	if (!img->img)
 		ft_perror("🚨 Error in creating main image!", 0, 0);
 	img->addr = mlx_get_data_addr(img->img, \

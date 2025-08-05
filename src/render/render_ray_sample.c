@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 21:10:14 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 18:37:06 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ int	sample_pixels(t_rt vars, t_vec3 target, t_vec3 viewport_d[2], int x)
 			vars.ray.orig = sample_defoc_disk(vars, &seed);
 		vars.ray.vector = subtract_vec(res, vars.ray.orig);
 
-		/*debug*/printf("ft_draw:tar:%f %f %f\n", target.x, target.y, target.z);
-		/*debug*/printf("ft_draw:res:%f %f %f\n", res.x, res.y, res.z);
+		// /*debug*/printf("ft_draw:tar:%f %f %f\n", target.x, target.y, target.z);
+		// /*debug*/printf("ft_draw:res:%f %f %f\n", res.x, res.y, res.z);
 
 		// color = add_vec(color, ray_color_loop(vars, vars.ray, &seed));
 		color = add_vec(color, ray_color(&vars, vars.ray, vars.cam.ray_bounce, &seed));

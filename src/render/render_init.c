@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 20:36:12 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 19:05:08 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ void	init_obj(t_rt *vars)
 // 	vars->sph[1] = new_sphere(new_vector3d(r, 0, -1), r, \
 // new_vector3d(1, 0, 0), DIFFUSE); //right
 
-	vars->obj[0] = new_sphere(new_vec3(0, 0, -1.2), 0.5, \
+	vars->obj[0] = new_sphere(new_vec3(2, 0, -3), 0.5, \
 new_vec3(0.1, 0.2, 0.5), DIFFUSE);	//center
+// 	vars->obj[0] = new_sphere(new_vec3(0, 0, -1.2), 0.5, \
+// new_vec3(0.1, 0.2, 0.5), DIFFUSE);	//center
 	vars->obj[1] = new_sphere(new_vec3(0, -100.5, -1), 100, \
 new_vec3(0.8, 0.8, 0), DIFFUSE);	//ground
 	vars->obj[2] = new_sphere(new_vec3(-1, 0, -1), 0.5, \
@@ -72,7 +74,7 @@ void	init_cam(t_rt *vars)
 	vars->cam.defoc_disk[X] = new_vec3(0, 0, 0);	//lens max_width in vec3
 	vars->cam.defoc_disk[Y] = new_vec3(0, 0, 0);	//lens max_height in vec3
 	vars->cam.focus_dist = len_vec3(subtract_vec(vars->cam.orig, vars->cam.lookat));	//obj within this distance = sharp
-	/*debug*/printf("focus_dist:%f\n", vars->cam.focus_dist);
+	// /*debug*/printf("focus_dist:%f\n", vars->cam.focus_dist);
 
 	vars->cam.ray_bounce = 5;
 	vars->cam.sample_per_pixel = 5;

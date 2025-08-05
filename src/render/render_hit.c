@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/09 20:35:16 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 19:00:33 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float))
 }
 
 /*
+ * bvh_hit
  * child function in ray_color
  * checks if ray hits any surface
  * returns the closest point ray hits
  * at = origin + (t * direction)
  */
-// t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray, t_vec3 *at)
 t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
 {
 	float		t;
@@ -46,21 +46,38 @@ t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
 	init_hit_func(has_hit);
 	res = NULL;
 
-	// int	x = -1;
-	// while (++x < vars->obj_count)
-	// {
-		// /*debug*/printf("id:%d\n", x);
-		// t = has_hit[vars->obj[x].type](vars, x, ray_range, ray); //this returns t value only, more like get_root
-		t = hit_bvh(vars->bvh, ray_range, ray, vars);
-		/*debug*/printf("t! %f %d\n", t, vars->hit.index);
-		if (t > 0)
-		{
-			res = &vars->obj[vars->hit.index];
-			// ray_range.max = vars->rec.t;	//maybe no need
-		}
-	// }
+	t = hit_bvh(vars->bvh, ray_range, ray, vars);
+	// /*debug*/printf("t! %f %d\n", t, vars->hit.index);
+	if (t > 0)
+		res = &vars->obj[vars->hit.index];
 	return (res);
 }
+
+/* manual hit one by one */
+// t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
+// {
+// 	float		t;
+// 	t_obj		*res;
+// 	bool		(*has_hit[3])(t_rt *, int, t_interval, t_ray);
+
+// 	init_hit_func(has_hit);
+// 	res = NULL;
+
+// 	int	x = -1;
+// 	int	obj_count = vars->obj_count;
+// 	while (++x < obj_count)
+// 	{
+// 		// /*debug*/printf("id:%d\n", x);
+// 		t = has_hit[vars->obj[x].type](vars, x, ray_range, ray); //this returns t value only, more like get_root
+// 		// /*debug*/printf("t! %f %d\n", t, vars->hit.index);
+// 		if (t > 0)
+// 		{
+// 			res = &vars->obj[vars->hit.index];
+// 			ray_range.max = vars->hit.t;	//maybe no need
+// 		}
+// 	}
+// 	return (res);
+// }
 
 /* child function in hit_aabb */
 void	assign_ray_t(float t0, float t1, t_interval *ray_t)
@@ -110,10 +127,10 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
 	bool	t[2];
 	bool	(*has_hit[3])(t_rt *, int, t_interval, t_ray);
 
-	/*debug*/debug_print_bbox("hit_bvh", bvh->bbox);
+	// /*debug*/debug_print_bbox("hit_bvh", bvh->bbox);
 	if (!hit_aabb(ray, ray_range, bvh->bbox))
 	{
-		/*debug*/printf("\n\033[93mno aabb! %d~%d\033[0m\n\n", bvh->id[L], bvh->id[R]);
+		// /*debug*/printf("\n\033[93mno aabb! %d~%d\033[0m\n\n", bvh->id[L], bvh->id[R]);
 		return (0);
 	}
 
@@ -131,11 +148,12 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *vars)
 	else
 		t[L] = hit_bvh(bvh->left, ray_range, ray, vars);
 
+	if (t[L])
+		ray_range.max = vars->hit.t;
+
 	if (bvh->type[R] != BVH)
 	{
-		/*debug*/printf("bvh_id_R:%d  %d, rec.t:%f\n", bvh->id[R], bvh->type[R], vars->hit.t);
-		if (t[L] > 0.01f)
-			ray_range.max = vars->hit.t;
+		// /*debug*/printf("bvh_id_R:%d  %d, rec.t:%f\n", bvh->id[R], bvh->type[R], vars->hit.t);
 		t[R] = has_hit[bvh->type[R]](vars, bvh->id[R], ray_range, ray);
 	}
 	else

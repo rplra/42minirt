@@ -6,12 +6,11 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 18:15:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/06 13:04:28 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 15:46:35 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-// mlx
 
 /*
  * Template function from mlx documentation

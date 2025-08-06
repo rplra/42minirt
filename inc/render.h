@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/06 13:09:28 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 15:48:25 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_hit
 	t_obj		*obj;			// the object hit
 	float		t;				// ray paremeter (distance)
 	//bool		front_face;		// for correct normal orientation
-	float		coord[2];		// store u & v values (surface coordinates of hit point, for texture)
+	// float		coord[2];		// store u & v values (surface coordinates of hit point, for texture)
 	int			index;			// object index of the hitted obj
 	t_uchar		setting;		// helper variable for rendering cyl
 }	t_hit;

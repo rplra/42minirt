@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/05 17:43:42 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 15:55:03 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,8 @@ cross_product(rt->obj[i].plane.coord[X], intersect));
 		return (0);
 
 	/* ******************* optional if no texture ********************** */
-	rt->hit.coord[X] = alpha;
-	rt->hit.coord[Y] = beta;
+	// rt->hit.coord[X] = alpha;
+	// rt->hit.coord[Y] = beta;
 	return (1);
 }
 

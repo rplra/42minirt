@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/06 15:36:21 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 15:50:00 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	set_render_quality(t_rt *rt)
 
 void	init_cam(t_rt *rt)
 {
-	
 	// rt->camera.pos = new_vec3(0, 0, 9); //not parser
 	// rt->camera.pos = new_vec3(-2, 0, 11); //not parser
 	// rt->camera.vfov = radian(90);	//not parser
@@ -84,12 +83,19 @@ void	init_hit(t_rt *rt)
 }
 
 /* reassign material to other types than default */
-void	edit_material(t_rt *rt)
+void	assign_custom_material(t_rt *rt)
 {
-	update_material(&rt->obj[0], LIGHT, 0);
-	rt->obj[0].material.albedo = mult_vec_scalar(new_vec3(1,1,1), 4);
-	// update_material(&rt->obj[1], DIFFUSE, 0);
-	// update_material(&rt->obj[2], METAL, 0);
+	int	x;
+
+	x = 0;
+	while (x + 1 < (int)rt->obj_count)
+	{
+		if (x % 2 == 0)
+			update_material(&rt->obj[x], DIFFUSE, 0);
+		else
+			update_material(&rt->obj[x], METAL, 0);
+		x++;
+	}
 }
 
 void	init_light(t_rt *rt)
@@ -114,24 +120,18 @@ void	init_variable(t_rt *rt)
 	rt->b_preview_mode = 1;
 	rt->b_show_light = 1;
 	init_cam(rt);
-	// edit_material(rt);		//custom assign material
-
-	init_light(rt);			//variation
+	init_light(rt);
+	assign_custom_material(rt);
 	/* ************** need to comment out below when include parser ************************ */
 	// init_obj(rt);				//not parser
 	/* ************** need to comment out above when include parser ************************ */
-
-	// /*debug*/debug_print_arr("init_var", rt->obj, rt->obj_count);
 	init_bvh_node(rt);
-	// /*debug*/debug_print_arr("init_bvh", rt->obj, rt->obj_count);
 	init_hit(rt);
 	rt->sel.type = SEL_CAMERA;
 	rt->sel.obj_index = 0;
 	rt->color_bg[0] = mult_vec_scalar(new_vec3(0.4, 0.6, 1), rt->ambient.intensity + 0.01);
 	rt->color_bg[1] = mult_vec_scalar(rt->ambient.colour, rt->ambient.intensity);
-	// rt->color_bg[1] = new_vec3(1, 1, 1);
 	rt->seed = 12345;
-	// init_loading_img(rt);
 	my_create_img(rt, &rt->img);
 	assign_int(dimension, PANEL_WIDTH, WIN_HEIGHT);
 	my_create_menu(rt, &rt->img_menu, MENU, dimension);

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 12:16:30 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/25 10:09:41 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 15:48:23 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,8 @@ cross_product(intersect, (cyl.coord[Y])));
 	beta = scalar_product(cyl.w, \
 cross_product((cyl.coord[X]), intersect));
 
-// /*debug*/printf("has_hit_cap:%f %f\n", alpha, beta);
-	/* ********************************************************** */
 	if (!within_plane_range(alpha, beta, 2))
 		return (0);
-	// rt->hit.coord[X] = alpha;
-	// rt->hit.coord[Y] = beta;
 	return (1);
 }
 

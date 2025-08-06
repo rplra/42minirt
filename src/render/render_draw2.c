@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 20:49:32 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 15:14:53 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ static void	ft_draw(t_rt rt, t_vec3 viewport_00, t_vec3 viewport_d[2])
  * brief: render whole scene / img
  * get start > draw every pixel > put img to window
  */
-void	my_render_image(t_rt *rt)
+void	my_render_img(t_rt *rt)
 {
 	t_vec3	vp_d[2];
 	t_vec3	vp_00_loc;

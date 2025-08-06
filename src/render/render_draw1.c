@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 18:15:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 13:08:40 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 13:04:28 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	clear_image(t_rt rt, int win_width, int win_height, int color)
 }
 
 /* Create image container to start draw */
-void	my_create_image(t_rt *rt, t_img *img)
+void	my_create_img(t_rt *rt, t_img *img)
 {
 	img->img = mlx_new_image(rt->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!img->img)

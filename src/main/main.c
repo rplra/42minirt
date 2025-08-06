@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 13:09:38 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/18 12:20:24 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/06 15:17:40 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,11 @@ int main(int ac, char **av)
 	/*debug*/printf("Main: Init variables\n");
 
 	// render
-	my_render_image(&rt);
+	my_render_img(&rt);
 	/*debug*/printf("Main: Render image\n");
+	printf(">> use tabs to select cam/light/obj, then → translate/rotate/scale keys to transform\n");
+	mlx_put_image_to_window(rt.mlx, rt.mlx_win,
+rt.img_intro.img, (WIN_WIDTH / 2) - (INTRO_W / 2), WIN_HEIGHT / 2);
 	
 	// event hooks
 	mlx_hook(rt.mlx_win, ON_KEYDOWN, 1L << 0, key_press, &rt);
@@ -44,6 +47,7 @@ int main(int ac, char **av)
 
 	// render loop
 	mlx_loop(rt.mlx);
+	// mlx_loop_hook(rt.mlx, animate_loading, &rt);
 	
 	// cleanup
 	cleanup(&rt);	//might not need to free when translation & rotation

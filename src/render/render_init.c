@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 18:02:10 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 15:36:21 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	init_obj(t_rt *rt)
 
 void	set_render_quality(t_rt *rt)
 {
-	if (rt->preview_mode)
+	if (rt->b_preview_mode)
 	{
 		rt->camera.ray_bounce = SAMPLE_PREVIEW;
 		rt->camera.sample_per_pixel = SAMPLE_PREVIEW;
@@ -47,6 +47,7 @@ void	set_render_quality(t_rt *rt)
 	{
 		rt->camera.ray_bounce = SAMPLE_RAY_BOUNCE;
 		rt->camera.sample_per_pixel = SAMPLE_PER_PIXEL;
+		printf(">> Rendering image...\n");
 	}
 }
 
@@ -77,8 +78,7 @@ void	init_cam(t_rt *rt)
 void	init_hit(t_rt *rt)
 {
 	rt->hit.surf_norm = new_vec3(0, 0, 0);
-	rt->hit.t = 2147483648;
-	// rt->hit.t = 0;
+	rt->hit.t = 0;
 	rt->hit.index = -1;
 	rt->hit.setting = -1;
 }
@@ -99,7 +99,7 @@ void	init_light(t_rt *rt)
 	light.type = SPHERE;
 	light.sph.pos = rt->light.pos;
 	light.sph.rad = 0.5;
-	light.material.albedo = mult_vec_scalar(rt->light.colour, rt->light.brightness * 4);
+	light.material.albedo = mult_vec_scalar(rt->light.colour, rt->light.brightness * 6);
 	light.material.type = LIGHT;
 	assign_rotation(&light);
 	assign_bbox(&light);
@@ -107,18 +107,12 @@ void	init_light(t_rt *rt)
 	add_object(rt, &light);
 }
 
-void	assign_int(int value[2], int width, int height)
-{
-	value[W] = width;
-	value[H] = height;
-}
-
 void	init_variable(t_rt *rt)
 {
 	int	dimension[2];
 
-	rt->preview_mode = 1;
-	rt->show_light = 1;
+	rt->b_preview_mode = 1;
+	rt->b_show_light = 1;
 	init_cam(rt);
 	// edit_material(rt);		//custom assign material
 
@@ -137,7 +131,11 @@ void	init_variable(t_rt *rt)
 	rt->color_bg[1] = mult_vec_scalar(rt->ambient.colour, rt->ambient.intensity);
 	// rt->color_bg[1] = new_vec3(1, 1, 1);
 	rt->seed = 12345;
-	my_create_image(rt, &rt->img);
+	// init_loading_img(rt);
+	my_create_img(rt, &rt->img);
 	assign_int(dimension, PANEL_WIDTH, WIN_HEIGHT);
 	my_create_menu(rt, &rt->img_menu, MENU, dimension);
+	assign_int(dimension, LOADBAR_W, LOADBAR_H);
+	my_create_menu(rt, &rt->img_load, LOADBAR, dimension);
+	my_create_menu(rt, &rt->img_intro, INTRO, dimension);
 }

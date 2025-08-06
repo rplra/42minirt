@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/05 20:55:32 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 15:27:34 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,14 @@
 #  define MENU			"asset/menu-800.xpm"
 #  define PANEL_WIDTH	266
 # endif
-
 # define TOTAL_WIDTH	(WIN_WIDTH + PANEL_WIDTH)
+
+/*	img-assets	*/
+# define LOADBAR		"asset/load-600.xpm"
+# define INTRO			"asset/intro.xpm"
+# define LOADBAR_W		135
+# define LOADBAR_H		49
+# define INTRO_W		400
 
 /*	ambient	*/
 # define AMBIENT_RATIO_MIN	0.0
@@ -68,6 +74,7 @@
 # define DEFOC_YX	0
 # define DEFOC_YY	0
 # define DEFOC_YZ	0
+# define FOCUS_DIST	1
 
 /*	light	*/
 # define LIGHT_BRIGHTNESS_MIN	0.0
@@ -79,7 +86,7 @@
 # define PLANE_Y				4
 
 /*	material	*/
-# define MAT_TYPE				DIFFUSE
+# define MAT_TYPE				METAL
 # define MAT_SPECULAR			0.5
 # define MAT_REFLECT			0.5
 # define MAT_FUZZ				0.2

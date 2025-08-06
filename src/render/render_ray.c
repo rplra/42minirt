@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 19:09:49 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 12:33:47 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ t_uint *seed)
 	emitted_col = emitted(obj_hit);
 	if (obj_hit->material.type == LIGHT)
 	{
-		if (rt->show_light == 0 && ray_bounce == rt->camera.ray_bounce)
+		if (rt->b_show_light == 0 && ray_bounce == rt->camera.ray_bounce)
 			return (bg_color(*rt, ray));
 		return (emitted_col);
 	}

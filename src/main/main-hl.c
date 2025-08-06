@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:07:37 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/22 13:03:26 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 13:04:46 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(void)
 	init_variable(&vars);
 
 	/* _____________ rendering _____________ */
-	my_render_image(&vars);
+	my_render_img(&vars);
 
 	/* _____________ keymaps _____________ */
 	mlx_hook(vars.mlx_win, ON_KEYDOWN, 1L << 0, key_press, &vars);

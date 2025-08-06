@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_light.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:27:39 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/23 10:35:51 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/06 12:34:01 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_col	get_total_light(t_rt *rt, t_hit *point, t_uint *seed)
 	float		t;
 	float		diffuse_intensity;
 
-	if (rt->preview_mode)
+	if (rt->b_preview_mode)
 		light_pos = rt->light.pos;
 	else
 		light_pos = randomized_light_pos(rt, seed);
@@ -96,7 +96,7 @@ t_col	sample_direct_light(t_rt *rt, t_hit *point, t_uint *seed)
 	if (!point || !point->obj || rt->light.brightness <= 0)
 		return (new_vec3(0, 0, 0));
 	total_light = new_vec3(0, 0, 0);
-	if (rt->preview_mode)
+	if (rt->b_preview_mode)
 		samples = SAMPLE_PREVIEW;
 	else
 		samples = SAMPLE_SOFT_SHADOW;

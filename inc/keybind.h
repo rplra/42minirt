@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:47:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/04 18:16:18 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 09:48:27 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@
 #  define KEY_J				106
 #  define KEY_K				107
 #  define KEY_L				108
+#  define KEY_C				99
+#  define KEY_X				120
 
 #  define KEY_PLUS			61
 #  define KEY_MINUS			45
@@ -131,16 +133,17 @@ void		handle_translation(t_rt *rt, int keycode);
 void		handle_scale(t_rt *rt, int keycode);
 void		handle_rotation(t_rt *rt, int keycode);
 void		handle_show_light(t_rt *rt, int keycode);
+void		handle_focus_dist(t_rt *rt, int keycode);
 
-bool		translation_key(int keycode);
 t_vec3		translation_delta(int keycode);
-bool		scale_key(int keycode);
 float		scale_factor(int keycode);
 
 void		print_selected(t_rt *rt);
 
+bool		translation_key(int keycode);
+bool		scale_key(int keycode);
+bool		focus_dist_key(int keycode);
 bool		rotation_key(int keycode);
-bool		rotation_key_obj(int keycode);
 bool		control_key(int keycode);
 
 t_uint		get_obj_index(t_obj *obj, int obj_count, t_uint id);

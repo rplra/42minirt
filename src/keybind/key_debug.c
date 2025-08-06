@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 10:41:42 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/31 19:24:24 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 11:25:00 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,18 @@ void	print_selected(t_rt *rt)
 		printf(">> Selected: CAMERA\n");
 		printf("   Pos: (%.2f, %.2f, %.2f)\n",
 			rt->camera.pos.x, rt->camera.pos.y, rt->camera.pos.z);
+		debug_print_vec("   Rot", rt->camera.transform.rotate);
 	}
 	else if (rt->sel.type == SEL_LIGHT)
 	{
+		id = get_light_index(rt->obj, rt->obj_count);
+		obj = &rt->obj[id];
 		printf(">> Selected: LIGHT\n");
 		printf("   Pos: (%.2f, %.2f, %.2f)\n",
-			rt->light.pos.x, rt->light.pos.y, rt->light.pos.z);
+obj->sph.pos.x, obj->sph.pos.y, obj->sph.pos.z);
+		debug_print_vec("   Rot", obj->rotate);
+
+// rt->light.pos.x, rt->light.pos.y, rt->light.pos.z);
 	}
 	else if (rt->sel.type == SEL_OBJ)
 	{
@@ -54,6 +60,7 @@ void	print_selected(t_rt *rt)
 		}
 		else
 			printf("UNKNOWN TYPE)\n");
+		debug_print_vec("   Rot", obj->rotate);
 	}
 	else
 		printf(">> Selected: UNKNOWN\n");

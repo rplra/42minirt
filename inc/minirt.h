@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/05 12:49:40 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 15:35:19 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,12 @@ typedef struct s_img
 	int			endian;
 }				t_img;
 
-typedef struct s_key
-{
-	float		deg;
-	t_vec3		rot;		//rotation
-	t_quat		q_rot;
-	t_vec3		offset;
-}	t_key;
+// typedef struct s_animate
+// {
+// 	t_uint	i;
+// 	char	**path;	//malloc
+// 	int		size[2];
+// }	t_animate;
 
 
 typedef struct s_rt
@@ -77,10 +76,12 @@ typedef struct s_rt
 	void		*mlx_win;
 	t_img		img;
 	t_img		img_menu;
+	t_img		img_load;
+	t_img		img_intro;
 
 	//interactive
-	bool		preview_mode;
-	bool		show_light;
+	bool		b_preview_mode;
+	bool		b_show_light;
 	t_sel		sel;
 
 	//scene
@@ -94,10 +95,9 @@ typedef struct s_rt
 	// raytracing
 	t_hit		hit;
 	t_ray		ray;		//helper pointer
-
 	t_uint		seed;
+
 	t_bvh_tree	*bvh;
-	t_key		key;
 
 	//transform
 	t_transform transform;

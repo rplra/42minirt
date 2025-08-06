@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:52:37 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 11:35:05 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 11:17:01 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	debug_print_vec(char *str, t_vec3 vec)
 {
-	printf("%s: %f %f %f\n", str, vec.x, vec.y, vec.z);
+	printf("%s: (%.2f, %.2f, %.2f)\n", str, vec.x, vec.y, vec.z);
 }
 
 void	debug_print_arr(char *str, t_obj *obj, int obj_count)

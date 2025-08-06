@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 22:08:23 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 16:59:47 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 10:06:42 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ void	update_cam_pos(t_rt *rt)
 {
 	t_vec3	pos;
 	
+	if (rt->sel.type != SEL_CAMERA)
+		return ;
 	pos = add_vec(rt->camera.ori, rt->camera.transform.translate);
 	rt->camera.pos = quaternion_rotate_adv(pos, rt->camera.transform.rotate, 1);
 	rt->camera.vup = quaternion_rotate_adv(rt->camera.vup_ori, rt->camera.transform.rotate, 1);
-
 	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1));
-	rt->camera.focus_dist = len_vec3(subtract_vec(rt->camera.pos, rt->camera.lookat));
 	rt->ray.orig = rt->camera.pos;
 }

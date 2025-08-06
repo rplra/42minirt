@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 19:09:03 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/05 22:09:40 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
 		res = &rt->obj[rt->hit.index];
 		if (res->b_rotate == 1)
 			transform_hit_pt(rt, *res);
+		// rt->hit.at = add_vec(rt->hit.at, rt->camera.transform.translate);
 		// /*debug*/printf("hitted type: %d\n", res->type);
 		// /*debug*/debug_print_vec(" |hitted", res->cyl.pos);
 		// /*debug*/debug_print_vec(" |hitted_col", res->material.albedo);

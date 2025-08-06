@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:25:47 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/05 16:08:20 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 15:33:05 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	handle_render_mode(t_rt *rt, int keycode)
 {
 	if (keycode == KEY_DOWN)
-		rt->preview_mode = 1;
+		rt->b_preview_mode = 1;
 	if (keycode == KEY_UP)
-		rt->preview_mode = 0;
+		rt->b_preview_mode = 0;
 	// /*debug*/printf("preview_mode=%d\n", rt->preview_mode);
 	// init_cam(rt);
 	// init_bvh_node(rt);
@@ -62,10 +62,10 @@ void	handle_show_light(t_rt *rt, int keycode)
 		return ;
 	if (rt->sel.type == SEL_LIGHT)
 	{
-		if (!rt->show_light && keycode == KEY_SPACE)
-			rt->show_light = 1;
-		else if (rt->show_light && keycode == KEY_SPACE)
-			rt->show_light = 0;
+		if (!rt->b_show_light && keycode == KEY_SPACE)
+			rt->b_show_light = 1;
+		else if (rt->b_show_light && keycode == KEY_SPACE)
+			rt->b_show_light = 0;
 	}
 
 }
@@ -84,12 +84,8 @@ void	handle_translation(t_rt *rt, int keycode)
 	if (rt->sel.type == SEL_CAMERA)
 	{
 		/*debug*/printf("++ Translating CAMERA\n");
-		// rt->camera.pos = add_vec(rt->camera.pos, delta);
 		rt->camera.transform.translate = add_vec(rt->camera.transform.translate, delta);
-		// rt->camera.ori = add_vec(rt->camera.ori, delta);
-		/*debug*/printf("   New CAMERA Pos: (%.2f, %.2f, %.2f)\n",
-			rt->camera.pos.x, rt->camera.pos.y, rt->camera.pos.z);
-			// rt->camera.ori.x, rt->camera.ori.y, rt->camera.ori.z);
+		/*debug*/debug_print_vec("   New CAMERA Pos", rt->camera.pos);
 	}
 	else if (rt->sel.type == SEL_LIGHT)
 	{
@@ -97,12 +93,8 @@ void	handle_translation(t_rt *rt, int keycode)
 		id = get_light_index(rt->obj, rt->obj_count);
 		obj = &rt->obj[id];
 		obj->sph.pos = add_vec(obj->sph.pos, delta);
-
 		// rt->light.pos = add_vec(rt->light.pos, delta);
-
-		/*debug*/printf("   New LIGHT Pos: (%.2f, %.2f, %.2f)\n",
-obj->sph.pos.x, obj->sph.pos.y, obj->sph.pos.z);
-// rt->light.pos.x, rt->light.pos.y, rt->light.pos.z);
+		/*debug*/debug_print_vec("   New LIGHT Pos", obj->sph.pos);
 		aabb_translate(*obj, obj->bbox, delta);
 	}
 	else if (rt->sel.type == SEL_OBJ)
@@ -120,16 +112,14 @@ obj->type == CYLINDER ? "CYLINDER" : "UNKNOWN");
 obj->plane.pos.x, obj->plane.pos.y, obj->plane.pos.z);
 			obj->plane.pos = add_vec(obj->plane.pos, delta);
 			obj->plane.d = scalar_product(obj->plane.normal, obj->plane.pos);
-			/*debug*/printf("   New Pos: (%.2f, %.2f, %.2f)\n",
-obj->plane.pos.x, obj->plane.pos.y, obj->plane.pos.z);
+			/*debug*/debug_print_vec("   New Pos", obj->plane.pos);
 		}
 		else if (obj->type == SPHERE)
 		{
 			/*debug*/printf("   Old Pos @%p: (%.2f, %.2f, %.2f)\n", (void*)&obj->sph.pos,
 obj->sph.pos.x, obj->sph.pos.y, obj->sph.pos.z);
 			obj->sph.pos = add_vec(obj->sph.pos, delta);
-			/*debug*/printf("   New Pos: (%.2f, %.2f, %.2f)\n",
-obj->sph.pos.x, obj->sph.pos.y, obj->sph.pos.z);
+			/*debug*/debug_print_vec("   New Pos", obj->sph.pos);
 		}
 		else if (obj->type == CYLINDER)
 		{
@@ -143,9 +133,7 @@ obj->sph.pos.x, obj->sph.pos.y, obj->sph.pos.z);
 subtract_vec(obj->cyl.pos, axis_height));
 			obj->cyl.d[1] = scalar_product(obj->cyl.axis, \
 add_vec(obj->cyl.pos, axis_height));
-
-			/*debug*/printf("   New Pos: (%.2f, %.2f, %.2f)\n",
-obj->cyl.pos.x, obj->cyl.pos.y, obj->cyl.pos.z);
+			/*debug*/debug_print_vec("   New Pos", obj->cyl.pos);
 		}
 		aabb_translate(*obj, obj->bbox, delta);
 	}
@@ -183,4 +171,17 @@ mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2)));
 		}
 		create_bbox(obj, obj->bbox);
 	}
+}
+
+void	handle_focus_dist(t_rt *rt, int keycode)
+{
+	if (!focus_dist_key(keycode))
+		return ;
+	if (keycode == KEY_C)
+		rt->camera.focus_dist += FOCUS_DIST;
+	else if (keycode == KEY_X)
+		rt->camera.focus_dist -= FOCUS_DIST;
+	if (rt->camera.focus_dist < 1)
+		rt->camera.focus_dist = 1;
+	printf(">> Focus distance: %f\n", rt->camera.focus_dist);
 }

@@ -6,11 +6,10 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:32 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 16:56:06 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 13:39:32 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "keybind.h"
 #include "minirt.h"
 
 t_uint	get_obj_index(t_obj *obj, int obj_count, t_uint id)
@@ -42,7 +41,8 @@ t_uint	get_light_index(t_obj *obj, int obj_count)
 bool	valid_keypress(int keycode)
 {
 	return (rotation_key(keycode) || scale_key(keycode) ||
-control_key(keycode) || translation_key(keycode));
+control_key(keycode) || translation_key(keycode) ||
+focus_dist_key(keycode));
 }
 
 void	update_bbox(t_rt *rt)
@@ -68,20 +68,24 @@ int	key_press(int keycode, t_rt *rt)
 	handle_scale(rt, keycode);
 	handle_rotation(rt, keycode);
 	handle_show_light(rt, keycode);
+	handle_focus_dist(rt, keycode);
 
 	if (valid_keypress(keycode))
 	{
 		/*debug*/printf("keycode! %d\n", keycode);
-		// init_cam(rt);
-		// init_hit(rt);
 		update_cam_pos(rt);
-		// if (keycode == KEY_UP || keycode == KEY_DOWN)
-			// set_render_quality(rt);
+		if (keycode == KEY_UP || keycode == KEY_DOWN)
+		{
+			mlx_put_image_to_window(rt->mlx, rt->mlx_win,
+rt->img_load.img, (WIN_WIDTH / 2) - (LOADBAR_W / 2), WIN_HEIGHT * 0.05);
+			set_render_quality(rt);
+		}
 		if (scale_key(keycode) || translation_key(keycode))
 			update_bbox(rt);
 		free_bvh(rt->bvh);
 		init_bvh_node(rt);
-		my_render_image(rt);
+		my_render_img(rt);
+		// rt->b_loading = 0;
 	}
 	return (0);
 }

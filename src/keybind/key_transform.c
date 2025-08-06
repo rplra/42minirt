@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:33:48 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/04 19:41:37 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 09:47:50 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,9 @@ bool	control_key(int keycode)
 {
 	return (keycode == KEY_R || keycode == KEY_UP || keycode == KEY_DOWN
 || keycode == KEY_SPACE);
+}
+
+bool	focus_dist_key(int keycode)
+{
+	return (keycode == KEY_C || keycode == KEY_X);
 }

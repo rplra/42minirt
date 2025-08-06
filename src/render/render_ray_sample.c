@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 20:52:20 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 10:55:11 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ t_vec3	sample_defoc_disk(t_rt rt, unsigned int *seed)
 	t_vec3	res;
 
 	pt = rand_unit_disk(seed);
-	// res = rt.cam_orig;
 	res = add_vec(rt.camera.pos, add_vec(mult_vec_scalar(\
 rt.camera.defoc_disk[X], pt.x), mult_vec_scalar(rt.camera.defoc_disk[Y], pt.y)));
 	// /*debug*/debug_print_vec("sample_defoc:cam:", rt.camera.pos);
@@ -87,10 +86,8 @@ int	sample_pixels(t_rt rt, t_vec3 target, t_vec3 viewport_d[2], t_uint *seed)
 
 	while (++k < rt.camera.sample_per_pixel)
 	{
-		*seed += (rt.camera.sample_per_pixel * 73856093);
+		// *seed += (rt.camera.sample_per_pixel * 73856093);
 		offset = sample_sq_rand(seed);
-		// res.x = target.x + (offset.x * viewport_d.x);
-		// res.y = target.y + (offset.y * viewport_d.y);
 		res.x = target.x + (offset.x * viewport_d[X].x) + \
 (offset.y * viewport_d[Y].x);
 		res.y = target.y + (offset.y * viewport_d[Y].y) + \
@@ -104,13 +101,7 @@ int	sample_pixels(t_rt rt, t_vec3 target, t_vec3 viewport_d[2], t_uint *seed)
 		if (rt.camera.defoc_ang > 0)
 			rt.ray.orig = sample_defoc_disk(rt, seed);
 		rt.ray.vector = subtract_vec(res, rt.ray.orig);
-
-		/* add translate cam ray here */
-
-		// /*debug*/printf("ft_draw:tar:%f %f %f\n", target.x, target.y, target.z);
-		// /*debug*/printf("ft_draw:res:%f %f %f\n", res.x, res.y, res.z);
 		color = add_vec(color, ray_color(&rt, rt.ray, rt.camera.ray_bounce, seed));
-		// /*debug*/printf("color:%f %f %f\n", color.x, color.y, color.z);
 	}
 	color = div_vec_scalar(color, rt.camera.sample_per_pixel);
 	color = color_correction(color);

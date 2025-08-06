@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 20:49:58 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 13:09:28 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ t_obj		new_cyl_2(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, float radius, 
 void		init_box_compare(bool (*box_compare[])(t_obj, t_obj));
 void		init_surf_norm(t_vec3 (*get_surf_norm[])(t_ray, t_obj, float, t_uchar));
 void		init_hit_func(bool (*has_hit[])());
+void		init_loading_img(t_rt *rt);
 
 /* __________________ merge_sort __________________ */
 void		copy_array(t_obj *dest, t_obj *src, int n);
@@ -132,14 +133,15 @@ void		init_bvh_node(t_rt *vars);
 
 /* __________________ img render __________________ */
 void		my_mlx_pixel_put(t_rt vars, int x, int y, int color);
-void		my_create_image(t_rt *vars, t_img *img);
-void		my_render_image(t_rt *vars);
+void		my_create_img(t_rt *vars, t_img *img);
+void		my_render_img(t_rt *vars);
 void		my_create_menu(t_rt *rt, t_img *img, char *filepath, int size[2]);
 void		clear_image(t_rt vars, int win_width, int win_height, int color);
+int			animate_loading(t_rt *rt);
 
 /* __________________ rotate __________________ */
-void		transform_hit_pt(t_rt *rt, t_obj res);
 t_ray		transform_ray(t_obj obj, t_ray ray);
+void		transform_hit_pt(t_rt *rt, t_obj res);
 void		transform_bbox(t_rt *rt, t_uint index);
 
 /* __________________ hit __________________ */
@@ -180,7 +182,8 @@ t_vec3		split_rgb(int color);
 /* __________________ utils __________________ */
 bool		is_near_zero(t_vec3 vec);
 void		vec3_to_arr(t_vec3 pt, float res[3]);
-void		swap_float(float t[2]);
+// void		swap_float(float t[2]);
+void		assign_int(int value[2], int width, int height);
 
 /* __________________ random __________________ */
 float		rand_lcg(unsigned int *seed);

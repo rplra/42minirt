@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/06 15:27:34 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/06 21:57:59 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@
 # define PLANE_Y				4
 
 /*	material	*/
-# define MAT_TYPE				METAL
+# define MAT_TYPE				DIFFUSE
 # define MAT_SPECULAR			0.5
 # define MAT_REFLECT			0.5
 # define MAT_FUZZ				0.2

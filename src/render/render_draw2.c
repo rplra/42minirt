@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/06 15:14:53 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 17:33:40 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,16 @@ div_vec_scalar(add_vec(vp_d[X], vp_d[Y]), 2));
 	// /*debug*/debug_print_vec("00_loc:", *vp_00_loc);
 }
 
+static int	custom_style(t_rt rt, t_vec3 target, t_vec3 viewport_d[2], int add_on)
+{
+	t_uint seed;
+
+	seed = rt.seed;		//grunge
+	if (rt.b_style == 1)
+		seed += add_on;	//slant sketch
+	return (sample_pixels(rt, target, viewport_d, &seed));
+}
+
 /*
  * child function in my_render_image
  * viewport_00 = center of pixel 00 in viewport
@@ -131,8 +141,6 @@ static void	ft_draw(t_rt rt, t_vec3 viewport_00, t_vec3 viewport_d[2])
 	x = -1;
 	y = -1;
 	target = viewport_00;
-
-	// target.z = viewport_00.z + (x * viewport_d[X].z) + (y * viewport_d[Y].z);
 	while (++y < WIN_HEIGHT)
 	{
 		x = 0;
@@ -144,9 +152,10 @@ static void	ft_draw(t_rt rt, t_vec3 viewport_00, t_vec3 viewport_d[2])
 			target.x = viewport_00.x + (x * viewport_d[X].x) + (y * viewport_d[Y].x);
 // x = viewport_00.x + (x * dx.x)  |->  + (offset.x * dx.x)
 //                   + (y * dy.x)  |->  + (offset.y * dy.x)
-			// int num = (y * WIN_WIDTH) + x;
-			rt.seed += (y * WIN_WIDTH) + x;
-			color = sample_pixels(rt, target, viewport_d, &rt.seed);
+			if (rt.b_style == 0)
+				color = sample_pixels(rt, target, viewport_d, &rt.seed); //fine pointilism
+			else
+				color = custom_style(rt, target, viewport_d, x + y);
 			my_mlx_pixel_put(rt, x, y, color);
 		}
 	}
@@ -173,7 +182,6 @@ rt->img.img, 0, 0);
 	//draw
 	get_viewport_coords(rt, &vp_00_loc, &vp_top_left, vp_d);
 	ft_draw(*rt, vp_00_loc, vp_d);
-	//push draw result to window
 	mlx_put_image_to_window(rt->mlx, rt->mlx_win, \
 rt->img.img, 0, 0);
 

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:39:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/03 23:02:17 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 21:33:11 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	**tokenize(char *line);
 int		parse_scene(t_parse *file, t_rt *rt);
 int		parse_object(t_parse *file, t_rt *rt);
 void	assign_bbox(t_obj *obj);
+void	assign_bbox_translate(t_obj *obj, t_vec3 delta);
 void	assign_rotation(t_obj *obj);
 
 /*		parse_setup.c		*/

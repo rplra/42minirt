@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/06 15:50:00 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 21:46:31 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,10 @@ void	init_variable(t_rt *rt)
 
 	rt->b_preview_mode = 1;
 	rt->b_show_light = 1;
+	rt->b_style = 0;
 	init_cam(rt);
 	init_light(rt);
-	assign_custom_material(rt);
+	// assign_custom_material(rt);
 	/* ************** need to comment out below when include parser ************************ */
 	// init_obj(rt);				//not parser
 	/* ************** need to comment out above when include parser ************************ */

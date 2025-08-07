@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:25:47 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/06 15:33:05 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 21:47:35 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,11 @@ void	handle_translation(t_rt *rt, int keycode)
 	else if (rt->sel.type == SEL_LIGHT)
 	{
 		/*debug*/printf("++ Translating LIGHT\n");
-		id = get_light_index(rt->obj, rt->obj_count);
+		id = get_light_index(rt->obj, rt->obj_count);	//light is always the last obj
 		obj = &rt->obj[id];
 		obj->sph.pos = add_vec(obj->sph.pos, delta);
-		// rt->light.pos = add_vec(rt->light.pos, delta);
 		/*debug*/debug_print_vec("   New LIGHT Pos", obj->sph.pos);
-		aabb_translate(*obj, obj->bbox, delta);
+		assign_bbox_translate(obj, delta);
 	}
 	else if (rt->sel.type == SEL_OBJ)
 	{
@@ -124,18 +123,17 @@ obj->sph.pos.x, obj->sph.pos.y, obj->sph.pos.z);
 		else if (obj->type == CYLINDER)
 		{
 			/*debug*/printf("   Old Pos @%p: (%.2f, %.2f, %.2f)\n", (void*)&obj->cyl.pos,
-			obj->cyl.pos.x, obj->cyl.pos.y, obj->cyl.pos.z);
+obj->cyl.pos.x, obj->cyl.pos.y, obj->cyl.pos.z);
 			
 			obj->cyl.pos = add_vec(obj->cyl.pos, delta);
-
-			t_vec3	axis_height = mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2);
 			obj->cyl.d[0] = scalar_product(obj->cyl.axis, \
-subtract_vec(obj->cyl.pos, axis_height));
+subtract_vec(obj->cyl.pos, obj->cyl.axis_height));
 			obj->cyl.d[1] = scalar_product(obj->cyl.axis, \
-add_vec(obj->cyl.pos, axis_height));
+add_vec(obj->cyl.pos, obj->cyl.axis_height));
+
 			/*debug*/debug_print_vec("   New Pos", obj->cyl.pos);
 		}
-		aabb_translate(*obj, obj->bbox, delta);
+		assign_bbox_translate(obj, delta);
 	}
 }
 
@@ -152,8 +150,10 @@ void	handle_scale(t_rt *rt, int keycode)
 	{
 		id = get_obj_index(rt->obj, rt->obj_count, rt->sel.obj_index);
 		obj = &rt->obj[id];
+
 		if (obj->type == SPHERE)
 			obj->sph.rad *= scale;
+
 		else if (obj->type == CYLINDER)
 		{
 			obj->cyl.rad *= scale;
@@ -167,21 +167,7 @@ mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2)));
 mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2)));
 			t_vec3	n = cross_product(obj->cyl.coord[X], obj->cyl.coord[Y]);
 			obj->cyl.w = div_vec_scalar(n, scalar_product(n, n));
-			//coord, n, d, w, bbox
 		}
-		create_bbox(obj, obj->bbox);
+		assign_bbox(obj);
 	}
-}
-
-void	handle_focus_dist(t_rt *rt, int keycode)
-{
-	if (!focus_dist_key(keycode))
-		return ;
-	if (keycode == KEY_C)
-		rt->camera.focus_dist += FOCUS_DIST;
-	else if (keycode == KEY_X)
-		rt->camera.focus_dist -= FOCUS_DIST;
-	if (rt->camera.focus_dist < 1)
-		rt->camera.focus_dist = 1;
-	printf(">> Focus distance: %f\n", rt->camera.focus_dist);
 }

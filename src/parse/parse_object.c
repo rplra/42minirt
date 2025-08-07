@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/31 10:46:30 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 21:20:30 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	assign_cyl_components(t_obj *obj)
 {
 	t_vec3	n;
 	t_vec3	tmp_vec;
-	t_vec3	axis_height;
+	// t_vec3	axis_height;
 
 	obj->type = CYLINDER;
 	tmp_vec = set_tmp_vec(obj->cyl.axis);
@@ -63,11 +63,11 @@ void	assign_cyl_components(t_obj *obj)
 	obj->cyl.coord[Y] = mult_vec_scalar(obj->cyl.coord[Y], obj->cyl.rad * 2);
 	n = cross_product(obj->cyl.coord[X], obj->cyl.coord[Y]);
 
-	axis_height = mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2);
+	obj->cyl.axis_height = mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2);
 	obj->cyl.d[0] = scalar_product(obj->cyl.axis, \
-subtract_vec(obj->cyl.pos, axis_height)); //official use corner
+subtract_vec(obj->cyl.pos, obj->cyl.axis_height)); //official use corner
 	obj->cyl.d[1] = scalar_product(obj->cyl.axis, \
-add_vec(obj->cyl.pos, axis_height)); //official use corner
+add_vec(obj->cyl.pos, obj->cyl.axis_height)); //official use corner
 	obj->cyl.w = div_vec_scalar(n, scalar_product(n, n));
 }
 

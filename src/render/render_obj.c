@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:13:15 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/02 18:46:21 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 20:58:26 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,6 @@ t_obj	new_cyl(t_vec3 position, t_vec3 normal, float radius, float height, t_mat 
 	res.cyl.coord[X] = mult_vec_scalar(res.cyl.coord[X], radius * -2); //-2 diameter
 	res.cyl.coord[Y] = mult_vec_scalar(res.cyl.coord[Y], radius * 2);
 	n = cross_product(res.cyl.coord[X], res.cyl.coord[Y]);
-
-	// (0,1,0 * -2) = (0,-2,0)
-
-	// corner of bottom cap, corner of top cap
-	// t_vec3 corner = subtract_vec(subtract_vec(res.cyl.pos, \
-// div_vec_scalar(res.cyl.coord[X], 2)), div_vec_scalar(res.cyl.coord[Y], 2));
 
 	// /*debug*/debug_print_vec("\ncyl_corner_center", res.cyl.corner);
 	// /*debug*/debug_print_vec("cyl_cap_norm", res.cyl.axis);

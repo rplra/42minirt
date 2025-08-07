@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/06 15:35:19 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 13:53:59 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_rt
 	//interactive
 	bool		b_preview_mode;
 	bool		b_show_light;
+	int			b_style;
 	t_sel		sel;
 
 	//scene

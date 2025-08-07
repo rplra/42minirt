@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/04 18:11:15 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 21:11:19 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,12 @@ typedef struct s_cylinder
 {
 	t_vec3		pos;
 	t_vec3		axis;
+	t_vec3		axis_height;
 	float		rad;
 	float		height;
-	// t_vec3		corner;
 	t_vec3		coord[2];
-	float		d[2];	// d[0]:bot_cap, d[1]:top cap
-	t_vec3		w; //for calcuting plane alpha beta or x-z side
+	float		d[2];	// d[0]:bottom_cap, d[1]:top cap
+	t_vec3		w;		// for calculating plane alpha beta or x-z side
 }				t_cylinder;
 
 // tag / labelling of objects

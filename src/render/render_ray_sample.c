@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/06 10:55:11 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 13:52:50 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ rt.camera.defoc_disk[X], pt.x), mult_vec_scalar(rt.camera.defoc_disk[Y], pt.y)))
 int	sample_pixels(t_rt rt, t_vec3 target, t_vec3 viewport_d[2], t_uint *seed)
 {
 	int				k;
-	// unsigned int	seed;
 	t_vec3			offset;
 	t_vec3			color;
 	t_vec3			res;
@@ -83,7 +82,6 @@ int	sample_pixels(t_rt rt, t_vec3 target, t_vec3 viewport_d[2], t_uint *seed)
 	res.z = target.z;
 	///*debug*/printf("sample_pixels: sample_per_pixel=%d, ray_bounce=%d\n",
 	//	rt.camera.sample_per_pixel, rt.camera.ray_bounce);
-
 	while (++k < rt.camera.sample_per_pixel)
 	{
 		// *seed += (rt.camera.sample_per_pixel * 73856093);

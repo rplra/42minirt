@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:33:48 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/06 09:47:50 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 14:00:14 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,4 @@ float	scale_factor(int keycode)
 	if (keycode == KEY_MINUS)
 		return (SCALE_DOWN);
 	return (1.0f);
-}
-
-bool	rotation_key(int keycode)
-{
-	return (keycode == KEY_I || keycode == KEY_J ||
-keycode == KEY_K || keycode == KEY_L ||
-keycode == KEY_U || keycode == KEY_O);
-}
-
-/* all keypress button that allow img render to happen */
-bool	control_key(int keycode)
-{
-	return (keycode == KEY_R || keycode == KEY_UP || keycode == KEY_DOWN
-|| keycode == KEY_SPACE);
-}
-
-bool	focus_dist_key(int keycode)
-{
-	return (keycode == KEY_C || keycode == KEY_X);
 }

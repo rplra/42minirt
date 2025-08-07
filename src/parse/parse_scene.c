@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:02 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/03 22:52:54 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 21:32:43 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ void	assign_rotation(t_obj *obj)
 void	assign_bbox(t_obj *obj)
 {
 	create_bbox(obj, obj->bbox);
+	copy_bbox(obj->bbox_ori, obj->bbox);
+	obj->bbox_center = get_bbox_center(obj->bbox);
+}
+
+void	assign_bbox_translate(t_obj *obj, t_vec3 delta)
+{
+	aabb_translate(*obj, obj->bbox, delta);
 	copy_bbox(obj->bbox_ori, obj->bbox);
 	obj->bbox_center = get_bbox_center(obj->bbox);
 }

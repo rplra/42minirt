@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 12:16:30 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/06 15:48:23 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 21:28:29 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ bool	t_intersects_cap(t_cylinder cyl, int id, t_ray ray, float t)
 	float	alpha;
 	float	beta;
 	t_vec3	intersect;
-	t_vec3	axis_height;
+	// t_vec3	axis_height;
 
 /* ********************************************************** */
 	// p= o +t*d
 	intersect = add_vec(ray.orig, mult_vec_scalar(ray.vector, t));
 
-	axis_height = mult_vec_scalar(cyl.axis, cyl.height/2);
+	// axis_height = mult_vec_scalar(cyl.axis, cyl.height/2);
 	if (id == 1) //id=top_cap
-		intersect = subtract_vec(intersect, add_vec(cyl.pos, axis_height)); // center or corner?
+		intersect = subtract_vec(intersect, add_vec(cyl.pos, cyl.axis_height)); // center or corner?
 	else if (id == 0) //id=bottom_cap
-		intersect = subtract_vec(intersect, subtract_vec(cyl.pos, axis_height));
+		intersect = subtract_vec(intersect, subtract_vec(cyl.pos, cyl.axis_height));
 
 	alpha = scalar_product(cyl.w, \
 cross_product(intersect, (cyl.coord[Y])));
@@ -146,13 +146,13 @@ float	has_hit_cap(t_rt *rt, int i, t_interval ray_range, t_ray ray)
 t_interval	get_cyl_axis_height(t_cylinder cyl)
 {
 	t_vec3		cyl_axis_pos;
-	t_vec3		cyl_axis_height;
 	t_interval	cyl_height;
 
 	cyl_axis_pos = mult_vec_scalar(cyl.axis, scalar_product(cyl.pos, cyl.axis));
-	cyl_axis_height = mult_vec_scalar(cyl.axis, cyl.height / 2);
-	cyl_height.min = scalar_product(cyl.axis, subtract_vec(cyl_axis_pos, cyl_axis_height));
-	cyl_height.max = scalar_product(cyl.axis, add_vec(cyl_axis_pos, cyl_axis_height));
+	// /*debug*/debug_print_vec("ori_axis_h", cyl.axis_height);
+	// /*debug*/debug_print_vec("new_axis_h", cyl_axis_height);
+	cyl_height.min = scalar_product(cyl.axis, subtract_vec(cyl_axis_pos, cyl.axis_height));
+	cyl_height.max = scalar_product(cyl.axis, add_vec(cyl_axis_pos, cyl.axis_height));
 
 	return (cyl_height);
 }

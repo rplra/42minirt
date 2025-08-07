@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 21:36:01 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/30 17:49:23 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 21:23:20 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	copy_cyl(t_obj *dest, t_obj src)
 	dest->cyl.d[0] = src.cyl.d[0];
 	dest->cyl.d[1] = src.cyl.d[1];
 	dest->cyl.w = src.cyl.w;
-	// dest->cyl.corner = src.cyl.corner;
+	dest->cyl.axis_height = src.cyl.axis_height;
 }
 
 

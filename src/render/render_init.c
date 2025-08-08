@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/08 10:04:25 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/08 10:07:56 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	init_variable(t_rt *rt)
 	my_create_img(rt, &rt->img);
 	assign_int(dimension, PANEL_WIDTH, WIN_HEIGHT);
 	my_create_menu(rt, &rt->img_menu, MENU, dimension);
-	assign_int(dimension, LOADBAR_W, LOADBAR_H);
+	assign_int(dimension, LOADBAR_W, WIN_HEIGHT);
 	my_create_menu(rt, &rt->img_load, LOADBAR, dimension);
 	my_create_menu(rt, &rt->img_intro, INTRO, dimension);
 }

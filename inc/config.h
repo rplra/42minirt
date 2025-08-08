@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/06 21:57:59 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/08 10:08:43 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define LOADBAR		"asset/load-600.xpm"
 # define INTRO			"asset/intro.xpm"
 # define LOADBAR_W		135
-# define LOADBAR_H		49
+// # define LOADBAR_H		49
 # define INTRO_W		400
 
 /*	ambient	*/

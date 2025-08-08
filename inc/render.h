@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/06 15:48:25 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/08 09:47:31 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void		initialize_mlx(t_rt *rt);
 void		init_variable(t_rt *rt);
 void		init_cam(t_rt *rt);
 void		init_hit(t_rt *rt);
+void		init_bg_color(t_rt *rt, float intensity);
 void		update_cam_pos(t_rt *rt);
 void		set_render_quality(t_rt *rt);
 

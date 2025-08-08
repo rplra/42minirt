@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/07 21:20:30 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/08 08:43:11 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	assign_cyl_components(t_obj *obj)
 {
 	t_vec3	n;
 	t_vec3	tmp_vec;
-	// t_vec3	axis_height;
 
 	obj->type = CYLINDER;
 	tmp_vec = set_tmp_vec(obj->cyl.axis);

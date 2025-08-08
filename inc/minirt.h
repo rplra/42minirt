@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/07 13:53:59 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/08 09:55:52 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,13 @@ typedef struct s_img
 	int			endian;
 }				t_img;
 
-// typedef struct s_animate
-// {
-// 	t_uint	i;
-// 	char	**path;	//malloc
-// 	int		size[2];
-// }	t_animate;
+typedef struct s_animate
+{
+	int			count;
+	float		step;
+	float		pos;
+	float		intensity;
+}	t_animate;
 
 
 typedef struct s_rt
@@ -82,8 +83,16 @@ typedef struct s_rt
 	//interactive
 	bool		b_preview_mode;
 	bool		b_show_light;
+	bool		b_animate;
 	int			b_style;
 	t_sel		sel;
+
+	//animate
+	t_animate	animate;
+	// int			animate_count;
+	// float		animate_amb;
+	// float		animate_light;
+	// float		animate_intensity;
 
 	//scene
 	t_ambient	ambient;

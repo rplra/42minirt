@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 13:09:38 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/06 15:17:40 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 22:27:37 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ rt.img_intro.img, (WIN_WIDTH / 2) - (INTRO_W / 2), WIN_HEIGHT / 2);
 	mlx_key_hook(rt.mlx_win, close_window, &rt);
 
 	// render loop
+	mlx_loop_hook(rt.mlx, animate_light, &rt);
 	mlx_loop(rt.mlx);
-	// mlx_loop_hook(rt.mlx, animate_loading, &rt);
 	
 	// cleanup
 	cleanup(&rt);	//might not need to free when translation & rotation

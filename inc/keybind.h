@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:47:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/07 15:35:47 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/07 22:34:49 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@
 #  define KEY_1				49
 #  define KEY_2				50
 #  define KEY_3				51
+#  define KEY_4				52
 
 #  define KEY_PLUS			61
 #  define KEY_MINUS			45
@@ -138,9 +139,12 @@ void		handle_rotation(t_rt *rt, int keycode);
 void		handle_show_light(t_rt *rt, int keycode);
 void		handle_focus_dist(t_rt *rt, int keycode);
 void		handle_render_style(t_rt *rt, int keycode);
+void		handle_animate(t_rt *rt, int keycode);
 
 t_vec3		translation_delta(int keycode);
 float		scale_factor(int keycode);
+int			animate_light(t_rt *rt);
+
 
 void		print_selected(t_rt *rt);
 

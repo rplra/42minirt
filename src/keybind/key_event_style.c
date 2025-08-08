@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 14:02:01 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/07 21:47:40 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/08 09:55:52 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,22 @@ void	handle_focus_dist(t_rt *rt, int keycode)
 	if (rt->camera.focus_dist < 1)
 		rt->camera.focus_dist = 1;
 	printf(">> Focus distance: %f\n", rt->camera.focus_dist);
+}
+
+void	handle_animate(t_rt *rt, int keycode)
+{
+	if (keycode == KEY_4)
+	{
+		rt->b_animate = 1;
+		rt->animate.pos = TRANSLATE;
+		rt->animate.count = 0;
+		rt->animate.step = 0.02;
+		rt->animate.intensity = rt->ambient.intensity;
+
+	}
+	else if (keycode != KEY_4 && rt->b_animate == 1)
+	{
+		init_bg_color(rt, rt->ambient.intensity);
+		rt->b_animate = 0;
+	}
 }

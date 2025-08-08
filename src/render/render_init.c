@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/07 21:46:31 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/08 10:04:25 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,24 @@ void	init_light(t_rt *rt)
 	add_object(rt, &light);
 }
 
+void	init_bg_color(t_rt *rt, float intensity)
+{
+	rt->color_bg[0] = mult_vec_scalar(new_vec3(0.4, 0.6, 1), intensity + 0.01);
+	rt->color_bg[1] = mult_vec_scalar(rt->ambient.colour, intensity);
+}
+
 void	init_variable(t_rt *rt)
 {
 	int	dimension[2];
 
 	rt->b_preview_mode = 1;
 	rt->b_show_light = 1;
+	rt->b_animate = 0;
 	rt->b_style = 0;
+
+	rt->sel.type = SEL_CAMERA;
+	rt->sel.obj_index = 0;
+	rt->seed = 12345;
 	init_cam(rt);
 	init_light(rt);
 	// assign_custom_material(rt);
@@ -128,11 +139,7 @@ void	init_variable(t_rt *rt)
 	/* ************** need to comment out above when include parser ************************ */
 	init_bvh_node(rt);
 	init_hit(rt);
-	rt->sel.type = SEL_CAMERA;
-	rt->sel.obj_index = 0;
-	rt->color_bg[0] = mult_vec_scalar(new_vec3(0.4, 0.6, 1), rt->ambient.intensity + 0.01);
-	rt->color_bg[1] = mult_vec_scalar(rt->ambient.colour, rt->ambient.intensity);
-	rt->seed = 12345;
+	init_bg_color(rt, rt->ambient.intensity);
 	my_create_img(rt, &rt->img);
 	assign_int(dimension, PANEL_WIDTH, WIN_HEIGHT);
 	my_create_menu(rt, &rt->img_menu, MENU, dimension);

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/07 17:33:40 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/13 14:22:46 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,37 +37,32 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
 
 	h = tan(rt->camera.hfov / 2) * rt->camera.focus_dist;
 	// viewport[H] = 2 * h;
-	// viewport[W] = (viewport[H] * WIN_WIDTH) / WIN_HEIGHT;
+	// viewport[W] = (viewport[H] * ((float)WIN_WIDTH) / (float)WIN_HEIGHT);
 	// for hfov method, push changes later
 	viewport[W] = 2 * h;
 	viewport[H] = (viewport[W] * WIN_HEIGHT) / WIN_WIDTH;
 
-	// /*debug*/printf("h:%f, viewport: %f %f\n", h, viewport[X], viewport[Y]);
-	*cam_w = unit_vec3(subtract_vec(rt->camera.pos, rt->camera.lookat));
+	*cam_w = mult_vec_scalar(rt->camera.lookat, -1);
+	
+	// /*debug*/printf("dot: %f\n", (scalar_product(*cam_w, rt->camera.vup)));
+	if (fabs(scalar_product(*cam_w, rt->camera.vup)) > 0.9999)
+		rt->camera.vup = cross_product(new_vec3(1,0,0), rt->camera.lookat);
+	// /*debug*/debug_print_vec("lookat", rt->camera.lookat);
+
 	cam[X] = unit_vec3(cross_product(rt->camera.vup, *cam_w));
-	cam[Y] = mult_vec_scalar(cross_product(*cam_w, cam[X]), -1); // -v
+	cam[Y] = cross_product(*cam_w, cam[X]);
 	
-	
-	// *cam_w = quaternion_rotate_adv(*cam_w, rt->camera.transform.rotate, 1);
-	// cam[X] = quaternion_rotate_adv(cam[X], rt->camera.transform.rotate, 1);
-	// cam[Y] = quaternion_rotate_adv(cam[Y], rt->camera.transform.rotate, 1);
-	// /*debug*/printf("cam_w: %f %f %f\n", (*cam_w).x, (*cam_w).y, (*cam_w).z);
-	// /*debug*/printf("cam[X]: %f %f %f\n", cam[X].x, cam[X].y, cam[X].z);
-	// /*debug*/printf("cam[Y]: %f %f %f\n", cam[Y].x, cam[Y].y, cam[Y].z);
+	// /*debug*/debug_print_vec("vec_w", *cam_w);
+	// /*debug*/debug_print_vec("vec_u", cam[X]);
+	// /*debug*/debug_print_vec("vec_v", cam[Y]);
+
 	*viewport_u = mult_vec_scalar(cam[X], viewport[W]);
-	*viewport_v = mult_vec_scalar(cam[Y], viewport[H]);
-	// /*debug*/printf("cam_w: %f %f %f\n", (*cam_w).x, (*cam_w).y, (*cam_w).z);
-	// /*debug*/printf("cam_u: %f %f %f\n", cam[X].x, cam[X].y, cam[X].z);
-	// /*debug*/printf("cam_v: %f %f %f\n", cam[Y].x, cam[Y].y, cam[Y].z);
-	
+	*viewport_v = mult_vec_scalar(cam[Y], viewport[H] * -1);
+
 	defoc_radius = rt->camera.focus_dist * tan(rt->camera.defoc_ang / 2);
 
-	rt->camera.defoc_disk[X] = mult_vec_scalar(cam[X], defoc_radius); // right vector
-	rt->camera.defoc_disk[Y] = mult_vec_scalar(cam[Y], defoc_radius); // up vector
-
-	// *viewport_u = new_vector3d(viewport[X], 0, 0);
-	// *viewport_v = new_vector3d(0, -viewport[Y], 0);
-	// /*debug*/printf("vp_uv in: %f %f %f, %f %f %f\n", (*viewport_u).x, (*viewport_u).y, (*viewport_u).z, (*viewport_v).x, (*viewport_v).y, (*viewport_v).z);
+	rt->camera.defoc_disk[X] = mult_vec_scalar(cam[X], defoc_radius);	//right vector
+	rt->camera.defoc_disk[Y] = mult_vec_scalar(cam[Y], defoc_radius);	//up vector
 }
 
 /*
@@ -97,8 +92,10 @@ t_vec3 *vp_top_left, t_vec3 vp_d[2])
 	get_viewport_uv(rt, &vp[X], &vp[Y], &cam_w);	
 	vp_d[X] = div_vec_scalar(vp[X], WIN_WIDTH);
 	vp_d[Y] = div_vec_scalar(vp[Y], WIN_HEIGHT);
+
 	*vp_top_left = subtract_vec(rt->camera.pos, \
 mult_vec_scalar(cam_w, rt->camera.focus_dist));
+// new_vec3(0,0,rt->camera.focus_dist));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[X], 2));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[Y], 2));
 	*vp_00_loc = add_vec(*vp_top_left, \
@@ -136,26 +133,22 @@ static void	ft_draw(t_rt rt, t_vec3 viewport_00, t_vec3 viewport_d[2])
 	int		x;
 	int		y;
 	int		color;
-	t_vec3	target;		
+	t_vec3	pixel_center;		
 
 	x = -1;
 	y = -1;
-	target = viewport_00;
 	while (++y < WIN_HEIGHT)
 	{
 		x = 0;
-		target.y = viewport_00.y + (x * viewport_d[X].y) + (y * viewport_d[Y].y);
-		// target.y = viewport_00.y + (y * viewport_d[Y].y);
 		while (++x < WIN_WIDTH)
 		{
-			// target.x = viewport_00.x + (x * viewport_d[X].x); //short
-			target.x = viewport_00.x + (x * viewport_d[X].x) + (y * viewport_d[Y].x);
-// x = viewport_00.x + (x * dx.x)  |->  + (offset.x * dx.x)
-//                   + (y * dy.x)  |->  + (offset.y * dy.x)
+            // auto pixel_center = pixel00_loc + (x * pixel_delta_x) + (y * pixel_delta_y);
+			pixel_center = add_vec(viewport_00, mult_vec_scalar(viewport_d[X], x));
+			pixel_center = add_vec(pixel_center, mult_vec_scalar(viewport_d[Y], y));
 			if (rt.b_style == 0)
-				color = sample_pixels(rt, target, viewport_d, &rt.seed); //fine pointilism
+				color = sample_pixels(rt, pixel_center, viewport_d, &rt.seed); //fine pointilism
 			else
-				color = custom_style(rt, target, viewport_d, x + y);
+				color = custom_style(rt, pixel_center, viewport_d, x + y);
 			my_mlx_pixel_put(rt, x, y, color);
 		}
 	}

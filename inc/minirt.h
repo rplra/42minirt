@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/08 09:55:52 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/13 11:50:07 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct s_animate
 	float		intensity;
 }	t_animate;
 
-
 typedef struct s_rt
 {
 	//mlx
@@ -89,10 +88,6 @@ typedef struct s_rt
 
 	//animate
 	t_animate	animate;
-	// int			animate_count;
-	// float		animate_amb;
-	// float		animate_light;
-	// float		animate_intensity;
 
 	//scene
 	t_ambient	ambient;

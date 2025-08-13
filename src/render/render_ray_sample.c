@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/07 13:52:50 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/13 11:58:53 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ rt.camera.defoc_disk[X], pt.x), mult_vec_scalar(rt.camera.defoc_disk[Y], pt.y)))
  * 5. then after sampling it will average out the colour and correct it via gamma
  * 6. lastly converts the final colour to displayable RGB value
  */
-int	sample_pixels(t_rt rt, t_vec3 target, t_vec3 viewport_d[2], t_uint *seed)
+int	sample_pixels(t_rt rt, t_vec3 pixel_center, t_vec3 viewport_d[2], t_uint *seed)
 {
 	int				k;
 	t_vec3			offset;
@@ -79,20 +79,12 @@ int	sample_pixels(t_rt rt, t_vec3 target, t_vec3 viewport_d[2], t_uint *seed)
 
 	k = -1;
 	color = new_vec3(0, 0, 0);
-	res.z = target.z;
-	///*debug*/printf("sample_pixels: sample_per_pixel=%d, ray_bounce=%d\n",
-	//	rt.camera.sample_per_pixel, rt.camera.ray_bounce);
 	while (++k < rt.camera.sample_per_pixel)
 	{
 		// *seed += (rt.camera.sample_per_pixel * 73856093);
 		offset = sample_sq_rand(seed);
-		res.x = target.x + (offset.x * viewport_d[X].x) + \
-(offset.y * viewport_d[Y].x);
-		res.y = target.y + (offset.y * viewport_d[Y].y) + \
-(offset.x * viewport_d[X].y);
-		// res = add_vec(target, add_vec(\
-// mult_vec_scalar(viewport_d[X], offset.x), mult_vec_scalar(viewport_d[Y], offset.y)));
-
+		res = add_vec(pixel_center, add_vec(\
+mult_vec_scalar(viewport_d[X], offset.x), mult_vec_scalar(viewport_d[Y], offset.y)));
 		// auto pixel_sample = pixel00_loc
 		//						+ ((i + offset.x()) * pixel_delta_u)
 		//						+ ((j + offset.y()) * pixel_delta_v);

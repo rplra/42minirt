@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/08 10:08:43 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/13 11:08:24 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@
 # define LOADBAR		"asset/load-600.xpm"
 # define INTRO			"asset/intro.xpm"
 # define LOADBAR_W		135
-// # define LOADBAR_H		49
 # define INTRO_W		400
 
 /*	ambient	*/
@@ -82,8 +81,8 @@
 # define LIGHT_RADIUS			0.1
 
 /*	plane	*/
-# define PLANE_X				-4
-# define PLANE_Y				4
+# define PLANE_X				-8
+# define PLANE_Y				8
 
 /*	material	*/
 # define MAT_TYPE				DIFFUSE

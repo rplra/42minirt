@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/07 21:11:19 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/13 11:58:27 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,26 @@ typedef struct s_ambient
 	t_col	colour;
 }				t_ambient;
 
+typedef struct	s_cam_config
+{
+	t_vec3		pos;
+	t_vec3		vup;				//camera up vector
+	t_vec3		lookat;
+}				t_cam_config;
+
 typedef struct s_camera
 {
 	t_vec3		pos;
 	t_vec3		ori;
-	t_vec3		vup;				//camera orientation
-	t_vec3		vup_ori;				//camera orientation
-	float		hfov;				//vertical fov (need change to hfov)
+	t_vec3		vup;				//camera up vector
+	t_vec3		vup_ori;			//ori camera up vector
+	t_vec3		lookat;				//specific point that camera pointing to
+	t_vec3		lookat_ori;				//specific point that camera pointing to
 
-	t_vec3		lookat;				//camera pointing to				
+	// t_cam_config	ori;
+	// t_cam_config	dup;
+
+	float		hfov;				//horizontal fov
 	float		focus_dist;
 	float		defoc_ang;			//blur angle
 	t_vec3		defoc_disk[2];
@@ -90,6 +101,8 @@ typedef struct s_camera
 	t_uchar		ray_bounce;			//how many times a ray should bounce
 	t_transform	transform;
 }				t_camera;
+
+//vup, lookat, pos
 
 typedef struct s_light
 {

@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:47:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/07 22:34:49 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/13 13:53:53 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,7 @@ bool		style_key(int keycode);
 
 t_uint		get_obj_index(t_obj *obj, int obj_count, t_uint id);
 t_uint		get_light_index(t_obj *obj, int obj_count);
-void		update_cam_pos(t_rt *rt);
-
-void		reset_cam(t_rt *rt);
+void		update_cam_pos(t_rt *rt, int keycode);
+void		reset_cam(t_rt *rt, int keycode);
 
 #endif

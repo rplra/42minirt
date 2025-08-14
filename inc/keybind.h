@@ -3,47 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   keybind.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:47:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/07 22:34:49 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/14 12:36:15 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef KEYBIND_H
 # define KEYBIND_H
 
-// # ifndef MAC
-// #  if defined(__APPLE__) && defined(__MACH__)
-// #   define MAC
-// #  elif defined(__linux__) && !defined(LINUX)
-// #   define LINUX
-// #  endif
-// # endif
 
-// # ifdef MAC
-// #  define KEY_ESC 			65307 //53
-// #  define KEY_UP 			126
-// #  define KEY_DOWN 			125
-// #  define KEY_LEFT 			123
-// #  define KEY_RIGHT 		124
-// #  define KEY_SPACE 		49
-// #  define KEY_TAB	  		48
-// #  define KEY_W				13
-// #  define KEY_A				0
-// #  define KEY_S				1
-// #  define KEY_D				2
-// #  define KEY_Q				12
-// #  define KEY_E				14
-// #  define KEY_P				35
-// #  define KEY_R				15
-// #  define KEY_PLUS			24
-// #  define KEY_MINUS			27
-// #  define MOUSE_LEFT		1
-// #  define MOUSE_RIGHT		2
-// // #  define MOUSE_SCROLL_UP 4
-// // #  define MOUSE_SCROLL_DOWN 5
-// # elif defined(LINUX)
+# ifndef MAC
+#  if defined(__APPLE__) && defined(__MACH__)
+#   define MAC
+#  elif defined(__linux__) && !defined(LINUX)
+#   define LINUX
+#  endif
+# endif
+
+# ifdef MAC
+#  define KEY_ESC         53
+#  define KEY_UP          126
+#  define KEY_DOWN        125
+#  define KEY_LEFT        123
+#  define KEY_RIGHT       124
+#  define KEY_SPACE       49
+#  define KEY_TAB         48
+#  define KEY_W           13
+#  define KEY_A           0
+#  define KEY_S           1
+#  define KEY_D           2
+#  define KEY_Q           12
+#  define KEY_E           14
+#  define KEY_P           35
+#  define KEY_R           15
+#  define KEY_U           32
+#  define KEY_O           31
+#  define KEY_P           35
+#  define KEY_I           34
+#  define KEY_J           38
+#  define KEY_K           40
+#  define KEY_L           37
+#  define KEY_C           8
+#  define KEY_X           7
+#  define KEY_1           18
+#  define KEY_2           19
+#  define KEY_3           20
+#  define KEY_4           21
+
+#  define KEY_PLUS        24
+#  define KEY_MINUS       27
+#  define MOUSE_LEFT      1
+#  define MOUSE_RIGHT     2
+#  define KEY_ARROW_L     43  // comma key
+#  define KEY_ARROW_R     47  // period key
+// #  define MOUSE_SCROLL_UP 4
+// #  define MOUSE_SCROLL_DOWN 5
+# elif defined(LINUX)
 #  define KEY_ESC			65307
 #  define KEY_UP			65362
 #  define KEY_DOWN			65364
@@ -81,7 +98,7 @@
 #  define KEY_ARROW_R 		46
 // #  define MOUSE_SCROLL_UP 4
 // #  define MOUSE_SCROLL_DOWN 5
-// # endif
+# endif
 
 /* ------------------------------- clicks -------------------------------- */
 # define LEFT_CLICK 1
@@ -106,6 +123,7 @@
 # include "../lib/quaternion/ft_vector.h"
 # include "render.h"
 
+
 typedef struct s_rt	t_rt;
 
 typedef enum e_sel_type
@@ -119,7 +137,28 @@ typedef struct s_sel
 {
 	t_sel_type	type;
 	int			obj_index;
+	t_obj		*obj_ptr; 
 }				t_sel;
+
+typedef struct s_label
+{
+    t_img   camera;
+    t_img   light;
+    t_img   sphere;
+    t_img   plane;
+    t_img   cylinder;
+	t_img	digits[10];
+}   t_label;
+
+typedef struct s_info
+{
+	t_img	pos;
+	t_img	rot;
+	t_img	dot;
+	t_img	comma;
+	t_img	minus;
+}	t_info;
+
 
 /* __________________ key menu __________________ */
 void		draw_panel(t_rt *rt);
@@ -155,9 +194,14 @@ bool		rotation_key(int keycode);
 bool		control_key(int keycode);
 bool		style_key(int keycode);
 
+void		get_info(t_rt *rt, int x, int *y, int line_ht);
 t_uint		get_obj_index(t_obj *obj, int obj_count, t_uint id);
 t_uint		get_light_index(t_obj *obj, int obj_count);
 void		update_cam_pos(t_rt *rt);
+
+char		*ft_ftoa(float f);
+char		*get_info_str(t_vec3 pos);
+void		display_digit_xpm(t_rt *rt, char *str, int x, int y);
 
 void		reset_cam(t_rt *rt);
 

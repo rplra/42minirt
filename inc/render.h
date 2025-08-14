@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/08 09:47:31 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/14 10:40:25 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ typedef struct s_ray		t_ray;
 typedef struct s_img		t_img;
 typedef struct s_interval	t_interval;
 typedef unsigned char		t_uchar;
+
+typedef struct s_img
+{
+	void		*img;
+	char		*addr;
+	int			bpp;
+	int			line_len;
+	int			endian;
+}				t_img;
 
 enum	e_quadratic_values
 {

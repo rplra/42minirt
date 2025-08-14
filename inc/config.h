@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/08 10:08:43 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/14 12:14:20 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@
 # define WIN_HEIGHT		400
 
 /*	menu	*/
-# if WIN_HEIGHT <= 400
-#  define MENU			"asset/menu-400.xpm"
+# if WIN_HEIGHT <=		400
+#  define MENU			"asset/menu/menu-400.xpm"
 #  define PANEL_WIDTH	133
-# elif WIN_HEIGHT <= 600
-#  define MENU			"asset/menu-600.xpm"
+# elif WIN_HEIGHT <=	600
+#  define MENU			"asset/menu/menu-600.xpm"
 #  define PANEL_WIDTH	199
-# elif WIN_HEIGHT <= 800
-#  define MENU			"asset/menu-800.xpm"
+# elif WIN_HEIGHT <=	800
+#  define MENU			"asset/menu/menu-800.xpm"
 #  define PANEL_WIDTH	266
 # endif
 # define TOTAL_WIDTH	(WIN_WIDTH + PANEL_WIDTH)
@@ -42,6 +42,139 @@
 # define LOADBAR_W		135
 // # define LOADBAR_H		49
 # define INTRO_W		400
+
+/*	label-assets	*/
+# define LABEL_W		200
+# define LABEL_H		30
+# if WIN_HEIGHT <= 		400
+#  define LABEL_C		"asset/label/camera_400.xpm"
+#  define LABEL_L		"asset/label/light_400.xpm"
+#  define LABEL_PL		"asset/label/plane_400.xpm"
+#  define LABEL_SP		"asset/label/sphere_400.xpm"
+#  define LABEL_CY		"asset/label/cylinder_400.xpm"
+
+# elif WIN_HEIGHT <=	600
+#  define LABEL_C		"asset/label/camera_600.xpm"
+#  define LABEL_L		"asset/label/light_600.xpm"
+#  define LABEL_PL		"asset/label/plane_600.xpm"
+#  define LABEL_SP		"asset/label/sphere_600.xpm"
+#  define LABEL_CY		"asset/label/cylinder_600.xpm"
+
+# elif WIN_HEIGHT <=	800
+#  define LABEL_C		"asset/label/camera_800.xpm"
+#  define LABEL_L		"asset/label/light_800.xpm"
+#  define LABEL_PL		"asset/label/plane_800.xpm"
+#  define LABEL_SP		"asset/label/sphere_800.xpm"
+#  define LABEL_CY		"asset/label/cylinder_800.xpm"
+
+# endif
+
+/*	digit-assets	*/
+# define DIGIT_W		200
+# define DIGIT_H		30
+# if WIN_HEIGHT <=		400
+#  define DIGIT_0		"asset/digit/0_400.xpm"
+#  define DIGIT_1		"asset/digit/1_400.xpm"
+#  define DIGIT_2		"asset/digit/2_400.xpm"
+#  define DIGIT_3		"asset/digit/3_400.xpm"
+#  define DIGIT_4		"asset/digit/4_400.xpm"
+#  define DIGIT_5		"asset/digit/5_400.xpm"
+#  define DIGIT_6		"asset/digit/6_400.xpm"
+#  define DIGIT_7		"asset/digit/7_400.xpm"
+#  define DIGIT_8		"asset/digit/8_400.xpm"
+#  define DIGIT_9		"asset/digit/9_400.xpm"
+
+# elif WIN_HEIGHT <= 	600
+#  define DIGIT_0		"asset/digit/0_600.xpm"
+#  define DIGIT_1		"asset/digit/1_600.xpm"
+#  define DIGIT_2		"asset/digit/2_600.xpm"
+#  define DIGIT_3		"asset/digit/3_600.xpm"
+#  define DIGIT_4		"asset/digit/4_600.xpm"
+#  define DIGIT_5		"asset/digit/5_600.xpm"
+#  define DIGIT_6		"asset/digit/6_600.xpm"
+#  define DIGIT_7		"asset/digit/7_600.xpm"
+#  define DIGIT_8		"asset/digit/8_600.xpm"
+#  define DIGIT_9		"asset/digit/9_600.xpm"
+
+# elif WIN_HEIGHT <=	800
+#  define DIGIT_0 		"asset/digit/0_800.xpm"
+#  define DIGIT_1		"asset/digit/1_800.xpm"
+#  define DIGIT_2		"asset/digit/2_800.xpm"
+#  define DIGIT_3		"asset/digit/3_800.xpm"
+#  define DIGIT_4		"asset/digit/4_800.xpm"
+#  define DIGIT_5		"asset/digit/5_800.xpm"
+#  define DIGIT_6		"asset/digit/6_800.xpm"
+#  define DIGIT_7		"asset/digit/7_800.xpm"
+#  define DIGIT_8		"asset/digit/8_800.xpm"
+#  define DIGIT_9		"asset/digit/9_800.xpm"
+
+# endif
+
+/*	info-assets	*/
+# define INFO_W			200
+# define INFO_H			30
+# if WIN_HEIGHT <=		400
+#  define INFO_POS 			"asset/info/pos_400.xpm"
+#  define INFO_ROT 			"asset/info/rot_400.xpm"
+#  define INFO_DOT 			"asset/info/dot_400.xpm"
+#  define INFO_COMMA 		"asset/info/comma_400.xpm"
+#  define INFO_MINUS 		"asset/info/minus_400.xpm"
+
+# elif WIN_HEIGHT <=	600
+#  define INFO_POS 			"asset/info/pos_600.xpm"
+#  define INFO_ROT 			"asset/info/rot_600.xpm"
+#  define INFO_DOT 			"asset/info/dot_600.xpm"
+#  define INFO_COMMA 		"asset/info/comma_600.xpm"
+#  define INFO_MINUS 		"asset/info/minus_600.xpm"
+
+# elif WIN_HEIGHT <=	800
+#  define INFO_POS 			"asset/info/pos_800.xpm"
+#  define INFO_ROT 			"asset/info/rot_800.xpm"
+#  define INFO_DOT 			"asset/info/dot_800.xpm"
+#  define INFO_COMMA 		"asset/info/comma_800.xpm"
+#  define INFO_MINUS 		"asset/info/minus_800.xpm"
+
+# endif
+
+/*	menu sel/info-padding		*/
+# define SEL_Y_PADDING		0.9
+# if WIN_HEIGHT <=			400
+#  define LD_PADDING		30
+#  define LX_PADDING		WIN_WIDTH + (PANEL_WIDTH / 2.65)
+#  define LY_PADDING		19
+#  define IX_PADDING		WIN_WIDTH * 1.02
+#  define IY_PADDING		6
+#  define IY_OFFSET			-10
+#  define IDX				1.065
+#  define OFFSET			4
+#  define SPACE_OFFSET		0.5
+#  define DOT_OFFSET		1.5	
+#  define DY				0.5
+# elif WIN_HEIGHT <=		600
+#  define LD_PADDING		60
+#  define LX_PADDING		WIN_WIDTH + (PANEL_WIDTH / 2.4)
+#  define LY_PADDING		19
+#  define IX_PADDING		WIN_WIDTH * 1.028
+#  define IY_PADDING		12
+#  define IY_OFFSET			0
+#  define IDX				1.075
+#  define OFFSET			6
+#  define SPACE_OFFSET		1.0
+#  define DOT_OFFSET		2.0
+#  define DY				3
+# elif WIN_HEIGHT <=		800
+#  define LD_PADDING		80
+#  define LX_PADDING		WIN_WIDTH + (PANEL_WIDTH / 2.4)
+#  define LY_PADDING		18
+#  define IX_PADDING		WIN_WIDTH * 1.035
+#  define IY_PADDING		12
+#  define IY_OFFSET			0
+#  define IDX				1.075
+#  define OFFSET			8
+#  define SPACE_OFFSET		1.5
+#  define DOT_OFFSET		2.5
+#  define DY				1
+# endif
 
 /*	ambient	*/
 # define AMBIENT_RATIO_MIN	0.0

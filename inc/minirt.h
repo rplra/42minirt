@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/08 09:55:52 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/12 23:17:47 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,9 @@ typedef unsigned int		t_uint;
 // typedef struct s_obj		t_obj;
 typedef struct s_bvh_tree	t_bvh_tree;
 typedef struct s_sel 		t_sel; 
+//typedef struct s_label		t_label; 
 
-typedef struct s_img
-{
-	void		*img;
-	char		*addr;
-	int			bpp;
-	int			line_len;
-	int			endian;
-}				t_img;
+
 
 typedef struct s_animate
 {
@@ -86,6 +80,8 @@ typedef struct s_rt
 	bool		b_animate;
 	int			b_style;
 	t_sel		sel;
+	t_label		label;
+	t_info		info;
 
 	//animate
 	t_animate	animate;

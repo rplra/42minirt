@@ -6,19 +6,19 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 10:32:07 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 12:35:36 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:56:14 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-char *ft_ftoa(float f)
+char	*ft_ftoa(float f)
 {
-	char *int_part;
-	char *frac_part;
-	char *temp;
-	char *result;
-	int frac;
+	char	*int_part;
+	char	*frac_part;
+	char	*temp;
+	char	*result;
+	int		frac;
 
 	int_part = ft_itoa((int)f);
 	frac = (int)((f - (int)f) * 10);
@@ -42,19 +42,19 @@ char	*get_info_str(t_vec3 pos)
 	char	*res;
 
 	x = ft_ftoa(pos.x);
-    y = ft_ftoa(pos.y);
-    z = ft_ftoa(pos.z);
-    temp = ft_strjoin(x, ",");
-    free(x);
-    x = ft_strjoin(temp, y);
-    free(temp);
-    free(y);
-    temp = ft_strjoin(x, ",");
-    free(x);
-    res = ft_strjoin(temp, z);
-    free(temp);
-    free(z);
-    return (res);
+	y = ft_ftoa(pos.y);
+	z = ft_ftoa(pos.z);
+	temp = ft_strjoin(x, ",");
+	free(x);
+	x = ft_strjoin(temp, y);
+	free(temp);
+	free(y);
+	temp = ft_strjoin(x, ",");
+	free(x);
+	res = ft_strjoin(temp, z);
+	free(temp);
+	free(z);
+	return (res);
 }
 
 static void	*get_char_image(t_rt *rt, char c)

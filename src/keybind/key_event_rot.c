@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 22:47:23 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/14 14:27:38 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:53:39 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ void	apply_rotation_obj(t_vec3 delta, t_rt *rt)
 		return ;
 	obj->b_rotate = 1;
 	obj->rotate = add_vec(obj->rotate, delta);
-
-	if (fabs(obj->rotate.x) > 360 || fabs(obj->rotate.y) > 360 || fabs(obj->rotate.z) > 360)
-		obj->rotate = new_vec3(fmod(obj->rotate.x, 360), fmod(obj->rotate.y, 360), fmod(obj->rotate.z, 360));
+	if (fabs(obj->rotate.x) > 360 || fabs(obj->rotate.y) > 360
+		|| fabs(obj->rotate.z) > 360)
+		obj->rotate = new_vec3(fmod(obj->rotate.x, 360),
+				fmod(obj->rotate.y, 360), fmod(obj->rotate.z, 360));
 	transform_bbox(rt, id);
 }
 
@@ -76,7 +77,8 @@ void	reset_cam(t_rt *rt, int keycode)
 		return ;
 	rt->camera.transform.rotate = new_vec3(0, 0, 0);
 	rt->camera.transform.translate = new_vec3(0, 0, 0);
-	rt->camera.pos = new_vec3(rt->camera.ori.x, rt->camera.ori.y, rt->camera.ori.z);
+	rt->camera.pos = new_vec3(rt->camera.ori.x,
+			rt->camera.ori.y, rt->camera.ori.z);
 	// rt->camera.pos = rt->camera.ori;
 	rt->camera.vup = rt->camera.vup_ori;
 	rt->camera.lookat = rt->camera.lookat_ori;
@@ -87,7 +89,7 @@ void	handle_rotation(t_rt *rt, int keycode)
 {
 	t_vec3	delta;
 	t_vec3	*rot;
-	
+
 	// if (keycode == KEY_R)
 	// 	reset_cam(rt);
 	if (!rotation_key(keycode))
@@ -95,10 +97,13 @@ void	handle_rotation(t_rt *rt, int keycode)
 	delta = rotation_delta(keycode);
 	if (rt->sel.type == SEL_CAMERA)
 	{
-		rt->camera.transform.rotate = add_vec(rt->camera.transform.rotate, delta);
+		rt->camera.transform.rotate
+			= add_vec(rt->camera.transform.rotate, delta);
 		rot = &rt->camera.transform.rotate;
-		if (fabs((*rot).x) > 360 || fabs((*rot).y) > 360 || fabs((*rot).z) > 360)
-			*rot = new_vec3(fmod((*rot).x, 360), fmod((*rot).y, 360), fmod((*rot).z, 360));
+		if (fabs((*rot).x) > 360 || fabs((*rot).y) > 360
+			|| fabs((*rot).z) > 360)
+			*rot = new_vec3(fmod((*rot).x, 360),
+					fmod((*rot).y, 360), fmod((*rot).z, 360));
 	}
 	else if (rt->sel.type == SEL_OBJ)
 		apply_rotation_obj(delta, rt);

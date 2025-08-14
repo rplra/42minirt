@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 09:27:03 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 12:01:52 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 17:00:06 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 bool	translation_key(int keycode)
 {
-	return (keycode == KEY_W || keycode == KEY_S ||
-			keycode == KEY_A || keycode == KEY_D ||
-			keycode == KEY_Q || keycode == KEY_E);
+	return (keycode == KEY_W || keycode == KEY_S || keycode == KEY_A
+		|| keycode == KEY_D || keycode == KEY_Q || keycode == KEY_E);
 }
 
 t_vec3	translation_delta(int keycode)
@@ -36,24 +35,25 @@ t_vec3	translation_delta(int keycode)
 	return (new_vec3(0, 0, 0));
 }
 
+// light is always the last obj
 static void	translate_setup(t_rt *rt, t_vec3 delta)
 {
 	t_obj	*obj;
 	int		id;
-	
+
 	if (rt->sel.type == SEL_CAMERA)
-		rt->camera.transform.translate = 
-			add_vec(rt->camera.transform.translate, delta);
+		rt->camera.transform.translate = add_vec(rt->camera.transform.translate,
+				delta);
 	else if (rt->sel.type == SEL_LIGHT)
 	{
-		id = get_light_index(rt->obj, rt->obj_count);	//light is always the last obj
+		id = get_light_index(rt->obj, rt->obj_count);
 		obj = &rt->obj[id];
 		obj->sph.pos = add_vec(obj->sph.pos, delta);
 		assign_bbox_translate(obj, delta);
 	}
 }
 
-static void translate_obj(t_rt *rt, t_vec3 delta)
+static void	translate_obj(t_rt *rt, t_vec3 delta)
 {
 	t_obj	*obj;
 	int		id;
@@ -63,18 +63,17 @@ static void translate_obj(t_rt *rt, t_vec3 delta)
 	if (obj->type == PLANE)
 	{
 		obj->plane.pos = add_vec(obj->plane.pos, delta);
-		obj->plane.d = scalar_product(obj->plane.normal,
-			obj->plane.pos);
+		obj->plane.d = scalar_product(obj->plane.normal, obj->plane.pos);
 	}
 	else if (obj->type == SPHERE)
 		obj->sph.pos = add_vec(obj->sph.pos, delta);
 	else if (obj->type == CYLINDER)
 	{
 		obj->cyl.pos = add_vec(obj->cyl.pos, delta);
-		obj->cyl.d[0] = scalar_product(obj->cyl.axis,
-			subtract_vec(obj->cyl.pos, obj->cyl.axis_height));
-		obj->cyl.d[1] = scalar_product(obj->cyl.axis,
-			add_vec(obj->cyl.pos, obj->cyl.axis_height));
+		obj->cyl.d[0] = scalar_product(obj->cyl.axis, subtract_vec(obj->cyl.pos,
+					obj->cyl.axis_height));
+		obj->cyl.d[1] = scalar_product(obj->cyl.axis, add_vec(obj->cyl.pos,
+					obj->cyl.axis_height));
 	}
 	assign_bbox_translate(obj, delta);
 }
@@ -82,9 +81,9 @@ static void translate_obj(t_rt *rt, t_vec3 delta)
 void	handle_translation(t_rt *rt, int keycode)
 {
 	t_vec3	delta;
-	
+
 	if (!translation_key(keycode))
-		return;
+		return ;
 	delta = translation_delta(keycode);
 	if (rt->sel.type == SEL_CAMERA || rt->sel.type == SEL_LIGHT)
 		translate_setup(rt, delta);
@@ -100,13 +99,15 @@ void	handle_translation(t_rt *rt, int keycode)
 	int		id;
 
 	if (!translation_key(keycode))
-		return;
+		return ;
 	delta = translation_delta(keycode);
 	if (rt->sel.type == SEL_CAMERA)
-		rt->camera.transform.translate = add_vec(rt->camera.transform.translate, delta);
+		rt->camera.transform.translate = add_vec(rt->camera.transform.translate,
+				delta);
 	else if (rt->sel.type == SEL_LIGHT)
 	{
-		id = get_light_index(rt->obj, rt->obj_count);	//light is always the last obj
+		id = get_light_index(rt->obj,
+					rt->obj_count);	//light is always the last obj
 		obj = &rt->obj[id];
 		obj->sph.pos = add_vec(obj->sph.pos, delta);
 		assign_bbox_translate(obj, delta);
@@ -125,10 +126,10 @@ void	handle_translation(t_rt *rt, int keycode)
 		else if (obj->type == CYLINDER)
 		{
 			obj->cyl.pos = add_vec(obj->cyl.pos, delta);
-			obj->cyl.d[0] = scalar_product(obj->cyl.axis, \
-subtract_vec(obj->cyl.pos, obj->cyl.axis_height));
-			obj->cyl.d[1] = scalar_product(obj->cyl.axis, \
-add_vec(obj->cyl.pos, obj->cyl.axis_height));
+			obj->cyl.d[0] = scalar_product(obj->cyl.axis,
+				subtract_vec(obj->cyl.pos, obj->cyl.axis_height));
+			obj->cyl.d[1] = scalar_product(obj->cyl.axis, 
+				add_vec(obj->cyl.pos, obj->cyl.axis_height));
 		}
 		assign_bbox_translate(obj, delta);
 	}

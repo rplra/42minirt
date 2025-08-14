@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 10:41:42 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 12:50:09 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:51:02 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	print_obj_details(t_obj *obj)
 		printf("CYLINDER)\n");
 		debug_print_vec("   Pos", obj->cyl.pos);
 	}
-	else 
+	else
 		printf(">> Selected: UNKNOWN obj\n");
 }
 
@@ -72,6 +72,6 @@ void	print_selected(t_rt *rt)
 		print_selected_setup(rt);
 	else if (rt->sel.type == SEL_OBJ)
 		print_selected_obj(rt);
-	else 
+	else
 		printf(">> Selected: UNKNOWN\n");
 }

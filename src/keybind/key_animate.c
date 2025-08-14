@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_animate.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:17:00 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/08 10:01:30 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/13 11:51:35 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	handle_animate_light(t_rt *rt)
 	if (rt->animate.count == 4)
 		rt->animate.count = 0;
 	delta = new_vec3(0, rt->animate.pos, 0);
-
 	id = get_light_index(rt->obj, rt->obj_count);	//light is always the last obj
 	obj = &rt->obj[id];
 	obj->sph.pos = add_vec(obj->sph.pos, delta);

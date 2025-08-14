@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:32 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/08 08:42:43 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/14 12:33:19 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,8 @@ rt->img_load.img, (WIN_WIDTH / 2) - (LOADBAR_W / 2), WIN_HEIGHT * 0.05);
 		init_bvh_node(rt);
 		my_render_img(rt);
 	}
+	/*debug*/printf("Selected OBJ index = %d\n", rt->sel.obj_index);
+	/*debug*/print_selected(rt);
 	return (0);
 }
+

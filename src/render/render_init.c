@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/08 10:07:56 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/12 17:38:36 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,33 @@ void	init_bg_color(t_rt *rt, float intensity)
 	rt->color_bg[1] = mult_vec_scalar(rt->ambient.colour, intensity);
 }
 
+void	init_menu_label_info(t_rt *rt)
+{
+	int	dimension[2];
+
+	assign_int(dimension, LABEL_W, LABEL_H);
+	my_create_menu(rt, &rt->label.camera, LABEL_C, dimension);
+	my_create_menu(rt, &rt->label.light, LABEL_L, dimension);
+	my_create_menu(rt, &rt->label.plane, LABEL_PL, dimension);
+	my_create_menu(rt, &rt->label.sphere, LABEL_SP, dimension);
+	my_create_menu(rt, &rt->label.cylinder, LABEL_CY, dimension);
+	my_create_menu(rt, &rt->label.digits[0], DIGIT_0, dimension);
+	my_create_menu(rt, &rt->label.digits[1], DIGIT_1, dimension);
+	my_create_menu(rt, &rt->label.digits[2], DIGIT_2, dimension);
+	my_create_menu(rt, &rt->label.digits[3], DIGIT_3, dimension);
+	my_create_menu(rt, &rt->label.digits[4], DIGIT_4, dimension);
+	my_create_menu(rt, &rt->label.digits[5], DIGIT_5, dimension);
+	my_create_menu(rt, &rt->label.digits[6], DIGIT_6, dimension);
+	my_create_menu(rt, &rt->label.digits[7], DIGIT_7, dimension);
+	my_create_menu(rt, &rt->label.digits[8], DIGIT_8, dimension);
+	my_create_menu(rt, &rt->label.digits[9], DIGIT_9, dimension);
+	my_create_menu(rt, &rt->info.pos, INFO_POS, dimension);
+    my_create_menu(rt, &rt->info.rot, INFO_ROT, dimension);
+	my_create_menu(rt, &rt->info.dot, INFO_DOT, dimension);
+    my_create_menu(rt, &rt->info.comma, INFO_COMMA, dimension);
+	my_create_menu(rt, &rt->info.minus, INFO_MINUS, dimension);
+}
+
 void	init_variable(t_rt *rt)
 {
 	int	dimension[2];
@@ -146,4 +173,5 @@ void	init_variable(t_rt *rt)
 	assign_int(dimension, LOADBAR_W, WIN_HEIGHT);
 	my_create_menu(rt, &rt->img_load, LOADBAR, dimension);
 	my_create_menu(rt, &rt->img_intro, INTRO, dimension);
+	init_menu_label_info(rt);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/07 17:33:40 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/11 09:27:15 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,9 +188,5 @@ rt->img.img, 0, 0);
 	//menu img
 	mlx_put_image_to_window(rt->mlx, rt->mlx_win, \
 rt->img_menu.img, WIN_WIDTH, 0);
-
-	//menu
-	// draw_panel(rt);
-	// keybind_guide(rt);
 	selection_guide(rt);
 }

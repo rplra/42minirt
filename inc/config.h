@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 14:36:25 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 23:20:53 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,9 @@
 
 # include "scene.h"
 
-/*	math constant	*/
-# define EPSILON		0.00001
-//# define PI 3.14159265358979323846
-
 /*	window	*/
-# define WIN_WIDTH		1000
-# define WIN_HEIGHT		800
+# define WIN_WIDTH		600
+# define WIN_HEIGHT		400
 
 /*	menu	*/
 # if WIN_HEIGHT <=		400
@@ -34,7 +30,6 @@
 #  define MENU			"asset/menu/menu-800.xpm"
 #  define PANEL_WIDTH	266
 # endif
-# define TOTAL_WIDTH	(WIN_WIDTH + PANEL_WIDTH)
 
 /*	img-assets	*/
 # define LOADBAR		"asset/load-600.xpm"
@@ -65,7 +60,6 @@
 #  define LABEL_PL		"asset/label/plane_800.xpm"
 #  define LABEL_SP		"asset/label/sphere_800.xpm"
 #  define LABEL_CY		"asset/label/cylinder_800.xpm"
-
 # endif
 
 /*	digit-assets	*/
@@ -106,43 +100,41 @@
 #  define DIGIT_7		"asset/digit/7_800.xpm"
 #  define DIGIT_8		"asset/digit/8_800.xpm"
 #  define DIGIT_9		"asset/digit/9_800.xpm"
-
 # endif
 
 /*	info-assets	*/
 # define INFO_W			200
 # define INFO_H			30
 # if WIN_HEIGHT <=		400
-#  define INFO_POS 			"asset/info/pos_400.xpm"
-#  define INFO_ROT 			"asset/info/rot_400.xpm"
-#  define INFO_DOT 			"asset/info/dot_400.xpm"
-#  define INFO_COMMA 		"asset/info/comma_400.xpm"
-#  define INFO_MINUS 		"asset/info/minus_400.xpm"
+#  define INFO_POS 		"asset/info/pos_400.xpm"
+#  define INFO_ROT 		"asset/info/rot_400.xpm"
+#  define INFO_DOT 		"asset/info/dot_400.xpm"
+#  define INFO_COMMA 	"asset/info/comma_400.xpm"
+#  define INFO_MINUS 	"asset/info/minus_400.xpm"
 
 # elif WIN_HEIGHT <=	600
-#  define INFO_POS 			"asset/info/pos_600.xpm"
-#  define INFO_ROT 			"asset/info/rot_600.xpm"
-#  define INFO_DOT 			"asset/info/dot_600.xpm"
-#  define INFO_COMMA 		"asset/info/comma_600.xpm"
-#  define INFO_MINUS 		"asset/info/minus_600.xpm"
+#  define INFO_POS 		"asset/info/pos_600.xpm"
+#  define INFO_ROT 		"asset/info/rot_600.xpm"
+#  define INFO_DOT 		"asset/info/dot_600.xpm"
+#  define INFO_COMMA 	"asset/info/comma_600.xpm"
+#  define INFO_MINUS 	"asset/info/minus_600.xpm"
 
 # elif WIN_HEIGHT <=	800
-#  define INFO_POS 			"asset/info/pos_800.xpm"
-#  define INFO_ROT 			"asset/info/rot_800.xpm"
-#  define INFO_DOT 			"asset/info/dot_800.xpm"
-#  define INFO_COMMA 		"asset/info/comma_800.xpm"
-#  define INFO_MINUS 		"asset/info/minus_800.xpm"
-
+#  define INFO_POS 		"asset/info/pos_800.xpm"
+#  define INFO_ROT 		"asset/info/rot_800.xpm"
+#  define INFO_DOT 		"asset/info/dot_800.xpm"
+#  define INFO_COMMA 	"asset/info/comma_800.xpm"
+#  define INFO_MINUS 	"asset/info/minus_800.xpm"
 # endif
 
 /*	menu sel/info-padding		*/
 # define SEL_Y_PADDING		0.9
 # if WIN_HEIGHT <=			400
-#  define LD_PADDING		30
-#  define LX_PADDING		WIN_WIDTH + (PANEL_WIDTH / 2.65)
-#  define LY_PADDING		19
-#  define IX_PADDING		WIN_WIDTH * 1.02
-#  define IY_PADDING		6
+#  define LD				30
+#  define LX				2.65
+#  define LY				19
+#  define IX				1.02
+#  define IY				6
 #  define IY_OFFSET			-10
 #  define IDX				1.065
 #  define OFFSET			4
@@ -150,11 +142,11 @@
 #  define DOT_OFFSET		1.5	
 #  define DY				0.5
 # elif WIN_HEIGHT <=		600
-#  define LD_PADDING		60
-#  define LX_PADDING		WIN_WIDTH + (PANEL_WIDTH / 2.4)
-#  define LY_PADDING		19
-#  define IX_PADDING		WIN_WIDTH * 1.028
-#  define IY_PADDING		12
+#  define LD				60
+#  define LX				2.4
+#  define LY				19
+#  define IX				1.028
+#  define IY				12
 #  define IY_OFFSET			0
 #  define IDX				1.075
 #  define OFFSET			6
@@ -162,11 +154,11 @@
 #  define DOT_OFFSET		2.0
 #  define DY				3
 # elif WIN_HEIGHT <=		800
-#  define LD_PADDING		80
-#  define LX_PADDING		WIN_WIDTH + (PANEL_WIDTH / 2.4)
-#  define LY_PADDING		18
-#  define IX_PADDING		WIN_WIDTH * 1.035
-#  define IY_PADDING		12
+#  define LD				80
+#  define LX				2.4
+#  define LY				18
+#  define IX				1.035
+#  define IY				12
 #  define IY_OFFSET			0
 #  define IDX				1.075
 #  define OFFSET			8
@@ -174,6 +166,9 @@
 #  define DOT_OFFSET		2.5
 #  define DY				1
 # endif
+
+/*	math constant	*/
+# define EPSILON			0.00001
 
 /*	ambient	*/
 # define AMBIENT_RATIO_MIN	0.0
@@ -199,7 +194,7 @@
 /*	camera	*/
 # define FOV_MIN	0
 # define FOV_MAX	180
-# define DEFOC_ANG	radian(0)
+# define DEFOC_ANG	0
 # define DEFOC_XX	0
 # define DEFOC_XY	0
 # define DEFOC_XZ	0

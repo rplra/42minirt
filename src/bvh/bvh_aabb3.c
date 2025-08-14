@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_aabb3.c                                     :+:      :+:    :+:   */
+/*   bvh_aabb3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:35:35 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/05 15:56:57 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/14 17:26:54 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
  *   aabb = axis-aligned bounding box
  * ************************************************************************** */
 
-
 #include "minirt.h"
 
 /*
- * res = bound_box 
+ * res = bound_box
  * updates bound_box for static cylinder
  * value returned in res
  */
@@ -37,9 +36,10 @@ void	aabb_cyl(t_obj *obj, t_interval res[3])
 	tmp_vec = new_vec3(cyl.rad, cyl.rad, cyl.rad);
 	aabb(subtract_vec(cyl.pos, tmp_vec), add_vec(cyl.pos, tmp_vec), bbox_side2);
 	update_aabb_box(bbox_side1, bbox_side2, res);
-
-	// aabb(cyl.pos, add_vec(add_vec(cyl.pos, cyl.coord[X]), cyl.coord[Y]), bbox_side1);
-	// aabb(add_vec(cyl.pos, cyl.coord[X]), add_vec(cyl.pos, cyl.coord[Y]), bbox_side2);
+	// aabb(cyl.pos, add_vec(add_vec(cyl.pos, cyl.coord[X]), cyl.coord[Y]),
+		// bbox_side1);
+	// aabb(add_vec(cyl.pos, cyl.coord[X]), add_vec(cyl.pos, cyl.coord[Y]),
+		// bbox_side2);
 	// update_aabb_box(bbox_side1, bbox_side2, res);
 }
 
@@ -54,15 +54,19 @@ void	aabb_plane(t_obj *obj, t_interval res[3])
 	plane = obj->plane;
 	corner = subtract_vec(plane.pos, div_vec_scalar(plane.coord[X], 2));
 	corner = subtract_vec(corner, div_vec_scalar(plane.coord[Y], 2));
-	aabb(corner, add_vec(add_vec(corner, plane.coord[X]), plane.coord[Y]), bbox_side1);
-	aabb(add_vec(corner, plane.coord[X]), add_vec(corner, plane.coord[Y]), bbox_side2);
-	// aabb(plane.pos, add_vec(add_vec(plane.pos, plane.coord[X]), plane.coord[Y]), bbox_side1);
-	// aabb(add_vec(plane.pos, plane.coord[X]), add_vec(plane.pos, plane.coord[Y]), bbox_side2);
+	aabb(corner, add_vec(add_vec(corner, plane.coord[X]), plane.coord[Y]),
+		bbox_side1);
+	aabb(add_vec(corner, plane.coord[X]), add_vec(corner, plane.coord[Y]),
+		bbox_side2);
+	// aabb(plane.pos, add_vec(add_vec(plane.pos, plane.coord[X]),
+			// plane.coord[Y]), bbox_side1);
+	// aabb(add_vec(plane.pos, plane.coord[X]), add_vec(plane.pos,
+			// plane.coord[Y]), bbox_side2);
 	update_aabb_box(bbox_side1, bbox_side2, res);
 }
 
 /*
- * res = bound_box 
+ * res = bound_box
  * updates bound_box for static sphere
  * value returned in res
  */

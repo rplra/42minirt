@@ -6,11 +6,12 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 17:26:13 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/29 10:40:20 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:06:47 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 // #include <stdio.h>
 
 static void	handle_whitespace_and_sign(const char **str, int *sign)
@@ -31,7 +32,7 @@ static void	process_digits(const char **str, t_atod *atod)
 			atod->val = (atod->val * 10) + (**str - '0');
 		else
 		{
-			atod->frac += (**str - '0') /(double)atod->divisor;
+			atod->frac += (**str - '0') / (double)atod->divisor;
 			atod->divisor *= 10;
 		}
 		atod->has_digit = true;
@@ -53,7 +54,7 @@ static bool	process_dot(const char **str, t_atod *atod)
 		else if (ft_isdigit(**str))
 			process_digits(str, atod);
 		else
-			break;
+			break ;
 	}
 	return (true);
 }
@@ -73,7 +74,7 @@ double	ft_atod(const char *str, bool *valid)
 	if (!process_dot(&str, &atod) || !atod.has_digit || *str != '\0')
 	{
 		*valid = false;
-		return 0.0;
+		return (0.0);
 	}
 	*valid = true;
 	return ((atod.val + atod.frac) * sign);
@@ -81,18 +82,19 @@ double	ft_atod(const char *str, bool *valid)
 
 /* int main(void)
 {
-    bool valid;
-    const char *tests[] = {"123.45", "-0.5", ".7", "1.", "1.2.3", "abc", "a.12", "1.2b"};
-    int count = sizeof(tests) / sizeof(tests[0]);
-    int i;
-    for (i = 0; i < count; i++)
-    {
-        double val = ft_atod(tests[i], &valid);
-        printf("input: '%s' -> ", tests[i]);
-        if (valid)
-            printf("after atod: %f\n", val);
-        else
-            printf("Invalid input for atod\n");
-    }
-    return 0;
+	bool valid;
+	const char *tests[] = {"123.45", "-0.5", ".7", "1.", "1.2.3", "abc", "a.12",
+		"1.2b"};
+	int count = sizeof(tests) / sizeof(tests[0]);
+	int i;
+	for (i = 0; i < count; i++)
+	{
+		double val = ft_atod(tests[i], &valid);
+		printf("input: '%s' -> ", tests[i]);
+		if (valid)
+			printf("after atod: %f\n", val);
+		else
+			printf("Invalid input for atod\n");
+	}
+	return (0);
 } */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_quaternion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 20:33:14 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/25 17:33:44 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/14 16:12:51 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,4 @@ t_quat	conjugate_quaternion(t_quat q1)
 	result.scalar = q1.scalar;
 	result.vector = mult_vec_scalar(q1.vector, -1.0);
 	return (result);
-}
-
-/* 
- * Calculates the length/magnitude/norm of quaternion
- * = sqrt(scalar sq + i sq + j sq + k sq)
- */
-float	len_quaternion(t_quat q1)
-{
-	return (sqrt(ft_square(q1.scalar) + ft_square(q1.vector.x) + \
-ft_square(q1.vector.y) + ft_square(q1.vector.z)));
-}
-
-/*
- * Unit Quaternion
- * Normalize the quaternion to length of 1
- * = q / len_quaternion
- */
-void	norm_quaternion(t_quat *q1)
-{
-	float	qlength;
-
-	qlength = len_quaternion(*q1);
-	q1->scalar /= qlength;
-	q1->vector = mult_vec_scalar(q1->vector, 1.0 / qlength);
 }

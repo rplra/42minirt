@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:10:59 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/24 19:18:16 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/14 16:05:59 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 typedef struct s_atod
 {
 	double		val;
-	double 		frac;
+	double		frac;
 	int			divisor;
 	bool		has_dot;
 	bool		has_digit;
@@ -31,13 +31,13 @@ typedef struct s_atod
 typedef struct s_atof
 {
 	double		val;
-	double 		frac;
+	double		frac;
 	int			divisor;
 	bool		has_dot;
 	bool		has_digit;
 }				t_atof;
 
-typedef unsigned int t_uint;
+typedef unsigned int	t_uint;
 
 /* PART 1 - LIBC */
 /* VALUES */
@@ -96,7 +96,6 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 int		ft_perror(char *err_str, char *err_str2, int return_value);
-
 
 /* PART 3 - BONUS */
 /* LISTS */

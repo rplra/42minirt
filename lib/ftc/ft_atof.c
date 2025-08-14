@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:01:31 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/12 19:00:38 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:06:26 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	process_digits(const char **str, t_atof *atof)
 			atof->val = (atof->val * 10) + (**str - '0');
 		else
 		{
-			atof->frac += (**str - '0') /(double)atof->divisor;
+			atof->frac += (**str - '0') / (double)atof->divisor;
 			atof->divisor *= 10;
 		}
 		atof->has_digit = true;
@@ -54,7 +54,7 @@ static bool	process_dot(const char **str, t_atof *atof)
 		else if (ft_isdigit(**str))
 			process_digits(str, atof);
 		else
-			break;
+			break ;
 	}
 	return (true);
 }
@@ -74,37 +74,37 @@ float	ft_atof(const char *str, bool *valid)
 	if (!process_dot(&str, &atof) || !atof.has_digit || *str != '\0')
 	{
 		*valid = false;
-		return 0.0;
+		return (0.0);
 	}
 	*valid = true;
 	return ((atof.val + atof.frac) * sign);
 }
 
 /*
-int main(void)
+int	main(void)
 {
-    bool valid;
-    const char *tests[] = {
-        "123.45", "-0.5", ".7", "1.", "1.2.3", "abc", "a.12", "1.2b"
-    };
-    int count = sizeof(tests) / sizeof(tests[0]);
+	bool	valid;
+	int		count;
+	float	my_val;
+	float	sys_val;
 
-    for (int i = 0; i < count; i++)
-    {
-        float my_val = ft_atof(tests[i], &valid);
-        float sys_val = atof(tests[i]);
-
-        printf("input: '%s'\n", tests[i]);
-
-        if (valid)
-            printf("  ft_atof  => %f\n", my_val);
-        else
-            printf("  ft_atof  => Invalid input\n");
-
-        printf("  std_atof => %f\n", sys_val);
-        printf("\n");
-    }
-    return 0;
+	const char *tests[] = {
+		"123.45", "-0.5", ".7", "1.", "1.2.3", "abc", "a.12", "1.2b"
+	};
+	count = sizeof(tests) / sizeof(tests[0]);
+	for (int i = 0; i < count; i++)
+	{
+		my_val = ft_atof(tests[i], &valid);
+		sys_val = atof(tests[i]);
+		printf("input: '%s'\n", tests[i]);
+		if (valid)
+			printf("  ft_atof  => %f\n", my_val);
+		else
+			printf("  ft_atof  => Invalid input\n");
+		printf("  std_atof => %f\n", sys_val);
+		printf("\n");
+	}
+	return (0);
 }
 */
 
@@ -159,22 +159,21 @@ float	ft_atof(const char *str)
 }
 */
 
-
 /* int	main(void)
 {
 	float	val;
 	float	f;
-	
-	char *str = "1.45";
+	char	*str;
+
+	str = "1.45";
 	val = ft_atof(str);
 	f = atof(str);
 	printf("Before atof		: %s \n", str);
 	printf("After ft_atof	: %f \n", val);
 	printf("After atof		: %f \n", f);
-
 	// OUTPUT
-	// Before atof		: 1.45 
-	// After ft_atof	: 1.450000 
+	// Before atof		: 1.45
+	// After ft_atof	: 1.450000
 	// After atof		: 1.450000
 }
 */

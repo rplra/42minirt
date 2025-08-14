@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   transform.h                                        :+:      :+:    :+:   */
+/*   bvh_transform_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/22 11:22:13 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 15:59:36 by rraja-az         ###   ########.fr       */
+/*   Created: 2025/08/14 17:11:35 by hsim              #+#    #+#             */
+/*   Updated: 2025/08/14 17:11:59 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TRANSFORM_H
-# define TRANSFORM_H
+#include "minirt.h"
 
-# include "../lib/quaternion/ft_vector.h"
-
-# define TRANSLATE	1.0f
-# define SCALE_UP	1.1f
-# define SCALE_DOWN 0.9f
-# define ROTATE		15.0f
-
-typedef struct s_transform
+t_vec3	get_vec_min(t_vec3 j, t_vec3 k)
 {
-	t_vec3		translate;
-	t_vec3		rotate;
-}				t_transform;
+	t_vec3	pt;
 
-#endif
+	pt.x = fmin(j.x, k.x);
+	pt.y = fmin(j.y, k.y);
+	pt.z = fmin(j.z, k.z);
+	return (pt);
+}
+
+t_vec3	get_vec_max(t_vec3 j, t_vec3 k)
+{
+	t_vec3	pt;
+
+	pt.x = fmax(j.x, k.x);
+	pt.y = fmax(j.y, k.y);
+	pt.z = fmax(j.z, k.z);
+	return (pt);
+}

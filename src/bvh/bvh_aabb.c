@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_aabb.c                                      :+:      :+:    :+:   */
+/*   bvh_aabb.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/31 11:45:10 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/14 17:14:27 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,6 @@
  * ************************************************************************** */
 
 #include "minirt.h"
-
-/* compares which smaller and returns in as 1st param in t_interval */
-static t_interval	assign_min_max(float a, float v)
-{
-	t_interval	range;
-
-	if (a <= v)
-	{
-		range.min = a;
-		range.max = v;
-	}
-	else
-	{
-		range.min = v;
-		range.max = a;
-	}
-	return (range);
-}
 
 /* expand res range by num, res need to passed as &res */
 void	expand_box(float num, t_interval *res)

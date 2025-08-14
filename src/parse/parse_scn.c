@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_scene.c                                      :+:      :+:    :+:   */
+/*   parse_scn.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:02 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/07 21:32:43 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/14 23:43:34 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,41 +25,13 @@ int	parse_scene(t_parse *file, t_rt *rt)
 	else if (ft_strcmp(file->tokens[0], "L") == 0)
 		return (parse_light(file->tokens, file, &rt->light));
 	else if (is_object(file->tokens[0]))
-		return(parse_object(file, rt));
+		return (parse_object(file, rt));
 	return (print_error(file, ERROR_INVALIDID, 0, NULL));
-}
-
-void	assign_material(t_mat *material)
-{
-	material->type = MAT_TYPE;
-	material->specular = MAT_SPECULAR;
-	material->reflect = MAT_REFLECT;
-	material->fuzz = MAT_FUZZ;
-}
-
-void	assign_rotation(t_obj *obj)
-{
-	obj->b_rotate = 0;
-	obj->rotate = new_vec3(0, 0, 0);
-}
-
-void	assign_bbox(t_obj *obj)
-{
-	create_bbox(obj, obj->bbox);
-	copy_bbox(obj->bbox_ori, obj->bbox);
-	obj->bbox_center = get_bbox_center(obj->bbox);
-}
-
-void	assign_bbox_translate(t_obj *obj, t_vec3 delta)
-{
-	aabb_translate(*obj, obj->bbox, delta);
-	copy_bbox(obj->bbox_ori, obj->bbox);
-	obj->bbox_center = get_bbox_center(obj->bbox);
 }
 
 int	parse_object(t_parse *file, t_rt *rt)
 {
-	t_obj obj;
+	t_obj	obj;
 
 	ft_memset(&obj, 0, sizeof(t_obj));
 	if (ft_strcmp(file->tokens[0], "pl") == 0)
@@ -80,9 +52,7 @@ int	parse_object(t_parse *file, t_rt *rt)
 		if (parse_cylinder(file, &obj))
 			return (1);
 	}
-	assign_material(&obj.material);
-	assign_rotation(&obj);
-	assign_bbox(&obj);
+	assign_obj(&obj);
 	obj.id = rt->obj_count;
 	return (add_object(rt, &obj));
 }

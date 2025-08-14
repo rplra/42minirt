@@ -6,29 +6,27 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:51:22 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/13 13:29:10 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:07:30 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <stdio.h>
+// #include <stdio.h>
 #include "libft.h"
 
 /**
  * @brief		Copies ememory from one location to another
- * 
+ *
  * @param dest	String to copy to
  * @param src	String to copy from
  * @param n		Size of bytes to copy
  * @return		Pointer to typacasted dest (str copied)
-*/
+ */
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	char		*d;
 	const char	*s;
 	size_t		i;
 
-	// if (dest == NULL && src == NULL)
-	// 	return (NULL);
 	if (dest == NULL || src == NULL || n == 0)
 		return (dest);
 	d = (char *)dest;
@@ -56,11 +54,12 @@ LOGIC :
 	1. Check for NULL or zero length
 	2. Typecast dest and src pointers to char pointers
 		- WHY?
-		- void * is a generic pointer type that can point to any data type, 
+		- void * is a generic pointer type that can point to any data type,
 		but it cant be used for pointer arithmetic / dereferencing because the
 		compiler doesn't know the size of the data it points to
 		- by casting pointers to char *, we're telling the compiler to treat
-		these pointers as pointers to characters (bytes), which allows to perform
+		these pointers as pointers to characters (bytes),
+			which allows to perform
 		byte-wise operations
 		- we can access the memory byte by byte
 		- once casted, can ++ / -- (move), enabling us to copy memory in a loop

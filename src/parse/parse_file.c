@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:53 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/19 20:15:05 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 17:42:18 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ static int	parse_line(char *line, t_parse *file, t_rt *rt)
 	char	*type;
 
 	file->tokens = tokenize(line);
-	//for (int i = 0; file->tokens && file->tokens[i] ; i++) // debug
-	//		printf("   Line: %d, Token %d: [%s]\n", file->line_num, i, file->tokens[i]); // debug
 	if (!file->tokens)
 		exit_with_error("Error: No tokens");
 	if (file->tokens[0] && file->tokens[0][0] != '#')
@@ -41,7 +39,7 @@ static int	parse_line(char *line, t_parse *file, t_rt *rt)
 		else if (!ft_strcmp(type, "L") && ++file->light_count > 1)
 			return (print_error(file, "Light must only be 1", -1, NULL));
 		else if (parse_scene(file, rt))
-			return(1);
+			return (1);
 	}
 	return (0);
 }
@@ -54,7 +52,6 @@ int	parse_file(int fd, t_parse *file, t_rt *rt)
 	line = get_next_line(fd);
 	while (line)
 	{
-		// /*debug*/printf("\n-->Line: %s\n", line);
 		file->line_num++;
 		if (parse_line(line, file, rt))
 			return (handle_parse_error(fd, line, file));
@@ -68,7 +65,6 @@ int	parse_file(int fd, t_parse *file, t_rt *rt)
 	if (file->ambient_count < 1 || file->camera_count < 1
 		|| file->light_count < 1)
 		return (print_error(NULL, ERROR_MISSINGID, -1, NULL));
-	// /*debug*/printf("Parsed file\n");
 	return (0);
 }
 

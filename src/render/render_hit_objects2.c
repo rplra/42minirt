@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:47:34 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/02 14:55:23 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/08 17:18:51 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ float	check_hit_body(t_rt *rt, int i, t_ray ray, float t[2])
 
 	cyl_height = get_cyl_axis_height(rt->obj[i].cyl);
 	get_point_on_surf(rt->obj[i].cyl, ray, t, pt_hit);
-// 	if (((pt_hit[0] > cyl_height.min && pt_hit[0] < cyl_height.max) || \
+// 	if (((pt_hit[0] > cyl_height.min && pt_hit[0] < cyl_height.max) ||
 // (pt_hit[1] > cyl_height.min && pt_hit[1] < cyl_height.max)))
 	if (pt_hit[0] > cyl_height.min + EPSILON && pt_hit[0] < cyl_height.max + EPSILON)
 	{
@@ -28,6 +28,17 @@ float	check_hit_body(t_rt *rt, int i, t_ray ray, float t[2])
 		return (t[0]);
 	}
 	return (-1);
+}
+
+static bool	t_intersect_body(float *t, t_interval ray_range, float n[3], float discriminant)
+{
+	if (*t <= ray_range.min || *t >= ray_range.max)
+	{
+		*t = (n[B] + sqrt(discriminant)) / n[A];
+		if (*t <= ray_range.min || *t >= ray_range.max)
+			return (0);
+	}
+	return (1);
 }
 
 float	has_hit_body(t_cylinder cyl, t_interval ray_range, t_ray ray, float t[2])
@@ -59,12 +70,14 @@ ft_square(cyl.rad);
 	t[1] = (n[B] + sqrt(discriminant)) / n[A];
 
 	/* *************** if t intersects obj ************** */
-	if (t[0] <= ray_range.min || t[0] >= ray_range.max)
-	{
-		t[0] = (n[B] + sqrt(discriminant)) / n[A];
-		if (t[0] <= ray_range.min || t[0] >= ray_range.max)
-			return (-1);
-	}
+	if (!t_intersect_body(&t[0], ray_range, n, discriminant))
+		return (-1);
+	// if (t[0] <= ray_range.min || t[0] >= ray_range.max)
+	// {
+	// 	t[0] = (n[B] + sqrt(discriminant)) / n[A];
+	// 	if (t[0] <= ray_range.min || t[0] >= ray_range.max)
+	// 		return (-1);
+	// }
 	return (t[0]);
 }
 
@@ -96,12 +109,7 @@ bool	has_hit_cylinder(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 	/* *************************** if both ok *************************** */
 	if (hit_body != -1 && hit_cap != -1)
 	{
-		// /*debug*/printf("has_hit_cyl:%d: %f < %f\n", index, hit_cap, hit_body);
-		// /*debug*/debug_print_vec("has_hit_cyl: ray.orig", ray.orig);
-		// /*debug*/debug_print_vec("has_hit_cyl: ray.dir", ray.vector);
-		// /*debug*/printf("has_hit_cyl:%d: %f < %f\n", index, hit_cap, hit_body);
-		// /*debug*/debug_print_vec("has_hit_cyl: ray.orig", ray.orig);
-		// /*debug*/debug_print_vec("has_hit_cyl: ray.dir", ray.vector);
+		/* ********************* prioritize cyl_body ******************** */
 		if (hit_cap < hit_body)
 		{
 			// /*debug*/printf("has_hit_cyl:s\n");
@@ -115,7 +123,6 @@ bool	has_hit_cylinder(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 	}
 
 	/* *************************** cap ok *************************** */
-	// if (hit_cap != -1 && hit_body == -1)
 	if (hit_cap != -1)
 	{
 		// /*debug*/printf("has_hit_cyl: %f < %f\n", hit_cap, hit_body);
@@ -124,16 +131,12 @@ bool	has_hit_cylinder(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 		return (1);
 	}
 
-	/* *************************** body ok *************************** */
-	// if (hit_body != -1 && hit_cap == -1)
+	// /* *************************** body ok *************************** */
 	if (hit_body != -1)
 	{
-		// if (hit_cap)
-			// /*debug*/printf("has_hit_cyl:body: %f < %f\n", hit_cap, hit_body);
 		update_hit_rec(rt, index, ray, hit_body);
 		rt->hit.setting = 1;
 		return (1);
 	}
-
 	return (0);
 }

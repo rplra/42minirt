@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:17:00 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/13 11:51:35 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 14:27:12 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int animate_light(t_rt *rt)
 	rotate = rt->animate.step * 20;
 	rt->camera.transform.rotate = add_vec(rt->camera.transform.rotate, new_vec3(0, rotate, 0));
 	//update
-	update_cam_pos(rt);
+	rt->sel.type = SEL_CAMERA;
+	update_cam_pos(rt, 0);
 	free_bvh(rt->bvh);
 	init_bvh_node(rt);
 	my_render_img(rt);

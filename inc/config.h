@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 12:14:20 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 14:36:25 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 //# define PI 3.14159265358979323846
 
 /*	window	*/
-# define WIN_WIDTH		600
-# define WIN_HEIGHT		400
+# define WIN_WIDTH		1000
+# define WIN_HEIGHT		800
 
 /*	menu	*/
 # if WIN_HEIGHT <=		400
@@ -40,7 +40,6 @@
 # define LOADBAR		"asset/load-600.xpm"
 # define INTRO			"asset/intro.xpm"
 # define LOADBAR_W		135
-// # define LOADBAR_H		49
 # define INTRO_W		400
 
 /*	label-assets	*/
@@ -215,8 +214,8 @@
 # define LIGHT_RADIUS			0.1
 
 /*	plane	*/
-# define PLANE_X				-4
-# define PLANE_Y				4
+# define PLANE_X				-8
+# define PLANE_Y				8
 
 /*	material	*/
 # define MAT_TYPE				DIFFUSE

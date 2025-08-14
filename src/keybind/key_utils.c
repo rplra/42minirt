@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:32 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/14 12:33:19 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 14:28:52 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	key_press(int keycode, t_rt *rt)
 
 	if (valid_keypress(keycode))
 	{
-		update_cam_pos(rt);
+		update_cam_pos(rt, keycode);
 		if (keycode == KEY_UP || keycode == KEY_DOWN)
 		{
 			mlx_put_image_to_window(rt->mlx, rt->mlx_win,

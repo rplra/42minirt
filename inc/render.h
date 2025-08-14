@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/14 10:40:25 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 14:24:23 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ void		init_variable(t_rt *rt);
 void		init_cam(t_rt *rt);
 void		init_hit(t_rt *rt);
 void		init_bg_color(t_rt *rt, float intensity);
-void		update_cam_pos(t_rt *rt);
+// void		update_cam_pos(t_rt *rt);
+
 void		set_render_quality(t_rt *rt);
 
 /* __________________ aabb __________________ */

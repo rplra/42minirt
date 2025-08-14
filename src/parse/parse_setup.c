@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:26:36 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/03 17:00:04 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/13 12:00:11 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,15 @@ int parse_camera(char **params, t_parse *file, t_camera *camera)
 	//printf("Camera pos: (x=%f, y=%f, z=%f)\n", tmp.position.x, tmp.position.y, tmp.position.z);
 	free_array(values);
 	values = ft_split(params[2], ',');
-	if (is_vector(file, values, &tmp.vup, YES))
+	if (is_vector(file, values, &tmp.lookat, YES))
 		return (print_error(file, ERROR_CORT, 2, values));
 	//printf("Camera ort: (x=%f, y=%f, z=%f)\n", tmp.orientation.x, tmp.orientation.y, tmp.orientation.z); // debug
 	free_array(values);
 	//printf("Camera ort normalized: (x=%f, y=%f, z=%f)\n", tmp.orientation.x, tmp.orientation.y, tmp.orientation.z); // debug
-	tmp.vup = unit_vec3(tmp.vup);
+	tmp.lookat = unit_vec3(tmp.lookat);
+	if (tmp.lookat.x == 0 && tmp.lookat.y == 0 && tmp.lookat.z == 0)
+		tmp.lookat = unit_vec3(subtract_vec(tmp.lookat, tmp.pos));
+	tmp.lookat_ori = tmp.lookat;
 	tmp.hfov = radian(ft_atof(params[3], &valid));
 	if (!valid || tmp.hfov < FOV_MIN || tmp.hfov > FOV_MAX)
 		return (print_error(file, ERROR_CFOV, 3, params));

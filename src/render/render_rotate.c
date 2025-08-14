@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 22:08:23 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/07 21:41:56 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/13 13:58:01 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,15 @@ void	transform_bbox(t_rt *rt, t_uint index)
 	aabb_translate(rt->obj[index], rt->obj[index].bbox, rt->obj[index].bbox_center);
 }
 
-void	update_cam_pos(t_rt *rt)
+void	update_cam_pos(t_rt *rt, int keycode)
 {
-	t_vec3	pos;
-	
-	if (rt->sel.type != SEL_CAMERA)
+	if (rt->sel.type != SEL_CAMERA && keycode != KEY_R)
 		return ;
-	pos = add_vec(rt->camera.ori, rt->camera.transform.translate);
-	rt->camera.pos = quaternion_rotate_adv(pos, rt->camera.transform.rotate, 1);
-	rt->camera.vup = quaternion_rotate_adv(rt->camera.vup_ori, rt->camera.transform.rotate, 1);
-	rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1));
+	reset_cam(rt, keycode);
+	rt->camera.pos = add_vec(rt->camera.ori, rt->camera.transform.translate);
+	rt->camera.vup = quaternion_rotate_adv(rt->camera.vup_ori, rt->camera.transform.rotate, 0);
+	rt->camera.lookat = quaternion_rotate_adv(rt->camera.lookat_ori, rt->camera.transform.rotate, 0);
+	// /*debug*/debug_print_vec("rot_vup", rt->camera.vup);
+	// /*debug*/debug_print_vec("orient_rot", rt->camera.lookat);
 	rt->ray.orig = rt->camera.pos;
 }

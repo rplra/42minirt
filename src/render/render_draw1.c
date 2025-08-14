@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 18:15:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/12 17:51:27 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 14:33:48 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	my_create_img(t_rt *rt, t_img *img)
 {
 	img->img = mlx_new_image(rt->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!img->img)
-		ft_perror("Create img: 🚨 Error in creating main image!", 0, 0);
+		ft_perror("Create img: 🚨 Error in creating image!", 0, 0);
 	img->addr = mlx_get_data_addr(img->img, \
 &img->bpp, \
 &img->line_len, \
@@ -66,31 +66,9 @@ void	my_create_menu(t_rt *rt, t_img *img, char *filepath, int size[2])
 {
 	img->img = mlx_xpm_file_to_image(rt->mlx, filepath, &size[W], &size[H]);
 	if (!img->img)
-		ft_perror("Create menu: 🚨 Error in creating main image!", 0, 0);
+		ft_perror("Create menu: 🚨 Error in creating image!", 0, 0);
 	img->addr = mlx_get_data_addr(img->img, \
 &img->bpp, \
 &img->line_len, \
 &img->endian);
 }
-
-/* void load_label(t_rt *rt)
-{
-    int size[2];
-
-    my_create_menu(rt, &rt->label.camera, LABEL_C, size);
-    my_create_menu(rt, &rt->label.light, LABEL_L, size);
-	my_create_menu(rt, &rt->label.plane, LABEL_PL, size);
-    my_create_menu(rt, &rt->label.sphere, LABEL_SP, size);
-    my_create_menu(rt, &rt->label.cylinder, LABEL_CY, size);
-}
-
-void load_info(t_rt *rt)
-{
-    int size[2];
-
-    my_create_menu(rt, &rt->info.pos, INFO_POS, size);
-    my_create_menu(rt, &rt->info.rot, INFO_ROT, size);
-	my_create_menu(rt, &rt->info.dot, INFO_DOT, size);
-    my_create_menu(rt, &rt->info.comma, INFO_COMMA, size);
-    my_create_menu(rt, &rt->info.minus, INFO_MINUS, size);
-} */

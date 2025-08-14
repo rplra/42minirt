@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:11:57 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/31 11:54:00 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/08 16:05:35 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,12 @@ t_vec3	get_surf_norm_sph(t_ray ray, t_obj obj, float t, t_uchar setting)
 /*
  * renders 3d or flat based on identifier id
  * projects cyl_center to be parallel to hit_point
- * then, subtract P-C (same as sphere), & normalize
+ * subtract P-C (same as sphere, but discard axis value), & normalize
+ * if hit_pt=P, center=C 
+ * 1. subtract P-C
+ * 2. get height: dot(axis, P-C)
+ * 3. remove height: C = cyl_center + (cyl_axis * height)
+ * 4. subtract P-new_C
  * 
  * id = 1: renders 3D
  * else  : renders flat 2D
@@ -119,13 +124,12 @@ t_vec3	get_surf_norm_cyl(t_ray ray, t_obj obj, float t, t_uchar setting)
 		surf_norm = unit_vec3(surf_norm);
 		return (surf_norm);
 	}
-
 	// t_interval cyl_height = get_cyl_axis_height(obj.cyl);
+
 	// t2 = scalar_product(pt_ray, obj.cyl.axis);
 	// if (t2 >= cyl_height.max - EPSILON)
 	// 	return (obj.cyl.axis);
 	// return (mult_vec_scalar(obj.cyl.axis, -1));
-
 	return (set_face_norm(ray, obj.cyl.axis));
 }
 

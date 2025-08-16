@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:39:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 15:27:16 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/16 22:34:23 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ int					handle_parse_error(int fd, char *line, t_parse *file);
 void				print_ambient(const t_ambient *ambient);
 void				print_camera(const t_camera *camera);
 void				print_light(const t_light *light);
-void				print_plane(const t_obj *obj);
-void				print_sphere(const t_obj *obj);
-void				print_cylinder(const t_obj *obj);
+void				print_obj(const t_obj *obj);
 
 #endif

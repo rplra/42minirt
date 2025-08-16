@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 23:30:28 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/16 22:33:21 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	parse_plane(t_parse *file, t_obj *obj)
 	if (is_colour(file, values, &obj->material.albedo))
 		return (1);
 	free_array(values);
+	obj->type = PLANE;
 	obj->plane = tmp;
 	setup_plane_geometry(obj);
 	return (0);
@@ -100,6 +101,7 @@ int	parse_cylinder(t_parse *file, t_obj *obj)
 	free_array(values);
 	if (parse_cylinder_dimensions_and_color(file, &tmp, obj))
 		return (1);
+	obj->type = CYLINDER;
 	obj->cyl = tmp;
 	setup_cylinder_geometry(obj);
 	return (0);

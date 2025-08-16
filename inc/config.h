@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 23:20:53 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/16 17:52:31 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "scene.h"
 
 /*	window	*/
-# define WIN_WIDTH		600
-# define WIN_HEIGHT		400
+# define WIN_WIDTH		800
+# define WIN_HEIGHT		600
 
 /*	menu	*/
 # if WIN_HEIGHT <=		400
@@ -128,43 +128,48 @@
 # endif
 
 /*	menu sel/info-padding		*/
-# define SEL_Y_PADDING		0.9
 # if WIN_HEIGHT <=			400
 #  define LD				30
-#  define LX				2.65
-#  define LY				19
+#  define LX				2.45
+#  define LY				15
 #  define IX				1.02
-#  define IY				6
-#  define IY_OFFSET			-10
-#  define IDX				1.065
+#  define IY				4
+#  define IY_OFFSET			-3
+#  define IDX				1.07
+#  define POSX				20
+#  define ROTX				22
 #  define OFFSET			4
 #  define SPACE_OFFSET		0.5
 #  define DOT_OFFSET		1.5	
-#  define DY				0.5
+#  define DY				2
 # elif WIN_HEIGHT <=		600
-#  define LD				60
-#  define LX				2.4
-#  define LY				19
+#  define LD				53
+#  define LX				2.45
+#  define LY				20
 #  define IX				1.028
-#  define IY				12
+#  define IY				8
 #  define IY_OFFSET			0
-#  define IDX				1.075
+#  define IDX				1.077
+#  define POSX				23
+#  define ROTX				26
 #  define OFFSET			6
 #  define SPACE_OFFSET		1.0
 #  define DOT_OFFSET		2.0
 #  define DY				3
 # elif WIN_HEIGHT <=		800
-#  define LD				80
-#  define LX				2.4
-#  define LY				18
+#  define LD				65
+#  define LX				2.45
+#  define LY				25
 #  define IX				1.035
-#  define IY				12
+#  define IY				10
 #  define IY_OFFSET			0
-#  define IDX				1.075
+#  define IDX				1.072
+#  define POSX				26
+#  define ROTX				30
 #  define OFFSET			8
 #  define SPACE_OFFSET		1.5
 #  define DOT_OFFSET		2.5
-#  define DY				1
+#  define DY				3
 # endif
 
 /*	math constant	*/

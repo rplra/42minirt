@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/14 23:56:47 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/16 23:44:04 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_rt			t_rt;
 typedef struct s_ray		t_ray;
 typedef struct s_interval	t_interval;
 typedef unsigned char		t_uchar;
-// typedef struct s_img		t_img;
+typedef struct s_img		t_img;
 
 typedef struct s_img
 {
@@ -145,14 +145,18 @@ t_bvh_tree		*build_bvh_tree(t_obj *obj, int id[2],
 void			init_bvh_node(t_rt *vars);
 
 /* __________________ img render __________________ */
-void			my_mlx_pixel_put(t_rt vars, int x, int y, int color);
-void			my_create_img(t_rt *vars, t_img *img);
-void			my_render_img(t_rt *vars);
-void			my_create_menu(t_rt *rt, t_img *img, char *filepath,
+void			render(t_rt *rt);
+void			get_viewport_coords(t_rt *rt, t_vec3 *vp_00_loc, \
+t_vec3 *vp_top_left, t_vec3 vp_d[2]);
+void			ft_mlx_pixel_put(t_rt vars, int x, int y, int color);
+void			ft_create_img(t_rt *vars, t_img *img);
+void			render(t_rt *vars);
+void			load_menu(t_rt *rt, t_img *img, char *filepath,
 					int size[2]);
 void			clear_image(t_rt vars, int win_width, int win_height,
 					int color);
 int				animate_loading(t_rt *rt);
+void			load_menu_label_info(t_rt *rt);
 
 /* __________________ rotate __________________ */
 t_ray			transform_ray(t_obj obj, t_ray ray);
@@ -196,12 +200,10 @@ t_vec3			sample_sq_rand(unsigned int *seed);
 t_vec3			point_at(float t, t_ray ray);
 
 /* __________________ color __________________ */
-t_vec3			lerp_rgb(t_vec3 c1, t_vec3 c2, float t);
 int				create_rgb(int r_value, int g_value, int b_value);
-float			clamp(float value, float min, float max);
-t_col			colour_clamp(t_col c);
-t_vec3			color_correction(t_vec3 color);
-t_vec3			split_rgb(int color);
+t_col			lerp_rgb(t_col c1, t_col c2, float t);
+t_col			color_correction(t_col color);
+t_col			split_rgb(int color);
 
 /* __________________ utils __________________ */
 bool			is_near_zero(t_vec3 vec);
@@ -238,15 +240,6 @@ void			debug_print_lst(char *str, t_obj *lst);
 void			debug_print_arr(char *str, t_obj *obj, int obj_count);
 void			debug_print_bvh(char *str, t_bvh_tree *bvh);
 void			debug_print_bbox(char *str, t_interval bbox[3]);
-
-/*				light.c	- TO REMOVE		*/
-t_col			ambient(t_hit *hit, t_ambient amb);
-t_col			diffuse(t_rt *rt, t_hit *point, float intensity);
-t_col			get_total_light(t_rt *rt, t_hit *point, t_uint *seed);
-t_col			sample_direct_light(t_rt *rt, t_hit *point, t_uint *seed);
-
-/*				shadow.c - TO REMOVE	*/
-int				is_shadowed(t_rt *rt, t_hit *point, t_vec3 light_dir, float t);
 
 t_vec3			mat_lambertian(t_vec3 surf_norm, t_uint *seed);
 t_vec3			mat_metal(t_vec3 incoming_ray, t_vec3 surf_norm,

@@ -6,35 +6,19 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/14 14:31:02 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/16 23:44:04 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-/*
- * initialize mlx windows for image rendering
- * mlx_init uses malloc
- */
-void	initialize_mlx(t_rt *rt)
-{
-	rt->mlx = mlx_init();
-	if (rt->mlx == NULL)
-	{
-		free(rt->mlx);
-		exit (1);
-	}
-	rt->mlx_win = mlx_new_window(rt->mlx, WIN_WIDTH + PANEL_WIDTH, WIN_HEIGHT, \
-"miniRT");
-}
-
-//debug
-void	init_obj(t_rt *rt)
-{
-	// init_sph_scene(rt);
-	init_plane_scene(rt);
-	// init_cyl_scene(rt);
-}
+// //debug
+// void	init_obj(t_rt *rt)
+// {
+// 	// init_sph_scene(rt);
+// 	init_plane_scene(rt);
+// 	// init_cyl_scene(rt);
+// }
 
 void	set_render_quality(t_rt *rt)
 {
@@ -62,7 +46,7 @@ void	set_cam_vup(t_rt *rt)
 	else
 		rt->camera.vup = new_vec3(0, 1, 0);
 	rt->camera.vup_ori = rt->camera.vup;
-	/*debug*/debug_print_vec("cam_vup", rt->camera.vup);
+	// /*debug*/debug_print_vec("cam_vup", rt->camera.vup);
 }
 
 void	init_cam(t_rt *rt)
@@ -76,7 +60,7 @@ void	init_cam(t_rt *rt)
 	rt->camera.transform.translate = new_vec3(0, 0, 0);
 	rt->camera.ori = new_vec3(rt->camera.pos.x, rt->camera.pos.y, rt->camera.pos.z);
 	// rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1));
-	/*debug*/debug_print_vec("lookat", rt->camera.lookat);
+	// /*debug*/debug_print_vec("lookat", rt->camera.lookat);
 
 	set_cam_vup(rt);
 	// /*debug*/debug_print_vec("cam_vup", rt->camera.vup);
@@ -138,34 +122,7 @@ void	init_bg_color(t_rt *rt, float intensity)
 	rt->color_bg[1] = mult_vec_scalar(rt->ambient.colour, intensity);
 }
 
-void	init_menu_label_info(t_rt *rt)
-{
-	int	dimension[2];
-
-	assign_int(dimension, LABEL_W, LABEL_H);
-	my_create_menu(rt, &rt->label.camera, LABEL_C, dimension);
-	my_create_menu(rt, &rt->label.light, LABEL_L, dimension);
-	my_create_menu(rt, &rt->label.plane, LABEL_PL, dimension);
-	my_create_menu(rt, &rt->label.sphere, LABEL_SP, dimension);
-	my_create_menu(rt, &rt->label.cylinder, LABEL_CY, dimension);
-	my_create_menu(rt, &rt->label.digits[0], DIGIT_0, dimension);
-	my_create_menu(rt, &rt->label.digits[1], DIGIT_1, dimension);
-	my_create_menu(rt, &rt->label.digits[2], DIGIT_2, dimension);
-	my_create_menu(rt, &rt->label.digits[3], DIGIT_3, dimension);
-	my_create_menu(rt, &rt->label.digits[4], DIGIT_4, dimension);
-	my_create_menu(rt, &rt->label.digits[5], DIGIT_5, dimension);
-	my_create_menu(rt, &rt->label.digits[6], DIGIT_6, dimension);
-	my_create_menu(rt, &rt->label.digits[7], DIGIT_7, dimension);
-	my_create_menu(rt, &rt->label.digits[8], DIGIT_8, dimension);
-	my_create_menu(rt, &rt->label.digits[9], DIGIT_9, dimension);
-	my_create_menu(rt, &rt->info.pos, INFO_POS, dimension);
-    my_create_menu(rt, &rt->info.rot, INFO_ROT, dimension);
-	my_create_menu(rt, &rt->info.dot, INFO_DOT, dimension);
-    my_create_menu(rt, &rt->info.comma, INFO_COMMA, dimension);
-	my_create_menu(rt, &rt->info.minus, INFO_MINUS, dimension);
-}
-
-void	init_variable(t_rt *rt)
+void	init_rt(t_rt *rt)
 {
 	int	dimension[2];
 
@@ -186,11 +143,11 @@ void	init_variable(t_rt *rt)
 	init_bvh_node(rt);
 	init_hit(rt);
 	init_bg_color(rt, rt->ambient.intensity);
-	my_create_img(rt, &rt->img);
+	ft_create_img(rt, &rt->img);
 	assign_int(dimension, PANEL_WIDTH, WIN_HEIGHT);
-	my_create_menu(rt, &rt->img_menu, MENU, dimension);
+	load_menu(rt, &rt->img_menu, MENU, dimension);
 	assign_int(dimension, LOADBAR_W, WIN_HEIGHT);
-	my_create_menu(rt, &rt->img_load, LOADBAR, dimension);
-	my_create_menu(rt, &rt->img_intro, INTRO, dimension);
-	init_menu_label_info(rt);
+	load_menu(rt, &rt->img_load, LOADBAR, dimension);
+	load_menu(rt, &rt->img_intro, INTRO, dimension);
+	load_menu_label_info(rt);
 }

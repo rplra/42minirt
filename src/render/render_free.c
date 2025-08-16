@@ -6,12 +6,11 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:09:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/07/19 09:47:02 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/15 09:13:04 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-// utils
 
 /* frees a single block of memory */
 void	free_one(void *vars)
@@ -50,34 +49,16 @@ void	free_bvh(t_bvh_tree *bvh)
  * indicator controls what to free
  * brief: free all resources used by renderer
  */
-void	free_render(t_rt *vars, int indicator)
+void	free_render(t_rt *rt, int indicator)
 {
-	if (!vars)
+	if (!rt)
 		return ;
-	free_one(vars->mlx);
-	free_bvh(vars->bvh);
-	free_one(vars->obj);
+	free_one(rt->mlx);
+	free_bvh(rt->bvh);
+	free_one(rt->obj);
 
 	if (indicator > 0)
 	{
 		//add custom controls here
 	}
 }
-
-/*
-void	ft_lstclear_obj(t_obj **lst)
-{
-	t_obj	*temp;
-
-	if (lst == NULL)
-		return ;
-	temp = *lst;
-	while (*lst != NULL)
-	{
-		temp = (*lst)->next;
-		free(*lst);
-		*lst = temp;
-	}
-	*lst = NULL;
-}
-*/

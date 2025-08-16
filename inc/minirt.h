@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 15:26:14 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/15 09:05:17 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # include "transform.h"
 
 # define RED				"\033[31m"
+# define LBLUE 				"\033[38;2;136;193;208m"
 # define RESET				"\033[0m"
 
 # define YES				1

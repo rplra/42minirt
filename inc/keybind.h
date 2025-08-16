@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:47:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/14 15:20:00 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/16 23:15:59 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,15 +157,16 @@ typedef struct s_info
 }					t_info;
 
 /* __________________ key menu __________________ */
-void				draw_panel(t_rt *rt);
-void				keybind_guide(t_rt *rt);
 void				selection_guide(t_rt *rt);
+void				get_info(t_rt *rt, int x, int *y, int line_ht);
 
 /* __________________ key configurations __________________ */
 int					close_window(int keycode, t_rt *vars);
 int					close_window_x(int keycode, t_rt *vars);
 int					key_press(int keycode, t_rt *rt);
 
+/* __________________ key event __________________ */
+void				event_loop(t_rt *rt);
 void				handle_render_mode(t_rt *rt, int keycode);
 void				handle_selection(t_rt *rt, int keycode);
 void				handle_translation(t_rt *rt, int keycode);
@@ -180,8 +181,7 @@ t_vec3				translation_delta(int keycode);
 float				scale_factor(int keycode);
 int					animate_light(t_rt *rt);
 
-void				print_selected(t_rt *rt);
-
+/* __________________ keybind __________________ */
 bool				translation_key(int keycode);
 bool				scale_key(int keycode);
 bool				focus_dist_key(int keycode);
@@ -189,14 +189,16 @@ bool				rotation_key(int keycode);
 bool				control_key(int keycode);
 bool				style_key(int keycode);
 
-void				get_info(t_rt *rt, int x, int *y, int line_ht);
-t_uint				get_obj_index(t_obj *obj, int obj_count, t_uint id);
-t_uint				get_light_index(t_obj *obj, int obj_count);
-void				update_cam_pos(t_rt *rt, int keycode);
-
+/* __________________ utils __________________ */
 char				*ft_ftoa(float f);
 char				*get_info_str(t_vec3 pos);
+t_uint				get_obj_index(t_obj *obj, int obj_count, t_uint id);
+t_uint				get_light_index(t_obj *obj, int obj_count);
 void				display_digit_xpm(t_rt *rt, char *str, int x, int y);
+void				update_cam_pos(t_rt *rt, int keycode);
 void				reset_cam(t_rt *rt, int keycode);
+
+/* __________________ debug __________________ */
+void				print_selected(t_rt *rt);
 
 #endif

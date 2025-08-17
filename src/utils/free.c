@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 11:50:40 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/07/18 12:21:01 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/17 12:58:24 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,64 @@ int	free_array(char **arr)
 	return (0);
 }
 
+/* frees a single block of memory */
+void	free_one(void *vars)
+{
+	if (!vars)
+		return ;
+	free(vars);
+	vars = NULL;
+}
+
+/* frees all nodes in BVH */
+void	free_bvh(t_bvh_tree *bvh)
+{
+	if (!bvh)
+		return ;
+	if (bvh->type[L] == BVH)
+		free_bvh(bvh->left);
+	if (bvh->type[R] == BVH)
+		free_bvh(bvh->right);
+	free(bvh);
+}
+
 void	cleanup(t_rt *rt)
+{
+	if (!rt)
+		return;
+	free_one(rt->mlx);
+	free_bvh(rt->bvh);
+	free_one(rt->obj);
+}
+
+void	cleanup_and_exit(t_rt *rt, int exit_code)
+{
+	if (rt)
+		cleanup(rt);
+	exit(exit_code);
+}
+
+// /* 
+//  * consolidate all mallocs and free when exit program
+//  * indicator controls what to free
+//  * brief: free all resources used by renderer
+//  */
+// void	free_render(t_rt *rt, int indicator)
+// {
+// 	if (!rt)
+// 		return ;
+// 	free_one(rt->mlx);
+// 	free_bvh(rt->bvh);
+// 	free_one(rt->obj);
+
+// 	if (indicator > 0)
+// 	{
+// 		//add custom controls here
+// 	}
+// }
+
+
+/* void	cleanup(t_rt *rt)
 {
 	if (rt->obj)
 	{
@@ -37,12 +94,5 @@ void	cleanup(t_rt *rt)
 	{
 		free_bvh(rt->bvh);
 		rt->bvh = NULL;
-	}
-}
-
-void	cleanup_and_exit(t_rt *rt)
-{
-	if (rt)
-		cleanup(rt);
-	exit(1);
-}
+	} 
+} */

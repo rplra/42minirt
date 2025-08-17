@@ -6,21 +6,18 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:07:08 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/14 16:48:17 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/17 12:55:23 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 /*dont use mlx_destroy_window, have fsan error*/
-int	close_window(int keycode, t_rt *vars)
+int	close_window(int keycode, t_rt *rt)
 {
-	(void)vars;
+	(void)rt;
 	if (keycode == KEY_ESC)
-	{
-		free_render(vars, 1);
-		exit(0);
-	}
+		cleanup_and_exit(rt, 0);
 	return (0);
 }
 

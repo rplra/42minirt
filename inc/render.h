@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/16 23:44:04 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/17 15:45:46 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,6 @@ void			init_bvh_node(t_rt *vars);
 
 /* __________________ img render __________________ */
 void			render(t_rt *rt);
-void			get_viewport_coords(t_rt *rt, t_vec3 *vp_00_loc, \
-t_vec3 *vp_top_left, t_vec3 vp_d[2]);
 void			ft_mlx_pixel_put(t_rt vars, int x, int y, int color);
 void			ft_create_img(t_rt *vars, t_img *img);
 void			render(t_rt *vars);
@@ -174,6 +172,9 @@ bool			has_hit_plane(t_rt *rt, int index, t_interval ray_range,
 bool			within_plane_range(float alpha, float beta, int flag);
 bool			has_hit_cylinder(t_rt *rt, int index, t_interval ray_range,
 					t_ray ray);
+float			check_hit_body(t_rt *rt, int i, t_ray ray, float t[2]);
+float			has_hit_body(t_cylinder cyl, t_interval ray_range,
+					t_ray ray, float t[2]);
 float			has_hit_cap(t_rt *rt, int i, t_interval ray_range, t_ray ray);
 int				update_hit_rec(t_rt *vars, int index, t_ray ray, float t);
 
@@ -225,7 +226,7 @@ int				malloc_obj_ptr(t_obj **dest, int num);
 
 /* __________________ memory free functions __________________ */
 void			free_bvh(t_bvh_tree *bvh);
-void			free_render(t_rt *vars, int indicator);
+void			free_render(t_rt *rt, int indicator);
 // void			ft_lstclear_obj(t_obj **lst);
 
 /* __________________ debug_scene functions __________________ */

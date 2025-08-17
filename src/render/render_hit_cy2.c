@@ -1,16 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_hit_objects2.c                              :+:      :+:    :+:   */
+/*   render_hit_cy2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/17 10:47:34 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/08 17:18:51 by hsim             ###   ########.fr       */
+/*   Created: 2025/07/20 12:16:30 by hsim              #+#    #+#             */
+/*   Updated: 2025/08/17 15:43:10 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+/*
+ * child function in check_hit_body
+ * returns cyl_height considering its axis
+ * using dot(pos, axis)*axis to mask the correct axis value
+ * eg if axis=(0,1,0), cyl_axis_pos returns y value in cyl position
+ * 
+ * eg. if axis=(0,1,0) (y-axis), will be
+ * cyl_height.max = cyl.pos.y + (cyl.axis.y * cyl.height / 2)
+ * cyl_height.min = cyl.pos.y - (cyl.axis.y * cyl.height / 2)
+ */
+t_interval	get_cyl_axis_height(t_cylinder cyl)
+{
+	t_vec3		cyl_axis_pos;
+	t_interval	cyl_height;
+
+	cyl_axis_pos = mult_vec_scalar(cyl.axis, scalar_product(cyl.pos, cyl.axis));
+	// /*debug*/debug_print_vec("ori_axis_h", cyl.axis_height);
+	// /*debug*/debug_print_vec("new_axis_h", cyl_axis_height);
+	cyl_height.min = scalar_product(cyl.axis, subtract_vec(cyl_axis_pos, cyl.axis_height));
+	cyl_height.max = scalar_product(cyl.axis, add_vec(cyl_axis_pos, cyl.axis_height));
+
+	return (cyl_height);
+}
+
+/*
+ * child function in check_hit_body
+ * returns point on surface correspondiing to the cyl_axis
+ * eg. if cyl_axis=(0,1,0) , point_on_surf=(3,2,1) returns 2 (value of y)
+ */
+void	get_point_on_surf(t_cylinder cyl, t_ray ray, float t[2], float res[2])
+{
+	t_vec3		pt_ray[2];
+
+	pt_ray[0] = add_vec(ray.orig, mult_vec_scalar(ray.vector, t[0]));
+	pt_ray[1] = add_vec(ray.orig, mult_vec_scalar(ray.vector, t[1]));
+	res[0] = scalar_product(cyl.axis, pt_ray[0]);
+	res[1] = scalar_product(cyl.axis, pt_ray[1]);
+}
 
 float	check_hit_body(t_rt *rt, int i, t_ray ray, float t[2])
 {
@@ -79,64 +118,4 @@ ft_square(cyl.rad);
 	// 		return (-1);
 	// }
 	return (t[0]);
-}
-
-/*
- * checks if ray to point falls within the cylinder space
- * formula modifies from <Raytracing in One Weekend>, sphere intersection formula
- * just modified y to be assigned to 0
- * 
- * Reference:
- * https://raytracing.github.io/books/RayTracingInOneWeekend.html
- * #addingasphere/ray-sphereintersection
- */
-bool	has_hit_cylinder(t_rt *rt, int index, t_interval ray_range, t_ray ray)
-{
-	float	t[2];
-	float	hit_body = 0;
-	float	hit_cap = 0;
-
-	if (rt->obj[index].b_rotate == 1)
-		ray = transform_ray(rt->obj[index], ray);
-
-	hit_body = has_hit_body(rt->obj[index].cyl, ray_range, ray, t);
-	if (hit_body != -1)
-		hit_body = check_hit_body(rt, index, ray, t);
-	hit_cap = has_hit_cap(rt, index, ray_range, ray);
-
-	if (hit_body == -1 && hit_cap == -1)
-		return (0);
-	/* *************************** if both ok *************************** */
-	if (hit_body != -1 && hit_cap != -1)
-	{
-		/* ********************* prioritize cyl_body ******************** */
-		if (hit_cap < hit_body)
-		{
-			// /*debug*/printf("has_hit_cyl:s\n");
-			update_hit_rec(rt, index, ray, hit_cap);
-			rt->hit.setting = 0;
-			return (1);
-		}
-	// 	update_hit_rec(rt, index, ray, t[0]);
-	// 	rt->hit.setting = 1;
-		return (0);
-	}
-
-	/* *************************** cap ok *************************** */
-	if (hit_cap != -1)
-	{
-		// /*debug*/printf("has_hit_cyl: %f < %f\n", hit_cap, hit_body);
-		update_hit_rec(rt, index, ray, hit_cap);
-		rt->hit.setting = 0;
-		return (1);
-	}
-
-	// /* *************************** body ok *************************** */
-	if (hit_body != -1)
-	{
-		update_hit_rec(rt, index, ray, hit_body);
-		rt->hit.setting = 1;
-		return (1);
-	}
-	return (0);
 }

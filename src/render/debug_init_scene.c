@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   debug_init_scene.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 16:56:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/03 16:56:20 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/17 14:36:32 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+
+/* mallocs a obj_ptr up to num count */
+int	malloc_obj_ptr(t_obj **dest, int num)
+{
+	if (num <= 0)
+		return (0);
+	*dest = (t_obj *)malloc(sizeof(t_obj) * num);
+	if (!(*dest))
+	{
+		ft_perror("🚨 malloc_obj_ptr failed!", 0, 0);
+		return (0);
+	}
+	return (1);
+}
 
 void	init_sph_scene(t_rt *rt)
 {

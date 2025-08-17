@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/16 17:52:31 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/17 14:42:56 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "scene.h"
 
 /*	window	*/
-# define WIN_WIDTH		800
-# define WIN_HEIGHT		600
+# define WIN_WIDTH		600
+# define WIN_HEIGHT		400
 
 /*	menu	*/
 # if WIN_HEIGHT <=		400
@@ -127,7 +127,7 @@
 #  define INFO_MINUS 	"asset/info/minus_800.xpm"
 # endif
 
-/*	menu sel/info-padding		*/
+/*	menu sel/info-alignment	*/
 # if WIN_HEIGHT <=			400
 #  define LD				30
 #  define LX				2.45

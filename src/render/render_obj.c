@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_obj.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:13:15 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/07 20:58:26 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/17 15:13:22 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,6 @@ mult_vec_scalar(res.cyl.axis, height / 2))); //official use corner
 	return (res);
 }
 
-t_mat	new_material(t_vec3 color, t_mat_type type)
-{
-	t_mat	mat;
-
-	mat.albedo = color;
-	mat.type = type;
-	return (mat);
-}
-
 /* Q,u,v, color, mat_type */
 t_obj	new_plane_2(t_vec3 position, t_vec3 coord_u, t_vec3 coord_v, t_mat mat)
 {
@@ -133,6 +124,15 @@ t_obj	new_plane(t_vec3 position, t_vec3 normal, t_mat mat)
 	copy_bbox(res.bbox_ori, res.bbox);
 	res.bbox_center = get_bbox_center(res.bbox);
 	return (res);
+}
+
+t_mat	new_material(t_vec3 color, t_mat_type type)
+{
+	t_mat	mat;
+
+	mat.albedo = color;
+	mat.type = type;
+	return (mat);
 }
 
 /*

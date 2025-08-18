@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 11:50:40 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/18 16:12:27 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/19 04:26:58 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,31 @@ void	free_bvh(t_bvh_tree *bvh)
 	free(bvh);
 }
 
-void	cleanup(t_rt *rt)
+/* use this for mac */
+// void	cleanup(t_rt *rt)
+// {
+// 	if (!rt)
+// 		return ;
+// 	free_one(rt->mlx);
+// 	free_bvh(rt->bvh);
+// 	free_one(rt->obj);
+// }
+
+/* use this for linux */
+void cleanup(t_rt *rt)
 {
-	if (!rt)
-		return ;
-	free_one(rt->mlx);
-	free_bvh(rt->bvh);
-	free_one(rt->obj);
+    if (!rt)
+        return;
+    if (rt->img.img)
+        mlx_destroy_image(rt->mlx, rt->img.img);
+    if (rt->mlx_win)
+        mlx_destroy_window(rt->mlx, rt->mlx_win);
+    free_bvh(rt->bvh);
+    free_one(rt->obj);
+    mlx_destroy_display(rt->mlx); // LINUX ONLY
+    free(rt->mlx);
 }
+
 
 void	cleanup_and_exit(t_rt *rt, int exit_code)
 {

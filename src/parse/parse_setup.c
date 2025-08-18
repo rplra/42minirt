@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:26:36 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 23:52:01 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/19 05:03:15 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ int	parse_camera(char **params, t_parse *file, t_camera *camera)
 	if (tmp.lookat.x == 0 && tmp.lookat.y == 0 && tmp.lookat.z == 0)
 		tmp.lookat = unit_vec3(subtract_vec(tmp.lookat, tmp.pos));
 	tmp.lookat_ori = tmp.lookat;
-	tmp.hfov = radian(ft_atof(params[3], &valid));
+	tmp.hfov = ft_atof(params[3], &valid);
 	if (!valid || tmp.hfov < FOV_MIN || tmp.hfov > FOV_MAX)
 		return (print_error(file, ERROR_CFOV, 3, params));
+	tmp.hfov = radian(tmp.hfov);
 	*camera = tmp;
 	return (0);
 }

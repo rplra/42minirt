@@ -6,13 +6,11 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:11:57 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/17 15:30:56 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/17 17:31:30 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-
 
 /*
  * brief: set surface normal at hit point to face against the incoming ray

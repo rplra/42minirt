@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/18 16:13:54 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/19 04:23:44 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@
 /*	light	*/
 # define LIGHT_BRIGHTNESS_MIN	0.0
 # define LIGHT_BRIGHTNESS_MAX	1.0
-# define LIGHT_RADIUS			0.5	// change to 2 for shadow.rt
+# define LIGHT_RADIUS			0.5	// change to 2 for shadow.rt (default = 0.5)
 
 /*	plane	*/
 # define PLANE_X				-8

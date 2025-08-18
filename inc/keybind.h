@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:47:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/17 12:03:49 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/19 02:13:01 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void				get_info(t_rt *rt, int x, int *y, int line_ht);
 
 /* __________________ key configurations __________________ */
 int					close_window(int keycode, t_rt *rt);
-int					close_window_x(int keycode, t_rt *vars);
+int					close_window_x(t_rt *rt);
 int					key_press(int keycode, t_rt *rt);
 
 /* __________________ key event __________________ */

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 15:58:16 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/18 15:41:59 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ typedef struct s_cylinder
 	t_vec3		coord[2];
 	float		d[2];	// d[0]:bottom_cap, d[1]:top cap
 	t_vec3		w;		// for calculating plane alpha beta or x-z side
-}				t_cylinder;
+}				t_cy;
 
 typedef enum e_obj_type
 {
@@ -139,7 +139,7 @@ typedef struct s_obj
 	{
 		t_sphere	sph;
 		t_plane		plane;
-		t_cylinder	cyl;
+		t_cy	cyl;
 	};
 	t_uint		id;
 	t_mat		material;

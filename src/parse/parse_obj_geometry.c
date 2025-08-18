@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 17:57:35 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/17 12:46:31 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/18 10:19:14 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	setup_plane_geometry(t_obj *obj)
 	obj->plane.w = div_vec_scalar(n, scalar_product(n, n));
 }
 
-// obj->cyl.d[0/1] =official use corner
+// obj->cyl.d[0/1] = official use corner
 // obj->cyl.coord[X/Y] = mult_vec_scalar == scale to certain size
 void	setup_cylinder_geometry(t_obj *obj)
 {

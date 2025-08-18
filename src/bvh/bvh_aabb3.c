@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:35:35 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/14 17:26:54 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/18 15:51:37 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  */
 void	aabb_cyl(t_obj *obj, t_interval res[3])
 {
-	t_cylinder	cyl;
+	t_cy		cyl;
 	t_vec3		tmp_vec;
 	t_interval	bbox_side1[3];
 	t_interval	bbox_side2[3];

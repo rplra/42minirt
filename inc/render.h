@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/17 15:45:46 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/18 16:22:40 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # include <stdbool.h>         // for bool
 # include "scene.h"           // for t_object, t_obj_type
-# include "interval.h"        // for t_interval
+// # include "interval.h"        // for t_interval
 # include "../lib/quaternion/ft_vector.h" 
 
 typedef struct s_rt			t_rt;
 typedef struct s_ray		t_ray;
-typedef struct s_interval	t_interval;
+// typedef struct s_interval	t_interval;
 typedef unsigned char		t_uchar;
 typedef struct s_img		t_img;
 
@@ -54,6 +54,8 @@ typedef struct s_hit
 	float		t;			// distance, (formula: pt_at = a + t*d)
 	// float	coord[2];	// uv vals (surf coords of hit pt, for texture)
 	int			index;		// object index of the hitted obj
+	int			body;		// helper variable for rendering cyl
+	int			cap;		// helper variable for rendering cyl
 	t_uchar		setting;	// helper variable for rendering cyl
 }	t_hit;
 
@@ -76,8 +78,9 @@ typedef struct s_bvh_tree
 /* __________________ initialization __________________ */
 void			init_mlx(t_rt *rt);
 void			init_rt(t_rt *rt);
-void			init_cam(t_rt *rt);
 void			init_hit(t_rt *rt);
+void			init_cam(t_rt *rt);
+void			init_light(t_rt *rt);
 void			init_bg_color(t_rt *rt, float intensity);
 // void				update_cam_pos(t_rt *rt);
 
@@ -170,17 +173,17 @@ bool			has_hit_sphere(t_rt *rt, int index, t_interval ray_range,
 bool			has_hit_plane(t_rt *rt, int index, t_interval ray_range,
 					t_ray ray);
 bool			within_plane_range(float alpha, float beta, int flag);
-bool			has_hit_cylinder(t_rt *rt, int index, t_interval ray_range,
+bool			has_hit_cy(t_rt *rt, int index, t_interval ray_range,
 					t_ray ray);
 float			check_hit_body(t_rt *rt, int i, t_ray ray, float t[2]);
-float			has_hit_body(t_cylinder cyl, t_interval ray_range,
+float			has_hit_body(t_cy cyl, t_interval ray_range,
 					t_ray ray, float t[2]);
 float			has_hit_cap(t_rt *rt, int i, t_interval ray_range, t_ray ray);
 int				update_hit_rec(t_rt *vars, int index, t_ray ray, float t);
 
-void			get_point_on_surf(t_cylinder cyl, t_ray ray, float t[2],
+void			get_point_on_surf(t_cy cyl, t_ray ray, float t[2],
 					float res[2]);
-t_interval		get_cyl_axis_height(t_cylinder cyl);
+t_interval		get_cyl_axis_height(t_cy cyl);
 
 t_vec3			set_face_norm(t_ray ray, t_vec3 surf_norm);
 t_vec3			get_surf_norm_plane(t_ray ray, t_obj obj, float t,

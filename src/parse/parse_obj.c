@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/17 12:46:40 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/18 16:10:59 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	parse_sphere(t_parse *file, t_obj *obj)
 }
 
 static int	parse_cylinder_dimensions_and_color(t_parse *file,
-	t_cylinder *tmp, t_obj *obj)
+	t_cy *tmp, t_obj *obj)
 {
 	char	**values;
 	bool	valid;
@@ -84,12 +84,12 @@ static int	parse_cylinder_dimensions_and_color(t_parse *file,
 
 int	parse_cylinder(t_parse *file, t_obj *obj)
 {
-	t_cylinder	tmp;
-	char		**values;
+	t_cy	tmp;
+	char	**values;
 
 	if (count_params(file->tokens) != 6)
 		return (print_error(file, ERROR_CYCOUNT, -1, file->tokens));
-	ft_memset(&tmp, 0, sizeof(t_cylinder));
+	ft_memset(&tmp, 0, sizeof(t_cy));
 	values = ft_split(file->tokens[1], ',');
 	if (is_vector(file, values, &tmp.pos, NO))
 		return (print_error(file, ERROR_CYPOS, 1, values));

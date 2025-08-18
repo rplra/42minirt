@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/17 14:42:56 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/18 16:13:54 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 #  define MENU			"asset/menu/menu-800.xpm"
 #  define PANEL_WIDTH	266
 # endif
+
 
 /*	img-assets	*/
 # define LOADBAR		"asset/load-600.xpm"
@@ -149,7 +150,7 @@
 #  define IX				1.028
 #  define IY				8
 #  define IY_OFFSET			0
-#  define IDX				1.077
+#  define IDX				1.073
 #  define POSX				23
 #  define ROTX				26
 #  define OFFSET			6
@@ -211,7 +212,7 @@
 /*	light	*/
 # define LIGHT_BRIGHTNESS_MIN	0.0
 # define LIGHT_BRIGHTNESS_MAX	1.0
-# define LIGHT_RADIUS			0.1
+# define LIGHT_RADIUS			0.5	// change to 2 for shadow.rt
 
 /*	plane	*/
 # define PLANE_X				-8

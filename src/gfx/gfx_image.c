@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 18:15:49 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/16 23:26:36 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/18 15:52:57 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,3 @@ void	ft_create_img(t_rt *rt, t_img *img)
 &img->line_len, \
 &img->endian);
 }
-

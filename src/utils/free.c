@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 11:50:40 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/17 12:58:24 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/18 16:12:27 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	free_bvh(t_bvh_tree *bvh)
 void	cleanup(t_rt *rt)
 {
 	if (!rt)
-		return;
+		return ;
 	free_one(rt->mlx);
 	free_bvh(rt->bvh);
 	free_one(rt->obj);
@@ -80,7 +80,6 @@ void	cleanup_and_exit(t_rt *rt, int exit_code)
 // 		//add custom controls here
 // 	}
 // }
-
 
 /* void	cleanup(t_rt *rt)
 {

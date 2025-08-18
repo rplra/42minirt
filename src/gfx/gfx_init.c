@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 07:54:21 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/16 23:37:47 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/18 15:52:48 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,3 @@ void	init_mlx(t_rt *rt)
 	rt->mlx_win = mlx_new_window(rt->mlx, WIN_WIDTH + PANEL_WIDTH, WIN_HEIGHT,
 			"miniRT");
 }
-

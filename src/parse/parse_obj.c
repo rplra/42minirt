@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/18 16:10:59 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/19 03:56:03 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,11 @@ static int	parse_cylinder_dimensions_and_color(t_parse *file,
 		return (print_error(file, ERROR_CYHT, 4, file->tokens));
 	values = ft_split(file->tokens[5], ',');
 	if (is_colour(file, values, &obj->material.albedo))
+	{
+		free_array(values);
 		return (1);
+	}
+	free_array(values);
 	return (0);
 }
 

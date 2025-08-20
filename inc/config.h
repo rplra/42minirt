@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/20 07:39:52 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/20 14:46:41 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,17 @@
 # include "scene.h"
 
 /*	window	*/
-# define WIN_WIDTH		600
-# define WIN_HEIGHT		400
+// # define WIN_WIDTH		600
+// # define WIN_HEIGHT		400
+
+# define WIN_WIDTH		800
+# define WIN_HEIGHT		600
+
+// # define WIN_WIDTH		1000
+// # define WIN_HEIGHT		800
+
+// # define WIN_WIDTH		2880
+// # define WIN_HEIGHT		2160
 
 /*	menu	*/
 # if WIN_HEIGHT <=		400
@@ -29,6 +38,9 @@
 # elif WIN_HEIGHT <=	800
 #  define MENU			"asset/menu/menu-800.xpm"
 #  define PANEL_WIDTH	266
+# elif WIN_HEIGHT <=	2160
+#  define MENU			"asset/menu/menu-2160.xpm"
+#  define PANEL_WIDTH	720
 # endif
 
 
@@ -61,6 +73,13 @@
 #  define LABEL_PL		"asset/label/plane_800.xpm"
 #  define LABEL_SP		"asset/label/sphere_800.xpm"
 #  define LABEL_CY		"asset/label/cylinder_800.xpm"
+
+# elif WIN_HEIGHT <=	2160
+#  define LABEL_C		"asset/label/camera_2160.xpm"
+#  define LABEL_L		"asset/label/light_2160.xpm"
+#  define LABEL_PL		"asset/label/plane_2160.xpm"
+#  define LABEL_SP		"asset/label/sphere_2160.xpm"
+#  define LABEL_CY		"asset/label/cylinder_2160.xpm"
 # endif
 
 /*	digit-assets	*/
@@ -101,6 +120,18 @@
 #  define DIGIT_7		"asset/digit/7_800.xpm"
 #  define DIGIT_8		"asset/digit/8_800.xpm"
 #  define DIGIT_9		"asset/digit/9_800.xpm"
+
+# elif WIN_HEIGHT <=	2160
+#  define DIGIT_0 		"asset/digit/0_2160.xpm"
+#  define DIGIT_1		"asset/digit/1_2160.xpm"
+#  define DIGIT_2		"asset/digit/2_2160.xpm"
+#  define DIGIT_3		"asset/digit/3_2160.xpm"
+#  define DIGIT_4		"asset/digit/4_2160.xpm"
+#  define DIGIT_5		"asset/digit/5_2160.xpm"
+#  define DIGIT_6		"asset/digit/6_2160.xpm"
+#  define DIGIT_7		"asset/digit/7_2160.xpm"
+#  define DIGIT_8		"asset/digit/8_2160.xpm"
+#  define DIGIT_9		"asset/digit/9_2160.xpm"
 # endif
 
 /*	info-assets	*/
@@ -126,10 +157,18 @@
 #  define INFO_DOT 		"asset/info/dot_800.xpm"
 #  define INFO_COMMA 	"asset/info/comma_800.xpm"
 #  define INFO_MINUS 	"asset/info/minus_800.xpm"
+
+# elif WIN_HEIGHT <=	2160
+#  define INFO_POS 		"asset/info/pos_2160.xpm"
+#  define INFO_ROT 		"asset/info/rot_2160.xpm"
+#  define INFO_DOT 		"asset/info/dot_2160.xpm"
+#  define INFO_COMMA 	"asset/info/comma_2160.xpm"
+#  define INFO_MINUS 	"asset/info/minus_2160.xpm"
 # endif
 
 /*	menu sel/info-alignment	*/
 # if WIN_HEIGHT <=			400
+#  define DY				2
 #  define LD				30
 #  define LX				2.45
 #  define LY				15
@@ -142,8 +181,9 @@
 #  define OFFSET			4
 #  define SPACE_OFFSET		0.5
 #  define DOT_OFFSET		1.5	
-#  define DY				2
+
 # elif WIN_HEIGHT <=		600
+#  define DY				3
 #  define LD				53
 #  define LX				2.45
 #  define LY				20
@@ -156,21 +196,36 @@
 #  define OFFSET			6
 #  define SPACE_OFFSET		1.0
 #  define DOT_OFFSET		2.0
-#  define DY				3
+
 # elif WIN_HEIGHT <=		800
-#  define LD				65
-#  define LX				2.45
-#  define LY				25
-#  define IX				1.035
-#  define IY				10
+#  define DY				3		// obj id ht
+#  define LD				65		// obj id alignment
+#  define LX				2.45	// label alignment	
+#  define LY				25		// label height; > == higher
+#  define IX				1.035	// info alignment
+#  define IY				10		// rot height from pos	
 #  define IY_OFFSET			0
 #  define IDX				1.072
-#  define POSX				26
-#  define ROTX				30
-#  define OFFSET			8
-#  define SPACE_OFFSET		1.5
-#  define DOT_OFFSET		2.5
-#  define DY				3
+#  define POSX				26		// pos xpm alignment
+#  define ROTX				30		// rot xpm alignment
+#  define OFFSET			8		// digit offset
+#  define SPACE_OFFSET		1.5		// space after comma
+#  define DOT_OFFSET		2.5	
+
+# elif WIN_HEIGHT <=		2160
+#  define DY				7	
+#  define LD				170		
+#  define LX				2.45	
+#  define LY				68		
+#  define IX				1.035	
+#  define IY				37		
+#  define IY_OFFSET			0		// info offset from label (gap btw label and info)
+#  define IDX				1.066	// info digit
+#  define POSX				69		
+#  define ROTX				80		
+#  define OFFSET			20		
+#  define SPACE_OFFSET		4.05
+#  define DOT_OFFSET		6.75
 # endif
 
 /*	math constant	*/

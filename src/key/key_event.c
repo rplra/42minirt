@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:25:47 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/19 02:12:27 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/20 14:52:17 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	key_press(int keycode, t_rt *rt)
 
 void	event_loop(t_rt *rt)
 {
-	printf(LBLUE ">> use tabs to select cam/light/obj,"
+	printf(TURQ ">> use tabs to select cam/light/obj,"
 		" then → translate/rotate/scale keys to transform\n" RESET);
 	mlx_put_image_to_window(rt->mlx, rt->mlx_win, rt->img_intro.img,
 		(WIN_WIDTH / 2) - (INTRO_W / 2), WIN_HEIGHT / 2);

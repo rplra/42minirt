@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:05:22 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/18 16:22:18 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/20 14:52:47 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	set_render_quality(t_rt *rt)
 	{
 		rt->camera.ray_bounce = SAMPLE_RAY_BOUNCE;
 		rt->camera.sample_per_pixel = SAMPLE_PER_PIXEL;
-		printf(">> Rendering image...\n");
+		printf(TURQ ">> Rendering image...\n" RESET);
 	}
 }
 

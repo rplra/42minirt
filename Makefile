@@ -93,7 +93,7 @@ fclean: clean
 re: fclean all
 
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --log-file=valgrind_output.txt ./$(NAME) $(ARGS)
 
 leaks:
 	leaks -atExit -- ./$(NAME)

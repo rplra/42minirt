@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 22:08:23 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/17 14:39:19 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:09:29 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,5 @@ void	update_cam_pos(t_rt *rt, int keycode)
 			rt->camera.transform.rotate, 0);
 	rt->camera.lookat = quaternion_rotate_adv(rt->camera.lookat_ori,
 			rt->camera.transform.rotate, 0);
-	// /*debug*/debug_print_vec("rot_vup", rt->camera.vup);
-	// /*debug*/debug_print_vec("orient_rot", rt->camera.lookat);
 	rt->ray.orig = rt->camera.pos;
 }

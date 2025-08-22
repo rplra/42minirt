@@ -6,12 +6,17 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:47:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 09:44:00 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:37:13 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef KEYBIND_H
 # define KEYBIND_H
+
+# include "../lib/quaternion/ft_vector.h"
+# include "render.h"
+# include <stdbool.h>
+# include <stdio.h>
 
 # ifndef MAC
 #  if defined(__APPLE__) && defined(__MACH__)
@@ -106,12 +111,6 @@
 # define ON_MOUSEUP 	5
 # define ON_MOUSEMOVE 	6
 
-// # include "minirt.h"
-# include "../lib/quaternion/ft_vector.h"
-# include "render.h"
-# include <stdbool.h>
-# include <stdio.h>
-
 typedef struct s_rt	t_rt;
 
 typedef enum e_sel_type
@@ -125,7 +124,6 @@ typedef struct s_sel
 {
 	t_sel_type		type;
 	int				obj_index;
-	// t_obj			*obj_ptr;
 }					t_sel;
 
 typedef struct s_label

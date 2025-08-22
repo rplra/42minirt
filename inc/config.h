@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/22 09:13:33 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:49:06 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 // # define WIN_WIDTH		800
 // # define WIN_HEIGHT		600
 
-# define WIN_WIDTH		600
-# define WIN_HEIGHT		400
+# define WIN_WIDTH		1000
+# define WIN_HEIGHT		800
 
 // # define WIN_WIDTH		2880
 // # define WIN_HEIGHT		2160

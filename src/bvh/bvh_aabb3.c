@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:35:35 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 09:58:05 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 12:51:07 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,6 @@ void	aabb_cyl(t_obj *obj, t_interval res[3])
 	tmp_vec = new_vec3(cyl.rad, cyl.rad, cyl.rad);
 	aabb(subtract_vec(cyl.pos, tmp_vec), add_vec(cyl.pos, tmp_vec), bbox_side2);
 	update_aabb_box(bbox_side1, bbox_side2, res);
-	// aabb(cyl.pos, add_vec(add_vec(cyl.pos, cyl.coord[X]), cyl.coord[Y]),
-		// bbox_side1);
-	// aabb(add_vec(cyl.pos, cyl.coord[X]), add_vec(cyl.pos, cyl.coord[Y]),
-		// bbox_side2);
-	// update_aabb_box(bbox_side1, bbox_side2, res);
 }
 
 /* aabb for plane & quadrilaterals(all diff form of planes) */
@@ -58,10 +53,6 @@ void	aabb_plane(t_obj *obj, t_interval res[3])
 		bbox_side1);
 	aabb(add_vec(corner, plane.coord[X]), add_vec(corner, plane.coord[Y]),
 		bbox_side2);
-	// aabb(plane.pos, add_vec(add_vec(plane.pos, plane.coord[X]),
-			// plane.coord[Y]), bbox_side1);
-	// aabb(add_vec(plane.pos, plane.coord[X]), add_vec(plane.pos,
-			// plane.coord[Y]), bbox_side2);
 	update_aabb_box(bbox_side1, bbox_side2, res);
 }
 
@@ -104,10 +95,7 @@ void	create_bbox(t_obj *obj, t_interval bound_box[3])
 	void	(*func[3])(t_obj *, t_interval[3]);
 
 	if (obj->type < 0 || obj->type > 2)
-	{
-		/*debug*/printf("invalid bbox_type! %d\n", obj->type);
 		return ;
-	}
 	init_bbox_func(func);
 	func[obj->type](obj, bound_box);
 }

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/22 09:44:58 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:26:44 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-// # include "interval.h"
 # include "render.h"
 # include "transform.h"
 

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 22:47:23 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 08:17:02 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 12:51:41 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,12 @@ static t_vec3	rotation_delta(int keycode)
 
 void	reset_cam(t_rt *rt, int keycode)
 {
-	// if (rt->sel.type != SEL_CAMERA)
-		// return ;
 	if (keycode != KEY_R)
 		return ;
 	rt->camera.transform.rotate = new_vec3(0, 0, 0);
 	rt->camera.transform.translate = new_vec3(0, 0, 0);
 	rt->camera.pos = new_vec3(rt->camera.ori.x,
 			rt->camera.ori.y, rt->camera.ori.z);
-	// rt->camera.pos = rt->camera.ori;
 	rt->camera.vup = rt->camera.vup_ori;
 	rt->camera.lookat = rt->camera.lookat_ori;
 	rt->camera.focus_dist = 1;
@@ -68,8 +65,6 @@ void	handle_rotation(t_rt *rt, int keycode)
 	t_vec3	delta;
 	t_vec3	*rot;
 
-	// if (keycode == KEY_R)
-	// 	reset_cam(rt);
 	if (!rotation_key(keycode))
 		return ;
 	delta = rotation_delta(keycode);

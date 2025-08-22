@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:54:15 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/19 04:30:20 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:05:41 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,38 +59,3 @@ bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 	update_hit_rec(rt, index, ray, t);
 	return (1);
 }
-
-// bool	has_hit_sphere(t_rt *rt, int index, t_interval ray_range, t_ray ray)
-// {
-// 	float		n[3];
-// 	float		t;
-// 	float		discriminant;
-// 	t_vec3		ray_to_center;
-
-// 	// /*debug*/printf("has_hit ent:%d\n", index);
-// 	/* ************* get discriminant ************* */
-// 	// if (rt->obj[index].b_rotate == 1)
-// 		// ray = transform_ray(rt->obj[index], ray);
-
-// 	ray_to_center = subtract_vec(rt->obj[index].sph.pos, ray.orig);
-// 	n[A] = scalar_product(ray.vector, ray.vector);
-// 	n[B] = scalar_product(ray.vector, ray_to_center);
-// 	n[C] = scalar_product(ray_to_center, ray_to_center) - 
-// (rt->obj[index].sph.rad * rt->obj[index].sph.rad);
-// 	discriminant = ft_square(n[B]) - (n[A] * n[C]);
-// 	if (discriminant < 0)
-// 		return (0);
-
-// 	/* ****************** get t ****************** */
-// 	t = (n[B] - sqrt(discriminant)) / n[A];
-// 	/* *********** if t intersects obj *********** */
-// 	if (t <= ray_range.min || t >= ray_range.max)
-// 	{
-// 		t = (n[B] + sqrt(discriminant)) / n[A];
-// 		if (t <= ray_range.min || t >= ray_range.max)
-// 			return (0);
-// 	}
-// 	// /*debug*/printf("has_hit_sphere:%f %f\n", t, discriminant);
-// 	update_hit_rec(rt, index, ray, t);
-// 	return (1);
-// }

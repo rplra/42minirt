@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 09:02:19 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/19 01:41:01 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 12:50:10 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,10 @@ t_vec3	get_rotated_point(t_obj obj, int n[3])
 {
 	t_vec3	pt;
 
-	// pt.x = (n[X] * obj.bbox_rot[X].max) + ((1 - n[X]) * obj.bbox_rot[X].min);
-	// pt.y = (n[Y] * obj.bbox_rot[Y].max) + ((1 - n[Y]) * obj.bbox_rot[Y].min);
-	// pt.z = (n[Z] * obj.bbox_rot[Z].max) + ((1 - n[Z]) * obj.bbox_rot[Z].min);
 	pt.x = (n[X] * obj.bbox[X].max) + ((1 - n[X]) * obj.bbox[X].min);
 	pt.y = (n[Y] * obj.bbox[Y].max) + ((1 - n[Y]) * obj.bbox[Y].min);
 	pt.z = (n[Z] * obj.bbox[Z].max) + ((1 - n[Z]) * obj.bbox[Z].min);
-	// /*debug*/debug_print_bbox("rot_bbox", obj.bbox);
-	// /*debug*/debug_print_vec("bf_rot", pt);
 	pt = quaternion_rotate_adv(pt, obj.rotate, 1);
-	// /*debug*/debug_print_vec("af_rot", pt);
 	return (pt);
 }
 
@@ -40,12 +34,9 @@ static void	rotate_point(t_obj obj, int n[3], t_vec3 *min, t_vec3 *max)
 		pt = get_rotated_point(obj, n);
 		*min = get_vec_min(*min, pt);
 		*max = get_vec_max(*max, pt);
-		// /*debug*/debug_print_vec("min", *min);
-		// /*debug*/debug_print_vec("max", *max);
 	}
 }
 
-// void	aabb_rotate(t_obj src, t_interval dest[3])
 void	aabb_rotate(t_obj obj, t_interval dest[3])
 {
 	t_vec3	min;
@@ -66,7 +57,6 @@ void	aabb_rotate(t_obj obj, t_interval dest[3])
 	aabb(min, max, dest);
 }
 
-// void	aabb_translate(t_obj obj, t_vec3 offset, t_interval res[3])
 void	aabb_translate(t_obj obj, t_interval res[3], t_vec3 offset)
 {
 	res[X].min = obj.bbox[X].min + offset.x;

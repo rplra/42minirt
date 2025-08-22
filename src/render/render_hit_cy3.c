@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:41:54 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/17 17:20:09 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:11:39 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,39 +47,6 @@ int	smallest_t(float t_cap[2])
 	return (1);
 }
 
-//static
-int	closest_t(t_interval ray_range, float t_cap[2])
-{
-	if ((t_cap[0] < ray_range.min || t_cap[0] > ray_range.max)
-		&& (t_cap[1] < ray_range.min || t_cap[1] > ray_range.max))
-		return (-1);
-	else if (t_cap[0] < ray_range.min || t_cap[0] > ray_range.max)
-		return (1);
-	else if (t_cap[1] < ray_range.min || t_cap[1] > ray_range.max)
-		return (0);
-	else if (t_cap[0] < t_cap[1])
-		return (0);
-	return (1);
-}
-
-//static
-int	t_in_cap_range(t_cy cyl, t_interval ray_range, t_ray ray, float tmp_cap[2])
-{
-	int	flag[2];
-
-	flag[0] = t_intersects_cap(cyl, 0, ray, tmp_cap[0]);
-	flag[1] = t_intersects_cap(cyl, 1, ray, tmp_cap[1]);
-	if (!flag[0] && !flag[1])
-		return (-1);
-	if (flag[0] && flag[1])
-		return (closest_t(ray_range, tmp_cap));
-	if (flag[0] && tmp_cap[0] >= ray_range.min && tmp_cap[0] <= ray_range.max)
-		return (0);
-	if (flag[1] && tmp_cap[1] >= ray_range.min && tmp_cap[1] <= ray_range.max)
-		return (1);
-	return (-1);
-}
-
 /*
  * plane formula:
  * t = dot((C-O), N) / dot(d, N)
@@ -118,36 +85,36 @@ float	has_hit_cap(t_rt *rt, int i, t_interval ray_range, t_ray ray)
 	return (t_cap);
 }
 
-// float	has_hit_cap(t_rt *rt, int i, t_interval ray_range, t_ray ray)
-// {
-// 	float	denom;
-// 	float	dot_np;
-// 	float	t_cap;
-// 	float	tmp_cap[2];
-// 	int		id;
+// static 
+/* int	closest_t(t_interval ray_range, float t_cap[2])
+{
+	if ((t_cap[0] < ray_range.min || t_cap[0] > ray_range.max)
+		&& (t_cap[1] < ray_range.min || t_cap[1] > ray_range.max))
+		return (-1);
+	else if (t_cap[0] < ray_range.min || t_cap[0] > ray_range.max)
+		return (1);
+	else if (t_cap[1] < ray_range.min || t_cap[1] > ray_range.max)
+		return (0);
+	else if (t_cap[0] < t_cap[1])
+		return (0);
+	return (1);
+} */
 
-// 	//should we do both axises, +1 & -1
-// 	denom = scalar_product(rt->obj[i].cyl.axis, ray.vector);
-// 	if (fabs(denom) < EPSILON)
-// 		return (-1);
-// 	dot_np = scalar_product(rt->obj[i].cyl.axis, ray.orig);
-// 	tmp_cap[0] = (rt->obj[i].cyl.d[0] - 
-//		dot_np) / denom; //might need to flip axis
-// 	tmp_cap[1] = (rt->obj[i].cyl.d[1] - dot_np) / denom;
+// static
+/* int	t_in_cap_range(t_cy cyl, t_interval ray_range,
+		t_ray ray, float tmp_cap[2])
+{
+	int	flag[2];
 
-// 	// take the smallest
-// 	// id = closest_t(ray_range, tmp_cap);
-// 	id = smallest_t(tmp_cap);
-// 	// /*debug*/printf("hit_cap: %d | %f < %f\n", id, tmp_cap[0], tmp_cap[1]);
-// 	// id = t_in_cap_range(rt->obj[i].cyl, ray_range, ray, tmp_cap);
-// 	// if (id == -1)
-// 		// return (-1);
-// 	// return (tmp_cap[id]);
-// 	/* ***************************************************************** */
-// 	t_cap = tmp_cap[id];
-// 	if (t_cap < ray_range.min || t_cap > ray_range.max)
-// 		return (-1);
-// 	if (!t_intersects_cap(rt->obj[i].cyl, id, ray, t_cap))
-// 		return (-1);
-// 	return (t_cap);
-// }
+	flag[0] = t_intersects_cap(cyl, 0, ray, tmp_cap[0]);
+	flag[1] = t_intersects_cap(cyl, 1, ray, tmp_cap[1]);
+	if (!flag[0] && !flag[1])
+		return (-1);
+	if (flag[0] && flag[1])
+		return (closest_t(ray_range, tmp_cap));
+	if (flag[0] && tmp_cap[0] >= ray_range.min && tmp_cap[0] <= ray_range.max)
+		return (0);
+	if (flag[1] && tmp_cap[1] >= ray_range.min && tmp_cap[1] <= ray_range.max)
+		return (1);
+	return (-1);
+} */

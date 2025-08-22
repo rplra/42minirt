@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/17 14:51:10 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:09:21 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_vec3	sample_sq_rand(unsigned int *seed)
 	t_vec3	pt;
 
 	pt = new_vec3(rand_lcg(seed) - 0.5, rand_lcg(seed) - 0.5, 0);
-	// /*debug*/printf("sample_sq_rand:%f %f %f\n", pt.x, pt.y, pt.z);
 	return (pt);
 }
 
@@ -49,11 +48,6 @@ t_vec3	sample_defoc_disk(t_rt rt, unsigned int *seed)
 	res = add_vec(rt.camera.pos,
 			add_vec(mult_vec_scalar(rt.camera.defoc_disk[X], pt.x),
 				mult_vec_scalar(rt.camera.defoc_disk[Y], pt.y)));
-	// /*debug*/debug_print_vec("sample_defoc:cam:", rt.camera.pos);
-	// /*debug*/debug_print_vec("sample_defoc:x:", rt.camera.defoc_disk[X]);
-	// /*debug*/debug_print_vec("sample_defoc:y:", rt.camera.defoc_disk[Y]);
-	// /*debug*/debug_print_vec("sample_defoc:pt:", pt);
-	// /*debug*/debug_print_vec("sample_defoc:res:", res);
 	return (res);
 }
 
@@ -88,13 +82,9 @@ int	sample_pixels(t_rt rt, t_vec3 pixel_center, t_vec3 viewport_d[2],
 	color = new_vec3(0, 0, 0);
 	while (++k < rt.camera.sample_per_pixel)
 	{
-		// *seed += (rt.camera.sample_per_pixel * 73856093);
 		offset = sample_sq_rand(seed);
 		res = add_vec(pixel_center, add_vec(mult_vec_scalar(viewport_d[X],
 						offset.x), mult_vec_scalar(viewport_d[Y], offset.y)));
-		// auto pixel_sample = pixel00_loc
-		//						+ ((i + offset.x()) * pixel_delta_u)
-		//						+ ((j + offset.y()) * pixel_delta_v);
 		if (rt.camera.defoc_ang > 0)
 			rt.ray.orig = sample_defoc_disk(rt, seed);
 		rt.ray.vector = subtract_vec(res, rt.ray.orig);

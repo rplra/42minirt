@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 10:06:53 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/18 14:22:36 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:06:33 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,19 @@ void	set_cam_vup(t_rt *rt)
 	else
 		rt->camera.vup = new_vec3(0, 1, 0);
 	rt->camera.vup_ori = rt->camera.vup;
-	// /*debug*/debug_print_vec("cam_vup", rt->camera.vup);
 }
 
 void	init_cam(t_rt *rt)
 {
-	// rt->camera.pos = new_vec3(0, 0, 9); //not parser
-	// rt->camera.pos = new_vec3(-2, 0, 11); //not parser
-	// rt->camera.vfov = radian(90);	//not parser
-	/* ********* need to comment out above when include parser ********** */
 	rt->camera.transform.rotate = new_vec3(0, 0, 0);
 	rt->camera.transform.translate = new_vec3(0, 0, 0);
 	rt->camera.ori = new_vec3(rt->camera.pos.x, rt->camera.pos.y,
 			rt->camera.pos.z);
-	// rt->camera.lookat = add_vec(rt->camera.pos, new_vec3(0, 0, -1));
-	// /*debug*/debug_print_vec("lookat", rt->camera.lookat);
 	set_cam_vup(rt);
-	// /*debug*/debug_print_vec("cam_vup", rt->camera.vup);
 	rt->camera.defoc_ang = DEFOC_ANG;
 	rt->camera.defoc_disk[X] = new_vec3(DEFOC_XX, DEFOC_XY, DEFOC_XZ);
 	rt->camera.defoc_disk[Y] = new_vec3(DEFOC_YX, DEFOC_YY, DEFOC_YZ);
-	// rt->camera.focus_dist = len_vec3(subtract_vec(rt->camera.pos, 
-	//		rt->camera.lookat));
 	rt->camera.focus_dist = 1;
-	// /*debug*/printf("focus_dist:%f\n", rt->camera.focus_dist);
 	set_render_quality(rt);
 	rt->ray.orig = rt->camera.pos;
 	rt->ray.vector = new_vec3(0, 0, 0);

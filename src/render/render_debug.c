@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:52:37 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 09:16:27 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 12:58:28 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,14 @@ void	debug_print_vec(char *str, t_vec3 vec)
 	printf("%s: (%.2f, %.2f, %.2f)\n", str, vec.x, vec.y, vec.z);
 }
 
-void	debug_print_arr(char *str, t_obj *obj, int obj_count)
+void	debug_print_bbox(char *str, t_interval bbox[3])
+{
+	printf("%s[X]: %f %f\n", str, bbox[X].min, bbox[X].max);
+	printf("%s[Y]: %f %f\n", str, bbox[Y].min, bbox[Y].max);
+	printf("%s[Z]: %f %f\n", str, bbox[Z].min, bbox[Z].max);
+}
+
+/* void	debug_print_arr(char *str, t_obj *obj, int obj_count)
 {
 	int	i;
 
@@ -29,7 +36,8 @@ void	debug_print_arr(char *str, t_obj *obj, int obj_count)
 		if (obj[i].type == SPHERE)
 		{
 			printf("sph!\n");
-			// printf("rad: %f\n%s: %d: bbox:\n", obj[i].sph.rad, str, obj[i].id);
+			// printf("rad: %f\n%s: %d: bbox:\n",
+			//	obj[i].sph.rad, str, obj[i].id);
 			// debug_print_bbox(" |sph_bbox", obj[i].bbox);
 			// debug_print_vec(" |sph", obj[i].sph.pos);
 			// printf("----------------\n");
@@ -40,7 +48,8 @@ void	debug_print_arr(char *str, t_obj *obj, int obj_count)
 			// printf("bbox:\n");
 			// debug_print_bbox(" |cyl_bbox", obj[i].bbox);
 			// // printf(" |d: %f\n", obj[i].cyl.d);
-			// // printf(" |cyl_height: %f\n |cyl_rad: %f\n", obj[i].cyl.height, obj[i].cyl.rad);
+			// // printf(" |cyl_height: %f\n |cyl_rad: %f\n",
+			// //	obj[i].cyl.height, obj[i].cyl.rad);
 			// debug_print_vec(" |cyl", obj[i].cyl.pos);
 			// // debug_print_vec(" |cyl_axis", obj[i].cyl.axis);
 			// // debug_print_vec(" |cyl_coord[X]", obj[i].cyl.coord[X]);
@@ -56,16 +65,9 @@ void	debug_print_arr(char *str, t_obj *obj, int obj_count)
 			debug_print_bbox(" |pl_bbox", obj[i].bbox);
 		}
 	}
-}
+} */
 
-void	debug_print_bbox(char *str, t_interval bbox[3])
-{
-	printf("%s[X]: %f %f\n", str, bbox[X].min, bbox[X].max);
-	printf("%s[Y]: %f %f\n", str, bbox[Y].min, bbox[Y].max);
-	printf("%s[Z]: %f %f\n", str, bbox[Z].min, bbox[Z].max);
-}
-
-void	debug_print_bvh(char *str, t_bvh_tree *bvh)
+/* void	debug_print_bvh(char *str, t_bvh_tree *bvh)
 {
 	if (!bvh)
 		return ;
@@ -95,4 +97,4 @@ void	debug_print_bvh(char *str, t_bvh_tree *bvh)
 		// printf("|bvh_bbox[X]: %f %f\n\n", bvh->bbox[X].min, bvh->bbox[X].max);
 		debug_print_bvh(str, bvh->right);
 	}
-}
+} */

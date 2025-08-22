@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/17 15:13:14 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:08:51 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,4 @@ t_vec3	bg_color(t_rt vars, t_ray ray)
 	ray.vector.y /= len_vec3(ray.vector);
 	t = (ray.vector.y + 1) / 2;
 	return (lerp_rgb(vars.color_bg[1], vars.color_bg[0], t));
-	// return (split_rgb(lerp_hsv(vars.color_bg[1], vars.color_bg[0], t)));
 }

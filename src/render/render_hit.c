@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 10:12:06 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:10:41 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
 /* child function in has_hit_sphere, records details of the hitted obj */
 int	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
 {
-	t_vec3 (*get_surf_norm[3])(t_ray r, t_obj o, float t , t_uchar s);
+	t_vec3 (*get_surf_norm[3])(t_ray r, t_obj o, float t, t_uchar s);
 	init_surf_norm(get_surf_norm);
 	rt->hit.surf_norm = get_surf_norm[rt->obj[index].type](ray, rt->obj[index],
 			t, rt->hit.setting);
@@ -67,97 +67,5 @@ int	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
 	rt->hit.obj = &rt->obj[index];
 	rt->hit.index = index;
 	rt->hit.t = t;
-	// /*debug*/printf("update_hit_rec: t! %f\n", t);
 	return (1);
 }
-
-// original func
-// t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
-// {
-// 	float	t;
-// 	t_obj	*res;
-
-// 	res = NULL;
-
-// 	t = hit_bvh(rt->bvh, ray_range, ray, rt);
-// 	if (t > 0)
-// 	{
-// 		res = &rt->obj[rt->hit.index];
-// 		if (res->b_rotate == 1)
-// 			transform_hit_pt(rt, *res);
-// 		// rt->hit.at = add_vec(rt->hit.at, rt->camera.transform.translate);
-// 		// /*debug*/printf("hitted type: %d\n", res->type);
-// 		// /*debug*/debug_print_vec(" |hitted", res->cyl.pos);
-// 		// /*debug*/debug_print_vec(" |hitted_col", res->material.albedo);
-// 	}
-// 	return (res);
-// }
-
-/*
- * child function in ray_color
- * checks if ray hits any surface
- * returns the closest point ray hits
- * at = origin + (t * direction)
- */
-// t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray, t_vec3 *at)
-// using linked list
-// t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
-// {
-// 	float		t;
-// 	t_obj		*tmp;
-// 	t_obj		*res;
-// 	float		min;
-// 	float		(*has_hit[3])(t_obj, t_interval, t_ray);
-// 	t_vec3      (*get_surf_norm[3])(t_ray, t_obj, float);
-
-// 	init_hit_func(has_hit);
-// 	init_surf_norm(get_surf_norm);
-// 	min = ray_range.max;
-// 	res = NULL;
-// 	tmp = vars->obj;
-// 	while (tmp != NULL)
-// 	{
-// 		// /*debug*/printf("id:%d\n", x);
-// 		t = has_hit[tmp->type](*tmp, ray_range, ray); 
-//		// this returns t value only, more like get_root
-// 		// /*debug*/printf("has_hit_sphere:t:%f\n", t);
-// 		if (t > ray_range.min && t <= min) // if its new min, keep in record
-// 		{
-// 			res = tmp;
-// 			min = t;
-// 			vars->rec.t = t; //hit hittable
-// 			// can split this out to end (has_hit_sphere)
-//			 //min=t
-// 			vars->rec.at = add_vec(ray.orig, mult_vec_scalar(ray.vector, min));
-// 			vars->rec.surf_norm = get_surf_norm[res->type](ray, *res, min);
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// 	return (res);
-// }
-
-// t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
-// {
-// 	float		t;
-// 	t_obj		*res;
-// 	bool		(*has_hit[3])(t_rt *, int, t_interval, t_ray);
-
-// 	int	x = -1;
-// 	int	obj_count = vars->obj_count;
-
-// 	init_hit_func(has_hit);
-// 	res = NULL;
-// 	while (++x < obj_count)
-// 	{
-// 		// /*debug*/printf("id:%d\n", x);
-//		//this returns t value only, more like get_root
-// 		t = has_hit[vars->obj[x].type](vars, x, ray_range, ray);
-// 		// /*debug*/printf("t! %f %d\n", t, vars->hit.index);
-// 		if (t > 0)
-// 		{
-// 			res = &vars->obj[vars->hit.index];
-// 			ray_range.max = vars->hit.t;
-// 		}
-// 	}
-// 	return (res);
-// }

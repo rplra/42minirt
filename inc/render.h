@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 10:10:48 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:34:08 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 
 # include <stdbool.h>         // for bool
 # include "scene.h"           // for t_object, t_obj_type
-// # include "interval.h"        // for t_interval
 # include "../lib/quaternion/ft_vector.h" 
 
 typedef struct s_rt			t_rt;
 typedef struct s_ray		t_ray;
-// typedef struct s_interval	t_interval;
 typedef unsigned char		t_uchar;
 typedef struct s_img		t_img;
 
@@ -52,7 +50,6 @@ typedef struct s_hit
 	t_vec3		surf_norm;	// surface normal at the point
 	t_obj		*obj;		// the object hit
 	float		t;			// distance, (formula: pt_at = a + t*d)
-	// float	coord[2];	// uv vals (surf coords of hit pt, for texture)
 	int			index;		// object index of the hitted obj
 	int			body;		// helper variable for rendering cyl
 	int			cap;		// helper variable for rendering cyl
@@ -71,7 +68,7 @@ typedef struct s_bvh_tree
 	int			id_orig[2];
 	void		*left;
 	void		*right;
-	t_obj_type	type[2];		//can remove this if using t_obj
+	t_obj_type	type[2];		// can remove this if using t_obj
 	t_interval	bbox[3];
 }	t_bvh_tree;
 
@@ -201,7 +198,6 @@ t_col			split_rgb(int color);
 /* __________________ utils __________________ */
 bool			is_near_zero(t_vec3 vec);
 void			vec3_to_arr(t_vec3 pt, float res[3]);
-// void			swap_float(float t[2]);
 void			assign_int(int value[2], int width, int height);
 
 /* __________________ random __________________ */
@@ -215,9 +211,8 @@ int				rand_int(unsigned int *seed, int min, int max);
 
 /* __________________ debug_print functions __________________ */
 void			debug_print_vec(char *str, t_vec3 vec);
-void			debug_print_lst(char *str, t_obj *lst);
-void			debug_print_arr(char *str, t_obj *obj, int obj_count);
-void			debug_print_bvh(char *str, t_bvh_tree *bvh);
 void			debug_print_bbox(char *str, t_interval bbox[3]);
+// void			debug_print_bvh(char *str, t_bvh_tree *bvh);
+// void			debug_print_arr(char *str, t_obj *obj, int obj_count);
 
 #endif

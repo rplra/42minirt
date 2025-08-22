@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 09:00:58 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 12:50:38 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,10 @@ t_vec3 *viewport_v, t_vec3 *cam_w)
 	viewport[W] = 2 * h;
 	viewport[H] = (viewport[W] * WIN_HEIGHT) / WIN_WIDTH;
 	*cam_w = mult_vec_scalar(rt->camera.lookat, -1);
-	// /*debug*/printf("dot: %f\n", (scalar_product(*cam_w, rt->camera.vup)));
 	if (fabs(scalar_product(*cam_w, rt->camera.vup)) > 0.9999)
 		rt->camera.vup = cross_product(new_vec3(1, 0, 0), rt->camera.lookat);
-	// /*debug*/debug_print_vec("lookat", rt->camera.lookat);
 	cam[X] = unit_vec3(cross_product(rt->camera.vup, *cam_w));
 	cam[Y] = cross_product(*cam_w, cam[X]);
-	// /*debug*/debug_print_vec("vec_w", *cam_w);
-	// /*debug*/debug_print_vec("vec_u", cam[X]);
-	// /*debug*/debug_print_vec("vec_v", cam[Y]);
 	*viewport_u = mult_vec_scalar(cam[X], viewport[W]);
 	*viewport_v = mult_vec_scalar(cam[Y], viewport[H] * -1);
 	defoc_radius = rt->camera.focus_dist * tan(rt->camera.defoc_ang / 2);
@@ -91,16 +86,10 @@ t_vec3 *vp_top_left, t_vec3 vp_d[2])
 	vp_d[Y] = div_vec_scalar(vp[Y], WIN_HEIGHT);
 	*vp_top_left = subtract_vec(rt->camera.pos, \
 mult_vec_scalar(cam_w, rt->camera.focus_dist));
-// new_vec3(0,0,rt->camera.focus_dist));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[X], 2));
 	*vp_top_left = subtract_vec(*vp_top_left, div_vec_scalar(vp[Y], 2));
 	*vp_00_loc = add_vec(*vp_top_left, \
 div_vec_scalar(add_vec(vp_d[X], vp_d[Y]), 2));
-	// /*debug*/debug_print_vec("viewport_x:", vp[X]);
-	// /*debug*/debug_print_vec("viewport_y:", vp[Y]);
-	// /*debug*/debug_print_vec("viewport_dx:", vp_d[X]);
-	// /*debug*/debug_print_vec("viewport_dy:", vp_d[Y]);
-	// /*debug*/debug_print_vec("00_loc:", *vp_00_loc);
 }
 
 /* 
@@ -143,8 +132,6 @@ static void	ft_draw(t_rt rt, t_vec3 viewport_00, t_vec3 viewport_d[2])
 		x = 0;
 		while (++x < WIN_WIDTH)
 		{
-			// auto pixel_center = pixel00_loc + (x * pixel_delta_x)
-			//	+ (y * pixel_delta_y);
 			pixel_center = add_vec(viewport_00,
 					mult_vec_scalar(viewport_d[X], x));
 			pixel_center = add_vec(pixel_center,

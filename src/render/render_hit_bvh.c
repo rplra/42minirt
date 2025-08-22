@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:34:59 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 09:40:20 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:11:20 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ int	hit_aabb(t_ray r, t_interval ray_t, t_interval bbox[3])
 		t[1] = (bbox[axis].max - ray_orig[axis]) * axis_inv;
 		assign_ray_t(t[0], t[1], &ray_t);
 		if (ray_t.max < ray_t.min)
-		{
-			// /*debug*/printf("hit_aabb: %f %f\n", ray_t.max, ray_t.min);
 			return (0);
-		}
 	}
 	return (1);
 }
@@ -89,7 +86,7 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *rt)
 {
 	bool	t[2];
 
-	bool (*has_hit[3])(t_rt *rt, int i, t_interval rg, t_ray r);
+	bool (*has_hit[3])(t_rt * rt, int i, t_interval rg, t_ray r);
 	if (!hit_aabb(ray, ray_range, bvh->bbox))
 		return (0);
 	t[L] = 0;
@@ -110,45 +107,3 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *rt)
 		return (1);
 	return (0);
 }
-
-// bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *rt)
-// {
-// 	bool	t[2];
-
-// 	bool	(*has_hit[3])(t_rt *, int, t_interval, t_ray);
-// 	if (!hit_aabb(ray, ray_range, bvh->bbox))
-// 	{
-// 		// /*debug*/debug_print_bbox("hit_bvh", bvh->bbox);
-// 		// /*debug*/printf("\n\033[93mno aabb! %d~%d\033[0m\n\n", bvh->id[L], bvh->id[R]);
-// 		return (0);
-// 	}
-// 	t[L] = 0;
-// 	t[R] = 0;
-// 	if (bvh->type[L] != BVH || bvh->type[R] != BVH)
-// 		init_hit_func(has_hit);
-
-// 	/* ******************************************** */
-// 	if (bvh->type[L] != BVH)
-// 	{
-// 		// /*debug*/printf("bvh_id_L:%d  %d\n", bvh->id[L], bvh->type[L]);
-// 		t[L] = has_hit[bvh->type[L]](rt, bvh->id[L], ray_range, ray);
-// 	}
-// 	else
-// 		t[L] = hit_bvh(bvh->left, ray_range, ray, rt);
-
-// 	// shorten ray_range.max if hit found
-// 	if (t[L])
-// 		ray_range.max = rt->hit.t;
-// 	if (bvh->type[R] != BVH)
-// 	{
-// 		// /*debug*/printf("bvh_id_R:%d  %d, rec.t:%f\n", bvh->id[R], bvh->type[R], vars->hit.t);
-// 		t[R] = has_hit[bvh->type[R]](rt, bvh->id[R], ray_range, ray);
-// 	}
-// 	else
-// 		t[R] = hit_bvh(bvh->right, ray_range, ray, rt);
-// 	/* ******************************************** */
-// 	// /*debug*/printf("t[L] & t[R]: %d %d  %d~%d\n", t[L], t[R], bvh->id[L], bvh->id[R]);
-// 	if (t[L] || t[R])
-// 		return (1);
-// 	return (0);
-// }

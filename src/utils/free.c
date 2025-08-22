@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 11:50:40 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/22 16:09:41 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:24:40 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,18 @@ void	free_bvh(t_bvh_tree *bvh)
 }
 
 /* use this for mac */
-void	cleanup(t_rt *rt)
-{
-	if (!rt)
-		return ;
-	free_one(rt->obj);
-	free_bvh(rt->bvh);
-	if (rt->mlx)
-		free_one(rt->mlx);
-}
+// void	cleanup(t_rt *rt)
+// {
+// 	if (!rt)
+// 		return ;
+// 	free_one(rt->obj);
+// 	free_bvh(rt->bvh);
+// 	if (rt->mlx)
+// 		free_one(rt->mlx);
+// }
 
 /* use this for linux */
-/* void	cleanup(t_rt *rt)
+void	cleanup(t_rt *rt)
 {
 	if (!rt)
 	{
@@ -76,7 +76,7 @@ void	cleanup(t_rt *rt)
 		mlx_destroy_display(rt->mlx);
 		free(rt->mlx);
 	}
-}  */
+}
 
 void	cleanup_and_exit(t_rt *rt, int exit_code)
 {

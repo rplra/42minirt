@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 12:02:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/20 14:31:13 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 08:02:53 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,82 +112,3 @@ void	get_info(t_rt *rt, int x, int *y, int line_ht)
 	else if (rt->sel.type == SEL_OBJ)
 		display_obj_info(rt, x, y, line_ht);
 }
-
-/* static void	setup_info(t_rt *rt, int x, int *y, int line_ht)
-{
-	char	*pos_str;
-
-	if (rt->sel.type == SEL_CAMERA)
-	{
-		*y += line_ht;
-		mlx_string_put(rt->mlx, rt->mlx_win, x, *y, WHITE, "Pos:");
-		pos_str = get_info_str(rt->camera.pos);
-		mlx_string_put(rt->mlx, rt->mlx_win, x + 30, *y + 12, WHITE, pos_str);
-		free(pos_str);
-	}
-	else if (rt->sel.type == SEL_LIGHT)
-	{
-		*y += line_ht;
-		mlx_string_put(rt->mlx, rt->mlx_win, x, *y, WHITE, "Pos:");
-		pos_str = get_info_str(rt->light.pos);
-		mlx_string_put(rt->mlx, rt->mlx_win, x + 30, *y + 12, WHITE, pos_str);
-		free(pos_str);
-	}
-}
-
-static void	obj_info(t_rt *rt, int x, int *y, int line_ht)
-{
-	char	*pos_str;
-
-	if (rt->sel.type == SEL_OBJ && rt->sel.obj_index >= 0 &&
-		(size_t)rt->sel.obj_index < rt->obj_count)
-	{
-		*y += line_ht;
-		mlx_string_put(rt->mlx, rt->mlx_win, x, *y, WHITE, "Pos:");
-		if (rt->obj[rt->sel.obj_index].type == SPHERE)
-			pos_str = get_info_str(rt->obj[rt->sel.obj_index].sph.pos);
-		else if (rt->obj[rt->sel.obj_index].type == PLANE)
-			pos_str = get_info_str(rt->obj[rt->sel.obj_index].plane.pos);
-		else if (rt->obj[rt->sel.obj_index].type == CYLINDER)
-			pos_str = get_info_str(rt->obj[rt->sel.obj_index].cyl.pos);
-		else
-			return ;
-		mlx_string_put(rt->mlx, rt->mlx_win, x + 30, *y + 12, WHITE, pos_str);
-		free(pos_str);
-	}
-}
-
-void	get_info(t_rt *rt, int x, int *y, int line_ht)
-{
-	setup_info(rt, x, y, line_ht);
-	obj_info(rt, x, y, line_ht);
-}
- */
-
-/* static void	display_camera_info(t_rt *rt, int x, int *y, int line_ht)
-{
-	char	*pos_str;
-	char	*rot_str;
-	char	*pos_str;
-
-	*y += line_ht + 12;
-	mlx_string_put(rt->mlx, rt->mlx_win, x, *y, WHITE, "Pos:");
-	pos_str = get_info_str(rt->camera.pos);
-	mlx_string_put(rt->mlx, rt->mlx_win, x + 30, *y, WHITE, pos_str);
-	free(pos_str);
-	*y += line_ht + 12;
-	mlx_string_put(rt->mlx, rt->mlx_win, x, *y, WHITE, "Rot:");
-	rot_str = get_info_str(rt->camera.transform.rotate);
-	mlx_string_put(rt->mlx, rt->mlx_win, x + 30, *y, WHITE, rot_str);
-	free(rot_str);
-} */
-/*
-static void	display_light_info(t_rt *rt, int x, int *y, int line_ht)
-{
-	*y += line_ht + 12;
-	mlx_string_put(rt->mlx, rt->mlx_win, x, *y, WHITE, "Pos:");
-	pos_str = get_info_str(rt->light.pos);
-	mlx_string_put(rt->mlx, rt->mlx_win, x + 30, *y, WHITE, pos_str);
-	free(pos_str);
-}
-*/

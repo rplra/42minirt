@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:32:00 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/18 15:41:59 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 09:42:23 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_camera
 	t_vec3		vup;				//camera up vector
 	t_vec3		vup_ori;			//ori camera up vector
 	t_vec3		lookat;				//specific point that camera pointing to
-	t_vec3		lookat_ori;				//specific point that camera pointing to
+	t_vec3		lookat_ori;			//specific point that camera pointing to
 	// t_cam_config	ori;
 	// t_cam_config	dup;
 	float		hfov;				//horizontal fov
@@ -139,7 +139,7 @@ typedef struct s_obj
 	{
 		t_sphere	sph;
 		t_plane		plane;
-		t_cy	cyl;
+		t_cy		cyl;
 	};
 	t_uint		id;
 	t_mat		material;

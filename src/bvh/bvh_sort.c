@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 21:36:01 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/17 17:02:28 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 08:46:04 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	free_mergesort_ptr(t_obj *ptr[2], int n)
 		free(ptr[--n]);
 }
 
-/* 22 lines ok! */
 /*
  * Child function in merge_sort
  * *arr[2] = double pointer to left & right array
@@ -66,7 +65,6 @@ void	merge_final(t_obj *arr[2], t_obj *dest, int argc, bool (*func)(t_obj,
 		copy_obj(&dest[i++], arr[R][r++]);
 }
 
-/* 14 lines ok! */
 /*
  * argc indicates the length of array
  * argc has to be argc -1 in here

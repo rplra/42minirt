@@ -6,13 +6,13 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 10:32:07 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 16:56:14 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 08:14:23 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-char	*ft_ftoa(float f)
+static char	*ft_ftoa(float f)
 {
 	char	*int_part;
 	char	*frac_part;

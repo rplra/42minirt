@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/16 23:38:40 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 09:00:58 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ static void	ft_draw(t_rt rt, t_vec3 viewport_00, t_vec3 viewport_d[2])
 	int		x;
 	int		y;
 	int		color;
-	t_vec3	pixel_center;		
+	t_vec3	pixel_center;
 
 	x = -1;
 	y = -1;

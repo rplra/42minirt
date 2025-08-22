@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:52:37 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/17 17:02:28 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 09:16:27 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	debug_print_bvh(char *str, t_bvh_tree *bvh)
 		return ;
 	printf("%s: BVH_NODE %d~%d:\n", str, bvh->id[L], bvh->id[R]);
 	debug_print_bbox(" |bvh_bbox", bvh->bbox);
-
 	if (bvh->type[L] != BVH)
 	{
 		printf("%s: bvh_id: %d:\n", str, bvh->id[L]);

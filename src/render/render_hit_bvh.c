@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:34:59 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/19 04:30:00 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 09:40:20 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ bool	hit_bvh(t_bvh_tree *bvh, t_interval ray_range, t_ray ray, t_rt *rt)
 {
 	bool	t[2];
 
-	bool (*has_hit[3])(t_rt *, int, t_interval, t_ray);
+	bool (*has_hit[3])(t_rt *rt, int i, t_interval rg, t_ray r);
 	if (!hit_aabb(ray, ray_range, bvh->bbox))
 		return (0);
 	t[L] = 0;

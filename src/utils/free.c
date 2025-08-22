@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 11:50:40 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/20 08:24:27 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 10:01:32 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,32 +51,32 @@ void	free_bvh(t_bvh_tree *bvh)
 // {
 // 	if (!rt)
 // 		return ;
-// 	free_one(rt->mlx);
-// 	free_bvh(rt->bvh);
 // 	free_one(rt->obj);
+// 	free_bvh(rt->bvh);
+// 	if (rt->mlx)
+// 		free_one(rt->mlx);
 // }
 
 /* use this for linux */
-void cleanup(t_rt *rt)
+void	cleanup(t_rt *rt)
 {
-    if (!rt)
+	if (!rt)
 	{
-        return;
+		return ;
 	}
 	free_main_img(rt);
 	free_label_img(rt);
 	free_info_img(rt);
-    if (rt->mlx_win)
-        mlx_destroy_window(rt->mlx, rt->mlx_win);
-    free_bvh(rt->bvh);
-    free_one(rt->obj);
+	if (rt->mlx_win)
+		mlx_destroy_window(rt->mlx, rt->mlx_win);
+	free_bvh(rt->bvh);
+	free_one(rt->obj);
 	if (rt->mlx)
 	{
-		mlx_destroy_display(rt->mlx); // LINUX ONLY
+		mlx_destroy_display(rt->mlx);
 		free(rt->mlx);
 	}
 }
-
 
 void	cleanup_and_exit(t_rt *rt, int exit_code)
 {
@@ -84,37 +84,3 @@ void	cleanup_and_exit(t_rt *rt, int exit_code)
 		cleanup(rt);
 	exit(exit_code);
 }
-
-// /* 
-//  * consolidate all mallocs and free when exit program
-//  * indicator controls what to free
-//  * brief: free all resources used by renderer
-//  */
-// void	free_render(t_rt *rt, int indicator)
-// {
-// 	if (!rt)
-// 		return ;
-// 	free_one(rt->mlx);
-// 	free_bvh(rt->bvh);
-// 	free_one(rt->obj);
-
-// 	if (indicator > 0)
-// 	{
-// 		//add custom controls here
-// 	}
-// }
-
-/* void	cleanup(t_rt *rt)
-{
-	if (rt->obj)
-	{
-		free(rt->obj);
-		rt->obj = NULL;
-		rt->obj_count = 0;
-	}
-	if (rt->bvh)
-	{
-		free_bvh(rt->bvh);
-		rt->bvh = NULL;
-	} 
-} */

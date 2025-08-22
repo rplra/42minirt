@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:45:13 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/17 17:30:23 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 10:12:06 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
 /* child function in has_hit_sphere, records details of the hitted obj */
 int	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
 {
-	t_vec3 (*get_surf_norm[3])(t_ray, t_obj, float, t_uchar);
+	t_vec3 (*get_surf_norm[3])(t_ray r, t_obj o, float t , t_uchar s);
 	init_surf_norm(get_surf_norm);
 	rt->hit.surf_norm = get_surf_norm[rt->obj[index].type](ray, rt->obj[index],
 			t, rt->hit.setting);
@@ -99,9 +99,9 @@ int	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
  * returns the closest point ray hits
  * at = origin + (t * direction)
  */
-// t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray, t_vec3 *at)
+// t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray, t_vec3 *at)
 // using linked list
-// t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
+// t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
 // {
 // 	float		t;
 // 	t_obj		*tmp;
@@ -136,7 +136,7 @@ int	update_hit_rec(t_rt *rt, int index, t_ray ray, float t)
 // 	return (res);
 // }
 
-// t_obj	*hit(t_rt *vars, t_interval ray_range, t_ray ray)
+// t_obj	*hit(t_rt *rt, t_interval ray_range, t_ray ray)
 // {
 // 	float		t;
 // 	t_obj		*res;

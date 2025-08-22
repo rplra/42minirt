@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:47:24 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/19 02:13:01 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 09:44:00 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,11 @@
 #  define KEY_2			19
 #  define KEY_3 		20
 #  define KEY_4 		21
-
 #  define KEY_PLUS 		24
 #  define KEY_MINUS 	27
 #  define MOUSE_LEFT 	1
 #  define MOUSE_RIGHT 	2
-#  define KEY_ARROW_L 	43 // comma key
-#  define KEY_ARROW_R 	47 // period key
-// #  define MOUSE_SCROLL_UP 4
-// #  define MOUSE_SCROLL_DOWN 5
+
 # elif defined(LINUX)
 #  define KEY_ESC 		65307
 #  define KEY_UP 		65362
@@ -88,15 +84,10 @@
 #  define KEY_2 		50
 #  define KEY_3 		51
 #  define KEY_4 		52
-
 #  define KEY_PLUS 		61
 #  define KEY_MINUS 	45
 #  define MOUSE_LEFT 	1
 #  define MOUSE_RIGHT 	2
-#  define KEY_ARROW_L 	44
-#  define KEY_ARROW_R 	46
-// #  define MOUSE_SCROLL_UP 4
-// #  define MOUSE_SCROLL_DOWN 5
 # endif
 
 /* ------------------------------- clicks -------------------------------- */
@@ -134,7 +125,7 @@ typedef struct s_sel
 {
 	t_sel_type		type;
 	int				obj_index;
-	t_obj			*obj_ptr;
+	// t_obj			*obj_ptr;
 }					t_sel;
 
 typedef struct s_label
@@ -176,21 +167,17 @@ void				handle_show_light(t_rt *rt, int keycode);
 void				handle_focus_dist(t_rt *rt, int keycode);
 void				handle_render_style(t_rt *rt, int keycode);
 void				handle_animate(t_rt *rt, int keycode);
-
-t_vec3				translation_delta(int keycode);
-float				scale_factor(int keycode);
 int					animate_light(t_rt *rt);
 
 /* __________________ keybind __________________ */
-bool				translation_key(int keycode);
 bool				scale_key(int keycode);
-bool				focus_dist_key(int keycode);
+bool				translation_key(int keycode);
 bool				rotation_key(int keycode);
+bool				focus_dist_key(int keycode);
 bool				control_key(int keycode);
 bool				style_key(int keycode);
 
 /* __________________ utils __________________ */
-char				*ft_ftoa(float f);
 char				*get_info_str(t_vec3 pos);
 t_uint				get_obj_index(t_obj *obj, int obj_count, t_uint id);
 t_uint				get_light_index(t_obj *obj, int obj_count);

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:33:48 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/18 16:33:52 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 08:09:36 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	scale_key(int keycode)
 	return (keycode == KEY_PLUS || keycode == KEY_MINUS);
 }
 
-float	scale_factor(int keycode)
+static float	scale_factor(int keycode)
 {
 	if (keycode == KEY_PLUS)
 		return (SCALE_UP);

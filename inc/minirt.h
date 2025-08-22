@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/20 14:52:04 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 09:44:58 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,32 +95,5 @@ typedef struct s_rt
 	// transform
 	t_transform				transform;
 }							t_rt;
-
-// typedef struct s_vars
-// {
-// 	void		*mlxconnect;
-// 	void		*mlxwindow;
-// 	t_img		img;
-
-// 	//camera setup
-// 	t_vec3			cam_orig;
-// 	t_vec3			cam_lookat;
-// 	t_vec3			vup; //camera orientation
-// 	float			vfov; //vertical fov
-// 	float			focus_dist;
-// 	float			defoc_ang; //blur angle
-// 	t_vec3			defoc_disk[2];
-// 	int				sample_per_pixel;
-// 	t_uchar			ray_bounce; //how many times a ray should bounce
-
-// 	//scene
-// 	t_vec3			color_bg[2];
-// 	//obj
-// 	int				count_sph;
-// 	t_sph			*sph;
-
-// 	//general
-// 	t_ray			ray; //helper pointer
-// }	t_vars;
 
 #endif

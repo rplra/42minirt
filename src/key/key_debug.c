@@ -6,13 +6,13 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 10:41:42 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 16:51:02 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 08:01:46 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	print_selected_setup(t_rt *rt)
+static void	print_selected_setup(t_rt *rt)
 {
 	t_obj	*obj;
 	int		id;
@@ -33,7 +33,7 @@ void	print_selected_setup(t_rt *rt)
 	}
 }
 
-void	print_obj_details(t_obj *obj)
+static void	print_obj_details(t_obj *obj)
 {
 	if (obj->type == SPHERE)
 	{
@@ -54,7 +54,7 @@ void	print_obj_details(t_obj *obj)
 		printf(">> Selected: UNKNOWN obj\n");
 }
 
-void	print_selected_obj(t_rt *rt)
+static void	print_selected_obj(t_rt *rt)
 {
 	t_obj	*obj;
 	int		id;

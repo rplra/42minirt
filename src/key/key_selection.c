@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 20:23:59 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/18 14:39:46 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 08:12:35 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ static void	obj_selection(t_rt *rt, int x, int *y)
 		+ LD, *y - LY + DY);
 }
 
-// main key_selection
 void	selection_guide(t_rt *rt)
 {
 	int	x;
@@ -109,71 +108,3 @@ void	selection_guide(t_rt *rt)
 	obj_selection(rt, x, &y);
 	get_info(rt, WIN_WIDTH * IX, &y, line_ht);
 }
-
-// helper function for label generation
-/* static void get_label(char *label, t_obj_type type, size_t index)
-{
-	const char *names[] = {"Sphere", "Plane", "Cylinder"};
-	int			len;
-
-	if (type >= SPHERE && type <= CYLINDER)
-	{
-		len = ft_strlcpy(label, names[type - SPHERE], 20);
-		label[len] = ' ';
-		label[len + 1] = '0' + (index % 10);
-		label[len + 2] = '\0';
-	}
-	else
-		label[0] = '\0';
-} */
-
-/* static void	setup_selection(t_rt *rt, int x, int *y, int line_ht)
-{
-	char	*names[] = {"Camera", "Light"};
-	t_sel_type	types[2];
-	int			i;
-
-	types[0] = SEL_CAMERA;
-	types[1] = SEL_LIGHT;
-	i = -1;
-	while (++i < 2)
-	{
-		if (rt->sel.type == types[i])
-		{
-			*y += line_ht;
-			mlx_string_put(rt->mlx, rt->mlx_win, x, *y, CYAN, names[i]);
-		}
-	}
-} */
-
-// uses put string but size doesnt scale nicely
-/* static void obj_selection(t_rt *rt, int x, int *y, int line_ht)
-{
-	char	label[32];
-
-	if (rt->sel.type == SEL_OBJ && rt->sel.obj_index >= 0 &&
-		(size_t)rt->sel.obj_index < rt->obj_count)
-	{
-		get_label(label, rt->obj[rt->sel.obj_index].type, rt->sel.obj_index);
-		if (label[0])
-		{
-			*y += line_ht;
-			mlx_string_put(rt->mlx, rt->mlx_win, x, *y, CYAN, label);
-		}
-	}
-} */
-
-/* original selection guide */
-// void	selection_guide(t_rt *rt)
-// {
-// 	int	x;
-// 	int	y;
-// 	int	line_ht;
-
-// 	x = WIN_WIDTH + 20;
-// 	y = 290;
-// 	line_ht = 12;
-// 	mlx_string_put(rt->mlx, rt->mlx_win, x, y, WHITE, "SELECTION");
-// 	setup_selection(rt, x, &y, line_ht);
-// 	obj_selection(rt, x, &y, line_ht);
-// }

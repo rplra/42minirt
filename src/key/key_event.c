@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:25:47 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/20 14:52:17 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 08:02:04 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ static void	handle_event(t_rt *rt, int keycode)
 	handle_animate(rt, keycode);
 }
 
-/* prints out current keycode number */
 int	key_press(int keycode, t_rt *rt)
 {
 	printf("🟡 keycode is %i\n", keycode);
-	// close_window(keycode, rt);
 	handle_event(rt, keycode);
 	if (valid_keypress(keycode))
 	{

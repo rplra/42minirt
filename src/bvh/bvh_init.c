@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 22:27:52 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/17 17:02:28 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 10:08:17 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ t_bvh_tree	*build_bvh_tree(t_obj *obj, int id[2], bool (*func[3])(t_obj,
 }
 
 /* build a bvh tree with objects list */
-void	init_bvh_node(t_rt *vars)
+void	init_bvh_node(t_rt *rt)
 {
 	int		id[2];
 

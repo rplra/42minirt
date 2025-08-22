@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:56:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/17 17:02:28 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 08:44:52 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,6 @@ void	get_bbox_val(t_obj *obj, int argc, t_interval res[3])
 		// /*debug*/debug_print_bbox(NULL, obj[x].bbox);
 		update_aabb_box(res, obj[x].bbox, res);
 	}
-	//5/2 =2 (mid)
+	// 5/2 =2 (mid)
 	// ac-mid = 5-2=3
 }

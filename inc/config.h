@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/20 14:46:41 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 09:13:33 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 # include "scene.h"
 
-/*	window	*/
+// /*	window	*/
 // # define WIN_WIDTH		600
 // # define WIN_HEIGHT		400
 
-# define WIN_WIDTH		800
-# define WIN_HEIGHT		600
+// # define WIN_WIDTH		800
+// # define WIN_HEIGHT		600
 
-// # define WIN_WIDTH		1000
-// # define WIN_HEIGHT		800
+# define WIN_WIDTH		600
+# define WIN_HEIGHT		400
 
 // # define WIN_WIDTH		2880
 // # define WIN_HEIGHT		2160
@@ -42,7 +42,6 @@
 #  define MENU			"asset/menu/menu-2160.xpm"
 #  define PANEL_WIDTH	720
 # endif
-
 
 /*	img-assets	*/
 # define LOADBAR		"asset/load-600.xpm"
@@ -204,8 +203,8 @@
 #  define LY				25		// label height; > == higher
 #  define IX				1.035	// info alignment
 #  define IY				10		// rot height from pos	
-#  define IY_OFFSET			0
-#  define IDX				1.072
+#  define IY_OFFSET			0		// info offset from label
+#  define IDX				1.072	// info digit
 #  define POSX				26		// pos xpm alignment
 #  define ROTX				30		// rot xpm alignment
 #  define OFFSET			8		// digit offset
@@ -219,8 +218,8 @@
 #  define LY				68		
 #  define IX				1.035	
 #  define IY				37		
-#  define IY_OFFSET			0		// info offset from label (gap btw label and info)
-#  define IDX				1.066	// info digit
+#  define IY_OFFSET			0		
+#  define IDX				1.066
 #  define POSX				69		
 #  define ROTX				80		
 #  define OFFSET			20		
@@ -238,15 +237,6 @@
 /*	colour	*/
 # define COL_MIN	0
 # define COL_MAX	255
-
-# define BLACK		0x000000  // (0, 0, 0)
-# define GREEN		0x00FF00  // (0, 255, 0)
-# define YELLOW		0xFFFF00  // (255, 255, 0)
-# define BLUE		0x0000FF  // (0, 0, 255)
-# define MAGENTA	0xFF00FF  // (255, 0, 255)
-# define CYAN		0x00FFFF  // (0, 255, 255)
-# define WHITE		0xFFFFFF  // (255, 255, 255)
-# define GREY		0x808080  // (128, 128, 128)
 
 /*	vector	*/
 # define VEC_MIN	-1
@@ -280,7 +270,6 @@
 # define MAT_FUZZ				0.2
 
 /*	sample	*/
-# define SAMPLE_SOFT_SHADOW		15  // > == softer shadow
 # define SAMPLE_RAY_BOUNCE		5	// > == more realistic lighting
 # define SAMPLE_PER_PIXEL		100	// > == smoother img
 # define SAMPLE_PREVIEW			2

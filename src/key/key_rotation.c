@@ -6,13 +6,13 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 22:47:23 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/18 15:56:16 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 08:17:02 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	apply_rotation_obj(t_vec3 delta, t_rt *rt)
+static void	apply_rotation_obj(t_vec3 delta, t_rt *rt)
 {
 	t_uint	id;
 	t_obj	*obj;
@@ -30,27 +30,7 @@ void	apply_rotation_obj(t_vec3 delta, t_rt *rt)
 	transform_bbox(rt, id);
 }
 
-// void	apply_rotation_cam(int keycode, t_rt *rt)
-// {
-// 	float	deg;
-
-// 	deg = 1;
-// 	if (keycode == KEY_I)
-// 		rt->camera.transform.rotate.x -= deg;
-// 	else if (keycode == KEY_K)
-// 		rt->camera.transform.rotate.x += deg;
-// 	else if (keycode == KEY_J)
-// 		rt->camera.transform.rotate.y -= deg;
-// 	else if (keycode == KEY_L)
-// 		rt->camera.transform.rotate.y += deg;
-// 	else if (keycode == KEY_U)
-// 		rt->camera.transform.rotate.z -= (deg + 20);
-// 	else if (keycode == KEY_O)
-// 		rt->camera.transform.rotate.z += (deg + 20);
-// 	// /*debug*/debug_print_vec("cam_rot", rt->camera.transform.rotate);
-// }
-
-t_vec3	rotation_delta(int keycode)
+static t_vec3	rotation_delta(int keycode)
 {
 	if (keycode == KEY_I)
 		return (new_vec3(-ROTATE, 0, 0));
@@ -62,10 +42,8 @@ t_vec3	rotation_delta(int keycode)
 		return (new_vec3(0, ROTATE, 0));
 	else if (keycode == KEY_O)
 		return (new_vec3(0, 0, -ROTATE));
-		// return (new_vec3(0, 0, -ROTATE - 20));
 	else if (keycode == KEY_U)
 		return (new_vec3(0, 0, ROTATE));
-		// return (new_vec3(0, 0, ROTATE + 20));
 	return (new_vec3(0, 0, 0));
 }
 

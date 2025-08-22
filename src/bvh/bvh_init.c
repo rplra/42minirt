@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 22:27:52 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 10:08:17 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 10:37:23 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,6 @@ void	init_bvh_node(t_rt *rt)
 	bool (*box_compare[3])(t_obj, t_obj);
 	init_box_compare(box_compare);
 	id[0] = 0;
-	id[1] = vars->obj_count;
-	vars->bvh = build_bvh_tree(vars->obj, id, box_compare);
+	id[1] = rt->obj_count;
+	rt->bvh = build_bvh_tree(rt->obj, id, box_compare);
 }

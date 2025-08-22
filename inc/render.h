@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:05:46 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 13:34:08 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:15:36 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ typedef struct s_hit
 	t_obj		*obj;		// the object hit
 	float		t;			// distance, (formula: pt_at = a + t*d)
 	int			index;		// object index of the hitted obj
-	int			body;		// helper variable for rendering cyl
-	int			cap;		// helper variable for rendering cyl
+	float		body;		// helper variable for rendering cyl
+	float		cap;		// helper variable for rendering cyl
 	t_uchar		setting;	// helper variable for rendering cyl
 }	t_hit;
 

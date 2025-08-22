@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:47:34 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 13:00:13 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:22:12 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ static int	handle_cylinder_hits(t_rt *rt, int index, t_ray ray)
 			rt->hit.setting = 0;
 			return (1);
 		}
-		update_hit_rec(rt, index, ray, rt->hit.cap);
-		rt->hit.setting = 1;
-		return (1);
+		return (0);
 	}
 	if (rt->hit.cap != -1)
 	{
@@ -44,15 +42,19 @@ static int	handle_cylinder_hits(t_rt *rt, int index, t_ray ray)
 		rt->hit.setting = 0;
 		return (1);
 	}
-	update_hit_rec(rt, index, ray, rt->hit.body);
-	rt->hit.setting = 1;
-	return (1);
+	if (rt->hit.body != -1)
+	{
+		update_hit_rec(rt, index, ray, rt->hit.body);
+		rt->hit.setting = 1;
+		return (1);
+	}
+	return (0);
 }
 
 bool	has_hit_cy(t_rt *rt, int index, t_interval ray_range, t_ray ray)
 {
 	float	t[2];
-
+	
 	if (rt->obj[index].b_rotate == 1)
 		ray = transform_ray(rt->obj[index], ray);
 	rt->hit.body = has_hit_body(rt->obj[index].cyl, ray_range, ray, t);

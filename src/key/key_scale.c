@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:33:48 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/22 11:35:31 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:22:36 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ static void	scale_obj(t_rt *rt, float scale)
 		obj->cyl.coord[X] = mult_vec_scalar(obj->cyl.coord[X], scale);
 		obj->cyl.coord[Y] = mult_vec_scalar(obj->cyl.coord[Y], scale);
 		obj->cyl.axis_height = mult_vec_scalar(obj->cyl.axis_height, scale);
-		obj->cyl.d[0] = scalar_product(obj->cyl.axis, subtract_vec(obj->cyl.pos,
-					obj->cyl.axis_height));
-		obj->cyl.d[1] = scalar_product(obj->cyl.axis, add_vec(obj->cyl.pos,
-					obj->cyl.axis_height));
+		obj->cyl.d[0] = scalar_product(obj->cyl.axis, subtract_vec(obj->cyl.pos, \
+mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2)));
+		obj->cyl.d[1] = scalar_product(obj->cyl.axis, add_vec(obj->cyl.pos, \
+mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2)));
 		n = cross_product(obj->cyl.coord[X], obj->cyl.coord[Y]);
 		obj->cyl.w = div_vec_scalar(n, scalar_product(n, n));
 	}

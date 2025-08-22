@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:47:34 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/18 16:22:25 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/22 11:33:22 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ static int	handle_cylinder_hits(t_rt *rt, int index, t_ray ray)
 			rt->hit.setting = 0;
 			return (1);
 		}
-		return (0);
+		// return (0);
+		// BUG FIX for shadow
+		update_hit_rec(rt, index, ray, rt->hit.cap);
+		rt->hit.setting = 1;
+		return (1);
 	}
 	if (rt->hit.cap != -1)
 	{

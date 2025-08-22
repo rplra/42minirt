@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:25:47 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/07 21:47:35 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/22 16:05:46 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,8 @@ void	handle_scale(t_rt *rt, int keycode)
 
 			obj->cyl.coord[X] = mult_vec_scalar(obj->cyl.coord[X], scale);
 			obj->cyl.coord[Y] = mult_vec_scalar(obj->cyl.coord[Y], scale);
+
+			obj->cyl.axis_height = mult_vec_scalar(obj->cyl.axis_height, scale);
 			obj->cyl.d[0] = scalar_product(obj->cyl.axis, subtract_vec(obj->cyl.pos, \
 mult_vec_scalar(obj->cyl.axis, obj->cyl.height / 2)));
 			obj->cyl.d[1] = scalar_product(obj->cyl.axis, add_vec(obj->cyl.pos, \

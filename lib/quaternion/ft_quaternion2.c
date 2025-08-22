@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:55:02 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/13 14:17:21 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/22 15:48:58 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ t_vec3	quaternion_rotate_adv(t_vec3 initpoint, t_vec3 rotation, int flag)
  * left (q2 . q1) = rotation on global axis,
  * right (q1 . q2) = rotation on local axis 
  */
-// t_vec3	quaternion_rotate_adv(t_quat x, t_quat y, t_quat z, \
+// t_vec3	quaternion_rotate_adv(t_quat x, t_quat y, t_quat z,
 // t_vec3 initpoint)
 // {
 // 	t_quat	qpoint;

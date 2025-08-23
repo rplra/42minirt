@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_hit_cy.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:47:34 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 17:28:25 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/23 16:29:35 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,22 @@ static int	handle_cylinder_hits(t_rt *rt, int index, t_ray ray)
 	{
 		if (rt->hit.cap < rt->hit.body)
 		{
-			update_hit_rec(rt, index, ray, rt->hit.cap);
 			rt->hit.setting = 0;
+			update_hit_rec(rt, index, ray, rt->hit.cap);
 			return (1);
 		}
 		return (0);
 	}
 	if (rt->hit.cap != -1)
 	{
-		update_hit_rec(rt, index, ray, rt->hit.cap);
 		rt->hit.setting = 0;
+		update_hit_rec(rt, index, ray, rt->hit.cap);
 		return (1);
 	}
 	if (rt->hit.body != -1)
 	{
-		update_hit_rec(rt, index, ray, rt->hit.body);
 		rt->hit.setting = 1;
+		update_hit_rec(rt, index, ray, rt->hit.body);
 		return (1);
 	}
 	return (0);

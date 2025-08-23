@@ -25,7 +25,6 @@ ifeq ($(OS),Darwin)
 		MLX_DIR = 	mlx/macos2
 		MLX 	= 	$(MLX_DIR)/libmlx_intel-mac.a
 		LINKS 	= 	$(MLX) -L/usr/X11/lib -lX11 -lXext -framework OpenGL -framework AppKit
-#		LINKS 	= 	-L/usr/X11/lib -lX11 -lXext -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 	else
 		MLX_DIR = 	mlx/macos
 		MLX 	= 	$(MLX_DIR)libmlx.a

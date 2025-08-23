@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/23 17:26:05 by hsim             ###   ########.fr       */
+/*   Updated: 2025/08/23 17:29:04 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 #  define WIN_WIDTH		800
 #  define WIN_HEIGHT	600
 # elif WIN_SIZE == 2
-# define WIN_WIDTH		1000
-# define WIN_HEIGHT		800
+#  define WIN_WIDTH		1000
+#  define WIN_HEIGHT		800
 # elif WIN_SIZE == 3
-# define WIN_WIDTH		2880
-# define WIN_HEIGHT		2160
+#  define WIN_WIDTH		2880
+#  define WIN_HEIGHT		2160
 # endif
 
 /*	menu	*/

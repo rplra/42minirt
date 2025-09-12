@@ -27,13 +27,13 @@ ifeq ($(OS),Darwin)
 		LINKS 	= 	$(MLX) -L/usr/X11/lib -lX11 -lXext -framework OpenGL -framework AppKit
 	else
 		MLX_DIR = 	mlx/macos
-		MLX 	= 	$(MLX_DIR)libmlx.a
+		MLX 	= 	$(MLX_DIR)/libmlx.a
 		LINKS 	= 	-L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -lm
 	endif
 else ifeq ($(OS),Linux)
 	CFLAGS += 	-DLINUX
 	MLX_DIR = 	mlx/linux
-	MLX 	= 	$(MLX_DIR)libmlx.a
+	MLX 	= 	$(MLX_DIR)/libmlx.a
 	LINKS 	= 	-L$(MLX_DIR) -lmlx -lGL -lX11 -lXext -lm
 else
 	$(error Unsupported OS: $(OS))

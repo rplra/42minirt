@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/23 17:29:04 by hsim             ###   ########.fr       */
+/*   Updated: 2025/09/12 16:10:07 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 #  define WIN_HEIGHT	600
 # elif WIN_SIZE == 2
 #  define WIN_WIDTH		1000
-#  define WIN_HEIGHT		800
+#  define WIN_HEIGHT	800
 # elif WIN_SIZE == 3
 #  define WIN_WIDTH		2880
-#  define WIN_HEIGHT		2160
+#  define WIN_HEIGHT	2160
 # endif
 
 /*	menu	*/
@@ -47,11 +47,32 @@
 #  define PANEL_WIDTH	720
 # endif
 
-/*	img-assets	*/
-# define LOADBAR		"asset/load-600.xpm"
-# define INTRO			"asset/intro.xpm"
-# define LOADBAR_W		135
-# define INTRO_W		400
+/*	loadbar	*/
+# if WIN_HEIGHT <=		600
+#  define LOADBAR_W		135
+#  define LOADBAR		"asset/load/load-600.xpm"
+# elif WIN_HEIGHT <=	1080
+#  define LOADBAR_W		202
+#  define LOADBAR		"asset/load/load-1080.xpm"
+# elif WIN_HEIGHT <=	2160
+#  define LOADBAR_W		440
+#  define LOADBAR		"asset/load/load-2160.xpm"
+# endif
+
+/*	intro	*/
+# if WIN_HEIGHT <=		600
+#  define INTRO_W		400
+#  define INTRO			"asset/intro/intro-600.xpm"
+# elif WIN_HEIGHT <=	800
+#  define INTRO_W		600
+#  define INTRO			"asset/intro/intro-800.xpm"
+# elif WIN_HEIGHT <=	1080
+#  define INTRO_W		800
+#  define INTRO			"asset/intro/intro-1080.xpm"
+# elif WIN_HEIGHT <=	2160
+#  define INTRO_W		1800
+#  define INTRO			"asset/intro/intro-2160.xpm"
+# endif
 
 /*	label-assets	*/
 # define LABEL_W		200

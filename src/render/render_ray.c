@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ray.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/17 14:49:38 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/24 16:56:30 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ bool	scatter(t_rt *rt, t_ray ray, t_ray *bounce, t_uint *seed)
 	else if (obj_hit->material.type == DIFFUSE)
 		bounce->vector = mat_lambertian(rt->hit.surf_norm, seed);
 	return (1);
+}
+
+/* for debug purposes, returns surf_norm as color */
+t_vec3	surf_norm_color(t_vec3 surf_norm)
+{
+	return (mult_vec_scalar(add_vec(surf_norm, new_vec3(1, 1, 1)), 0.5 * 255));
 }
 
 /* ray_color v3, objs as light */

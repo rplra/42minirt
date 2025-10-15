@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 20:23:59 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/22 08:12:35 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:40:06 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	obj_selection(t_rt *rt, int x, int *y)
 {
 	t_obj	*obj;
 	int		id;
-	int		digit;
+	int		digit[2];
 
 	(void)x;
 	if (rt->sel.type != SEL_OBJ || rt->sel.obj_index < 0
@@ -90,9 +90,18 @@ static void	obj_selection(t_rt *rt, int x, int *y)
 	id = get_obj_index(rt->obj, rt->obj_count, rt->sel.obj_index);
 	obj = &rt->obj[id];
 	display_obj_label(rt, obj, *y);
-	digit = rt->sel.obj_index % 10;
-	mlx_put_image_to_window(rt->mlx, rt->mlx_win, rt->label.digits[digit].img, x
-		+ LD, *y - LY + DY);
+	digit[0] = (rt->sel.obj_index / 10) % 10;
+	digit[1] = rt->sel.obj_index % 10;
+	if (digit[0] > 0)
+	{
+		mlx_put_image_to_window(rt->mlx, rt->mlx_win,
+			rt->label.digits[digit[0]].img, x + LD, *y - LY + DY);
+		mlx_put_image_to_window(rt->mlx, rt->mlx_win,
+			rt->label.digits[digit[1]].img, x + LD + LD_OFFSET, *y - LY + DY);
+	}
+	else
+		mlx_put_image_to_window(rt->mlx, rt->mlx_win,
+			rt->label.digits[digit[1]].img, x + LD, *y - LY + DY);
 }
 
 void	selection_guide(t_rt *rt)

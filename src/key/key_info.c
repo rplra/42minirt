@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 12:02:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/22 08:02:53 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/31 12:13:51 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,15 @@ static void	display_camera_info(t_rt *rt, int x, int *y, int line_ht)
 static void	display_light_info(t_rt *rt, int x, int *y, int line_ht)
 {
 	char	*pos_str;
-	t_vec3	transformed_light_pos;
+	t_vec3	light_pos;
 	int		light_index;
 
 	light_index = get_light_index(rt->obj, rt->obj_count);
-	if (light_index >= 0)
-		transformed_light_pos = rt->obj[light_index].sph.pos;
-	else
-		transformed_light_pos = rt->light.pos;
+	light_pos = rt->obj[light_index].sph.pos;
 	*y += line_ht + IY_OFFSET;
 	mlx_put_image_to_window(rt->mlx, rt->mlx_win, rt->info.pos.img,
 		x + POSX, *y);
-	pos_str = get_info_str(transformed_light_pos);
+	pos_str = get_info_str(light_pos);
 	display_digit_xpm(rt, pos_str, x * IDX, *y);
 	free(pos_str);
 }

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 09:27:03 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/22 08:08:01 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:41:39 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ static void	translate_setup(t_rt *rt, t_vec3 delta)
 	}
 }
 
+// d is the distance from origin in the direction of the normal vec
+// moves cyl's center position, top and bottom cap
+// gets the new bottom and top cap position
 static void	translate_obj(t_rt *rt, t_vec3 delta)
 {
 	t_obj	*obj;

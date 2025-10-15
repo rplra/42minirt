@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:33:48 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/22 17:22:36 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:40:55 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ static float	scale_factor(int keycode)
 	return (1.0f);
 }
 
+// scales cyl's radius and ht
+// scale's cyl's local coords and axis ht (orientation)
+// calculates the distance of bottom and top cap
+// gets the length vector (cyl body for light / shadow) and normalize it
+// surface orientation
 static void	scale_obj(t_rt *rt, float scale)
 {
 	t_obj	*obj;

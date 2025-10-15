@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:46:09 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 13:09:21 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/29 13:54:14 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,8 @@ t_vec3	sample_defoc_disk(t_rt rt, unsigned int *seed)
  * generate random sampling point on pixels
  * and return the color sampled
  *
-
-	* combines sample from both square and lens to sample each pixes
-	multiple times, trace rays, and compute final colour
+ * combines sample from both square and lens to sample each pixes
+ * multiple times, trace rays, and compute final colour
  * target : 3d position on the image plane (the pixel i want to sample)
  * viewport : vecs that defines the pixel's width and height in 3d space
  * x : pixel's coordinate's (used for seeding ramdomness)

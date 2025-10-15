@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   render_ray.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:18:16 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/24 16:56:30 by hsim             ###   ########.fr       */
+/*   Updated: 2025/10/14 11:58:45 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+/* 
+ * brief: checks light col that's emitted from a light object
+ *
+ * 1. check if obj is light
+ * 2. if light is off and its the first camera ray bounce
+ * 		> return the background col
+ * 3. else return the light's col
+ * 4. if obj is not light > just emit tiny light (almost black)
+*/
 t_col	emitted(t_rt *rt, t_uchar ray_bounce, t_ray ray, t_obj *obj)
 {
 	if (obj->material.type == LIGHT)
@@ -23,6 +32,15 @@ t_col	emitted(t_rt *rt, t_uchar ray_bounce, t_ray ray, t_obj *obj)
 	return (new_vec3(0.01, 0.01, 0.01));
 }
 
+/*  
+ * brief: get the next bounced ray(metal / diffuse) based on given hit
+ *
+ * 1. get the obj being hit
+ * 2. if light > dont scatter
+ * 3. if metal (reflect) > reflects ray on surf norm
+ * 4. if reflected ray is inwards > discard == absorb
+ * 5. if diffuse > rand ray ard normal (simulate rough matte scattering)
+ */
 bool	scatter(t_rt *rt, t_ray ray, t_ray *bounce, t_uint *seed)
 {
 	t_obj	*obj_hit;
@@ -48,7 +66,18 @@ t_vec3	surf_norm_color(t_vec3 surf_norm)
 	return (mult_vec_scalar(add_vec(surf_norm, new_vec3(1, 1, 1)), 0.5 * 255));
 }
 
-/* ray_color v3, objs as light */
+/* 
+ * brief: recursively bounce rays to get global illumantion 
+ *
+ * 1. if no bounce left > return black col
+ * 2. get the first obj being hit > if non > return background col
+ * 3. set bounce pt at hit pt
+ * 4. get emitted col (if there's light obj) 
+ * 		> scatter > if not > return light col only
+ * 5. recursively call ray_color with new bounce ray 
+ * 		> decrement bounce count > multiple res with mat's albedo
+ * 6. return light emitted + light gathered from other bounces
+ */
 t_vec3	ray_color(t_rt *rt, t_ray ray, t_uchar ray_bounce, t_uint *seed)
 {
 	t_obj	*obj_hit;

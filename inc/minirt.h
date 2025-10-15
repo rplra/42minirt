@@ -3,25 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:49:25 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/10/07 21:00:38 by hsim             ###   ########.fr       */
+/*   Updated: 2025/10/15 19:17:34 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# include "../lib/gnl/get_next_line.h"
-# include "../lib/inc/libft.h"
-# include "../lib/quaternion/ft_enum.h"
-# include "../lib/quaternion/ft_vector.h"
-# include "config.h"
-# include "keybind.h"
-# include "parse.h"
-# include "scene.h"
-# include "utils.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <float.h>
@@ -33,8 +24,17 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "config.h"
+# include "keybind.h"
+# include "parse.h"
+# include "scene.h"
+# include "utils.h"
 # include "render.h"
 # include "transform.h"
+# include "../lib/gnl/get_next_line.h"
+# include "../lib/inc/libft.h"
+# include "../lib/quaternion/ft_enum.h"
+# include "../lib/quaternion/ft_vector.h"
 
 # define RED				"\033[31m"
 # define TURQ				"\033[38;2;29;253;227m"

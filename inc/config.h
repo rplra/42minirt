@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:01:32 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/09/12 16:10:07 by hsim             ###   ########.fr       */
+/*   Updated: 2025/10/14 11:57:39 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "scene.h"
 
 /*	window size 0/1/2/3 */
-# define WIN_SIZE       2
+# define WIN_SIZE       1
 
 # if WIN_SIZE == 0
 #  define WIN_WIDTH		600
@@ -194,6 +194,7 @@
 # if WIN_HEIGHT <=			400
 #  define DY				2
 #  define LD				30
+#  define LD_OFFSET			5
 #  define LX				2.45
 #  define LY				15
 #  define IX				1.02
@@ -209,6 +210,7 @@
 # elif WIN_HEIGHT <=		600
 #  define DY				3
 #  define LD				53
+#  define LD_OFFSET			6
 #  define LX				2.45
 #  define LY				20
 #  define IX				1.028
@@ -224,6 +226,7 @@
 # elif WIN_HEIGHT <=		800
 #  define DY				3		// obj id ht
 #  define LD				65		// obj id alignment
+#  define LD_OFFSET			8		// obj id tenth's offet
 #  define LX				2.45	// label alignment	
 #  define LY				25		// label height; > == higher
 #  define IX				1.035	// info alignment
@@ -238,7 +241,8 @@
 
 # elif WIN_HEIGHT <=		2160
 #  define DY				7	
-#  define LD				170		
+#  define LD				170
+#  define LD_OFFSET			20		
 #  define LX				2.45	
 #  define LY				68		
 #  define IX				1.035	
@@ -270,7 +274,7 @@
 /*	camera	*/
 # define FOV_MIN	0
 # define FOV_MAX	180
-# define DEFOC_ANG	0
+# define DEFOC_ANG	0				// > == shallower depth of field, more blur
 # define DEFOC_XX	0
 # define DEFOC_XY	0
 # define DEFOC_XZ	0

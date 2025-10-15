@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gfx_draw.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 12:50:38 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/10/14 18:12:23 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
  * camera = where rays originate from and how they were constructed
  * viewport = screen = where rays are aimed at, pixel by pixel
  * 
- * rt->camera.defoc_disk[X] = right vector
- * rt->camera.defoc_disk[X] = up vector
+ * rt->camera.defoc_disk[X] = right edge of lens
+ * rt->camera.defoc_disk[Y] = up edge of lens
  * 
  * 1. calculates viewport size in world units
  * 2. computes cam's local coords frame (basis vector)
@@ -35,13 +35,13 @@
 static void	get_viewport_uv(t_rt *rt, t_vec3 *viewport_u, \
 t_vec3 *viewport_v, t_vec3 *cam_w)
 {
-	float		h;
+	float		width;
 	float		defoc_radius;
 	float		viewport[2];
 	t_vec3		cam[2];
 
-	h = tan(rt->camera.hfov / 2) * rt->camera.focus_dist;
-	viewport[W] = 2 * h;
+	width = tan(rt->camera.hfov / 2) * rt->camera.focus_dist;
+	viewport[W] = 2 * width;
 	viewport[H] = (viewport[W] * WIN_HEIGHT) / WIN_WIDTH;
 	*cam_w = mult_vec_scalar(rt->camera.lookat, -1);
 	if (fabs(scalar_product(*cam_w, rt->camera.vup)) > 0.9999)
@@ -158,9 +158,9 @@ void	render(t_rt *rt)
 	t_vec3	vp_00_loc;
 	t_vec3	vp_top_left;
 
-	clear_image(*rt, WIN_WIDTH, WIN_HEIGHT, 0x000000);
-	mlx_put_image_to_window(rt->mlx, rt->mlx_win, \
-rt->img.img, 0, 0);
+	// clear_image(*rt, WIN_WIDTH, WIN_HEIGHT, 0x000000);
+// 	mlx_put_image_to_window(rt->mlx, rt->mlx_win, \
+// rt->img.img, 0, 0);
 	get_viewport_coords(rt, &vp_00_loc, &vp_top_left, vp_d);
 	ft_draw(*rt, vp_00_loc, vp_d);
 	mlx_put_image_to_window(rt->mlx, rt->mlx_win, \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_hit_pl.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:29:51 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 13:05:33 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:36:55 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,13 @@ cross_product(rt->obj[i].plane.coord[X], intersect));
  * gets t(hit point) value and check if it is within plane surface
  * D = D in plane formula ABCD=0, D=dot(plane.corner, norm)
  * d = d in (P= ray_origin + t*d)
+ * n = normal
  * 
  * Formula:
  * t = D - dot(n, P) / dot(n, d)
+ * t = dot((P-Q), n) / dot(n, d)
+ * t = dot(n, Q) - dot(n, P) / dot(n, d)
+ * 
  * if (fabs(denom) < EPSILON) //if ray parallel to plane
  * 
  * denom: dot prod btw plane's normal and ray's direction 

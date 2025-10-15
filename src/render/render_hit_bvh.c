@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_hit_bvh.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:34:59 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/22 13:11:20 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:10:46 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,23 @@ void	assign_ray_t(float t0, float t1, t_interval *ray_t)
  * 3. distance where ray exits the box of this axis
  * 4. update ray range based on entry/exit
  * 5. checks if ray doesnt intersect the box on all axes
+ * #  P = o + (t*d)
+ *    t = (P-o) / d  //that is what axis_inv for (1/d)
  */
 int	hit_aabb(t_ray r, t_interval ray_t, t_interval bbox[3])
 {
 	int		axis;
 	float	axis_inv;
-	float	ray_vec[3];
+	float	ray_dir[3];
 	float	ray_orig[3];
 	float	t[2];
 
 	axis = -1;
-	vec3_to_arr(r.vector, ray_vec);
+	vec3_to_arr(r.vector, ray_dir);
 	vec3_to_arr(r.orig, ray_orig);
 	while (++axis < 3)
 	{
-		axis_inv = 1 / ray_vec[axis];
+		axis_inv = 1 / ray_dir[axis];
 		t[0] = (bbox[axis].min - ray_orig[axis]) * axis_inv;
 		t[1] = (bbox[axis].max - ray_orig[axis]) * axis_inv;
 		assign_ray_t(t[0], t[1], &ray_t);

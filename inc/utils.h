@@ -6,14 +6,14 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:42:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/22 08:54:28 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/10/15 20:12:04 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-int			print_error(t_parse *file, char *msg, int param, char **params);
+int			print_error(t_parse *file, char *msg, int token_idx, char **tokens);
 void		exit_with_error(char *msg);
 void		perror_exit(char *perrmsg);
 

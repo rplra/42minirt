@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:43:30 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/19 03:56:03 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:29:08 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	parse_plane(t_parse *file, t_obj *obj)
 	t_plane	tmp;
 	char	**values;
 
-	if (count_params(file->tokens) != 4)
+	if (count_tokens(file->tokens) != TOKENS_PLANE)
 		return (print_error(file, ERROR_PLCOUNT, -1, file->tokens));
 	ft_memset(&tmp, 0, sizeof(t_plane));
 	values = ft_split(file->tokens[1], ',');
@@ -45,7 +45,7 @@ int	parse_sphere(t_parse *file, t_obj *obj)
 	char		**values;
 	bool		valid;
 
-	if (count_params(file->tokens) != 4)
+	if (count_tokens(file->tokens) != TOKENS_SPHERE)
 		return (print_error(file, ERROR_SPCOUNT, -1, file->tokens));
 	ft_memset(&tmp, 0, sizeof(t_sphere));
 	values = ft_split(file->tokens[1], ',');
@@ -91,7 +91,7 @@ int	parse_cylinder(t_parse *file, t_obj *obj)
 	t_cy	tmp;
 	char	**values;
 
-	if (count_params(file->tokens) != 6)
+	if (count_tokens(file->tokens) != TOKENS_CYLINDER)
 		return (print_error(file, ERROR_CYCOUNT, -1, file->tokens));
 	ft_memset(&tmp, 0, sizeof(t_cy));
 	values = ft_split(file->tokens[1], ',');

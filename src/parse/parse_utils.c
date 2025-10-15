@@ -6,18 +6,18 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 08:34:27 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 23:52:45 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:25:09 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	count_params(char **params)
+int	count_tokens(char **tokens)
 {
 	int	i;
 
 	i = 0;
-	while (params[i])
+	while (tokens[i])
 		i++;
 	return (i);
 }
@@ -50,7 +50,7 @@ int	is_colour(t_parse *scene, char **col, t_col *colour)
 {
 	bool	valid;
 
-	if (count_params(col) != 3)
+	if (count_tokens(col) != 3)
 		return (print_error(scene, ERROR_COLCOUNT, -1, col));
 	colour->R = ft_atoui(col[0], &valid);
 	if (!valid)
@@ -74,7 +74,7 @@ int	is_vector(t_parse *scene, char **values, t_vec3 *vector, bool check_range)
 {
 	bool	valid;
 
-	if (count_params(values) != 3)
+	if (count_tokens(values) != 3)
 		return (print_error(scene, ERROR_INVALID_COORD, -1, NULL));
 	vector->x = ft_atof(values[0], &valid);
 	if (!valid)

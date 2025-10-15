@@ -6,17 +6,13 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 17:57:35 by hsim              #+#    #+#             */
-/*   Updated: 2025/08/18 10:19:14 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:38:26 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 /*
- * when a ray hits the plane,
-	we need to know if it landed on the visible part of the plane
- * these 2 functions make sure we have a clear map of the visible part
- * picks a direction that is NOT the same as "up" (normal)
  * if (normal.x == 1) // additional?
  */
 t_vec3	set_tmp_vec(t_vec3 normal)
@@ -35,6 +31,9 @@ t_vec3	set_tmp_vec(t_vec3 normal)
 /* 
  * brief: use the normal and the temp vec,
  * 		to calc two perpendicular directions (forward and right)
+ * 	  n : plane's surface orientation
+ *    d : plane's distance from origin along the axis
+ * 	  w : the way the plane is oriented in 3d space
  */
 void	setup_plane_geometry(t_obj *obj)
 {

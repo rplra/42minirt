@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:39:28 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/22 09:12:18 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:31:41 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # include "scene.h"
 
-# define PARAMS_AMBIENT 	3
-# define PARAMS_CAMERA 		4
-# define PARAMS_LIGHT 		4
-# define PARAMS_SPHERE 		4
-# define PARAMS_PLANE 		4
-# define PARAMS_CYLINDER	6
+# define TOKENS_AMBIENT 	3
+# define TOKENS_CAMERA 		4
+# define TOKENS_LIGHT 		4
+# define TOKENS_SPHERE 		4
+# define TOKENS_PLANE 		4
+# define TOKENS_CYLINDER	6
 
 # define ERROR_ARGFORMAT "Format: <./minirt> <scenes/scene.rt>"
 # define ERROR_FILETYPE "Error: File type must be in .rt"
@@ -97,11 +97,11 @@ void				assign_bbox_translate(t_obj *obj, t_vec3 delta);
 void				assign_rotation(t_obj *obj);
 
 /*					parse_setup.c				*/
-int					parse_ambient(char **params, t_parse *file,
+int					parse_ambient(char **tokens, t_parse *file,
 						t_ambient *ambient);
-int					parse_camera(char **params, t_parse *file,
+int					parse_camera(char **tokens, t_parse *file,
 						t_camera *camera);
-int					parse_light(char **params, t_parse *file, t_light *light);
+int					parse_light(char **tokens, t_parse *file, t_light *light);
 
 /*					parse_objects.c				*/
 int					parse_plane(t_parse *file, t_obj *obj);
@@ -111,7 +111,7 @@ int					parse_cylinder(t_parse *file, t_obj *obj);
 /*					parse_utils.c				*/
 bool				is_object(const char *token);
 int					add_object(t_rt *rt, t_obj *obj);
-int					count_params(char **params);
+int					count_tokens(char **tokens);
 int					is_colour(t_parse *scene, char **col, t_col *colour);
 int					is_vector(t_parse *scene, char **values, t_vec3 *vector,
 						bool check_normal);

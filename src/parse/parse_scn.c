@@ -6,18 +6,14 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:02 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/08/14 23:43:34 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:57:21 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-// validate and store
-
 int	parse_scene(t_parse *file, t_rt *rt)
 {
-	if (!file->tokens)
-		return (print_error(file, ERROR_PARAMEMPTY, 0, NULL));
 	if (ft_strcmp(file->tokens[0], "A") == 0)
 		return (parse_ambient(file->tokens, file, &rt->ambient));
 	else if (ft_strcmp(file->tokens[0], "C") == 0)

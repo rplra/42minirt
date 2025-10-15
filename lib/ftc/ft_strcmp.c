@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:32:20 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/02 14:38:32 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:07:05 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
-	
+
 	i = 0;
 	if (!s1 || !s2)
 		return (1);

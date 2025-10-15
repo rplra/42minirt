@@ -1,0 +1,25 @@
+/* XPM */
+static char *__400[] = {
+/* columns rows colors chars-per-pixel */
+"4 7 12 1 ",
+"  c black",
+". c #101010",
+"X c #202020",
+"o c gray25",
+"O c #606060",
+"+ c gray44",
+"@ c gray50",
+"# c #808080",
+"$ c #818181",
+"% c #909090",
+"& c #9F9F9F",
+"* c #AFAFAF",
+/* pixels */
+"X$O ",
+"% $ ",
+"+o* ",
+" o% ",
+"o+& ",
+" .  ",
+"    "
+};

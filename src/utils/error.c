@@ -6,13 +6,13 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:30:15 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/13 11:29:16 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/10/15 20:11:34 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	print_error(t_parse *file, char *msg, int param_idx, char **params)
+int	print_error(t_parse *file, char *msg, int token_idx, char **tokens)
 {
 	if (msg)
 	{
@@ -23,16 +23,16 @@ int	print_error(t_parse *file, char *msg, int param_idx, char **params)
 	{
 		ft_putstr_fd(" [line: ", 2);
 		ft_putnbr_fd(file->line_num, 2);
-		if (param_idx >= 0)
+		if (token_idx >= 0)
 		{
 			ft_putstr_fd(", param: ", 2);
-			ft_putnbr_fd(param_idx + 1, 2);
+			ft_putnbr_fd(token_idx + 1, 2);
 		}
 		ft_putstr_fd("]", 2);
 	}
 	ft_putendl_fd(RESET "", 2);
-	if (params && (!file || params != file->tokens))
-		free_array(params);
+	if (tokens && (!file || tokens != file->tokens))
+		free_array(tokens);
 	return (1);
 }
 

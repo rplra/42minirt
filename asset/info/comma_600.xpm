@@ -1,0 +1,24 @@
+/* XPM */
+static char *comma_600[] = {
+/* columns rows colors chars-per-pixel */
+"4 10 8 1 ",
+"  c black",
+". c #010101",
+"X c #101010",
+"o c gray12",
+"O c gray25",
+"+ c #505050",
+"@ c #808080",
+"# c gray81",
+/* pixels */
+"    ",
+"    ",
+"    ",
+"    ",
+"    ",
+"    ",
+"+#  ",
+"O@  ",
+"oX  ",
+"    "
+};

@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:13:41 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/05 13:08:58 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:06:40 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 /**
  * @brief			Reallocates memory for an array of elements and
  * 					initialize all bytes to zero.
- * 
+ *
  * @param ptr		Pointer to memory previously allocated
  * @param new_size	New size of variable(type/byte)
  * @return			Pointer to the newly allocated memory
-*/
-void *ft_realloc(void *ptr, size_t old_size, size_t new_size)
+ */
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
 	void	*memory;
 	size_t	copy_size;
@@ -36,8 +36,8 @@ void *ft_realloc(void *ptr, size_t old_size, size_t new_size)
 		copy_size = old_size;
 	else
 		copy_size = new_size;
-	ft_memcpy(memory, ptr, copy_size);
+	if (copy_size > 0)
+		ft_memcpy(memory, ptr, copy_size);
 	free(ptr);
 	return (memory);
 }
-

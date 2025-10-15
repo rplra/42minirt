@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:33:53 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/17 08:09:04 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:33:28 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,61 +22,7 @@ bool	is_rt_file(const char *filename)
 	return ((len >= 3 && !ft_strncmp(filename + len - 3, ".rt", 3)));
 }
 
-static int	parse_line(char *line, t_parse *file, t_scene *scene)
-{
-	char	*type;
-
-	file->tokens = tokenize(line);
-	//for (int i = 0; file->tokens && file->tokens[i] ; i++) // debug
-	//		printf("   Line: %d, Token %d: [%s]\n", file->line_num, i, file->tokens[i]); // debug
-	if (!file->tokens)
-		exit_with_error("Error: No tokens");
-	if (file->tokens[0] && file->tokens[0][0] != '#')
-	{
-		type = file->tokens[0];
-		if (!ft_strcmp(type, "A") && ++file->ambient_count > 1)
-			return (print_error(file, "Ambient must only be 1", -1, NULL));
-		else if (!ft_strcmp(type, "C") && ++file->camera_count > 1)
-			return (print_error(file, "Camera must only be 1", -1, NULL));
-		else if (!ft_strcmp(type, "L") && ++file->light_count > 1)
-			return (print_error(file, "Light must only be 1", -1, NULL));
-		else if (parse_scene(file, scene))
-			return(1);
-	}
-	return (0);
-}
-
-// to check if there are invalid params, interrupt gnl and free line
-int	parse_file(int fd, t_parse *file, t_scene *scene)
-{
-	char	*line;
-
-	ft_bzero(file, sizeof(t_parse));
-	while ((line = get_next_line(fd)))
-	{
-		//printf("\n-->Line: %s\n", line); // debug
-		file->line_num++;
-		if (parse_line(line, file, scene))
-		{
-			free(line);
-			free_array(file->tokens);
-			flush_gnl(fd);
-			close(fd);
-			return (1);
-		}	
-		free(line);
-		free_array(file->tokens);
-	}
-	close(fd);
-	if (file->line_num == 0)
-		return (print_error(NULL, ERROR_FILEEMPTY, -1, NULL));
-	if (file->ambient_count < 1 || file->camera_count < 1
-		|| file->light_count < 1)
-		return (print_error(NULL, ERROR_MISSINGID, -1, NULL));
-	return (0);
-}
-
-int	open_file(const char *file, t_scene *scene)
+int	open_file(const char *file, t_rt *rt)
 {
 	int		fd;
 	t_parse	parse;
@@ -88,8 +34,54 @@ int	open_file(const char *file, t_scene *scene)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		exit_with_error(ERROR_FILEFD);
-	if (parse_file(fd, &parse, scene))
+	if (parse_file(fd, &parse, rt))
 		return (1);
+	return (0);
+}
+
+static int	parse_line(char *line, t_parse *file, t_rt *rt)
+{
+	char	*type;
+
+	file->tokens = tokenize(line);
+	if (!file->tokens)
+		return (print_error(file, ERROR_PARAMEMPTY, 0, NULL));
+	if (file->tokens[0] && file->tokens[0][0] != '#')
+	{
+		type = file->tokens[0];
+		if (!ft_strcmp(type, "A") && ++file->ambient_count > 1)
+			return (print_error(file, "Ambient must only be 1", -1, NULL));
+		else if (!ft_strcmp(type, "C") && ++file->camera_count > 1)
+			return (print_error(file, "Camera must only be 1", -1, NULL));
+		else if (!ft_strcmp(type, "L") && ++file->light_count > 1)
+			return (print_error(file, "Light must only be 1", -1, NULL));
+		else if (parse_scene(file, rt))
+			return (1);
+	}
+	return (0);
+}
+
+int	parse_file(int fd, t_parse *file, t_rt *rt)
+{
+	char	*line;
+
+	ft_bzero(file, sizeof(t_parse));
+	line = get_next_line(fd);
+	while (line)
+	{
+		file->line_num++;
+		if (parse_line(line, file, rt))
+			return (handle_parse_error(fd, line, file));
+		free(line);
+		free_array(file->tokens);
+		line = get_next_line(fd);
+	}
+	close(fd);
+	if (file->line_num == 0)
+		return (print_error(NULL, ERROR_FILEEMPTY, -1, NULL));
+	if (file->ambient_count < 1 || file->camera_count < 1
+		|| file->light_count < 1)
+		return (print_error(NULL, ERROR_MISSINGID, -1, NULL));
 	return (0);
 }
 
@@ -105,79 +97,3 @@ char	**tokenize(char *line)
 	}
 	return (ft_split(line, ' '));
 }
-
-/*
-	FILE.C
-
-	1. validate file
-		- extension .rt
-		- read permission > error n exit
-		- open file
-			- empty file
-	
-	2. validate args
-		- check all params have exact count / not empty
-		- check all inputs are ints/floats/doubles only 
-		- check all params are within bounds
-		- check for valid vector format (3-comma seperated floats)
-		- check for normalized vector
-
-	3. semantic checks
-		- no duplicates of A, R, C
-		- check object bounds
-*/
-
-		// print params
-		/* 	if (scene->tokens)
-        {
-            int i = 0;
-            printf("tokens:");
-            while (scene->tokens[i])
-            {
-                printf(" [%s]", scene->tokens[i]);
-                i++;
-            }
-            printf("\n");
-        }  */
-
-		
-/* void	parse_file(int fd, t_parse *file, t_scene *scene)
-{
-	char	*line;
-
-	file->ambient_count = 0;
-	file->camera_count = 0;
-	file->light_count = 0;
-	file->line_num = 0;
-	line = get_next_line(fd);
-	while (line)
-	{
-		file->tokens = tokenize(line);
-		for (int i = 0; file->tokens && file->tokens[i] ; i++) // debug
-			printf("  Line: %d, Token %d: [%s]\n", file->line_num, i, file->tokens[i]); // debug
-		file->line_num++;
-		if (file->tokens && file->tokens[0] && file->tokens[0][0] != '#')
-		{
-			if (ft_strcmp(file->tokens[0], "A") == 0)
-				file->ambient_count++;
-			else if (ft_strcmp(file->tokens[0], "C") == 0)
-				file->camera_count++;
-			else if (ft_strcmp(file->tokens[0], "L") == 0)
-				file->light_count++;
-		}
-		//printf("parse scene\n"); // debug
-		if (!parse_scene(file, scene))
-		{
-			free(line);
-			free_array(file->tokens);
-			close(fd);
-			exit(1);
-		}
-		line = get_next_line(fd); //debug
-		printf("%s", line);
-	}
-	if (file->line_num == 0)
-		exit_with_error(ERROR_FILEEMPTY);
-	validate_setup(file);
-	close(fd);
-} */

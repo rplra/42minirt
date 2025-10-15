@@ -6,7 +6,7 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 11:50:40 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/13 11:50:34 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/24 10:44:20 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	free_array(char **arr)
 {
 	int	i;
-	
+
 	i = -1;
 	if (!arr)
 		return (1);
@@ -25,28 +25,62 @@ int	free_array(char **arr)
 	return (0);
 }
 
-int	free_arrays(char **arr1, char **arr2, char **arr3, char **arr4)
+/* frees a single block of memory */
+void	free_one(void *vars)
 {
-	free_array(arr1);
-	free_array(arr2);
-	free_array(arr3);
-	free_array(arr4);
-	return (0);
+	if (!vars)
+		return ;
+	free(vars);
+	vars = NULL;
 }
 
-void	free_scene(t_scene *scene)
+/* frees all nodes in BVH */
+void	free_bvh(t_bvh_tree *bvh)
 {
-	if (scene->objects)
+	if (!bvh)
+		return ;
+	if (bvh->type[L] == BVH)
+		free_bvh(bvh->left);
+	if (bvh->type[R] == BVH)
+		free_bvh(bvh->right);
+	free(bvh);
+}
+
+/* use this for mac */
+void	cleanup(t_rt *rt)
+{
+	if (!rt)
+		return ;
+	free_one(rt->obj);
+	free_bvh(rt->bvh);
+	if (rt->mlx)
+		free_one(rt->mlx);
+}
+
+/* use this for linux */
+/* void	cleanup(t_rt *rt)
+{
+	if (!rt)
 	{
-		free(scene->objects);
-		scene->objects = NULL;
-		scene->obj_count = 0;
+		return ;
 	}
-}
+	free_main_img(rt);
+	free_label_img(rt);
+	free_info_img(rt);
+	if (rt->mlx_win)
+		mlx_destroy_window(rt->mlx, rt->mlx_win);
+	free_bvh(rt->bvh);
+	free_one(rt->obj);
+	if (rt->mlx)
+	{
+		mlx_destroy_display(rt->mlx);
+		free(rt->mlx);
+	}
+} */
 
-void	cleanup_and_exit(t_scene *scene)
+void	cleanup_and_exit(t_rt *rt, int exit_code)
 {
-	if (scene)
-		free_scene(scene);
-	exit(1);
+	if (rt)
+		cleanup(rt);
+	exit(exit_code);
 }

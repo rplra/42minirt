@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoui.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:37:58 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/05/29 15:01:24 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/06/23 22:01:11 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-uint	ft_atoui(const char *str, bool *valid)
+t_uint	ft_atoui(const char *str, bool *valid)
 {
-	uint	result;
+	t_uint	result;
 
 	result = 0;
 	if (*str == '\0')

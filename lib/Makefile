@@ -6,7 +6,7 @@
 #    By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/03 11:26:39 by rraja-az          #+#    #+#              #
-#    Updated: 2025/05/22 13:36:11 by rraja-az         ###   ########.fr        #
+#    Updated: 2025/08/14 16:14:35 by rraja-az         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ WHITE    		= \033[37m		# White
 NAME = libft.a
 
 # Directory
-SRC_DIRS = ftc lst gnl
+SRC_DIRS = ftc lst gnl quaternion
 OBJ_DIR  = obj
 
 SRCS = $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.c))

@@ -1,0 +1,30 @@
+/* XPM */
+static char *__600[] = {
+/* columns rows colors chars-per-pixel */
+"5 10 14 1 ",
+"  c black",
+". c #101010",
+"X c #202020",
+"o c gray19",
+"O c gray25",
+"+ c #505050",
+"@ c #606060",
+"# c gray50",
+"$ c #9F9F9F",
+"% c #A0A0A0",
+"& c gray69",
+"* c gray75",
+"= c #C0C0C0",
+"- c #DFDFDF",
+/* pixels */
+" ***o",
+"+& O$",
+"@% X*",
+"o-@#=",
+" X@@*",
+"   o&",
+".*$=+",
+"  X. ",
+"     ",
+"     "
+};

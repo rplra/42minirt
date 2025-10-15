@@ -6,64 +6,54 @@
 /*   By: rraja-az <rraja-az@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:19:29 by rraja-az          #+#    #+#             */
-/*   Updated: 2025/06/21 12:06:00 by rraja-az         ###   ########.fr       */
+/*   Updated: 2025/08/16 22:38:04 by rraja-az         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void print_ambient(const t_ambient *ambient)
+void	print_ambient(const t_ambient *ambient)
 {
-    printf("Ambient ratio: %f\n", ambient->intensity);
-    printf("Ambient colour: (r=%u, g=%u, b=%u)\n",
-		ambient->colour.r, ambient->colour.g, ambient->colour.b);
+	printf("Ambient ratio: %f\n", ambient->intensity);
+	debug_print_vec("Ambient", ambient->colour);
 }
 
-void print_camera(const t_camera *camera)
+void	print_camera(const t_camera *camera)
 {
-    printf("Camera pos: (x=%f, y=%f, z=%f)\n",
-		camera->position.x, camera->position.y, camera->position.z);
-	printf("Camera ort: (x=%f, y=%f, z=%f)\n",
-		camera->orientation.x, camera->orientation.y, camera->orientation.z);
-	printf("Camera fov: %u\n", camera->fov);
+	debug_print_vec("Camera pos", camera->pos);
+	debug_print_vec("Camera ort", camera->lookat_ori);
+	printf("Camera fov: %f\n", camera->hfov);
 }
 
-void print_light(const t_light *light)
+void	print_light(const t_light *light)
 {
-    printf("Light pos: (x=%f, y=%f, z=%f)\n",
-		light->position.x, light->position.y, light->position.z);
+	debug_print_vec("Light pos", light->pos);
 	printf("Light brightness: %f\n", light->brightness);
-	printf("Light colour: (r=%u, g=%u, b=%u)\n",
-		light->colour.r, light->colour.g, light->colour.b);
+	debug_print_vec("Light col", light->colour);
 }
 
-void print_plane(const t_object *obj)
+void	print_obj(const t_obj *obj)
 {
-    printf("Plane pos: (x=%f, y=%f, z=%f)\n",
-        obj->obj.plane.position.x, obj->obj.plane.position.y, obj->obj.plane.position.z);
-    printf("Plane normal: (x=%f, y=%f, z=%f)\n",
-        obj->obj.plane.normal.x, obj->obj.plane.normal.y, obj->obj.plane.normal.z);
-    printf("Plane colour: (r=%u, g=%u, b=%u)\n",
-        obj->colour.r, obj->colour.g, obj->colour.b);
-}
-
-void	print_sphere(const t_object *obj)
-{
-	printf("Sphere pos: (x=%f, y=%f, z=%f)\n",
-        obj->obj.sphere.position.x, obj->obj.sphere.position.y, obj->obj.sphere.position.z);
-	printf("Sphere diameter: %f\n", obj->obj.sphere.diameter);
-	printf("Sphere colour: (r=%u, g=%u, b=%u)\n",
-        obj->colour.r, obj->colour.g, obj->colour.b);
-}
-
-void	print_cylinder(const t_object *obj)
-{
-	printf("Cylinder pos: (x=%f, y=%f, z=%f)\n",
-        obj->obj.cylinder.position.x, obj->obj.cylinder.position.y, obj->obj.cylinder.position.z);
-	printf("Cylinder axis: (x=%f, y=%f, z=%f)\n",
-		obj->obj.cylinder.axis.x, obj->obj.cylinder.axis.y, obj->obj.cylinder.axis.z);
-	printf("Cylinder diameter: %f\n", obj->obj.cylinder.diameter);
-	printf("Cylinder height: %f\n", obj->obj.cylinder.height);
-	printf("Cylinder colour: (r=%u, g=%u, b=%u)\n",
-        obj->colour.r, obj->colour.g, obj->colour.b);
+	if (obj->type == PLANE)
+	{
+		debug_print_vec("Plane pos", obj->plane.pos);
+		debug_print_vec("Plane normal", obj->plane.normal);
+		debug_print_vec("Plane col", obj->material.albedo);
+	}
+	else if (obj->type == SPHERE)
+	{
+		debug_print_vec("Sphere pos", obj->sph.pos);
+		printf("Sphere diameter: %f\n", obj->sph.rad);
+		debug_print_vec("Sphere col", obj->material.albedo);
+	}
+	else if (obj->type == CYLINDER)
+	{
+		debug_print_vec("Cylinder pos", obj->cyl.pos);
+		debug_print_vec("Cylinder axis", obj->cyl.axis);
+		printf("Cylinder diameter: %f\n", obj->cyl.rad);
+		printf("Cylinder height: %f\n", obj->cyl.height);
+		debug_print_vec("Cylinder col", obj->material.albedo);
+	}
+	else
+		printf("Debug error: Unkown obj\n");
 }

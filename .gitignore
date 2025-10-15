@@ -1,0 +1,15 @@
+# macOS system file
+.DS_Store
+
+# VSCode settings
+.vscode/
+
+# Object files
+*.o
+
+# Executable
+miniRT
+
+# Archive
+libft.a
+libmlx.a

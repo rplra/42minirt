@@ -6,7 +6,7 @@
 /*   By: hsim <hsim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:21:10 by hsim              #+#    #+#             */
-/*   Updated: 2025/10/14 18:12:23 by hsim             ###   ########.fr       */
+/*   Updated: 2025/10/15 18:53:45 by hsim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,9 +158,6 @@ void	render(t_rt *rt)
 	t_vec3	vp_00_loc;
 	t_vec3	vp_top_left;
 
-	// clear_image(*rt, WIN_WIDTH, WIN_HEIGHT, 0x000000);
-// 	mlx_put_image_to_window(rt->mlx, rt->mlx_win, \
-// rt->img.img, 0, 0);
 	get_viewport_coords(rt, &vp_00_loc, &vp_top_left, vp_d);
 	ft_draw(*rt, vp_00_loc, vp_d);
 	mlx_put_image_to_window(rt->mlx, rt->mlx_win, \

@@ -43,28 +43,56 @@ endif
 LIB_DIR 	= 	lib
 SRC_DIR		= 	src
 OBJ_DIR		= 	obj
-MAIN_DIR 	= 	$(SRC_DIR)/main
-PARSE_DIR 	= 	$(SRC_DIR)/parse
-BVH_DIR 	= 	$(SRC_DIR)/bvh
-GFX_DIR 	= 	$(SRC_DIR)/gfx
-RENDER_DIR	=	$(SRC_DIR)/render
-KEY_DIR 	= 	$(SRC_DIR)/key
-UTILS_DIR 	= 	$(SRC_DIR)/utils
+MAIN_DIR    = 	$(SRC_DIR)/main
+PARSE_DIR   = 	$(SRC_DIR)/parse
+BVH_DIR     = 	$(SRC_DIR)/bvh
+GFX_DIR    	= 	$(SRC_DIR)/gfx
+RENDER_DIR  = 	$(SRC_DIR)/render
+KEY_DIR     = 	$(SRC_DIR)/key
+UTILS_DIR   = 	$(SRC_DIR)/utils
 
-# Sources
-SRCS		=	$(wildcard $(MAIN_DIR)/main.c) \
-				$(wildcard $(PARSE_DIR)/*.c) \
-				$(wildcard $(BVH_DIR)/*.c) \
-				$(wildcard $(GFX_DIR)/*.c) \
-				$(wildcard $(RENDER_DIR)/*.c) \
-				$(wildcard $(KEY_DIR)/*.c) \
-				$(wildcard $(UTILS_DIR)/*.c)
-OBJS		=	$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+# Files
+MAIN_FILES 	= \
+	main
+
+PARSE_FILES	= \
+	parse_debug parse_error parse_file parse_obj_assign \
+	parse_obj_geometry parse_obj parse_scn parse_setup parse_utils
+
+BVH_FILES	= \
+	bvh_aabb bvh_aabb2 bvh_aabb3 bvh_init bvh_range \
+	bvh_sort_utils bvh_sort bvh_transform_utils bvh_transform bvh_utils
+
+GFX_FILES	= \
+	gfx_color gfx_draw gfx_image gfx_init gfx_menu
+
+RENDER_FILES = \
+	render_debug render_hit_bvh render_hit_cy render_hit_cy2 render_hit_cy3 \
+	render_hit_pl render_hit_sp render_hit render_init_setup render_init \
+	render_normal render_rand render_rand2 render_ray_mat render_ray_sample \
+	render_ray render_rotate render_utils
+
+KEY_FILES	= \
+	key_animate key_close key_config key_debug key_event key_info_utils \
+	key_info key_rotation key_scale key_selection key_translate \
+	key_utils key_ux
+
+UTILS_FILES	= \
+	error free_img free
+
+
+OBJ 		+= 	$(addprefix $(OBJ_DIR)/main/, $(addsuffix .o, $(MAIN_FILES)))
+OBJ 		+= 	$(addprefix $(OBJ_DIR)/parse/, $(addsuffix .o, $(PARSE_FILES)))
+OBJ 		+= 	$(addprefix $(OBJ_DIR)/bvh/, $(addsuffix .o, $(BVH_FILES)))
+OBJ 		+= 	$(addprefix $(OBJ_DIR)/gfx/, $(addsuffix .o, $(GFX_FILES)))
+OBJ 		+= 	$(addprefix $(OBJ_DIR)/render/, $(addsuffix .o, $(RENDER_FILES)))
+OBJ 		+= 	$(addprefix $(OBJ_DIR)/key/, $(addsuffix .o, $(KEY_FILES)))
+OBJ 		+= 	$(addprefix $(OBJ_DIR)/utils/, $(addsuffix .o, $(UTILS_FILES)))
 
 all : $(NAME)
 
-$(NAME): $(MLX) $(LIB_DIR)/libft.a $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -L$(LIB_DIR) -lft $(LINKS) -o $(NAME)
+$(NAME): $(MLX) $(LIB_DIR)/libft.a $(OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) -L$(LIB_DIR) -lft $(LINKS) -o $(NAME)
 	@echo "Compile $(NAME)		: OK!"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -95,6 +123,9 @@ valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all --log-file=valgrind_output.txt ./$(NAME) $(ARGS)
 
 leaks:
-	leaks -atExit -- ./$(NAME)
+	leaks -atExit -- ./$(NAME) $(ARGS)
 
 .PHONY: all clean fclean re valgrind leaks
+
+
+# make valgrind ARGS=scn/basics.rt
